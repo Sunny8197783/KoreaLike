@@ -577,6 +577,10 @@ func _draw_name_label(ci: Control, cx: float) -> void:
 	var a: float = 1.0 - tout
 	# 시련 안내판(deities, 위 y 82~)이 떠 있으면 아래 목표 띠 자리로 내린다(그동안 목표 묶음은 비켜 준다)
 	var base_y: float = NAME_Y if not _name_low() else roundf(_view.size.y - BAND_TOP + 12.0)
+	if _name_low():
+		a *= 1.0 - _bottom_a     # 목표 묶음이 비켜 나가는 0.15초 동안은 같은 자리에 두 글이 겹치지 않게(11-26 캡처 01_move_z_name)
+		if a <= 0.0:
+			return
 	var y: float = base_y - roundf(tout * 4.0)
 	# 앞머리 ◆/○ 는 붓 글자 대신 무구 표지(붉은 마름모·흰 고리)로
 	var label: String = _nl_text

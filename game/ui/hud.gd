@@ -210,9 +210,10 @@ func _ready() -> void:
 	Events.wave_event.connect(_on_wave_event)
 	_on_geori(Beat.geori_id, Beat.bpm, Beat.jangdan)
 	_lv_s = "Lv %d" % maxi(1, Game.level)
-	# 첫 판(RunLedger 가 위 add_child 에서 이미 ui.runs 를 1 로 올렸다): 굿판의 기운 바는 길잡이가 설명할 때(guide.reveal_giun) 드러낸다
+	# 실전: 기운 바(넋 ↔ 살)는 첫 판에도 처음부터 보인다(2026-11-26 사용자 피드백 — 첫 판 2분 숨김이 '빠진 UI'로 보였다).
+	#   길잡이는 2분(또는 살기 20)에 그대로 깜빡이며 한 줄 설명한다(guide.gd).
 	# 연습 굿판: 기운 바는 '살' 단계에서 디렉터가 reveal_giun() 으로 연다(design/17 §5.1)
-	if Game.tutorial_mode or (int(Save.get_value("ui.runs", 0)) <= 1 and UiSettings.guide_on() and not Game.autotest):
+	if Game.tutorial_mode:
 		_giun_on = false
 		_giun_vis = 0.0
 

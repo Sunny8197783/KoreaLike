@@ -867,7 +867,7 @@ func _draw_card(t: float, vs: Vector2) -> void:
 	var a: float = clampf(minf(e / 0.4, (d - e) / 0.5), 0.0, 1.0)
 	if a <= 0.0 or _f_brush == null:
 		return
-	# 제목 기준선 y. 먹 띠는 y−30 ~ y+29 → 띠 아래 끝 y121(card_y 92, ≤ y122), 무당 머리 위를 덮지 않는다(design/18 §2.3).
+	# 제목 기준선 y. 먹 띠는 y−34 ~ y+30 → 띠 아래 끝 y122(card_y 92, ≤ y122), 무당 머리 위를 덮지 않는다(design/18 §2.3).
 	var y: int = int(_pf("card_y", 92.0))
 	var cx: int = int(vs.x * 0.5)
 	var title: String = _card["title"]
@@ -879,8 +879,8 @@ func _draw_card(t: float, vs: Vector2) -> void:
 	# 먹 띠(α0.55) + 위아래 단청 1px(적·청·황 6px 마디)
 	var bw: int = maxi(maxi(tw, sw + 52), lw) + 40
 	var bx: int = cx - bw / 2
-	var by0: int = y - 30
-	var by1: int = y + 29
+	var by0: int = y - 34
+	var by1: int = y + 30
 	_ui.draw_rect(Rect2(bx, by0, bw, by1 - by0), Color(MK.r, MK.g, MK.b, 0.55 * a))
 	vis_rects["center:wave_card"] = [Rect2(bx, by0, bw, by1 - by0), Engine.get_process_frames()]
 	var dc: Array[Color] = [JK, DC_GUN, HW, DC_GUN]
@@ -898,22 +898,23 @@ func _draw_card(t: float, vs: Vector2) -> void:
 	sh.a = a
 	var col: Color = HJ
 	col.a = a
-	# 붓 제목은 기준선 아래로 4~6px 내려온다 — 기준선을 6px 올려 장단 줄과 겹치지 않게
-	_brush_str(Vector2(cx - tw / 2 + 2, y - 4), title, sh)
-	_brush_str(Vector2(cx - tw / 2, y - 6), title, col)
+	# 붓 제목은 기준선 아래로 약 8px 내려온다(받침·삐침) — 기준선을 10px 올리고 장단 줄을 2px 내려 둘 사이를 8px 띄운다
+	# (톤 리뷰 11-25: '진양조 · 45' 가 붓 제목 아래 끝에 겹쳐 찍혔다, tutorial/final2/practice/01_move_z_name)
+	_brush_str(Vector2(cx - tw / 2 + 2, y - 8), title, sh)
+	_brush_str(Vector2(cx - tw / 2, y - 10), title, col)
 	if _f_body != null:
 		var rc: Color = JK
 		rc.a = a
-		_ui.draw_rect(Rect2(cx - sw / 2 - 26, y + 10, 18, 1), rc)
-		_ui.draw_rect(Rect2(cx + sw / 2 + 8, y + 10, 18, 1), rc)
+		_ui.draw_rect(Rect2(cx - sw / 2 - 26, y + 12, 18, 1), rc)
+		_ui.draw_rect(Rect2(cx + sw / 2 + 8, y + 12, 18, 1), rc)
 		var sc: Color = HJ2
 		sc.a = a
-		_ui.draw_string(_f_body, Vector2(cx - sw / 2 + 1, y + 15), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sh)
-		_ui.draw_string(_f_body, Vector2(cx - sw / 2, y + 14), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sc)
+		_ui.draw_string(_f_body, Vector2(cx - sw / 2 + 1, y + 17), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sh)
+		_ui.draw_string(_f_body, Vector2(cx - sw / 2, y + 16), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sc)
 	if lw > 0:
 		var lc: Color = HJ3
 		lc.a = a
-		_ui.draw_string(_f_small, Vector2(cx - lw / 2, y + 25), line, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, lc)
+		_ui.draw_string(_f_small, Vector2(cx - lw / 2, y + 27), line, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, lc)
 
 
 ## 붓 글꼴의 가운뎃점(·)은 따옴표처럼 위로 뜬다 → 글자 높이 가운데에 먹/한지 점을 직접 찍는다(TutDraw.brush_text 와 같은 방식).

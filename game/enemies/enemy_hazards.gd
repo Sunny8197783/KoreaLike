@@ -1113,6 +1113,9 @@ func draw_overlay(ci: Node2D) -> void:
 		if o_alive[k] == 1 and o_kind[k] == OKind.GAUGE:
 			_draw_gauge(ci, k, tick)
 	_draw_knot_guides(ci, tick)
+	# 무당 몸 상자(발 기준 x±14, y−40~+4)와 겹치는 체력바는 α0.5 — 오버레이(z8)가 무당 금 테(z7)를 덮지 않게(design/18 ①)
+	var pl: Node2D = Game.player
+	var body: Rect2 = Rect2(pl.global_position + Vector2(-14, -40), Vector2(28, 44)) if pl != null else Rect2()
 	for b in _bar_n:
 		var x: float = floorf(_bars[b * 4] + 0.5)
 		var y: float = floorf(_bars[b * 4 + 1] + 0.5)
@@ -1128,11 +1131,13 @@ func draw_overlay(ci: Node2D) -> void:
 		var pull: bool = _bars[b * 4 + 3] > 0.5
 		var w: float = 32.0
 		var org: Vector2 = Vector2(x - 16.0, y)
-		ci.draw_rect(Rect2(org - Vector2(1, 1), Vector2(w + 2, 5)), C_HK)
-		ci.draw_rect(Rect2(org, Vector2(w, 3)), C_MK3)
+		var ba: float = 0.5 if (pl != null and body.intersects(Rect2(org - Vector2(1, 1), Vector2(w + 2, 5)))) else 1.0
+		ci.draw_rect(Rect2(org - Vector2(1, 1), Vector2(w + 2, 5)), Color(C_HK, C_HK.a * ba))
+		ci.draw_rect(Rect2(org, Vector2(w, 3)), Color(C_MK3, C_MK3.a * ba))
 		var fw: float = floorf(w * clampf(ratio, 0.0, 1.0))
 		if fw > 0.0:
-			ci.draw_rect(Rect2(org, Vector2(fw, 3)), C_BAEK_DK if pull else C_JK)
-		ci.draw_rect(Rect2(org + Vector2(floorf(w * 0.35), -1), Vector2(1, 5)), C_BAEK)
+			var fc: Color = C_BAEK_DK if pull else C_JK
+			ci.draw_rect(Rect2(org, Vector2(fw, 3)), Color(fc, fc.a * ba))
+		ci.draw_rect(Rect2(org + Vector2(floorf(w * 0.35), -1), Vector2(1, 5)), Color(C_BAEK, C_BAEK.a * ba))
 
 

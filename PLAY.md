@@ -149,10 +149,26 @@ C:/Users/김태양/Desktop/Godot_v4.7.2-stable_win64_console.exe --headless --pa
 ```
 
 * 릴리스 빌드에서는 F1~F10 디버그 키와 `--deity-test`·`--trial-at` 이 꺼진다.
+* 웹(GitHub Pages): 프리셋 **"Web"**(단일 스레드, `variant/thread_support=false`), 출력 `build/web/index.html`.
+
+```bash
+C:/Users/김태양/Desktop/Godot_v4.7.2-stable_win64_console.exe --headless --path game --export-release "Web" C:/Users/김태양/Desktop/KoreaLike/build/web/index.html
+```
+
+  - 렌더러는 데스크톱과 같은 `gl_compatibility`(WebGL 2)다. 웹에서 무거울 수 있는 것: 화면 전체 후처리 `shaders/occult_post.gdshader`(비네트·색동·붉은 달 적빛), 적 무리 `enemies/enemy_crowd.gdshader`(풀릴 기색 테가 적 픽셀마다 이웃 8~16번 샘플), 단일 스레드라 오디오·시뮬이 한 스레드에서 돈다. `index.pck` 가 약 87MB 라 첫 로딩이 길다.
+  - 웹은 소리를 첫 클릭·키 입력 뒤에야 낸다(브라우저 자동 재생 정책).
 
 ---
 
-## 7. 빌드 상태 (2026-11-25 릴리스 재빌드 / 11-24 리드 최종 검증)
+## 7. 빌드 상태 (2026-11-26 마감 빌드 / 아래는 11-25·11-24 기록)
+
+* **11-26 마감 빌드**(자세히: `design/99` 맨 아래 5.8, 가시성 `design/18` §8.5):
+  - 릴리스 exe `build/windows/neokgil_haewongut.exe` + `.pck`(12:36), 묶음 `build/neokgil_haewongut_windows.zip`(12:39), 웹 `build/web/`(12:38). 스모크 `--headless --quit-after 900` 오류 0.
+  - 검사: 기본 **OK: no errors**(LOG_TAG=final1126), `--full` **OK: no errors**(20:47 saja_bow 클리어), 연습 굿판 10/10·`save_same=true`. 사용자 세이브 md5 는 검사 전후 같다.
+  - 튜토리얼: 인트로 6장 → 권유 창, 연습 굿판 10단계, 굿 안내서 8쪽. 캡처 `game/captures/tutorial/final2/`.
+  - 가시성: 무당 금 테·발밑 표지, 무리 감광, 적 탄 z8 청 링, 영가 따뜻한 반투명, 가운데 글 1개, 피해 숫자 합치기. 설정 4종(무당 강조·무리 어둡게·적 탄 강조·피해 숫자 '자동'). 캡처 `game/captures/vis/final/`.
+  - 성능: 가시성 설정을 켜고 꺼도 fps 차이 ±3 안. 11-26 측정은 배터리 전원이라 낮게 나왔다(45~50fps, 같은 장면 11-25 전원 연결 113~119fps) — 전원 연결 상태에서 다시 잴 것.
+
 
 * **릴리스 exe**: `build/windows/neokgil_haewongut.exe` + `neokgil_haewongut.pck`(2026-11-25 00:04, 리뷰 수정 4건 반영 뒤 재내보내기, exit 0).
   - 스모크: 릴리스 exe `--headless --quit-after 900` 오류 0. 디버그 내보내기(임시 폴더)로 봇 사망 경로(`--autotest --seed=3 --autotest-die=20 --quit-at=60 --result-hold=1.0 --autotest-lobby`) 오류 0, `run_finished victory=false ending=death` 까지 도달.

@@ -2145,7 +2145,7 @@
     },
     "presenter": {
       "_doc": "waves/wave_presenter.gd 연출 수치(px = 640x360 논리 픽셀). 색은 art_palette 마스터 램프만.",
-      "banner_y": 84,
+      "banner_y": 80,
       "banner_h": 34,
       "banner_open_sec": 0.12,
       "banner_close_sec": 0.25,
