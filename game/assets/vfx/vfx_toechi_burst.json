@@ -1,0 +1,203 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_toechi_burst 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_toechi_burst 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_toechi_burst 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_toechi_burst 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_toechi_burst 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_toechi_burst 5",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_toechi_burst.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_toechi_burst",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_toechi_burst",
+   "name": "Toechi burst (한 파열)",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 6,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "frameSize": [
+    32,
+    32
+   ],
+   "columns": 6,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 120,
+   "palette": [
+    "#c8322d",
+    "#e4604f",
+    "#f4a183",
+    "#fff1b8",
+    "#544a6b",
+    "#d2c19c",
+    "#8c1f22",
+    "#3f3654",
+    "#b29d76",
+    "#2f2840",
+    "#857154",
+    "#561318"
+   ],
+   "color_role": "R",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     13,
+     6
+    ],
+    "semi_before": 16,
+    "blend": "add",
+    "size": "ok"
+   }
+  }
+ }
+}

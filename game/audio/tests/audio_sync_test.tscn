@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://audio/tests/audio_sync_test.gd" id="1"]
+
+[node name="AudioSyncTest" type="Node"]
+script = ExtResource("1")

@@ -1,0 +1,190 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_lamp_ignite 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_lamp_ignite 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_lamp_ignite 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_lamp_ignite 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_lamp_ignite 4",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_lamp_ignite 5",
+   "frame": {
+    "x": 16,
+    "y": 32,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_lamp_ignite.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_lamp_ignite",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_lamp_ignite",
+   "name": "굿판 등불 점등",
+   "fps": 12.0,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    16,
+    32
+   ],
+   "pivot": [
+    8,
+    31
+   ],
+   "columns": 4,
+   "frameWidth": 16,
+   "frameHeight": 32,
+   "blend": "add",
+   "layer": "L08",
+   "timing": "fps:12",
+   "beat_synced": false,
+   "max_concurrent": 8,
+   "color_role": "Y",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     10,
+     6
+    ],
+    "semi_before": 254,
+    "blend": "add",
+    "size": "ok"
+   }
+  }
+ }
+}

@@ -1,0 +1,152 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_status_fear 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_status_fear 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_status_fear 2",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_status_fear 3",
+   "frame": {
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_status_fear.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_status_fear",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_status_fear",
+   "name": "Status fear",
+   "fps": 8.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    11
+   ],
+   "columns": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     3,
+     3
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  },
+  "korealike": {
+   "category": "status",
+   "owner": "공포·경직",
+   "color_role": "R",
+   "spec_canvas": "8x8",
+   "spec_frames": 4,
+   "timing": "fps:8",
+   "blend": "normal",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 200,
+   "scope": "v1"
+  }
+ }
+}

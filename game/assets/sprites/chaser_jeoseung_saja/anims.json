@@ -1,0 +1,44 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  64,
+  64
+ ],
+ "pivot": [
+  32,
+  58
+ ],
+ "anims": {
+  "float": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "bow_eup": {
+   "south": 4,
+   "east": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "float": [
+   64,
+   64
+  ],
+  "bow_eup": [
+   64,
+   64
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "finalize",
+  "tier": "chaser",
+  "source": "art\\rework\\G3_pixellab_enemies\\work\\chaser_jeoseung_saja\\s5"
+ },
+ "workbench_score": 95.1,
+ "pixellab_id": "7ceee3d1-031b-48b0-8682-f3ec63990c6a",
+ "rework": "G3_pixellab_enemies 2026-11-22",
+ "bow_eup_note": "G7 손그림(0 gen): float_<dir>_0 블록 이동 + south 공수. f3 = f2 홀드. north 없음(정면·측면만 연출에 쓰임)"
+}

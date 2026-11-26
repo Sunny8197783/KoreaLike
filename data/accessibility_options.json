@@ -1,0 +1,906 @@
+{
+  "_meta": {
+    "source_doc": "design/11-ux-ui-hud.md",
+    "version": "0.10",
+    "units": "lpx = 640x360 logical pixels",
+    "status": "draft",
+    "canon_version": "v1.2",
+    "canon_basis": "design/01-concept-and-canon.md v1.2 + design/99-open-questions-and-next-steps.md (D-xx/C-xx)",
+    "canon_v1_2_log": [
+      "D-04/C-15: 표시명 살풀이 단 → 살 맺힘 단(3곳)",
+      "D-06: opt_move_8dir_snap 주석에 자유 이동 기준 명시",
+      "C-36: _meta.canon_version v1.2"
+    ]
+  },
+  "option_count": 59,
+  "options": [
+    {
+      "id": "opt_preset",
+      "category": "accessibility",
+      "name_ko": "프리셋",
+      "default": "default",
+      "values": [
+        "default",
+        "comfort",
+        "clear",
+        "large",
+        "one_hand",
+        "custom"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_colorblind",
+      "category": "visual",
+      "name_ko": "색약 보정",
+      "default": "off",
+      "values": [
+        "off",
+        "protan",
+        "deutan",
+        "tritan"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "1·2형: 적 #c8322d -> #d94a8c"
+    },
+    {
+      "id": "opt_high_contrast",
+      "category": "visual",
+      "name_ko": "고대비",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "art: bg value x0.7, enemy outline 2px; UX: bg saturation -40%, opaque panels"
+    },
+    {
+      "id": "opt_bullet_emphasis",
+      "category": "visual",
+      "name_ko": "적 탄 강조",
+      "default": "on",
+      "values": [
+        "off",
+        "on",
+        "strong"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "on: #5f93de 1lpx, strong: #a9caf5 2lpx; never #ff4fd8 in colorblind modes"
+    },
+    {
+      "id": "opt_player_vfx_alpha",
+      "category": "visual",
+      "name_ko": "내 무구 효과 투명도",
+      "default": 70,
+      "values": {
+        "min": 30,
+        "max": 100,
+        "step": 10
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_yeongga_alpha",
+      "category": "visual",
+      "name_ko": "영가 투명도",
+      "default": 75,
+      "values": {
+        "min": 30,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_pullil_outline_color",
+      "category": "visual",
+      "name_ko": "풀릴 기색 외곽선 색",
+      "default": "#f2ece0",
+      "values": [
+        "#f2ece0",
+        "#ffd84a",
+        "#4ff0ff"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "13-art-direction accessibility_overrides.pullil_outline_alt"
+    },
+    {
+      "id": "opt_pullil_marker",
+      "category": "visual",
+      "name_ko": "풀릴 기색 매듭 표식",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_sal_emphasis",
+      "category": "visual",
+      "name_ko": "살 알갱이 강조",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_damage_numbers",
+      "category": "visual",
+      "name_ko": "피해 숫자",
+      "default": "big_only",
+      "values": [
+        "off",
+        "big_only",
+        "all"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_eoduk_cone",
+      "category": "visual",
+      "name_ko": "어둑시니 시야 원뿔",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_ring_guide",
+      "category": "visual",
+      "name_ko": "고리 보조선",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "캐논 3.2.5"
+    },
+    {
+      "id": "opt_ring_preview",
+      "category": "visual",
+      "name_ko": "고리 미리보기",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_hud_mode",
+      "category": "visual",
+      "name_ko": "HUD 모드",
+      "default": "by_run",
+      "values": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "사용자가 한 번이라도 바꾸면 opt_hud_mode_user_set=true, 이후 자동 전환 없음(5.3)",
+      "default_by_run": {
+        "1-3": "simple",
+        "4+": "full"
+      }
+    },
+    {
+      "id": "opt_hp_corner_bar",
+      "category": "visual",
+      "name_ko": "정기 코너 바",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_hud_counts",
+      "category": "visual",
+      "name_ko": "재화·처치 수 표시",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "넋·엽전·해원/퇴치 누계 HUD 상시 표시. 끔이어도 일시정지 머리줄·정산에는 표시(v0.10, U1)"
+    },
+    {
+      "id": "opt_ui_scale",
+      "category": "visual",
+      "name_ko": "UI 크기",
+      "default": 0,
+      "values": [
+        -1,
+        0,
+        1
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_safe_margin",
+      "category": "visual",
+      "name_ko": "화면 여백",
+      "default": 0,
+      "values": {
+        "min": 0,
+        "max": 5,
+        "step": 1
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "콘솔 기본 5"
+    },
+    {
+      "id": "opt_screen_shake",
+      "category": "motion",
+      "name_ko": "화면 흔들림",
+      "default": 70,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 10
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_hitstop",
+      "category": "motion",
+      "name_ko": "히트스톱",
+      "default": "on",
+      "values": [
+        "on",
+        "short",
+        "off"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_flash_reduce",
+      "category": "motion",
+      "name_ko": "플래시 감소",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_motion_reduce",
+      "category": "motion",
+      "name_ko": "움직임 줄이기",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_beat_pulse",
+      "category": "motion",
+      "name_ko": "박 펄스 UI",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_auto_aim_directional",
+      "category": "control",
+      "name_ko": "방향 무구 자동 조준",
+      "default": "off",
+      "values": [
+        "off",
+        "when_idle",
+        "always"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_auto_maedeup",
+      "category": "control",
+      "name_ko": "자동 매듭",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "스냅 1.5 -> 2.5유닛 (캐논)"
+    },
+    {
+      "id": "opt_mouse_move",
+      "category": "control",
+      "name_ko": "마우스로 이동",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_move_8dir_snap",
+      "category": "control",
+      "name_ko": "스틱 8방향 스냅",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": "02-core-loop-combat 3.2. 기본 이동은 자유 이동(스틱 360°, 키보드 8방향, D-06). 이 옵션은 스틱만 45° 스냅"
+    },
+    {
+      "id": "opt_deadzone_inner",
+      "category": "control",
+      "name_ko": "스틱 데드존",
+      "default": 0.2,
+      "values": {
+        "min": 0.05,
+        "max": 0.4,
+        "step": 0.05
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_letterbox_hud",
+      "category": "visual",
+      "name_ko": "레터박스 HUD",
+      "default": "auto_on_16x10_21x9",
+      "values": [
+        "auto_on_16x10_21x9",
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_nintendo_layout",
+      "category": "control",
+      "name_ko": "확인/취소 위치 바꾸기",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_haptics",
+      "category": "control",
+      "name_ko": "진동 세기",
+      "default": 70,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 10
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_box_speed",
+      "category": "control",
+      "name_ko": "상자 연출",
+      "default": "default",
+      "values": [
+        "default",
+        "fast",
+        "instant"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_auto_pause_focus",
+      "category": "control",
+      "name_ko": "포커스 잃으면 일시정지",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_text_size",
+      "category": "text",
+      "name_ko": "글자 크기",
+      "default": "default",
+      "values": [
+        "default",
+        "large",
+        "xlarge"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_font_readable",
+      "category": "text",
+      "name_ko": "읽기 쉬운 글꼴",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_subtitle_bg",
+      "category": "text",
+      "name_ko": "자막 배경",
+      "default": 60,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 10
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_subtitle_time",
+      "category": "text",
+      "name_ko": "자막 시간",
+      "default": 1.0,
+      "values": [
+        1.0,
+        1.5,
+        2.0
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_subtitle_speaker",
+      "category": "text",
+      "name_ko": "화자 표시",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_neokduri_freq",
+      "category": "text",
+      "name_ko": "넋두리 빈도",
+      "default": "default",
+      "values": [
+        "low",
+        "default",
+        "high"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_sound_cues",
+      "category": "text",
+      "name_ko": "소리 시각화",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_goal_reminder",
+      "category": "text",
+      "name_ko": "목표 알림",
+      "default": "first_5_runs",
+      "values": [
+        "first_5_runs",
+        "on",
+        "off"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_show_genre_terms",
+      "category": "text",
+      "name_ko": "장르 용어 병기",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_glossary_hover",
+      "category": "text",
+      "name_ko": "용어 툴팁",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_hints",
+      "category": "text",
+      "name_ko": "힌트",
+      "default": true,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_hints_reset",
+      "category": "text",
+      "name_ko": "힌트 다시 보기",
+      "default": null,
+      "values": [
+        "action"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_jeomji_detail_default",
+      "category": "text",
+      "name_ko": "점지 상세 기본 열림",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_vol_master",
+      "category": "audio",
+      "name_ko": "전체 볼륨",
+      "default": 80,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_vol_music",
+      "category": "audio",
+      "name_ko": "음악",
+      "default": 70,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_vol_sfx",
+      "category": "audio",
+      "name_ko": "효과음",
+      "default": 80,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_vol_voice",
+      "category": "audio",
+      "name_ko": "목소리",
+      "default": 80,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_vol_ui",
+      "category": "audio",
+      "name_ko": "UI",
+      "default": 60,
+      "values": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_jangdan_guide",
+      "category": "audio",
+      "name_ko": "장구 기준 박 강조",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_mono",
+      "category": "audio",
+      "name_ko": "모노",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_silence_safe",
+      "category": "audio",
+      "name_ko": "정적 연출 완화",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_fps_cap",
+      "category": "display",
+      "name_ko": "프레임 제한",
+      "default": 60,
+      "values": [
+        30,
+        40,
+        60,
+        120,
+        144,
+        0
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_particle_density",
+      "category": "display",
+      "name_ko": "파티클 밀도",
+      "default": 100,
+      "values": [
+        50,
+        75,
+        100
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": true,
+      "note": ""
+    },
+    {
+      "id": "opt_game_speed",
+      "category": "assist",
+      "name_ko": "굿판 빠르기",
+      "default": 100,
+      "values": [
+        70,
+        85,
+        100
+      ],
+      "leaderboard_eligible": false,
+      "editable_during_run": true,
+      "note": "BPM 동일 배율, 순위표 제외",
+      "run_flag": "game_speed_min",
+      "achievements": "유지(살 맺힘 단·시간 기록 업적 제외)"
+    },
+    {
+      "id": "opt_assist_bosalpim",
+      "category": "assist",
+      "name_ko": "보살핌",
+      "default": false,
+      "values": [
+        true,
+        false
+      ],
+      "leaderboard_eligible": false,
+      "editable_during_run": true,
+      "note": "피해 x0.5(02 12.1 5단계: max(ceil(raw*0.20*m), ceil((raw-신복)*m))), 보살핌 명줄 1(켤 때 지급·마지막 소모·끄면 회수, 런당 소모 1회), 살 맺힘 단 진행 불가, 메타·사연 유지. 12.7.1",
+      "damage_mult": 0.5,
+      "pipeline": "02-core-loop-combat 12.1 step5: both terms multiplied",
+      "extra_life": {
+        "slots": 1,
+        "grant": "on_enable",
+        "consume_order": "last",
+        "on_disable_unused": "revoke",
+        "max_consumed_per_run": 1
+      },
+      "run_flag": "assist_used (sticky true once enabled)",
+      "achievements": "유지(살 맺힘 단·무피격·시간 기록 업적 제외)",
+      "replay_submit": "rejected (14 3.13)"
+    },
+    {
+      "id": "opt_language",
+      "category": "language",
+      "name_ko": "언어",
+      "default": "auto",
+      "values": [
+        "ko",
+        "en",
+        "ja",
+        "zh_hans"
+      ],
+      "leaderboard_eligible": true,
+      "editable_during_run": false,
+      "note": ""
+    }
+  ],
+  "presets": {
+    "default": {},
+    "comfort": {
+      "opt_screen_shake": 30,
+      "opt_hitstop": "short",
+      "opt_flash_reduce": true,
+      "opt_motion_reduce": true,
+      "opt_box_speed": "fast"
+    },
+    "clear": {
+      "opt_high_contrast": true,
+      "opt_bullet_emphasis": "strong",
+      "opt_player_vfx_alpha": 50,
+      "opt_yeongga_alpha": 50,
+      "opt_sal_emphasis": true,
+      "opt_damage_numbers": "off"
+    },
+    "large": {
+      "opt_text_size": "xlarge",
+      "opt_ui_scale": 1,
+      "opt_hp_corner_bar": true,
+      "opt_subtitle_bg": 90
+    },
+    "one_hand": {
+      "input_preset": "keyboard_left_hand",
+      "opt_auto_maedeup": true,
+      "opt_auto_aim_directional": "always"
+    }
+  },
+  "always_on_safety": {
+    "flash_max_per_s_large_area": 3,
+    "large_area_threshold_pct": 25,
+    "luminance_delta_pct": 10,
+    "no_saturated_red_flash_over_pct": 25,
+    "sinmyeong_color_cycle": "hud_border_1lpx_only",
+    "wongwi_return_flash": false
+  },
+  "palette_tokens": {
+    "pal_bg": "#0e0b16",
+    "pal_hanji": "#e9dcc0",
+    "pal_panel": "#2a2238",
+    "pal_ink_text": "#3a2f2a",
+    "pal_baek": "#f2ece0",
+    "pal_jeok": "#c8322d",
+    "pal_jeok_light": "#e0524a",
+    "pal_cb_jeok": "#d94a8c",
+    "pal_hwang": "#e8b931",
+    "pal_cb_hwang_tritan": "#ffcf3a",
+    "pal_cheong": "#2a5caa",
+    "pal_cheong_rim": "#5f93de",
+    "pal_cheong_rim_strong": "#a9caf5",
+    "pal_heuk": "#1a1a1a"
+  },
+  "contrast_ratios_wcag": {
+    "hanji_on_bg": 14.34,
+    "jeok_on_bg": 3.66,
+    "jeok_light_on_bg": 5.08,
+    "cheong_on_bg": 2.98,
+    "cheong_rim_on_bg": 6.23,
+    "cheong_rim_strong_on_bg": 11.55,
+    "jeok_vs_baek": 4.52,
+    "baek_vs_hanji": 1.15,
+    "hanji_on_panel": 11.17,
+    "ink_text_on_hanji": 9.55
+  }
+}

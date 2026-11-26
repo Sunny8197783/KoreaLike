@@ -1,0 +1,24 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "anims": {
+  "float": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "pixellab_id": "79dbaf7b-a250-4603-a82e-f0d5b63db9cb",
+ "frame_size": {
+  "float": [
+   40,
+   40
+  ]
+ },
+ "post": "fade lower legs + saturation x0.55 (faint saekdong)",
+ "status": "v2"
+}

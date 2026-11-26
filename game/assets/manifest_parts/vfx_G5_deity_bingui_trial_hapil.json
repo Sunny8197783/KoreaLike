@@ -1,0 +1,654 @@
+{
+ "agent": "vfx_G5_deity_bingui_trial_hapil",
+ "group": "G5_deity_bingui_trial_hapil",
+ "tools": [
+  "pixelfx (tools/vendor/pixelfx/src/fx/korean/vfx_*.js + _g5.js helpers)",
+  "tools/g5_vfx_export.mjs (sheet export, deity variants, trailing-empty-frame trim)",
+  "tools/g5_pattern_tiles.mjs",
+  "tools/g5_crop.mjs (zoomed review crops)",
+  "tools/g5_manifest.cjs",
+  "Godot 4.7.2 compile/visual test of the shader"
+ ],
+ "pixellab_generations_used_estimate": 0,
+ "items": [
+  {
+   "id": "vfx_sinjangdae_descend",
+   "path": "game/assets/vfx/vfx_sinjangdae_descend.png",
+   "json": "game/assets/vfx/vfx_sinjangdae_descend.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinjangdae_descend.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:10",
+   "blend": "add",
+   "layer": "L08",
+   "beat_snap": false,
+   "max_concurrent": 2,
+   "color_role": "D",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    16,
+    64
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "holdLoop": [
+    4,
+    7
+   ],
+   "variants": [
+    {
+     "deity": "deity_sansin",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_sansin.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_sansin.json"
+    },
+    {
+     "deity": "deity_yongwang",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_yongwang.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_yongwang.json"
+    },
+    {
+     "deity": "deity_chilseong",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_chilseong.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_chilseong.json"
+    },
+    {
+     "deity": "deity_janggun",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_janggun.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_janggun.json"
+    },
+    {
+     "deity": "deity_barigongju",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_barigongju.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_barigongju.json"
+    },
+    {
+     "deity": "deity_jeseok_daegam",
+     "path": "game/assets/vfx/vfx_sinjangdae_descend_jeseok_daegam.png",
+     "json": "game/assets/vfx/vfx_sinjangdae_descend_jeseok_daegam.json"
+    }
+   ],
+   "note": "bare file = sansin default; per-deity palette variants (color role D)"
+  },
+  {
+   "id": "vfx_hwasin_won",
+   "path": "game/assets/vfx/vfx_hwasin_won.png",
+   "json": "game/assets/vfx/vfx_hwasin_won.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_hwasin_won.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "beat:2",
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": false,
+   "max_concurrent": 2,
+   "color_role": "D+H",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    404,
+    412
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "beat": 2,
+   "variants": [
+    {
+     "deity": "deity_sansin",
+     "path": "game/assets/vfx/vfx_hwasin_won_sansin.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_sansin.json"
+    },
+    {
+     "deity": "deity_yongwang",
+     "path": "game/assets/vfx/vfx_hwasin_won_yongwang.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_yongwang.json"
+    },
+    {
+     "deity": "deity_chilseong",
+     "path": "game/assets/vfx/vfx_hwasin_won_chilseong.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_chilseong.json"
+    },
+    {
+     "deity": "deity_janggun",
+     "path": "game/assets/vfx/vfx_hwasin_won_janggun.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_janggun.json"
+    },
+    {
+     "deity": "deity_barigongju",
+     "path": "game/assets/vfx/vfx_hwasin_won_barigongju.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_barigongju.json"
+    },
+    {
+     "deity": "deity_jeseok_daegam",
+     "path": "game/assets/vfx/vfx_hwasin_won_jeseok_daegam.png",
+     "json": "game/assets/vfx/vfx_hwasin_won_jeseok_daegam.json"
+    }
+   ],
+   "note": "bare file = sansin default; per-deity palette variants (color role D)"
+  },
+  {
+   "id": "vfx_confirm_ring",
+   "path": "game/assets/vfx/vfx_confirm_ring.png",
+   "json": "game/assets/vfx/vfx_confirm_ring.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_confirm_ring.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:12",
+   "blend": "normal",
+   "layer": "L13",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "D",
+   "scope": "v1",
+   "frames": 12,
+   "frame_size": [
+    24,
+    24
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "holdLast": true,
+   "variants": [
+    {
+     "deity": "deity_sansin",
+     "path": "game/assets/vfx/vfx_confirm_ring_sansin.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_sansin.json"
+    },
+    {
+     "deity": "deity_yongwang",
+     "path": "game/assets/vfx/vfx_confirm_ring_yongwang.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_yongwang.json"
+    },
+    {
+     "deity": "deity_chilseong",
+     "path": "game/assets/vfx/vfx_confirm_ring_chilseong.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_chilseong.json"
+    },
+    {
+     "deity": "deity_janggun",
+     "path": "game/assets/vfx/vfx_confirm_ring_janggun.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_janggun.json"
+    },
+    {
+     "deity": "deity_barigongju",
+     "path": "game/assets/vfx/vfx_confirm_ring_barigongju.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_barigongju.json"
+    },
+    {
+     "deity": "deity_jeseok_daegam",
+     "path": "game/assets/vfx/vfx_confirm_ring_jeseok_daegam.png",
+     "json": "game/assets/vfx/vfx_confirm_ring_jeseok_daegam.json"
+    }
+   ],
+   "note": "bare file = sansin default; per-deity palette variants (color role D)"
+  },
+  {
+   "id": "vfx_trial_block_wall",
+   "path": "game/assets/vfx/vfx_trial_block_wall.png",
+   "json": "game/assets/vfx/vfx_trial_block_wall.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_trial_block_wall.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:12",
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "D+H",
+   "scope": "v1",
+   "frames": 6,
+   "frame_size": [
+    404,
+    436
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "holdLoop": [
+    4,
+    5
+   ],
+   "variants": [
+    {
+     "deity": "deity_sansin",
+     "path": "game/assets/vfx/vfx_trial_block_wall_sansin.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_sansin.json"
+    },
+    {
+     "deity": "deity_yongwang",
+     "path": "game/assets/vfx/vfx_trial_block_wall_yongwang.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_yongwang.json"
+    },
+    {
+     "deity": "deity_chilseong",
+     "path": "game/assets/vfx/vfx_trial_block_wall_chilseong.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_chilseong.json"
+    },
+    {
+     "deity": "deity_janggun",
+     "path": "game/assets/vfx/vfx_trial_block_wall_janggun.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_janggun.json"
+    },
+    {
+     "deity": "deity_barigongju",
+     "path": "game/assets/vfx/vfx_trial_block_wall_barigongju.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_barigongju.json"
+    },
+    {
+     "deity": "deity_jeseok_daegam",
+     "path": "game/assets/vfx/vfx_trial_block_wall_jeseok_daegam.png",
+     "json": "game/assets/vfx/vfx_trial_block_wall_jeseok_daegam.json"
+    }
+   ],
+   "note": "bare file = sansin default; per-deity palette variants (color role D)"
+  },
+  {
+   "id": "vfx_bingui_pillar",
+   "path": "game/assets/vfx/vfx_bingui_pillar.png",
+   "json": "game/assets/vfx/vfx_bingui_pillar.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_bingui_pillar.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:24",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "D",
+   "scope": "v1",
+   "frames": 6,
+   "frame_size": [
+    32,
+    96
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "hit": {
+    "stop": 0.06,
+    "shake": 0.18,
+    "amp": 3
+   },
+   "variants": [
+    {
+     "deity": "deity_sansin",
+     "path": "game/assets/vfx/vfx_bingui_pillar_sansin.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_sansin.json"
+    },
+    {
+     "deity": "deity_yongwang",
+     "path": "game/assets/vfx/vfx_bingui_pillar_yongwang.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_yongwang.json"
+    },
+    {
+     "deity": "deity_chilseong",
+     "path": "game/assets/vfx/vfx_bingui_pillar_chilseong.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_chilseong.json"
+    },
+    {
+     "deity": "deity_janggun",
+     "path": "game/assets/vfx/vfx_bingui_pillar_janggun.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_janggun.json"
+    },
+    {
+     "deity": "deity_barigongju",
+     "path": "game/assets/vfx/vfx_bingui_pillar_barigongju.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_barigongju.json"
+    },
+    {
+     "deity": "deity_jeseok_daegam",
+     "path": "game/assets/vfx/vfx_bingui_pillar_jeseok_daegam.png",
+     "json": "game/assets/vfx/vfx_bingui_pillar_jeseok_daegam.json"
+    }
+   ],
+   "note": "bare file = sansin default; per-deity palette variants (color role D)"
+  },
+  {
+   "id": "vfx_bingui_pattern_sweep",
+   "path": "game/assets/vfx/vfx_bingui_pattern_sweep.gdshader",
+   "json": "game/assets/vfx/vfx_bingui_pattern_sweep.json",
+   "kind": "vfx_shader",
+   "source": "handwritten",
+   "source_file": "game/assets/vfx/vfx_bingui_pattern_sweep.gdshader",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "0.3s",
+   "blend": "normal",
+   "layer": "L09",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "D",
+   "scope": "v1",
+   "frames": 0,
+   "note": "Compile + visual test on Godot 4.7.2 (Compatibility). Tween zone_progress 0->1 over 0.3s at t=0.60s."
+  },
+  {
+   "id": "vfx_bingui_pattern_tiles",
+   "path": "game/assets/vfx/vfx_bingui_pattern_tiles.png",
+   "json": "game/assets/vfx/vfx_bingui_pattern_tiles.json",
+   "kind": "vfx_shader_texture",
+   "source": "handwritten (procedural pixel tiles)",
+   "source_file": "tools/g5_pattern_tiles.mjs",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "0.3s",
+   "blend": "normal",
+   "layer": "L09",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "D",
+   "scope": "v1",
+   "frames": 1,
+   "frame_size": [
+    16,
+    16
+   ],
+   "note": "12 data-mask tiles 16x16, seamless (R primary, G secondary, B saekdong index). Review image: vfx_bingui_pattern_tiles_preview.png"
+  },
+  {
+   "id": "vfx_sinmyeong_oreum_border",
+   "path": "game/assets/vfx/vfx_sinmyeong_oreum_border.png",
+   "json": "game/assets/vfx/vfx_sinmyeong_oreum_border.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinmyeong_oreum_border.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "beat:1",
+   "blend": "add",
+   "layer": "L17",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "H+D",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    640,
+    360
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    0
+   ],
+   "beat": 1
+  },
+  {
+   "id": "vfx_sinmyeong_oreum_aura",
+   "path": "game/assets/vfx/vfx_sinmyeong_oreum_aura.png",
+   "json": "game/assets/vfx/vfx_sinmyeong_oreum_aura.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinmyeong_oreum_aura.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "beat:1",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "Y+R",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    64,
+    64
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    32,
+    58
+   ],
+   "beat": 1
+  },
+  {
+   "id": "vfx_eolssigu_slam",
+   "path": "game/assets/vfx/vfx_eolssigu_slam.png",
+   "json": "game/assets/vfx/vfx_eolssigu_slam.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_eolssigu_slam.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:20",
+   "blend": "normal",
+   "layer": "L16",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "color_role": "M+H",
+   "scope": "v1",
+   "frames": 6,
+   "frame_size": [
+    96,
+    32
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    48,
+    16
+   ],
+   "holdLast": true,
+   "textRect": {
+    "x": 10,
+    "y": 6,
+    "w": 66,
+    "h": 13
+   },
+   "subtitleRect": {
+    "x": 0,
+    "y": 23,
+    "w": 96,
+    "h": 9
+   }
+  },
+  {
+   "id": "vfx_union_neoksinkal",
+   "path": "game/assets/vfx/vfx_union_neoksinkal.png",
+   "json": "game/assets/vfx/vfx_union_neoksinkal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_neoksinkal.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:16",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 20,
+   "color_role": "R+P",
+   "scope": "v1",
+   "frames": 6,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ]
+  },
+  {
+   "id": "vfx_union_sogeumsal",
+   "path": "game/assets/vfx/vfx_union_sogeumsal.png",
+   "json": "game/assets/vfx/vfx_union_sogeumsal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_sogeumsal.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "rot16",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 40,
+   "color_role": "R+P",
+   "scope": "v1",
+   "frames": 2,
+   "frame_size": [
+    20,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    10,
+    4
+   ],
+   "rotate": 16
+  },
+  {
+   "id": "vfx_union_jakdu_dari_ring",
+   "path": "game/assets/vfx/vfx_union_jakdu_dari_ring.png",
+   "json": "game/assets/vfx/vfx_union_jakdu_dari_ring.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_jakdu_dari_ring.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:14",
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": true,
+   "max_concurrent": 2,
+   "color_role": "R+P",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    128,
+    128
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    64,
+    64
+   ]
+  },
+  {
+   "id": "vfx_union_chilseong_mgg",
+   "path": "game/assets/vfx/vfx_union_chilseong_mgg.png",
+   "json": "game/assets/vfx/vfx_union_chilseong_mgg.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_chilseong_mgg.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "timing": "fps:14",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 4,
+   "color_role": "R+P+Y",
+   "scope": "v1",
+   "frames": 8,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    48,
+    48
+   ]
+  },
+  {
+   "id": "vfx_union_obang_cheoljin",
+   "path": "game/assets/vfx/vfx_union_obang_cheoljin.png",
+   "json": "game/assets/vfx/vfx_union_obang_cheoljin.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_obang_cheoljin.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "placeholder_x1",
+   "timing": "beat:1",
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": true,
+   "max_concurrent": 1,
+   "color_role": "R+P+D",
+   "scope": "x1",
+   "frames": 8,
+   "frame_size": [
+    128,
+    128
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    64,
+    64
+   ],
+   "beat": 1
+  },
+  {
+   "id": "vfx_union_sanullim",
+   "path": "game/assets/vfx/vfx_union_sanullim.png",
+   "json": "game/assets/vfx/vfx_union_sanullim.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_union_sanullim.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "placeholder_x1",
+   "timing": "fps:12",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 1,
+   "color_role": "R+P",
+   "scope": "x1",
+   "frames": 8,
+   "frame_size": [
+    192,
+    192
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    96,
+    96
+   ]
+  }
+ ],
+ "known_issues": [
+  "vfx_hwasin_won / vfx_trial_block_wall: 404px canvases for the r=6u (192px) circle. Under add blend the charcoal (숯) only shows as an ember dot; normal blend for the rope would read better",
+  "vfx_eolssigu_slam: text NOT baked. Engine renders real calligraphy font text in meta.pixelfx.textRect (canvas px) and the localized subtitle in subtitleRect",
+  "vfx_union_sogeumsal: rotate=16 in engine (2-frame sheet faces right)",
+  "vfx_union_obang_cheoljin (canon rename of jin_obangjin) / vfx_union_sanullim: x1 placeholders (frame/timing only)",
+  "hold semantics: holdLast = keep the last frame until removed; holdLoop [a,b] = after one play, loop frames a..b",
+  "beat-synced loops (hwasin_won beat 2, sinmyeong border/aura beat 1, obang_cheoljin): sheet fps is nominal, the engine should step frames from the beat clock (frame 0 = on the beat)"
+ ]
+}

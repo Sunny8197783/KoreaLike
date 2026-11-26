@@ -1,0 +1,147 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_orb_large 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_orb_large 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_orb_large 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_orb_large 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_orb_large.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_orb_large",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_orb_large",
+   "name": "원혼 구슬 대",
+   "fps": 12,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "frameWidth": 10,
+   "frameHeight": 10,
+   "blend": "normal",
+   "layer": "L07",
+   "timing": "beat:1",
+   "beat_synced": true,
+   "max_concurrent": 60,
+   "color_role": "R",
+   "beat_sync": "beat:1",
+   "reviewed": "ASSET-REVIEW 2026-11-22: re-rendered",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "10x10->16x16"
+   }
+  }
+ }
+}

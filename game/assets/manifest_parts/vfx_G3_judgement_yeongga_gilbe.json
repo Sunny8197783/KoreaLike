@@ -1,0 +1,445 @@
+{
+ "agent": "vfx_G3_judgement_yeongga_gilbe",
+ "group": "G3_judgement_yeongga_gilbe",
+ "items": [
+  {
+   "id": "vfx_pullil_enter",
+   "path": "game/assets/vfx/vfx_pullil_enter.png",
+   "json": "game/assets/vfx/vfx_pullil_enter.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_pullil_enter.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    12,
+    8
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    6,
+    7
+   ],
+   "blend": "normal",
+   "layer": "L11",
+   "palette": [
+    "#1a1a1a",
+    "#f2ece0",
+    "#fffdf6",
+    "#d6cfc1"
+   ],
+   "note": "흰 고(리본 매듭)가 섬광 후 느슨해지며 한숨 김. 손그림 4프레임"
+  },
+  {
+   "id": "vfx_toechi_burst",
+   "path": "game/assets/vfx/vfx_toechi_burst.png",
+   "json": "game/assets/vfx/vfx_toechi_burst.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_toechi_burst.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "palette": [
+    "#c8322d",
+    "#e4604f",
+    "#f4a183",
+    "#fff1b8",
+    "#544a6b",
+    "#d2c19c",
+    "#8c1f22",
+    "#3f3654",
+    "#b29d76",
+    "#2f2840",
+    "#857154",
+    "#561318"
+   ],
+   "note": "32px 적 8각 별 플래시 → 붉은 실 8가닥 방사 절단 + 먹 파편·한지 재. 먹 파편은 add 에서 약하게 보임(의도: 붉은 실이 주)"
+  },
+  {
+   "id": "vfx_gyeoldanta_cut",
+   "path": "game/assets/vfx/vfx_gyeoldanta_cut.png",
+   "json": "game/assets/vfx/vfx_gyeoldanta_cut.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gyeoldanta_cut.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "palette": [
+    "#e4604f",
+    "#fff1b8",
+    "#c8322d",
+    "#544a6b",
+    "#3f3654",
+    "#8c1f22",
+    "#2f2840"
+   ],
+   "note": "먹 붓 X자 2획(첫 획 황백·적 테로 달아오름→먹으로 식음, 비백) + 경면주사 붉은 점"
+  },
+  {
+   "id": "vfx_haewon_rise",
+   "path": "game/assets/vfx/vfx_haewon_rise.png",
+   "json": "game/assets/vfx/vfx_haewon_rise.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_haewon_rise.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    16,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    46
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "palette": [
+    "#f2ece0",
+    "#d6cfc1",
+    "#fffdf6",
+    "#d2c19c"
+   ],
+   "note": "매듭 섬광·빛기둥 → 흰 실 두 가닥 풀림 → 넋전 상승 → 나비 한 쌍. 퇴치(방사)와 반대 실루엣(수직)"
+  },
+  {
+   "id": "vfx_maetim_knot",
+   "path": "game/assets/vfx/vfx_maetim_knot.png",
+   "json": "game/assets/vfx/vfx_maetim_knot.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_maetim_knot.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    12,
+    12
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    6,
+    11
+   ],
+   "blend": "normal",
+   "layer": "L11",
+   "palette": [
+    "#544a6b",
+    "#3f3654",
+    "#1a1a1a",
+    "#2f2840"
+   ],
+   "note": "먹 실 4가닥이 감겨 매듭으로 조여짐(f4 squeeze). 손그림"
+  },
+  {
+   "id": "vfx_cheondo_ascend",
+   "path": "game/assets/vfx/vfx_cheondo_ascend.png",
+   "json": "game/assets/vfx/vfx_cheondo_ascend.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_cheondo_ascend.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    24,
+    32
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    30
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "palette": [
+    "#f2ece0",
+    "#fffdf6",
+    "#d6cfc1",
+    "#e9dcc0",
+    "#857154",
+    "#b29d76",
+    "#d2c19c"
+   ],
+   "note": "흰 연꽃 개화 → 한지빛 기둥 → 넋전 조각 상승 → 빛 점 하나 떠남"
+  },
+  {
+   "id": "vfx_daesin_matgi",
+   "path": "game/assets/vfx/vfx_daesin_matgi.png",
+   "json": "game/assets/vfx/vfx_daesin_matgi.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_daesin_matgi.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    24,
+    24
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    12,
+    16
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "palette": [
+    "#f2ece0",
+    "#fffdf6",
+    "#d6cfc1",
+    "#d2c19c",
+    "#e9dcc0",
+    "#b29d76",
+    "#857154"
+   ],
+   "note": "영가가 흰 무명천으로 펼쳐 막음: 섬광 + 주름 펄럭임 + 넋전 조각. 오른쪽(탄 방향)을 향함, 좌향은 flip_h"
+  },
+  {
+   "id": "vfx_gildakkeum_knot",
+   "path": "game/assets/vfx/vfx_gildakkeum_knot.png",
+   "json": "game/assets/vfx/vfx_gildakkeum_knot.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gildakkeum_knot.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    16,
+    16
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    8,
+    8
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "palette": [
+    "#d6cfc1",
+    "#f2ece0",
+    "#fffdf6",
+    "#e9dcc0",
+    "#b29d76",
+    "#d2c19c"
+   ],
+   "note": "십자 섬광+원 → 실 두 끝 당겨지며 흰 매듭 '툭'"
+  },
+  {
+   "id": "vfx_gildakkeum_fill",
+   "path": "game/assets/vfx/vfx_gildakkeum_fill.png",
+   "json": "game/assets/vfx/vfx_gildakkeum_fill.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gildakkeum_fill.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "palette": [
+    "#fffdf6",
+    "#d6cfc1",
+    "#f2ece0",
+    "#e9dcc0",
+    "#b29d76",
+    "#d2c19c"
+   ],
+   "note": "32px 셀 타일: 테두리 섬광 → 가운데부터 흰 40% 채움 + 8잎 지화, 모서리 1/4 꽃이 이웃 셀과 이어짐. 셀별 시작은 게임이 박 스냅+안쪽부터 지연"
+  },
+  {
+   "id": "vfx_gildakkeum_petals",
+   "path": "game/assets/vfx/vfx_gildakkeum_petals.png",
+   "json": "game/assets/vfx/vfx_gildakkeum_petals.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gildakkeum_petals.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "palette": [
+    "#f2ece0",
+    "#d6cfc1",
+    "#b29d76",
+    "#d2c19c",
+    "#e9dcc0",
+    "#857154"
+   ],
+   "note": "지화 꽃잎 1장 뒤집힘 루프(앞 순백/뒤 한지). 상승·흔들림은 런타임, 최대 40"
+  },
+  {
+   "id": "vfx_doryang_mandala",
+   "path": "game/assets/vfx/vfx_doryang_mandala.png",
+   "json": "game/assets/vfx/vfx_doryang_mandala.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_doryang_mandala.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    64,
+    64
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    32,
+    32
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "palette": [
+    "#8a7440",
+    "#5a4a37",
+    "#3b4f6e",
+    "#3e6a5a",
+    "#d2c19c",
+    "#7a3a2c",
+    "#3f3654",
+    "#e9dcc0",
+    "#857154",
+    "#b29d76"
+   ],
+   "note": "64px 이음 타일(검증: 2x2 무이음). 연꽃+오방 지화 로제트+창살 사선. 오방색은 예약색 대신 dc 단청 변이 램프. 8f=2박(fps 8 은 BPM 120 기준, 게임이 박 길이로 재타이밍)"
+  },
+  {
+   "id": "vfx_saja_begareugi",
+   "path": "game/assets/vfx/vfx_saja_begareugi.png",
+   "json": "game/assets/vfx/vfx_saja_begareugi.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_saja_begareugi.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 12,
+   "frame_size": [
+    256,
+    64
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    0,
+    32
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "palette": [
+    "#b29d76",
+    "#f2ece0",
+    "#d6cfc1",
+    "#d2c19c",
+    "#e9dcc0",
+    "#fffdf6"
+   ],
+   "note": "엔딩 256x64: 무명 결 길베가 왼쪽→오른쪽으로 갈라지고 사이로 한지빛 저승길. 피벗 = 왼쪽 끝 중심선"
+  },
+  {
+   "id": "vfx_pullil_outline",
+   "path": "game/assets/vfx/vfx_pullil_outline.gdshader",
+   "kind": "shader",
+   "source": "handwritten (Godot canvas_item)",
+   "license": "original (project-made)",
+   "status": "done",
+   "layer": "L11",
+   "blend": "normal",
+   "note": "기색 테 3겹(흑1·백1·먹 녹아웃 60%) + 고대비 백2px + 잔여 3초 4Hz 깜빡임 + ±1px 10Hz 흔들림 + overlay_only(L11 재출력) + cell_rect(아틀라스 셀 클램프). Godot 4.7 Compatibility 에서 컴파일·렌더 확인"
+  },
+  {
+   "id": "vfx_gilbe_trail",
+   "path": "game/assets/vfx/vfx_gilbe_trail.gdshader",
+   "kind": "shader",
+   "source": "handwritten (Godot canvas_item)",
+   "license": "original (project-made)",
+   "status": "done",
+   "layer": "L04",
+   "blend": "normal",
+   "note": "Line2D(width 6, LINE_TEXTURE_STRETCH)용 무명 결 리본: 알파 0.70↔1.00 박 맥동, 박 펄스 물결, 올 마디 흐름, 영가 0명 50%, 꼬리 25% 4단 페이드. length_px·beat_phase·yeongga_count 를 코드가 공급"
+  },
+  {
+   "id": "vfx_yeongga_spawn_run",
+   "path": "game/assets/vfx/vfx_yeongga_spawn_run.gdshader",
+   "kind": "shader",
+   "source": "handwritten (Godot canvas_item)",
+   "license": "original (project-made)",
+   "status": "done",
+   "layer": "L08",
+   "blend": "add",
+   "note": "합류 런 잔상 스프라이트용: 평면 백 실루엣 + 텍셀 4x4 베이어 디더 알파, echo_age 0→1 트윈(0.18s), 위쪽부터 가늘어짐, run_dir 반대로 1~2px 처짐. 사용 예 GDScript 주석 포함"
+  },
+  {
+   "id": "vfx_last_procession_ghost",
+   "path": "game/assets/vfx/vfx_last_procession_ghost.gdshader",
+   "kind": "shader",
+   "source": "handwritten (Godot canvas_item)",
+   "license": "original (project-made)",
+   "status": "done",
+   "layer": "L08",
+   "blend": "normal",
+   "note": "몸 알파 45% + 원래 흑 외곽선 자리를 백 1px 로 교체(머리 쪽 촛불 일렁임) + 하단 2px 페이드 + 1박 1px 부유"
+  }
+ ],
+ "tools": {
+  "exporter": "pixelfx render + G3 exporter (horizontal strip, trailing empty frame dropped, pixels snapped to reserved palette ramps, alpha in 4 steps)",
+  "shared_helper": "tools/vendor/pixelfx/src/fx/korean/_g3.js"
+ }
+}

@@ -1,0 +1,199 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_hojakdo_fear_ring 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_hojakdo_fear_ring 1",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_hojakdo_fear_ring 2",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_hojakdo_fear_ring 3",
+   "frame": {
+    "x": 0,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_hojakdo_fear_ring 4",
+   "frame": {
+    "x": 128,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_hojakdo_fear_ring 5",
+   "frame": {
+    "x": 256,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_hojakdo_fear_ring.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 384,
+   "h": 256
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_hojakdo_fear_ring",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_hojakdo_fear_ring",
+   "name": "Hojakdo fear ring",
+   "fps": 14.0,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    128,
+    128
+   ],
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 3,
+   "frameWidth": 128,
+   "frameHeight": 128,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_hojakdo",
+   "color_role": "R+M",
+   "spec_canvas": "128x128",
+   "spec_frames": 6,
+   "timing": "fps:14",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 2,
+   "scope": "v1",
+   "impact_frame": 2,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

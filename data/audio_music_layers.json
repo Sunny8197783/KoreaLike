@@ -1,0 +1,576 @@
+{
+  "schema_version": 2,
+  "canon_version": "v1.2",
+  "doc": "design/12-audio.md#4",
+  "tonic": "D (293.66Hz), A4=440",
+  "layers": [
+    {
+      "id": "mus_l00_janggu",
+      "name_ko": "장구 기준 박",
+      "instruments": "장구",
+      "band_hz": "60-8000",
+      "role": "박 시계. 상시. 장단 정체성",
+      "trigger": "always",
+      "volume_curve": "0dB 고정(정적 이벤트만 예외)",
+      "fade_in_s": 0,
+      "fade_out_s": 0,
+      "bus": "bus_mus_beat",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l01_bed",
+      "name_ko": "바닥(베드)",
+      "instruments": "스테이지별 국악 저음(대금 저취/아쟁 지속음) + 현대 패드",
+      "band_hz": "40-1200",
+      "role": "공간·조성 바닥. 스테이지 토리 기준음 D",
+      "trigger": "always",
+      "volume_curve": "I0 -6dB, I1+ -4dB",
+      "fade_in_s": 2.0,
+      "fade_out_s": 2.0,
+      "bus": "bus_mus_bed",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l02_daebuk",
+      "name_ko": "산신 레이어",
+      "instruments": "대북",
+      "band_hz": "35-250",
+      "role": "각 첫박 강타, 저역 추진",
+      "trigger": "deity_sansin 빙의",
+      "volume_curve": "빙의 0dB / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_sansin",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l03_jing",
+      "name_ko": "용왕 레이어",
+      "instruments": "징",
+      "band_hz": "80-1500(여운)",
+      "role": "장단 첫박 표지·여운",
+      "trigger": "deity_yongwang 빙의",
+      "volume_curve": "빙의 0dB / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_yongwang",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l04_kkwaenggwari",
+      "name_ko": "칠성 레이어",
+      "instruments": "꽹과리·설쇠",
+      "band_hz": "2000-9000",
+      "role": "고역 잔가락",
+      "trigger": "deity_chilseong 빙의",
+      "volume_curve": "빙의 0dB(-2dB 기본 트림) / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_chilseong",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l05_taepyeongso",
+      "name_ko": "장군 레이어",
+      "instruments": "태평소",
+      "band_hz": "500-4000",
+      "role": "주선율 메김(1-2각)",
+      "trigger": "deity_janggun 빙의",
+      "volume_curve": "빙의 0dB(-3dB 트림) / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_janggun",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l06_haegeum_piri",
+      "name_ko": "바리 레이어",
+      "instruments": "해금·피리(+여성 구음 한 줄)",
+      "band_hz": "300-3000",
+      "role": "대선율 받음(3-4각), 해금 지속음",
+      "trigger": "deity_barigongju 빙의",
+      "volume_curve": "빙의 0dB / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_barigongju",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l07_jegeum",
+      "name_ko": "제석·대감 레이어",
+      "instruments": "제금(바라)",
+      "band_hz": "1500-12000",
+      "role": "각 경계 악센트·쉬머",
+      "trigger": "deity_jeseok_daegam 빙의",
+      "volume_curve": "빙의 0dB(-2dB 트림) / 미완 -3dB+LPF6k",
+      "fade_in_s": "다음 각 첫박부터 2각(상한 4.0s)",
+      "fade_out_s": 0,
+      "bus": "bus_mus_deity",
+      "scope": "v1",
+      "deity": "deity_jeseok_daegam",
+      "face_stems": [
+        "wieom",
+        "gaho"
+      ]
+    },
+    {
+      "id": "mus_l08a_gueum_low",
+      "name_ko": "구음 코러스(저)",
+      "instruments": "남녀 구음 2인 제창",
+      "band_hz": "150-2500",
+      "role": "행렬 존재감",
+      "trigger": "행렬 비율 p=영가수/stat_haengnyeol > 0",
+      "volume_curve": "dB = -14*(1-p)^1.5, p=0이면 뮤트",
+      "fade_in_s": 2.0,
+      "fade_out_s": 2.0,
+      "bus": "bus_mus_choir",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l08b_gueum_full",
+      "name_ko": "구음 코러스(전)",
+      "instruments": "구음 6인 + 화음",
+      "band_hz": "150-5000",
+      "role": "행렬 절정",
+      "trigger": "p >= 0.5",
+      "volume_curve": "dB = -10 + 10*((p-0.5)/0.5)",
+      "fade_in_s": 2.0,
+      "fade_out_s": 2.0,
+      "bus": "bus_mus_choir",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l09_intensity",
+      "name_ko": "전투 강도 타악",
+      "instruments": "현대 퍼커션(서브 붐·필터드 노이즈 타격) + 소리북",
+      "band_hz": "30-6000",
+      "role": "위험도",
+      "trigger": "intensity level I0-I3",
+      "volume_curve": "I0 mute / I1 -9 / I2 -4 / I3 0 dB",
+      "fade_in_s": 1.0,
+      "fade_out_s": 2.5,
+      "bus": "bus_mus_bed",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l10_mori",
+      "name_ko": "신명 몰이",
+      "instruments": "장구 겹채 + (칠성 빙의 시) 꽹과리 잦은가락, 미빙의 시 소리북 잦은가락",
+      "band_hz": "100-9000",
+      "role": "피버",
+      "trigger": "sys_sinmyeong_oreum 15초",
+      "volume_curve": "0dB, 다음 박 진입, 종료 2s 페이드",
+      "fade_in_s": 0.5,
+      "fade_out_s": 2.0,
+      "bus": "bus_mus_deity",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l11_sal",
+      "name_ko": "살 레이어",
+      "instruments": "역재생 놋그릇 스웰, 아쟁 저음 디튠, 저역 드론",
+      "band_hz": "30-1500",
+      "role": "굿판의 기운: 살 쪽 무게(도덕 판정 아님)",
+      "trigger": "s=clamp(stat_salgi/75)",
+      "volume_curve": "s<0.05 뮤트, 그 외 dB=-24+24*s, 신령 레이어 LPF 18k→9k",
+      "fade_in_s": 3.0,
+      "fade_out_s": 3.0,
+      "bus": "bus_mus_bed",
+      "scope": "v1"
+    },
+    {
+      "id": "mus_l12_neok",
+      "name_ko": "넋 레이어",
+      "instruments": "맑은 방울 텍스처 + 고음 허밍 + 풍경",
+      "band_hz": "2000-12000",
+      "role": "굿판의 기운: 넋 쪽 밝음",
+      "trigger": "k=점등 등불 수(0-8)",
+      "volume_curve": "k=0 뮤트, dB=-18+18*(k/8), Rev_Neok 송신 +0.5dB*k",
+      "fade_in_s": 3.0,
+      "fade_out_s": 3.0,
+      "bus": "bus_mus_bed",
+      "scope": "v1"
+    }
+  ],
+  "sections": [
+    {
+      "id": "mus_{stage}_jinyang",
+      "tier": "jd_jinyang",
+      "geori": "geori_jutang_bujeong",
+      "stems": "L00-L12",
+      "note": "0-3분: 장구+베드+구음만으로 시작(빙의 0)"
+    },
+    {
+      "id": "mus_{stage}_jungmori",
+      "tier": "jd_jungmori",
+      "geori": "geori_gamang_sansin"
+    },
+    {
+      "id": "mus_{stage}_jungjungmori",
+      "tier": "jd_jungjungmori",
+      "geori": "geori_byeolsang_daegam_jeseok"
+    },
+    {
+      "id": "mus_{stage}_jajinmori",
+      "tier": "jd_jajinmori",
+      "geori": "geori_janggun_gunung_changbu"
+    },
+    {
+      "id": "mus_{stage}_hapil_sinawi",
+      "tier": "jd_danmori",
+      "geori": "geori_jakdu",
+      "note": "모신 신령(N, 표준 ≤4)의 시나위 즉흥 스템(면별 2종) + 공용 시나위 바닥 mus_sinawi_base + 구음 100%. 모시지 않은 신령 악기는 나오지 않음. 무한굿 B 구간 재사용"
+    },
+    {
+      "id": "mus_sinawi_base",
+      "tier": "jd_danmori",
+      "geori": "geori_jakdu",
+      "note": "공용 시나위 바닥(대금 즉흥 + 아쟁 지속 + 구음 허밍), 스테이지 공용. 합일 형별 3종(위세/자비/양면). 선율 신령 0이면 -3dB, 1명 이상이면 -9dB"
+    },
+    {
+      "id": "mus_{stage}_dwitjeon",
+      "tier": "jd_jinobangjin",
+      "geori": "geori_dwitjeon",
+      "note": "풀어먹이기: 평조 색, 추임새 빈도 2배"
+    },
+    {
+      "id": "mus_boss_{boss}_han",
+      "tier": "jd_salpuri",
+      "geori": "boss_form_han",
+      "note": "아쟁(보스)+씻김 구음, 모신 신령 레이어 '보스 반주형' 성긴 버전"
+    },
+    {
+      "id": "mus_boss_{boss}_sal",
+      "tier": "jd_eotmori",
+      "geori": "boss_form_sal",
+      "note": "거문고 술대 오스티나토 + 왜곡 아쟁 + 현대 저역"
+    },
+    {
+      "id": "mus_myeongbu_buk_solo",
+      "tier": "jd_free",
+      "geori": "geori_myeongbu",
+      "note": "소리북 독주(비정형)"
+    },
+    {
+      "id": "mus_myeongbu_sal_geodum",
+      "tier": "jd_hwimori",
+      "geori": "geori_myeongbu",
+      "note": "살 우세 '살 거둠'(캐논 v1.2 D-02): 사자는 비적대·추격 없음·접촉 피해 없음. 사자가 살 덩어리 3개를 각 30초 거두는 동안(기본 90초) 깨어난 원귀를 막는다. 덩어리 1개를 거둘 때마다 서브레이어 +1(상한 4)",
+      "alias_old": "mus_myeongbu_saja_chase"
+    },
+    {
+      "id": "mus_hub_sindang",
+      "tier": "jd_gutgeori",
+      "geori": "hub_sindang",
+      "note": "대금·가야금·장구(약)"
+    },
+    {
+      "id": "mus_title",
+      "tier": "jd_free",
+      "geori": "title",
+      "note": "아쟁+구음+바람 비정형"
+    },
+    {
+      "id": "mus_{stage}_jajinmori__muhan_m3",
+      "tier": "jd_jajinmori",
+      "geori": "mode_muhan A",
+      "bpm": 134.8,
+      "note": "무한굿 k=3 전용 렌더(h0만). k=1·2는 흥1(124.8)·흥2(129.6) 렌더 재사용"
+    },
+    {
+      "id": "mus_{stage}_jajinmori__muhan_m4",
+      "tier": "jd_jajinmori",
+      "geori": "mode_muhan A",
+      "bpm": 140.0,
+      "note": "무한굿 k>=4 전용 렌더(h0만)"
+    },
+    {
+      "id": "mus_muhan_sum",
+      "tier": "jd_free",
+      "geori": "mode_muhan D",
+      "note": "무한굿 D 구간 20s '숨': 음악 -30dB, L11만 남겨 상승, 마지막 12s 굴림 브리지 크레셴도 → 5:00 착지 덩"
+    }
+  ],
+  "stingers": [
+    {
+      "id": "stg_hapil_buildup",
+      "len": "17:50-18:00 10s",
+      "desc": "합일 직전 10초 상승: 모신 악기만 빙의 순서대로 순차 롤(악기당 10s/N) + 구음 크레셴도"
+    },
+    {
+      "id": "stg_wave_warn",
+      "len": "1.5s",
+      "desc": "동해안 파도선 침수 1.5초 전 경고(앰비언스 큰 파도 상승과 동기)"
+    },
+    {
+      "id": "stg_tide_turn",
+      "len": "1각",
+      "desc": "물때 전환(동해안 전용. 남도 갯마을 씻김굿판은 물때 기믹 금지, 08 9.2.1·16 A-4)"
+    },
+    {
+      "id": "stg_geori_land",
+      "len": "1박+꼬리1.5s",
+      "desc": "거리 전환 착지: 장구 덩 + 서브 드롭 + 소유 신령 악기 동시 1타"
+    },
+    {
+      "id": "stg_trial_call",
+      "len": "2각",
+      "desc": "T-10 공수 예고 아래 바닥 스웰"
+    },
+    {
+      "id": "stg_trial_bingui",
+      "len": "1.2s",
+      "desc": "sfx_trl_bingui_* 12종(7장)"
+    },
+    {
+      "id": "stg_hapil",
+      "len": "N박 (N = 모신 신령 수, 표준 ≤4 → 단모리 1장단)",
+      "desc": "HAPIL_CALL: 박마다 1신씩 악기 강타 + 한 단어 공수(06), N박째 전원 + 구음 스웰. 신령별 원샷(악기×면 12) 런타임 조립"
+    },
+    {
+      "id": "stg_gongmyeong_<pair>",
+      "len": "1마디",
+      "desc": "고른 신령 조합에서 성립한 공명 쌍(res_*)만 두 신령 악기 2중주(06 9.2.2). 6종 녹음, 4신 런 최대 3종"
+    },
+    {
+      "id": "mus_pause_bed",
+      "len": "60s 루프",
+      "desc": "정지 베드: 메인 음악은 박 시계와 함께 일시정지, 이 비정형 베드가 -12dB LPF 800Hz로 흐름"
+    },
+    {
+      "id": "stg_elite_<id>",
+      "len": "2박",
+      "desc": "정예 6종 등장 모티프(8.2절)"
+    },
+    {
+      "id": "stg_mboss_enter",
+      "len": "1장단",
+      "desc": "중간보스 4종 등장"
+    },
+    {
+      "id": "stg_wongwi_return",
+      "len": "2각",
+      "desc": "원귀 회귀: 음악 L11만 남기고 -12dB, 역재생 놋그릇 + 소리북 3연. 무한굿은 5분 순환 경계 착지 덩 위에 얹음"
+    },
+    {
+      "id": "stg_silence_drop",
+      "len": "1박",
+      "desc": "정적 해제 '덩': 모든 활성 레이어 동시 강타 후 즉시 복귀"
+    },
+    {
+      "id": "stg_boss_silence",
+      "len": "3.0s",
+      "desc": "20:00 정적: 0.4s 페이드아웃 → 심장 → 2.0s 소리북 1타 → 보스 등장 연출(≤2s)"
+    },
+    {
+      "id": "stg_gopuri_final",
+      "len": "4.0s",
+      "desc": "마지막 매듭: 0.5s 정적 → 해금 고음 지속 + 방울 폭포 + 구음 스웰"
+    },
+    {
+      "id": "stg_boss_sal_break",
+      "len": "2.0s",
+      "desc": "살형 퇴치: 붉은 파열 대형 + 1s 정적"
+    },
+    {
+      "id": "stg_outcome_eup",
+      "len": "8.0s",
+      "desc": "사자의 읍: 해금+구음+베가르기 천 찢김 2.5s"
+    },
+    {
+      "id": "stg_death",
+      "len": "2.5s",
+      "desc": "사망: 음악 LPF 20k→200Hz 1.5s + 소리북 1타 + 하행 구음"
+    },
+    {
+      "id": "stg_daehaewon",
+      "len": "1장단",
+      "desc": "뒷전 대해원(공물상 3 묶는 고리): 전 레이어 강타 + 추임새 군중"
+    },
+    {
+      "id": "stg_evo",
+      "len": "1각",
+      "desc": "진화 발현"
+    },
+    {
+      "id": "stg_union",
+      "len": "2각",
+      "desc": "결합 발현"
+    }
+  ],
+  "intensity": {
+    "formula": "I_raw = clamp(0.40*d + 0.25*h + 0.20*e + 0.15*p, 0, 1)",
+    "d": "clamp(n_enemies_within_10u/120,0,1)",
+    "h": "clamp((0.6-hp01)/0.5,0,1)",
+    "e": "정예/중간보스/보스 14유닛 내 존재 1 else 0",
+    "p": "clamp(enemy_projectiles_within_10u/40,0,1)",
+    "smoothing": {
+      "rise_tau_s": 1.5,
+      "fall_tau_s": 4.0
+    },
+    "levels": [
+      {
+        "level": 0,
+        "up": null,
+        "down": null
+      },
+      {
+        "level": 1,
+        "up": 0.3,
+        "down": 0.22
+      },
+      {
+        "level": 2,
+        "up": 0.55,
+        "down": 0.45
+      },
+      {
+        "level": 3,
+        "up": 0.8,
+        "down": 0.7
+      }
+    ]
+  },
+  "toris": {
+    "stage_guksadang": {
+      "tori": "경토리",
+      "degrees_from_tonic": [
+        0,
+        2,
+        5,
+        7,
+        9
+      ],
+      "note": "솔라도레미 계열, 솔=D"
+    },
+    "stage_jindo_ssitgim": {
+      "tori": "육자배기토리(게임 단순화)",
+      "degrees_from_tonic": [
+        0,
+        3,
+        5,
+        7,
+        10
+      ],
+      "note": "미라시(도) 핵심음을 포함한 5음 단순화, 미=D. 떠는목(라)·꺾는목(도→시)은 연주 시김새로"
+    },
+    "stage_east_sea_byeolsin": {
+      "tori": "메나리토리",
+      "degrees_from_tonic": [
+        0,
+        3,
+        5,
+        8,
+        10
+      ],
+      "note": "미솔라도레, 미=D"
+    },
+    "stage_jeju_chilmeori": {
+      "tori": "미정(자문)",
+      "degrees_from_tonic": null
+    },
+    "stage_myeongbu": {
+      "tori": "육자배기토리 공유",
+      "degrees_from_tonic": [
+        0,
+        3,
+        5,
+        7,
+        10
+      ]
+    }
+  },
+  "tonal_ladder": {
+    "rule": "해원 '딸랑'·원혼 흡수·게이지 틱은 스테이지 토리 5음 x 2옥타브(10단) 사다리를 오른다",
+    "pitch_scale": "2^(semitones/12)",
+    "chain_window_s": 1.5,
+    "max_step": 9,
+    "per_grid_slot_cap": 3
+  },
+  "changelog": [
+    "v2 (12-audio v0.9.2): 4신 상한 기준 합일·공명 일반화(N박 콜, 공용 시나위 바닥), 무한굿 5분 순환 섹션 추가",
+    "v1.2 canon sync (2026-11-21, 12-audio v0.9.3): D-02 mus_myeongbu_saja_chase -> mus_myeongbu_sal_geodum(alias_old 보존 — game/data 사본에서 원본으로 이관), D-01 ensemble 출처 문구, C-23 muhan_cycle C 표기",
+    "캐논 v1.2 / 16 C·D 반영 (2026-11-22): stg_tide_turn 동해안 전용(남도 갯마을 물때 금지), muhan_cycle C 최고조 표기(C-23)"
+  ],
+  "ensemble": {
+    "max_deities_source": "data/deities.json (06 소유). 표준 4(캐논 v1.2 D-01), 무한굿 6신 대합일 6. 오디오는 N을 읽어 동작",
+    "trial_times_source": "data/deities.json (캐논 v1.2 D-01: 180/390/750/930초, 30초 + DESCEND 최대 8초)",
+    "subsets_4_of_6": 15,
+    "face_combos_per_subset": 16,
+    "total_configs": 240,
+    "melodic_deities": [
+      "deity_janggun",
+      "deity_barigongju"
+    ],
+    "subset_classes": [
+      {
+        "class": "rhythm_only",
+        "count": 1,
+        "members": [
+          "deity_sansin",
+          "deity_yongwang",
+          "deity_chilseong",
+          "deity_jeseok_daegam"
+        ],
+        "rule": "공용 선율 바닥 적용"
+      },
+      {
+        "class": "melodic_1",
+        "count": 8,
+        "rule": "R3 단독형(각 게이트 끔)"
+      },
+      {
+        "class": "melodic_2",
+        "count": 6,
+        "rule": "R3 메기고 받기(각 게이트 켬)"
+      }
+    ],
+    "melodic_floor_when_zero": {
+      "l01_melodic_voice_db": 2.0,
+      "l08a_floor_db": -10.0,
+      "restore_fade": "4각"
+    },
+    "first_beat_boost_when_no_daebuk_jing": "제금 맞부딪침/문지름 시작을 장단 첫박으로 당김",
+    "resonance_pairs_per_4subset": "빠진 2신이 공명 고리상 이웃이면 3쌍(6개 부분집합), 아니면 2쌍(9개)",
+    "withdrawn_candidate_cue": "미선택 후보 프리뷰 0.8s 페이드아웃 + 그 악기 여운 1음 -18dB(하행·불협 금지). 물러남은 다음 시련 1회만(캐논 v1.2 D-01)"
+  },
+  "muhan_cycle": {
+    "source": "08-stages-waves §14.3, 상세 = audio_jangdan.json modes.mode_muhan",
+    "cycle_s": 300,
+    "segments": [
+      "A 0-120s 자진모리 사다리(124.8/129.6/134.8/140.0)",
+      "B 120-240s 시나위 단모리 160",
+      "C 240-280s 뒷전 최고조(jd_jinobangjin: 당악/자진모리) 180 + 소형 상차림",
+      "D 280-300s mus_muhan_sum"
+    ],
+    "boundary_cues": [
+      "stg_geori_land",
+      "stg_wongwi_return"
+    ]
+  }
+}

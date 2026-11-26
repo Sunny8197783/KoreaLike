@@ -1,0 +1,30 @@
+{
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   32,
+   32
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "finalize",
+  "tier": "common_s",
+  "source": "art\\pilot\\enm_dalgyal_gwisin__pilot\\s4_repair"
+ }
+}

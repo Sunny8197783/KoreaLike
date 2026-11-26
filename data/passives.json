@@ -1,0 +1,480 @@
+{
+  "_meta": {
+    "schema": "soulpath.passives.v1",
+    "doc": "design/05-stats-passives.md v0.10 (9장, 10장, 20장 리뷰 대응 로그)",
+    "canon": "design/01-concept-and-canon.md 4.4",
+    "canon_version": "v1.2",
+    "notes": [
+      "levels[] 값은 해당 레벨의 누적 총합이다(증분 아님).",
+      "op: flat = 기본치에 고정 가산, add_pct = 가산 % 버킷(0.08 = +8%).",
+      "lv5_completion은 [NEW] 섹션 초안 효과다. 캐논 Lv당 값은 바꾸지 않았다.",
+      "base_weight는 점지 항목 가중치(10.4). 실제 가중치 = base_weight × luck_factor(rarity) × owned_mult × evo_mult. (focus_mult는 보유 무구 전용이라 패시브에는 없다.) 점지 규칙 전체의 정본은 stats.json jeomji."
+    ],
+    "rules": {
+      "slots": 6,
+      "max_level": 5,
+      "evolution_requires": "pair weapon Lv8 + this passive Lv>=1 + box opened (box_gilhyung or box_neokham)",
+      "passive_kept_after_evolution": true,
+      "rarity_base_weight": { "common": 100, "uncommon": 60, "rare": 30 },
+      "luck_exponent": { "common": 0.0, "uncommon": 0.75, "rare": 1.5 },
+      "luck_L_clamp": [0.5, 3.0],
+      "owned_mult": 1.3,
+      "evo_mult_pair_passive": 1.5,
+      "evo_mult_pair_passive_weapon_lv8": 2.5,
+      "evo_mult_pair_weapon": 1.3
+    }
+  },
+  "passives": [
+    {
+      "id": "psv_jusa",
+      "name_ko": "경면주사",
+      "name_hanja": "鏡面朱砂",
+      "name_en": "Mirror Cinnabar",
+      "scope": "v1",
+      "rarity": "uncommon",
+      "base_weight": 60,
+      "tilt": "red",
+      "modifiers": [
+        { "stat": "stat_sinppal", "op": "add_pct", "levels": [0.08, 0.16, 0.24, 0.32, 0.40] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_jusa__lv5",
+        "name_ko": "주사 낙인",
+        "trigger": "on_toechi_han_pa",
+        "effect": "splash_red_damage",
+        "params": { "radius_units": 1.0, "radius_scales_with_doryang": true, "damage_ratio_of_hit": 0.25, "chain_depth": 1 }
+      },
+      "pair_weapons": ["wpn_gakgung"],
+      "evolutions": [{ "weapon": "wpn_gakgung", "evo": "evo_jusahwajeon" }],
+      "unions_via": ["union_sogeumsal"],
+      "folk_note": "부적을 쓰는 붉은 광물. 양기의 붉은빛으로 귀신을 막는 화공법 계열 벽사 재료.",
+      "ui": { "name_key": "psv_jusa.name", "desc_key": "psv_jusa.desc", "completion_key": "psv_jusa__lv5.desc" },
+      "art_key": "jusa"
+    },
+    {
+      "id": "psv_sinjangdae",
+      "name_ko": "신장대",
+      "name_hanja": "神將-",
+      "name_en": "Descent Pole",
+      "scope": "v1",
+      "rarity": "rare",
+      "base_weight": 30,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_sinjang", "op": "flat", "levels": [1, 1, 2, 2, 3] }
+      ],
+      "aux_by_level": {
+        "2": { "id": "psv_sinjangdae__lv2", "effect": "trial_confirm_ring_seconds", "value": 0.7, "default": 1.0 },
+        "4": { "id": "psv_sinjangdae__lv4", "effect": "trial_start_block_seconds", "value": 4.0, "default": 3.0 }
+      },
+      "lv5_completion": {
+        "id": "psv_sinjangdae__lv5",
+        "name_ko": "신장 강림",
+        "trigger": "passive",
+        "effect": "trial_gauge_charge_add_pct",
+        "params": { "value": 0.10, "stacks_with": "char_mansin trial_charge +0.15 (additive)" }
+      },
+      "pair_weapons": ["wpn_samjichang", "wpn_obanggi"],
+      "evolutions": [
+        { "weapon": "wpn_samjichang", "evo": "evo_saseulchang" },
+        { "weapon": "wpn_obanggi", "evo": "evo_obangjin" }
+      ],
+      "unions_via": ["union_obang_cheoljin"],
+      "folk_note": "신을 내릴 때 잡는 대(내림대). 오방기와 함께 대표 신기(神旗).",
+      "ui": { "name_key": "psv_sinjangdae.name", "desc_key": "psv_sinjangdae.desc", "completion_key": "psv_sinjangdae__lv5.desc" },
+      "art_key": "sinjangdae"
+    },
+    {
+      "id": "psv_mubok",
+      "name_ko": "무복",
+      "name_hanja": "巫服",
+      "name_en": "Shaman Robe",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_sinbok", "op": "flat", "levels": [1, 2, 3, 4, 5] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_mubok__lv5",
+        "name_ko": "겹무복",
+        "trigger": "passive",
+        "effect": "gyeongmun_hold_cap_add",
+        "params": { "value": 1, "default_cap": 1 }
+      },
+      "pair_weapons": ["wpn_jakdu", "wpn_sogeum"],
+      "evolutions": [
+        { "weapon": "wpn_jakdu", "evo": "evo_daejakdu" },
+        { "weapon": "wpn_sogeum", "evo": "evo_bujeong_gasim" }
+      ],
+      "unions_via": ["union_jakdu_dari", "union_sogeumsal"],
+      "folk_note": "신령을 모실 때 갈아입는 굿 옷(홍철릭, 쾌자, 몽두리 등).",
+      "ui": { "name_key": "psv_mubok.name", "desc_key": "psv_mubok.desc", "completion_key": "psv_mubok__lv5.desc" },
+      "art_key": "mubok"
+    },
+    {
+      "id": "psv_jeonghwasu",
+      "name_ko": "정화수",
+      "name_hanja": "井華水",
+      "name_en": "Dawn Well Water",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_saenggi", "op": "flat", "levels": [0.2, 0.4, 0.6, 0.8, 1.0] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_jeonghwasu__lv5",
+        "name_ko": "새벽 정화수",
+        "trigger": "passive",
+        "effect": "immune_regen_stop_and_clear_water_bonus",
+        "params": { "immune_to": ["sangmunsal", "gangcheori_drought"], "clear_water_regen_mult": 2.0 }
+      },
+      "pair_weapons": ["wpn_ssukmul"],
+      "evolutions": [{ "weapon": "wpn_ssukmul", "evo": "evo_sammul_ssitgim" }],
+      "unions_via": [],
+      "folk_note": "새벽에 처음 길어 올린 우물물. 굿상과 치성에 올리는 가장 맑은 물.",
+      "ui": { "name_key": "psv_jeonghwasu.name", "desc_key": "psv_jeonghwasu.desc", "completion_key": "psv_jeonghwasu__lv5.desc" },
+      "art_key": "jeonghwasu"
+    },
+    {
+      "id": "psv_myeongjusil",
+      "name_ko": "명주실",
+      "name_hanja": "命紬絲",
+      "name_en": "Lifespan Silk Thread",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_jeonggi", "op": "add_pct", "levels": [0.10, 0.20, 0.30, 0.40, 0.50] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_myeongjusil__lv5",
+        "name_ko": "명다리 실",
+        "trigger": "on_myeongjul_revive",
+        "effect": "revive_hp_and_wave_radius",
+        "params": { "revive_hp_ratio": 0.80, "default_revive_hp_ratio": 0.50, "wave_radius_units": 8.0, "default_wave_radius_units": 6.0, "default_ref": "combat_core.json revive.wave_radius_u (02 12.6)" }
+      },
+      "pair_weapons": ["wpn_pyeongon"],
+      "evolutions": [{ "weapon": "wpn_pyeongon", "evo": "evo_byeongnyeok_pyeongon" }],
+      "unions_via": [],
+      "folk_note": "긴 실은 긴 수명. 칠성에게 수명을 비는 명다리와 돌잡이 실타래의 상징.",
+      "ui": { "name_key": "psv_myeongjusil.name", "desc_key": "psv_myeongjusil.desc", "completion_key": "psv_myeongjusil__lv5.desc" },
+      "art_key": "myeongjusil"
+    },
+    {
+      "id": "psv_mituri",
+      "name_ko": "미투리",
+      "name_hanja": null,
+      "name_en": "Hemp Sandals",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "white",
+      "modifiers": [
+        { "stat": "stat_domu", "op": "add_pct", "levels": [0.08, 0.16, 0.24, 0.32, 0.40] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_mituri__lv5",
+        "name_ko": "먼 길",
+        "trigger": "passive",
+        "effect": "stat_modifier",
+        "params": { "stat": "stat_gilbe", "op": "flat", "value": 0.5 }
+      },
+      "pair_weapons": ["wpn_jangchang", "wpn_gilbe"],
+      "evolutions": [
+        { "weapon": "wpn_jangchang", "evo": "evo_pajinchang" },
+        { "weapon": "wpn_gilbe", "evo": "evo_begareugi" }
+      ],
+      "unions_via": ["union_jakdu_dari"],
+      "folk_note": "삼·짚으로 삼은 신. 상례의 사잣밥 상에 짚신을 올려 저승길을 배웅하는 풍속과 이어진다.",
+      "ui": { "name_key": "psv_mituri.name", "desc_key": "psv_mituri.desc", "completion_key": "psv_mituri__lv5.desc" },
+      "art_key": "mituri"
+    },
+    {
+      "id": "psv_obangkkeun",
+      "name_ko": "오방끈",
+      "name_hanja": "五方-",
+      "name_en": "Five-Direction Cords",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_doryang", "op": "add_pct", "levels": [0.08, 0.16, 0.24, 0.32, 0.40] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_obangkkeun__lv5",
+        "name_ko": "오방 매듭",
+        "trigger": "passive",
+        "effect": "mandala_threshold_and_duration",
+        "params": { "mandala_area_tiles": 50, "default_mandala_area_tiles": 60, "mandala_duration_s": 8.0, "default_mandala_duration_s": 6.0 }
+      },
+      "pair_weapons": ["wpn_woldo", "wpn_buchae"],
+      "evolutions": [
+        { "weapon": "wpn_woldo", "evo": "evo_manwoldo" },
+        { "weapon": "wpn_buchae", "evo": "evo_irwolseonpung" }
+      ],
+      "unions_via": [],
+      "folk_note": "청·적·황·백·흑 오방색 천·끈. 오방기, 무복 장식, 굿청 장식.",
+      "ui": { "name_key": "psv_obangkkeun.name", "desc_key": "psv_obangkkeun.desc", "completion_key": "psv_obangkkeun__lv5.desc" },
+      "art_key": "obangkkeun"
+    },
+    {
+      "id": "psv_baekjisul",
+      "name_ko": "백지술",
+      "name_hanja": "白紙-",
+      "name_en": "White Paper Tassel",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "red",
+      "modifiers": [
+        { "stat": "stat_gise", "op": "add_pct", "levels": [0.10, 0.20, 0.30, 0.40, 0.50] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_baekjisul__lv5",
+        "name_ko": "흰 술 바람",
+        "trigger": "on_red_projectile_contact",
+        "effect": "pass_through_pullil_minor",
+        "params": { "applies_to_weapon_form": ["projectile"], "target": "pullil && tier==normal", "damage": 0, "gyeoldan_roll": false, "consume_pierce": false }
+      },
+      "pair_weapons": ["wpn_sinkal"],
+      "evolutions": [{ "weapon": "wpn_sinkal", "evo": "evo_sinjangkal" }],
+      "unions_via": ["union_neoksinkal"],
+      "folk_note": "신칼 자루에 다는 10~40cm 흰 종이 술.",
+      "ui": { "name_key": "psv_baekjisul.name", "desc_key": "psv_baekjisul.desc", "completion_key": "psv_baekjisul__lv5.desc" },
+      "art_key": "baekjisul"
+    },
+    {
+      "id": "psv_chotdae",
+      "name_ko": "촛대",
+      "name_hanja": null,
+      "name_en": "Candle Stand",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_yeongheom", "op": "add_pct", "levels": [0.10, 0.20, 0.30, 0.40, 0.50] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_chotdae__lv5",
+        "name_ko": "촛불 밝힘",
+        "trigger": "passive",
+        "effect": "player_light_source",
+        "params": { "radius_units": 3.0, "eodukssini_growth_mult": 0.5, "stacks_with_deungbul": "multiplicative", "darkness_vision_add_units": 1.0 }
+      },
+      "pair_weapons": ["wpn_hojakdo"],
+      "evolutions": [{ "weapon": "wpn_hojakdo", "evo": "evo_sangun_pohyodo" }],
+      "unions_via": ["union_sanullim"],
+      "folk_note": "굿상 양쪽에 세우는 촛대. 밤굿의 빛, 광명법과 연결.",
+      "ui": { "name_key": "psv_chotdae.name", "desc_key": "psv_chotdae.desc", "completion_key": "psv_chotdae__lv5.desc" },
+      "art_key": "chotdae"
+    },
+    {
+      "id": "psv_gungchae",
+      "name_ko": "궁채",
+      "name_hanja": null,
+      "name_en": "Janggu Stick",
+      "scope": "v1",
+      "rarity": "uncommon",
+      "base_weight": 60,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_jangdan", "op": "add_pct", "levels": [-0.06, -0.12, -0.18, -0.24, -0.30] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_gungchae__lv5",
+        "name_ko": "덩더쿵",
+        "trigger": "passive",
+        "effect": "tempo_and_sinmyeong",
+        "params": { "heung_tempo_cap": 0.12, "default_heung_tempo_cap": 0.08, "sinmyeong_charge_add_pct": 0.10 }
+      },
+      "pair_weapons": ["wpn_janggu"],
+      "evolutions": [{ "weapon": "wpn_janggu", "evo": "evo_hapjangdan" }],
+      "unions_via": [],
+      "folk_note": "장구 궁편을 치는 채. 장구는 굿의 기본 박.",
+      "ui": { "name_key": "psv_gungchae.name", "desc_key": "psv_gungchae.desc", "completion_key": "psv_gungchae__lv5.desc" },
+      "art_key": "gungchae"
+    },
+    {
+      "id": "psv_chohon_jeoksam",
+      "name_ko": "초혼 적삼",
+      "name_hanja": "招魂-",
+      "name_en": "Soul-Calling Jacket",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "white",
+      "modifiers": [
+        { "stat": "stat_chohon", "op": "add_pct", "levels": [0.20, 0.40, 0.60, 0.80, 1.00] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_chohon_jeoksam__lv5",
+        "name_ko": "고복",
+        "trigger": "passive",
+        "effect": "pullil_duration_add",
+        "params": { "add_seconds": 3.0, "default_first_s": 12.0, "default_repeat_s": 8.0, "pullil_duration_cap_s": 20.0, "stacks_with": "comp_gaekgwi +4s (additive)" }
+      },
+      "pair_weapons": ["wpn_bangul"],
+      "evolutions": [{ "weapon": "wpn_bangul", "evo": "evo_cheoneum_bangul" }],
+      "unions_via": ["union_sanullim"],
+      "folk_note": "초혼(고복): 숨진 이의 저고리를 들고 지붕에 올라 이름을 세 번 부르며 넋을 부르는 상례 절차.",
+      "ui": { "name_key": "psv_chohon_jeoksam.name", "desc_key": "psv_chohon_jeoksam.desc", "completion_key": "psv_chohon_jeoksam__lv5.desc" },
+      "art_key": "chohon_jeoksam"
+    },
+    {
+      "id": "psv_baritdae",
+      "name_ko": "바릿대",
+      "name_hanja": null,
+      "name_en": "Divination Bowl",
+      "scope": "v1",
+      "rarity": "uncommon",
+      "base_weight": 60,
+      "tilt": "white",
+      "modifiers": [
+        { "stat": "stat_haewon_suryeon", "op": "add_pct", "levels": [0.08, 0.16, 0.24, 0.32, 0.40] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_baritdae__lv5",
+        "name_ko": "바리 공양",
+        "trigger": "on_haewon",
+        "effect": "haewon_orb_ratio",
+        "params": { "value": 0.70, "default": 0.60 }
+      },
+      "pair_weapons": ["wpn_myeongdu"],
+      "evolutions": [{ "weapon": "wpn_myeongdu", "evo": "evo_irwol_myeongdu" }],
+      "unions_via": ["union_chilseong_myeonggyeonggeom"],
+      "folk_note": "명두 무당이 점에 쓰는 놋 바리(찹쌀 점복).",
+      "ui": { "name_key": "psv_baritdae.name", "desc_key": "psv_baritdae.desc", "completion_key": "psv_baritdae__lv5.desc" },
+      "art_key": "baritdae"
+    },
+    {
+      "id": "psv_yeopjeon",
+      "name_ko": "엽전 꾸러미",
+      "name_hanja": "葉錢-",
+      "name_en": "String of Coins",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "neutral",
+      "modifiers": [
+        { "stat": "stat_siju", "op": "add_pct", "levels": [0.10, 0.20, 0.30, 0.40, 0.50] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_yeopjeon__lv5",
+        "name_ko": "홀짝 점복",
+        "trigger": "on_box_open / on_elite_plus_toechi",
+        "effect": "box_luck_bonus_and_coin",
+        "params": { "box_grade_luck_add": 25, "box_expected_items_gain_at_luck100": { "box_gilhyung": 0.07, "box_neokham": 0.11, "formula_ref": "combat_core.chest.luck (02 18.1, canon v1.2 C-18)" }, "elite_plus_toechi_yeopjeon_mult": 1.25, "note": "R-10: '+1 coin' (+1.7%) replaced by +25%" }
+      },
+      "pair_weapons": ["wpn_jijeon"],
+      "evolutions": [{ "weapon": "wpn_jijeon", "evo": "evo_nojatdon" }],
+      "unions_via": [],
+      "folk_note": "엽전 7~9개를 던져 홀짝으로 길흉을 보는 점복.",
+      "ui": { "name_key": "psv_yeopjeon.name", "desc_key": "psv_yeopjeon.desc", "completion_key": "psv_yeopjeon__lv5.desc" },
+      "art_key": "yeopjeon"
+    },
+    {
+      "id": "psv_santong",
+      "name_ko": "산통",
+      "name_hanja": "算筒",
+      "name_en": "Divination Tube",
+      "scope": "v1",
+      "rarity": "common",
+      "base_weight": 100,
+      "tilt": "red",
+      "modifiers": [
+        { "stat": "stat_jeomgwae", "op": "flat", "levels": [10, 20, 30, 40, 50] },
+        { "stat": "stat_gyeoldan", "op": "flat", "levels": [0.01, 0.02, 0.03, 0.04, 0.05] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_santong__lv5",
+        "name_ko": "산가지",
+        "trigger": "passive",
+        "effect": "fourth_option_chance_add",
+        "params": { "value": 0.10, "p4_total_cap": 0.60 }
+      },
+      "pair_weapons": ["wpn_sainsageom"],
+      "evolutions": [{ "weapon": "wpn_sainsageom", "evo": "evo_isippalsugeom" }],
+      "unions_via": ["union_chilseong_myeonggyeonggeom"],
+      "folk_note": "산가지를 넣고 흔들어 뽑는 점통(산통점).",
+      "ui": { "name_key": "psv_santong.name", "desc_key": "psv_santong.desc", "completion_key": "psv_santong__lv5.desc" },
+      "art_key": "santong"
+    },
+    {
+      "id": "psv_jeung",
+      "name_ko": "제웅",
+      "name_hanja": null,
+      "name_alias": "추령(芻靈)",
+      "name_en": "Straw Effigy",
+      "scope": "v1",
+      "rarity": "uncommon",
+      "base_weight": 50,
+      "tilt": "red",
+      "modifiers": [
+        { "stat": "stat_salgi", "op": "flat", "target": "baseline", "levels": [3, 6, 9, 12, 15] }
+      ],
+      "aux_by_level": {},
+      "on_acquire_note": "기본치가 오르므로 현재 살기도 즉시 같은 양만큼 오른다. 25/50/75 최초 도달 시 원귀 회귀 발동.",
+      "lv5_completion": {
+        "id": "psv_jeung__lv5",
+        "name_ko": "제웅치기",
+        "trigger": "on_elite_wongwi_resolved",
+        "effect": "wongwi_box_upgrade_and_coin",
+        "params": { "applies_on": ["toechi", "haewon"], "box_grade_steps": 1, "yeopjeon_mult": 2.0 }
+      },
+      "pair_weapons": ["wpn_cheoljillyeo"],
+      "evolutions": [{ "weapon": "wpn_cheoljillyeo", "evo": "evo_cheoljillyeojin" }],
+      "unions_via": ["union_obang_cheoljin"],
+      "folk_note": "정월에 액을 막으려 짚으로 만든 사람 형상(추령). 나후직성에 든 사람을 위해 길가에 버렸고 이를 제웅치기라 한다.",
+      "ui": { "name_key": "psv_jeung.name", "desc_key": "psv_jeung.desc", "completion_key": "psv_jeung__lv5.desc" },
+      "art_key": "jeung"
+    },
+    {
+      "id": "psv_wipae",
+      "name_ko": "위패",
+      "name_hanja": "位牌",
+      "name_en": "Spirit Tablet",
+      "scope": "v1",
+      "rarity": "uncommon",
+      "base_weight": 60,
+      "tilt": "white",
+      "modifiers": [
+        { "stat": "stat_haengnyeol", "op": "flat", "levels": [4, 8, 12, 16, 20] },
+        { "stat": "stat_neok_sumyeong", "op": "flat", "levels": [2, 4, 6, 8, 10] }
+      ],
+      "aux_by_level": {},
+      "lv5_completion": {
+        "id": "psv_wipae__lv5",
+        "name_ko": "위패 모심",
+        "trigger": "on_yeongga_expire_cheondo",
+        "effect": "farewell_pulse_white",
+        "params": { "radius_units": 1.5, "radius_scales_with_doryang": true, "damage": "aura_dps_of_that_yeongga * 3", "color": "white" }
+      },
+      "pair_weapons": ["wpn_neokjeon"],
+      "evolutions": [{ "weapon": "wpn_neokjeon", "evo": "evo_neokkkotbi" }],
+      "unions_via": ["union_neoksinkal"],
+      "folk_note": "망자의 넋이 깃들도록 이름을 써서 모시는 나무패.",
+      "ui": { "name_key": "psv_wipae.name", "desc_key": "psv_wipae.desc", "completion_key": "psv_wipae__lv5.desc" },
+      "art_key": "wipae"
+    }
+  ]
+}

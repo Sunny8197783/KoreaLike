@@ -1,0 +1,158 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_neokkkotbi_petal 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_neokkkotbi_petal 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_neokkkotbi_petal 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_neokkkotbi_petal 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_neokkkotbi_petal.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_neokkkotbi_petal",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_neokkkotbi_petal",
+   "name": "Neokkkotbi petal",
+   "fps": 10.0,
+   "loop": true,
+   "frames": 4,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "spec": {
+    "id": "vfx_neokkkotbi_petal",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_neokkkotbi",
+    "color_role": "P+H",
+    "canvas": "8x8",
+    "frames": 4,
+    "timing": "fps:10",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": false,
+    "max_concurrent": 120,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P+H",
+   "max_concurrent": 120,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  }
+ }
+}

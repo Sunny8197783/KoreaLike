@@ -1,0 +1,143 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_status_sangmunsal 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_sangmunsal 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_sangmunsal 2",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_sangmunsal 3",
+   "frame": {
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 167
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_status_sangmunsal.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_status_sangmunsal",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_status_sangmunsal",
+   "name": "Sangmun-sal status",
+   "fps": 6.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    12
+   ],
+   "columns": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "blend": "normal",
+   "layer": "L13",
+   "color_role": "B",
+   "max_concurrent": 1,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  }
+ }
+}

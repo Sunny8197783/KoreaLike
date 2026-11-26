@@ -1,0 +1,914 @@
+{
+  "schema_version": 1,
+  "doc": "design/10-narrative-world.md §4, §8",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): 넋기록, 선바위 굿당, 남도 갯마을 씻김굿판 표시 문구, beat.B09.3·B13.4 대사"],
+  "rules": {
+    "per_visit": {
+      "main": 1,
+      "facility": 2
+    },
+    "priority": {
+      "main_arc": 100,
+      "personal_arc": 80,
+      "react": 60,
+      "chatter": 20
+    },
+    "condition_grammar": "requires = AND list of 'key op value' | unlocked.<id> | flag.<id> | beat_done.<id>"
+  },
+  "prologue": [
+    {
+      "key": "story.prologue.1",
+      "ko": "동짓날 밤, 인왕산 아래 은실 만신이 숨을 거두었다."
+    },
+    {
+      "key": "story.prologue.2",
+      "ko": "신딸 서리는 신어머니를 보내는 진오기굿을 열었다."
+    },
+    {
+      "key": "story.prologue.3",
+      "ko": "그러나 어머니의 넋은 내리지 않았다. / 대신, 보내 주는 이 없던 넋들이 굿 소리를 듣고 몰려왔다."
+    },
+    {
+      "key": "story.prologue.4",
+      "ko": "명두가 갈라지며 마지막 목소리가 울렸다. / \"서리야, 풀어라. 다 풀고 나면… 나도.\""
+    }
+  ],
+  "final_gate": {
+    "stages_cleared": [
+      "stage_guksadang",
+      "stage_jindo_ssitgim",
+      "stage_east_sea_byeolsin"
+    ],
+    "myeongdu_jeom": 12,
+    "girok_score_min": 48,
+    "girok_score_max": 144,
+    "ending_by_boss_form": {
+      "han": "end_baeung",
+      "sal": "end_kkeuneum"
+    }
+  },
+  "beats": [
+    {
+      "id": "B01",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "flag.first_hub_visit"
+      ],
+      "condition_text": "프로필 첫 로비 진입",
+      "summary": "서기 귀신 등장. 대맺힘 설명. 넋기록 = 장부 복원 의뢰",
+      "lines": [
+        {
+          "speaker": "npc_myeongbu_seogi",
+          "key": "beat.B01.1",
+          "ko": "실례하오! 명부 서기올시다. 문이 열려 있기에."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B01.2",
+          "ko": "…귀신이 노크도 해?"
+        },
+        {
+          "speaker": "npc_myeongbu_seogi",
+          "key": "beat.B01.3",
+          "ko": "기록에 의하면 이 신당은 은실 만신 소관. 그분이 가신 뒤 넋길이 꽉 막혔소. 우리는 이걸 대맺힘이라 적소."
+        },
+        {
+          "speaker": "npc_myeongbu_seogi",
+          "key": "beat.B01.4",
+          "ko": "넋이 안 넘어오니 장부는 엉망이고, 나는 장부 한 묶음 들고 도망…아니, 출장 왔소."
+        },
+        {
+          "speaker": "npc_myeongbu_seogi",
+          "key": "beat.B01.5",
+          "ko": "무당께서 넋을 풀어 사연을 들으면, 내가 받아 적겠소. 이름이 장부에 돌아오면 넋도 길을 찾소."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B01.6",
+          "ko": "어머니 이름도 거기 있어?"
+        },
+        {
+          "speaker": "npc_myeongbu_seogi",
+          "key": "beat.B01.7",
+          "ko": "…찾는 중이오."
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_daejanggan",
+      "requires": [
+        "stats.deaths >= 1"
+      ],
+      "condition_text": "첫 쓰러짐(사인 무관) 후 로비",
+      "summary": "\"쓰러졌다고 굿이 끝나냐.\" 은실도 처음엔 자주 쓰러졌다는 이야기",
+      "lines": [
+        {
+          "speaker": "npc_soeme",
+          "key": "beat.B02.1",
+          "ko": "쓰러졌냐."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B02.2",
+          "ko": "…네."
+        },
+        {
+          "speaker": "npc_soeme",
+          "key": "beat.B02.3",
+          "ko": "은실이도 처음 십 년은 굿판에서 자주 뻗었다. 그래도 다음 날이면 칼 갈러 왔지."
+        },
+        {
+          "speaker": "npc_soeme",
+          "key": "beat.B02.4",
+          "ko": "쓰러졌다고 굿이 끝나냐. 칼 줘 봐라. 벼려 놓으마."
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "priority": 90,
+      "once": true,
+      "kind": "main",
+      "location": "hub_singirok_seogo",
+      "requires": [
+        "record.haewon_pieces_total >= 1"
+      ],
+      "condition_text": "첫 해원록 조각 획득",
+      "summary": "사연이 기록되면 장부에 이름이 돌아온다는 설명(L6). 길베 마당 소개",
+      "lines": []
+    },
+    {
+      "id": "B04",
+      "priority": 90,
+      "once": true,
+      "kind": "main",
+      "location": "hub_myeongdu_dan",
+      "requires": [
+        "shards >= 1"
+      ],
+      "condition_text": "첫 명두 계승점",
+      "summary": "첫 조각 대사 재생 + 서리 \"…어머니?\"",
+      "lines": []
+    },
+    {
+      "id": "B05",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "unlocked.char_baksu"
+      ],
+      "condition_text": "`char_baksu` 해금",
+      "summary": "무진 합류. 해원·퇴치 첫 논쟁",
+      "lines": [
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B05.1",
+          "ko": "막내. 귀신 하나하나 달래다가 네가 다치면 그게 굿이냐."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B05.2",
+          "ko": "오빠는 다 쳐내고 나면 살이 남잖아. 그거 다 돌아와."
+        },
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B05.3",
+          "ko": "돌아오면 또 물리면 된다. 불 속에선 빨리 끌어내는 게 사람 살리는 거였다."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B05.4",
+          "ko": "여긴 불 속 아니야."
+        },
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B05.5",
+          "ko": "굿판도 불 속이다. 다만 타는 게 한일 뿐."
+        },
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B05.6",
+          "ko": "…어머니라면 뭐라고 했을까."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B05.7",
+          "ko": "\"둘 다 해라.\""
+        },
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B05.8",
+          "ko": "(짧게 웃는다) 그 양반답다."
+        }
+      ]
+    },
+    {
+      "id": "B06",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "stage_clear.stage_guksadang >= 1"
+      ],
+      "condition_text": "선바위 굿당 첫 클리어",
+      "summary": "창밖 매듭 1개 풀림. 갯마을 씻김 손 요청",
+      "lines": []
+    },
+    {
+      "id": "B07",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "unlocked.char_dangol"
+      ],
+      "condition_text": "`char_dangol` 해금",
+      "summary": "옥단 합류. \"강신무는 신을 받고 우리는 소리를 받제\"",
+      "lines": []
+    },
+    {
+      "id": "B08",
+      "priority": 80,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "stage_entered.stage_jindo_ssitgim >= 1"
+      ],
+      "condition_text": "남도 갯마을 씻김굿판 첫 진입 후 로비",
+      "summary": "씻김굿 절차 짧은 해설(고풀이·씻김·길닦음)",
+      "lines": []
+    },
+    {
+      "id": "B09",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_myeongdu_dan",
+      "requires": [
+        "stage_clear.stage_jindo_ssitgim >= 1"
+      ],
+      "condition_text": "남도 갯마을 씻김굿판 첫 클리어",
+      "summary": "은빛 실 발견. 은실이 자기를 묶었다는 첫 의심",
+      "lines": [
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B09.1",
+          "ko": "선생님, 원결 매듭 안에 이게 있었어요."
+        },
+        {
+          "speaker": "char_dangol",
+          "key": "beat.B09.2",
+          "ko": "…은실이 실이네. 명두 끈에 감던 은빛 명주실. 그 양반 말고 이런 걸 쓰는 사람이 없제."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B09.3",
+          "ko": "어머니 실이 왜 갯마을 매듭 속에 있어요?"
+        },
+        {
+          "speaker": "char_dangol",
+          "key": "beat.B09.4",
+          "ko": "넋길은 다 이어져 있응께. 어디선가 이 실이 넋길을 묶어 놨다는 거여."
+        },
+        {
+          "speaker": "char_dangol",
+          "key": "beat.B09.5",
+          "ko": "은실이가 젊을 적에 그라더라. \"길이 터지면 내가 마개가 되지 뭐.\" 농담인 줄 알았제."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B09.6",
+          "ko": "…농담 아니었네요."
+        }
+      ]
+    },
+    {
+      "id": "B10",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "unlocked.char_myeongdu"
+      ],
+      "condition_text": "`char_myeongdu` 해금",
+      "summary": "연이·동이 합류. 동이가 은실을 \"할매\"라 부름",
+      "lines": []
+    },
+    {
+      "id": "B11",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "unlocked.char_simbang"
+      ],
+      "condition_text": "`char_simbang` 해금",
+      "summary": "해월 합류. 은실에게 진 빚",
+      "lines": []
+    },
+    {
+      "id": "B12",
+      "priority": 80,
+      "once": true,
+      "kind": "main",
+      "location": "hub_singirok_seogo",
+      "requires": [
+        "stage_entered.stage_east_sea_byeolsin >= 1"
+      ],
+      "condition_text": "동해안 첫 진입 후 로비",
+      "summary": "하늘 길(승천로)과 이무기의 장부 기록",
+      "lines": []
+    },
+    {
+      "id": "B13",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "stage_clear.stage_east_sea_byeolsin >= 1"
+      ],
+      "condition_text": "동해안 첫 클리어",
+      "summary": "넋길 끝의 은빛 매듭 = 은실. 무진이 처음으로 흔들림",
+      "lines": [
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B13.1",
+          "ko": "하늘에서 봤다. 넋길 끝, 저승 문 앞에…"
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B13.2",
+          "ko": "어머니였어. 은빛 실로 자기를 꽁꽁 묶고."
+        },
+        {
+          "speaker": "char_dangol",
+          "key": "beat.B13.3",
+          "ko": "갇힌 게 아니여. 막고 있는 거제. 살이 이승으로 쏟아지지 않게."
+        },
+        {
+          "speaker": "char_simbang",
+          "key": "beat.B13.4",
+          "ko": "그 매듭이 버티는 동안만 우리가 굿을 할 수 있는 겁니다."
+        },
+        {
+          "speaker": "char_baksu",
+          "key": "beat.B13.5",
+          "ko": "그럼 풀면… 어머니는."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B13.6",
+          "ko": "가시는 거지. 원래 가셨어야 했던 데로."
+        },
+        {
+          "speaker": "char_myeongdu",
+          "key": "beat.B13.7",
+          "ko": "언니… 괜찮아요?"
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B13.8",
+          "ko": "아니. 그래도 풀 거야. 그게 어머니가 시킨 일이니까."
+        }
+      ]
+    },
+    {
+      "id": "B14",
+      "priority": 90,
+      "once": true,
+      "kind": "main",
+      "location": "hub_myeongdu_dan",
+      "requires": [
+        "shards >= 6"
+      ],
+      "condition_text": "명두 계승점 6",
+      "summary": "\"절반 왔다. 무섭니? 나는 안 무섭다.\"",
+      "lines": []
+    },
+    {
+      "id": "B15",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_myeongdu_dan",
+      "requires": [
+        "shards >= 12"
+      ],
+      "condition_text": "명두 계승점 12",
+      "summary": "`gs.eunsil.shard.complete`. 종장 조건 UI 공개",
+      "lines": [
+        {
+          "speaker": "npc_eunsil",
+          "key": "beat.B15.1",
+          "ko": "다 맞췄구나. 길 보이지? …와서 풀어 줘."
+        },
+        {
+          "speaker": "char_mansin",
+          "key": "beat.B15.2",
+          "ko": "어머니, 풀면 진짜 가시는 거예요?"
+        },
+        {
+          "speaker": "npc_eunsil",
+          "key": "beat.B15.3",
+          "ko": "얘. 보내 주는 것도 굿이다. 제일 큰 굿이야."
+        },
+        {
+          "speaker": "npc_eunsil",
+          "key": "beat.B15.4",
+          "ko": "마흔아흐레 넘게 기다렸다. 조금만 더 기다리마."
+        }
+      ]
+    },
+    {
+      "id": "B16",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "gate_final == true"
+      ],
+      "condition_text": "종장 조건 모두 충족",
+      "summary": "\"오늘 밤은 어머니를 풀러 간다.\" 다음 클리어 런에서 종장 발동(미루기 가능)",
+      "lines": []
+    },
+    {
+      "id": "B17",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "endings_seen_count >= 1"
+      ],
+      "condition_text": "배웅 또는 끊음 엔딩 1회",
+      "summary": "엔딩 후 로비. 창밖 넋길이 흰 은하수로 바뀜. 서리가 '큰만신' 칭호를 받음(코스메틱)",
+      "lines": []
+    },
+    {
+      "id": "B18",
+      "priority": 100,
+      "once": true,
+      "kind": "main",
+      "location": "hub_gilbe_madang",
+      "requires": [
+        "endings_seen_count >= 2"
+      ],
+      "condition_text": "두 엔딩 모두",
+      "summary": "종장 '넋길 열림'(→ 10.5)",
+      "lines": []
+    },
+    {
+      "id": "B19",
+      "priority": 60,
+      "once": true,
+      "kind": "main",
+      "location": "hub_sindang",
+      "requires": [
+        "beat_done.B17",
+        "dlc.x1_installed"
+      ],
+      "condition_text": "B17 이후 + 명부 x1 설치",
+      "summary": "도경 법사의 편지(x1 훅)",
+      "lines": []
+    },
+    {
+      "id": "B20",
+      "priority": 80,
+      "once": true,
+      "kind": "main",
+      "location": "hub_singirok_seogo",
+      "requires": [
+        "stats.haewon_total >= 1000 || stats.toechi_total >= 1000"
+      ],
+      "condition_text": "해원 누적 1,000 / 퇴치 누적 1,000 각각",
+      "summary": "서기의 장부 두께 변화 + 퇴치·해원 각각을 인정하는 대사(둘 다 칭찬)",
+      "lines": []
+    }
+  ],
+  "react_pools": [
+    {
+      "id": "react_death_early",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.result == death",
+        "last_run.time_s < 360"
+      ],
+      "speaker": "npc_soeme",
+      "variants_planned": 3,
+      "lines": [
+        {
+          "key": "beat.react_death_early.1",
+          "ko": "초장에 뻗었냐. 신칼 날부터 다시 보자."
+        }
+      ]
+    },
+    {
+      "id": "react_death_eodukssini",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.cause == eodukssini"
+      ],
+      "speaker": "npc_myeongbu_seogi",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_death_eodukssini.1",
+          "ko": "기록에 의하면 무당께서 그걸 너무 오래 쳐다보셨소."
+        }
+      ]
+    },
+    {
+      "id": "react_death_wongwi",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.cause == wongwi"
+      ],
+      "speaker": "char_dangol",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_death_wongwi.1",
+          "ko": "덜 씻긴 손님한테 당했구먼. 다음엔 소금 좀 챙겨 가."
+        }
+      ]
+    },
+    {
+      "id": "react_death_saja",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.cause == saja_23"
+      ],
+      "speaker": "npc_myeongbu_seogi",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_death_saja.1",
+          "ko": "차사 양반이 시간 지키는 건 명부 제일이오. 나도 지각해서 혼났소."
+        }
+      ]
+    },
+    {
+      "id": "react_clear_han",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.result == clear",
+        "last_run.boss_form == han",
+        "shards >= 3"
+      ],
+      "speaker": "npc_eunsil",
+      "variants_planned": 3,
+      "lines": [
+        {
+          "key": "beat.react_clear_han.1",
+          "ko": "손님 잘 보냈다. 상 물리고 쉬어라."
+        }
+      ]
+    },
+    {
+      "id": "react_clear_sal",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.result == clear",
+        "last_run.boss_form == sal"
+      ],
+      "speaker": "char_baksu",
+      "variants_planned": 3,
+      "lines": [
+        {
+          "key": "beat.react_clear_sal.1",
+          "ko": "깔끔하게 물렸다. 남은 살은 다음에 걷자."
+        }
+      ]
+    },
+    {
+      "id": "react_saja_bow",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.saja_end == bow"
+      ],
+      "speaker": "npc_myeongbu_seogi",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_saja_bow.1",
+          "ko": "차사가 읍했다니! 장부에 줄 긋는 소리가 여기까지 들리오."
+        }
+      ]
+    },
+    {
+      "id": "react_sal_geodum_hold",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.saja_end == sal_geodum"
+      ],
+      "speaker": "npc_soeme",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_sal_geodum_hold.1",
+          "ko": "차사가 살 거두는 동안 굿판을 지켰다고? …칼 좀 더 벼려야겠군."
+        }
+      ]
+    },
+    {
+      "id": "react_ratio_haewon_high",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.haewon_ratio >= 0.8"
+      ],
+      "speaker": "char_baksu",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_ratio_haewon_high.1",
+          "ko": "다 풀었다고? …막내, 손목 괜찮냐."
+        }
+      ]
+    },
+    {
+      "id": "react_ratio_toechi_high",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.haewon_ratio <= 0.2"
+      ],
+      "speaker": "char_dangol",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_ratio_toechi_high.1",
+          "ko": "시원하게 쳐냈구먼. 그랴, 쳐낼 땐 쳐내야제."
+        }
+      ]
+    },
+    {
+      "id": "react_ring_record",
+      "priority": 60,
+      "once": false,
+      "cooldown_runs": 5,
+      "kind": "react",
+      "requires": [
+        "last_run.max_ring >= 60"
+      ],
+      "speaker": "char_mansin",
+      "variants_planned": 2,
+      "lines": [
+        {
+          "key": "beat.react_ring_record.1",
+          "ko": "…방금 그거, 어머니도 봤으면 좋았을 텐데."
+        }
+      ]
+    }
+  ],
+  "shrine": [
+    {
+      "key": "shrine.sansin__wieom.1",
+      "stage_face": "Lv1 위엄",
+      "ko": "범의 기세를 버틴 무당이 오랜만이구나. 은실 이후로 처음이다."
+    },
+    {
+      "key": "shrine.sansin__wieom.2",
+      "stage_face": "Lv2 위엄",
+      "ko": "힘으로 길을 내는 것도 산의 일이다. 산사태도 길을 낸다."
+    },
+    {
+      "key": "shrine.sansin__wieom.3",
+      "stage_face": "Lv3 위엄",
+      "ko": "은실은 늘 범 위엄을 받았다. 그 아이는 무서운 걸 먼저 껴안았지."
+    },
+    {
+      "key": "shrine.sansin__gaho.1",
+      "stage_face": "Lv1 가호",
+      "ko": "길 잃은 것들을 지켜 줘서 고맙네. 산이 시끄러웠거든."
+    },
+    {
+      "key": "shrine.sansin__gaho.2",
+      "stage_face": "Lv2 가호",
+      "ko": "호식총 시루 밑에 갇힌 넋이 아직 많네. 천천히 내려보내 주게."
+    },
+    {
+      "key": "shrine.sansin__gaho.3",
+      "stage_face": "Lv3 가호",
+      "ko": "은실이 묶은 매듭에 산의 솔바람을 조금 넣어 두었네. 풀 때 알 걸세."
+    },
+    {
+      "key": "shrine.jeseok_daegam__wieom.1",
+      "stage_face": "Lv1 대감",
+      "ko": "에헴! 대감을 이겼다고? 그럼 술값은 네가 내라!"
+    },
+    {
+      "key": "shrine.jeseok_daegam__wieom.2",
+      "stage_face": "Lv2 대감",
+      "ko": "재물은 돌아야 재물이다. 쌓아 두면 그게 살이 되느니라."
+    },
+    {
+      "key": "shrine.jeseok_daegam__wieom.3",
+      "stage_face": "Lv3 대감",
+      "ko": "은실이 외상값? 사십 년 치다. 그래도 그 굿상은 늘 넉넉했지. 허허."
+    },
+    {
+      "key": "shrine.jeseok_daegam__gaho.1",
+      "stage_face": "Lv1 제석",
+      "ko": "굿상을 지켜 주었구나. 복이 너에게 머물 것이다."
+    },
+    {
+      "key": "shrine.jeseok_daegam__gaho.2",
+      "stage_face": "Lv2 제석",
+      "ko": "복은 나누어야 불어난다. 넋들에게 나눈 것은 사라지지 않는다."
+    },
+    {
+      "key": "shrine.jeseok_daegam__gaho.3",
+      "stage_face": "Lv3 제석",
+      "ko": "은실의 마지막 굿상에도 내가 있었다. 그 아이는 자기 몫을 남기지 않았다."
+    },
+    {
+      "key": "shrine.yongwang__wieom.1",
+      "stage_face": "Lv1 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.yongwang__wieom.2",
+      "stage_face": "Lv2 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.yongwang__wieom.3",
+      "stage_face": "Lv3 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.yongwang__gaho.1",
+      "stage_face": "Lv1 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.yongwang__gaho.2",
+      "stage_face": "Lv2 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.yongwang__gaho.3",
+      "stage_face": "Lv3 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__wieom.1",
+      "stage_face": "Lv1 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__wieom.2",
+      "stage_face": "Lv2 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__wieom.3",
+      "stage_face": "Lv3 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__gaho.1",
+      "stage_face": "Lv1 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__gaho.2",
+      "stage_face": "Lv2 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.chilseong__gaho.3",
+      "stage_face": "Lv3 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__wieom.1",
+      "stage_face": "Lv1 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__wieom.2",
+      "stage_face": "Lv2 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__wieom.3",
+      "stage_face": "Lv3 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__gaho.1",
+      "stage_face": "Lv1 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__gaho.2",
+      "stage_face": "Lv2 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.janggun__gaho.3",
+      "stage_face": "Lv3 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__wieom.1",
+      "stage_face": "Lv1 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__wieom.2",
+      "stage_face": "Lv2 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__wieom.3",
+      "stage_face": "Lv3 wieom",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__gaho.1",
+      "stage_face": "Lv1 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__gaho.2",
+      "stage_face": "Lv2 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    },
+    {
+      "key": "shrine.barigongju__gaho.3",
+      "stage_face": "Lv3 gaho",
+      "ko": null,
+      "todo": "작가 작성 필요 (Lv3에 은실 정보 1조각)"
+    }
+  ]
+}

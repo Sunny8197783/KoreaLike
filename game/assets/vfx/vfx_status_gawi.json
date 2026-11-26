@@ -1,0 +1,143 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_status_gawi 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 180
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_gawi 1",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 180
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_gawi 2",
+   "frame": {
+    "x": 0,
+    "y": 180,
+    "w": 320,
+    "h": 180
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 180
+   },
+   "duration": 167
+  },
+  {
+   "filename": "vfx_status_gawi 3",
+   "frame": {
+    "x": 320,
+    "y": 180,
+    "w": 320,
+    "h": 180
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 320,
+    "h": 180
+   },
+   "sourceSize": {
+    "w": 320,
+    "h": 180
+   },
+   "duration": 167
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_status_gawi.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 640,
+   "h": 360
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_status_gawi",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_status_gawi",
+   "name": "Gawi-nullim screen edge",
+   "fps": 6.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    320,
+    180
+   ],
+   "pivot": [
+    0,
+    0
+   ],
+   "columns": 2,
+   "frameWidth": 320,
+   "frameHeight": 180,
+   "blend": "multiply",
+   "layer": "L17",
+   "color_role": "M",
+   "max_concurrent": 1,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     2,
+     2
+    ],
+    "semi_before": 141996,
+    "blend": "multiply",
+    "size": "keep 320x180"
+   }
+  }
+ }
+}

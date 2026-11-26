@@ -1,0 +1,155 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_pajinchang_dash 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_pajinchang_dash 1",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 128,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_pajinchang_dash 2",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 128,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_pajinchang_dash 3",
+   "frame": {
+    "x": 0,
+    "y": 96,
+    "w": 128,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 32
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_pajinchang_dash.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 128
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_pajinchang_dash",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_pajinchang_dash",
+   "name": "Pajinchang dash",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 4,
+   "frameSize": [
+    128,
+    32
+   ],
+   "pivot": [
+    20,
+    16
+   ],
+   "columns": 1,
+   "frameWidth": 96,
+   "frameHeight": 24,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "96x24->128x32"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_pajinchang",
+   "color_role": "R",
+   "spec_canvas": "96x24",
+   "spec_frames": 4,
+   "timing": "fps:20",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 6,
+   "scope": "v1",
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_yeopjeon_spin 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_yeopjeon_spin 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_yeopjeon_spin 2",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_yeopjeon_spin 3",
+   "frame": {
+    "x": 16,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 100
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_yeopjeon_spin.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_yeopjeon_spin",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_yeopjeon_spin",
+   "name": "엽전 회전",
+   "fps": 10.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "blend": "normal",
+   "layer": "L07",
+   "timing": "fps:10",
+   "beat_synced": false,
+   "max_concurrent": 60,
+   "color_role": "Y",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  }
+ }
+}

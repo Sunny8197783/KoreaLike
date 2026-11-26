@@ -1,0 +1,253 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_sinkal_proj 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 4",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 5",
+   "frame": {
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 6",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinkal_proj 7",
+   "frame": {
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "hand-drawn grid recipe (art/pilot/_scripts/fix_r3_vfx.py)",
+  "version": "1",
+  "image": "vfx_sinkal_proj.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_sinkal_proj",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_sinkal_proj",
+   "name": "Sinkal projectile",
+   "fps": 16.0,
+   "loop": true,
+   "frames": 8,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 8,
+   "frameWidth": 16,
+   "frameHeight": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_sinkal",
+   "spec_canvas": "16x16",
+   "spec_frames": 8,
+   "timing": "fps:16",
+   "blend": "normal",
+   "pilot": false,
+   "palette": [
+    "#561318",
+    "#c8322d",
+    "#d2c19c",
+    "#e4604f",
+    "#e9dcc0"
+   ],
+   "colors": 5,
+   "source": "art/pilot/_scripts/fix_r3_vfx.py (r3 hand redraw, 0 gen)",
+   "spin": "8 pre-rendered 45deg steps, frame k = k*45deg clockwise from east (blade tip direction); no runtime rotation",
+   "orient_phases": {
+    "out": "dir8",
+    "apex": "spin",
+    "ret": "spin"
+   },
+   "spec": "art_style_v1",
+   "promoted_from": "vfx_sinkal_proj__pilot"
+  }
+ }
+}

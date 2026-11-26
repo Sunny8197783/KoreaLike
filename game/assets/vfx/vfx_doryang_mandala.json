@@ -1,0 +1,243 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_doryang_mandala 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 2",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 3",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 4",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 5",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 6",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_doryang_mandala 7",
+   "frame": {
+    "x": 448,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_doryang_mandala.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 512,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_doryang_mandala",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_doryang_mandala",
+   "name": "Doryang mandala (도량 꽃살 타일)",
+   "fps": 8,
+   "loop": true,
+   "frames": 8,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameSize": [
+    64,
+    64
+   ],
+   "columns": 8,
+   "pivot": [
+    32,
+    32
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": false,
+   "max_concurrent": 3,
+   "palette": [
+    "#8a7440",
+    "#5a4a37",
+    "#3b4f6e",
+    "#3e6a5a",
+    "#d2c19c",
+    "#7a3a2c",
+    "#3f3654",
+    "#e9dcc0",
+    "#857154",
+    "#b29d76"
+   ],
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     10,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "keep 64x64"
+   }
+  }
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "spawn": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   32,
+   32
+  ],
+  "spawn": [
+   32,
+   32
+  ]
+ },
+ "source": "art/rework/G4_salvage_enemies_boss/_scripts/do_dalgyal_child.py (파일럿 r3 그리드 기반 recolor_variant, 0 gen)",
+ "west": "flip_h(east)",
+ "post": {
+  "rot": "south/east/north/west.png = move_<dir>_0",
+  "tier": "common_s"
+ }
+}

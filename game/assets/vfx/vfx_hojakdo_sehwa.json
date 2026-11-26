@@ -1,0 +1,97 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_hojakdo_sehwa 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 250
+  },
+  {
+   "filename": "vfx_hojakdo_sehwa 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 250
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_hojakdo_sehwa.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_hojakdo_sehwa",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_hojakdo_talisman",
+   "name": "Hojakdo talisman",
+   "fps": 4,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    16,
+    32
+   ],
+   "pivot": [
+    8,
+    16
+   ],
+   "columns": 2,
+   "frameWidth": 16,
+   "frameHeight": 20,
+   "renamed_from": "vfx_hojakdo_talisman",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "16x20->16x32"
+   }
+  },
+  "korealike": {}
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_wongwi_eye_aura 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_wongwi_eye_aura 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_wongwi_eye_aura 2",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_wongwi_eye_aura 3",
+   "frame": {
+    "x": 64,
+    "y": 64,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_wongwi_eye_aura.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 128
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_wongwi_eye_aura",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_wongwi_eye_aura",
+   "name": "Wongwi eye aura",
+   "fps": 8.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    64,
+    64
+   ],
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 2,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "blend": "add",
+   "layer": "L08",
+   "color_role": "R",
+   "max_concurrent": 12,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     10,
+     6
+    ],
+    "semi_before": 6016,
+    "blend": "add",
+    "size": "ok"
+   }
+  }
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "frames": [
+  {
+   "filename": "prop_seokdeung_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 48
+   },
+   "duration": 125
+  },
+  {
+   "filename": "prop_seokdeung_1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 48
+   },
+   "duration": 125
+  },
+  {
+   "filename": "prop_seokdeung_2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 48
+   },
+   "duration": 125
+  },
+  {
+   "filename": "prop_seokdeung_3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 48
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_seokdeung_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 48
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 8,
+   "loop": true,
+   "frameWidth": 32,
+   "frameHeight": 48,
+   "columns": 4,
+   "pivot": {
+    "x": 16,
+    "y": 45
+   }
+  },
+  "korealike": {
+   "light_color": "#ffb35a",
+   "light_radius_u": 2,
+   "light_point": [
+    16,
+    18
+   ]
+  }
+ }
+}

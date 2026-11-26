@@ -1,0 +1,587 @@
+{
+ "agent": "fonts_tiles",
+ "scope": "A) fonts  B) stage guksadang environment (tiles + props)",
+ "pixellab_generations_used_estimate": 57,
+ "tools": [
+  "tools/props_handdrawn.py",
+  "tools/props_postprocess.py",
+  "tools/env_grade_needles.py",
+  "tools/env_unify_tiles.py",
+  "tools/env_guard_tiles.py"
+ ],
+ "review_board": "art/_review_guksadang_env.png",
+ "known_issues": [
+  "ritual/light props (gutsang, musindo, chotdae, yeondeung lit, neokjeon, geumjul) exceed environment_prop_max_relative_luminance 0.18 on purpose (focal hanji/flame items) - review",
+  "tile_guksadang_grass_rock granite reads slightly like polygonal paving",
+  "re-running tools/props_postprocess.py requires re-running tools/env_guard_tiles.py (reserved-white guard) afterwards"
+ ],
+ "items": [
+  {
+   "id": "font_galmuri7",
+   "path": "game/assets/fonts/galmuri/Galmuri7.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmuri9",
+   "path": "game/assets/fonts/galmuri/Galmuri9.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmuri11",
+   "path": "game/assets/fonts/galmuri/Galmuri11.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmuri11_bold",
+   "path": "game/assets/fonts/galmuri/Galmuri11-Bold.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmuri11_condensed",
+   "path": "game/assets/fonts/galmuri/Galmuri11-Condensed.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmuri14",
+   "path": "game/assets/fonts/galmuri/Galmuri14.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_galmurimono11",
+   "path": "game/assets/fonts/galmuri/GalmuriMono11.ttf",
+   "kind": "font",
+   "source": "github:quiple/galmuri v2.40.4",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/galmuri/LICENSE.txt"
+  },
+  {
+   "id": "font_fusion_pixel_12_ko",
+   "path": "game/assets/fonts/fusion_pixel/fusion-pixel-12px-proportional-ko.otf",
+   "kind": "font",
+   "source": "github:TakWolf/fusion-pixel-font 2026.11.10",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/fusion_pixel/OFL.txt",
+   "role": "CJK/hanja fallback"
+  },
+  {
+   "id": "font_nanum_brush",
+   "path": "game/assets/fonts/nanum_brush/NanumBrushScript-Regular.ttf",
+   "kind": "font",
+   "source": "github:google/fonts ofl/nanumbrushscript",
+   "license": "SIL OFL 1.1",
+   "status": "done",
+   "license_file": "game/assets/fonts/nanum_brush/OFL.txt",
+   "role": "title / brush calligraphy"
+  },
+  {
+   "id": "tile_guksadang_earth_grass",
+   "path": "game/assets/tiles/tile_guksadang_earth_grass.png",
+   "kind": "tileset",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "metadata": "game/assets/tiles/tile_guksadang_earth_grass.metadata.json",
+   "note": "renamed from art/tilesets/stage1_earth_grass (0 gen)"
+  },
+  {
+   "id": "tile_guksadang_earth_stone",
+   "path": "game/assets/tiles/tile_guksadang_earth_stone.png",
+   "kind": "tileset",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "metadata": "game/assets/tiles/tile_guksadang_earth_stone.metadata.json",
+   "note": "renamed from stage1_earth_stone (0 gen); earth palette unified to shared earth"
+  },
+  {
+   "id": "tile_guksadang_earth_needles",
+   "path": "game/assets/tiles/tile_guksadang_earth_needles.png",
+   "kind": "tileset",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "metadata": "game/assets/tiles/tile_guksadang_earth_needles.metadata.json",
+   "note": "create_topdown_tileset pro 32px, chained lower=earth (15 gen)"
+  },
+  {
+   "id": "tile_guksadang_grass_rock",
+   "path": "game/assets/tiles/tile_guksadang_grass_rock.png",
+   "kind": "tileset",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "metadata": "game/assets/tiles/tile_guksadang_grass_rock.metadata.json",
+   "note": "create_topdown_tileset pro 32px, chained lower=grass (15 gen, P3)"
+  },
+  {
+   "id": "tile_guksadang_index",
+   "path": "game/assets/tiles/tile_guksadang_index.json",
+   "kind": "tileset_index",
+   "source": "project",
+   "license": "original",
+   "status": "done"
+  },
+  {
+   "id": "lm_guksadang_dangjip",
+   "path": "game/assets/props/lm_guksadang_dangjip.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "create_map_object 192x128 (1 gen); window candle flicker 4f recolour",
+   "sheet": "game/assets/props/lm_guksadang_dangjip_sheet.png",
+   "sheet_json": "game/assets/props/lm_guksadang_dangjip_sheet.json"
+  },
+  {
+   "id": "lm_guksadang_seonbawi",
+   "path": "game/assets/props/lm_guksadang_seonbawi.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "create_map_object 128x160 (3 gen incl. 2 rejected)"
+  },
+  {
+   "id": "lm_guksadang_pine_hill",
+   "path": "game/assets/props/lm_guksadang_pine_hill.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "create_map_object 160x128 (2 gen incl. 1 rejected)"
+  },
+  {
+   "id": "prop_pine_a",
+   "path": "game/assets/props/prop_pine_a.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x96, collision = trunk 1u"
+  },
+  {
+   "id": "prop_pine_b",
+   "path": "game/assets/props/prop_pine_b.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x96, collision = trunk 1u"
+  },
+  {
+   "id": "prop_pine_c",
+   "path": "game/assets/props/prop_pine_c.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x96, collision = trunk 1u (2 gen incl. 1 rejected)"
+  },
+  {
+   "id": "prop_rock_s",
+   "path": "game/assets/props/prop_rock_s.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "32x32 obstacle"
+  },
+  {
+   "id": "prop_rock_m",
+   "path": "game/assets/props/prop_rock_m.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "48x48 obstacle"
+  },
+  {
+   "id": "prop_rock_l",
+   "path": "game/assets/props/prop_rock_l.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x64 obstacle"
+  },
+  {
+   "id": "prop_seonang_doltap",
+   "path": "game/assets/props/prop_seonang_doltap.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "48x48; five-colour cloth strips hand-added, 2f",
+   "sheet": "game/assets/props/prop_seonang_doltap_sheet.png",
+   "sheet_json": "game/assets/props/prop_seonang_doltap_sheet.json"
+  },
+  {
+   "id": "prop_seokdeung",
+   "path": "game/assets/props/prop_seokdeung.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "32x48; roof horns flattened (anti-toro), window flame 4f, light 2u #ffb35a",
+   "sheet": "game/assets/props/prop_seokdeung_sheet.png",
+   "sheet_json": "game/assets/props/prop_seokdeung_sheet.json"
+  },
+  {
+   "id": "prop_gutsang",
+   "path": "game/assets/props/prop_gutsang.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x32 offering table, no pig head"
+  },
+  {
+   "id": "prop_obanggi_bundle",
+   "path": "game/assets/props/prop_obanggi_bundle.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "32x64, 청적황백흑, 2f wave (PixelLab attempt rejected, 1 gen)",
+   "sheet": "game/assets/props/prop_obanggi_bundle_sheet.png",
+   "sheet_json": "game/assets/props/prop_obanggi_bundle_sheet.json"
+  },
+  {
+   "id": "prop_sinjangdae",
+   "path": "game/assets/props/prop_sinjangdae.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "16x64 bamboo + 오색천 + 한지술, 2f (PixelLab attempt rejected, 1 gen)",
+   "sheet": "game/assets/props/prop_sinjangdae_sheet.png",
+   "sheet_json": "game/assets/props/prop_sinjangdae_sheet.json"
+  },
+  {
+   "id": "prop_geumjul_seg",
+   "path": "game/assets/props/prop_geumjul_seg.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "32x16 tileable 왼새끼 + 숯·고추·한지"
+  },
+  {
+   "id": "prop_stone_stairs",
+   "path": "game/assets/props/prop_stone_stairs.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "64x32"
+  },
+  {
+   "id": "prop_chotdae_pair",
+   "path": "game/assets/props/prop_chotdae_pair.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "16x24 놋촛대 쌍, flame 4f, light 2u #ffb35a",
+   "sheet": "game/assets/props/prop_chotdae_pair_sheet.png",
+   "sheet_json": "game/assets/props/prop_chotdae_pair_sheet.json"
+  },
+  {
+   "id": "prop_musindo_hanging",
+   "path": "game/assets/props/prop_musindo_hanging.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "32x48 original musindo (frontal, halo, flat colour)"
+  },
+  {
+   "id": "prop_yeondeung",
+   "path": "game/assets/props/prop_yeondeung.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "16x24 한지 초롱 lit state; obj_gutpan_deungbul",
+   "sheet": "game/assets/props/prop_yeondeung_sheet.png",
+   "sheet_json": "game/assets/props/prop_yeondeung_sheet.json"
+  },
+  {
+   "id": "prop_yeondeung_off",
+   "path": "game/assets/props/prop_yeondeung_off.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "16x24 unlit state"
+  },
+  {
+   "id": "prop_jangseung_pair",
+   "path": "game/assets/props/prop_jangseung_pair.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "32x64; abstract strokes, no fake hanja"
+  },
+  {
+   "id": "prop_sotdae",
+   "path": "game/assets/props/prop_sotdae.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "16x64 pole + 3 wooden ducks (PixelLab attempt rejected, 1 gen)"
+  },
+  {
+   "id": "prop_neokjeon_line",
+   "path": "game/assets/props/prop_neokjeon_line.png",
+   "kind": "prop",
+   "source": "handdrawn",
+   "license": "original (project-made, tools/props_handdrawn.py)",
+   "status": "done",
+   "note": "64x16 넋전·지전 line, 2f sway",
+   "sheet": "game/assets/props/prop_neokjeon_line_sheet.png",
+   "sheet_json": "game/assets/props/prop_neokjeon_line_sheet.json"
+  },
+  {
+   "id": "prop_bush_a",
+   "path": "game/assets/props/prop_bush_a.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "non-colliding, 2f wind",
+   "sheet": "game/assets/props/prop_bush_a_sheet.png",
+   "sheet_json": "game/assets/props/prop_bush_a_sheet.json"
+  },
+  {
+   "id": "prop_bush_b",
+   "path": "game/assets/props/prop_bush_b.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "non-colliding, 2f wind",
+   "sheet": "game/assets/props/prop_bush_b_sheet.png",
+   "sheet_json": "game/assets/props/prop_bush_b_sheet.json"
+  },
+  {
+   "id": "prop_bush_c",
+   "path": "game/assets/props/prop_bush_c.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "non-colliding, 2f wind",
+   "sheet": "game/assets/props/prop_bush_c_sheet.png",
+   "sheet_json": "game/assets/props/prop_bush_c_sheet.json"
+  },
+  {
+   "id": "prop_bush_d",
+   "path": "game/assets/props/prop_bush_d.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "non-colliding, 2f wind",
+   "sheet": "game/assets/props/prop_bush_d_sheet.png",
+   "sheet_json": "game/assets/props/prop_bush_d_sheet.json"
+  },
+  {
+   "id": "prop_jangdok",
+   "path": "game/assets/props/prop_jangdok.png",
+   "kind": "prop",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "32x32 장독대 (P3)"
+  },
+  {
+   "id": "obj_gongmulsang_full",
+   "path": "game/assets/props/obj_gongmulsang_full.png",
+   "kind": "prop_state",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "derived from prop_gutsang by erasing offerings",
+   "sheet": "game/assets/props/obj_gongmulsang_sheet.png",
+   "sheet_json": "game/assets/props/obj_gongmulsang_sheet.json"
+  },
+  {
+   "id": "obj_gongmulsang_2_3",
+   "path": "game/assets/props/obj_gongmulsang_2_3.png",
+   "kind": "prop_state",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "derived from prop_gutsang by erasing offerings",
+   "sheet": "game/assets/props/obj_gongmulsang_sheet.png",
+   "sheet_json": "game/assets/props/obj_gongmulsang_sheet.json"
+  },
+  {
+   "id": "obj_gongmulsang_1_3",
+   "path": "game/assets/props/obj_gongmulsang_1_3.png",
+   "kind": "prop_state",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "derived from prop_gutsang by erasing offerings",
+   "sheet": "game/assets/props/obj_gongmulsang_sheet.png",
+   "sheet_json": "game/assets/props/obj_gongmulsang_sheet.json"
+  },
+  {
+   "id": "obj_gongmulsang_empty",
+   "path": "game/assets/props/obj_gongmulsang_empty.png",
+   "kind": "prop_state",
+   "source": "pixellab",
+   "license": "PixelLab generation (paid Tier 1 subscription, commercial use per PixelLab ToS)",
+   "status": "done",
+   "note": "derived from prop_gutsang by erasing offerings",
+   "sheet": "game/assets/props/obj_gongmulsang_sheet.png",
+   "sheet_json": "game/assets/props/obj_gongmulsang_sheet.json"
+  },
+  {
+   "id": "decal_flower_1",
+   "path": "game/assets/props/decal_flower_1.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_flower_2",
+   "path": "game/assets/props/decal_flower_2.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_flower_3",
+   "path": "game/assets/props/decal_flower_3.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_flower_4",
+   "path": "game/assets/props/decal_flower_4.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_flower_5",
+   "path": "game/assets/props/decal_flower_5.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_flower_6",
+   "path": "game/assets/props/decal_flower_6.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_leaf_1",
+   "path": "game/assets/props/decal_leaf_1.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_leaf_2",
+   "path": "game/assets/props/decal_leaf_2.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_leaf_3",
+   "path": "game/assets/props/decal_leaf_3.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_needles_1",
+   "path": "game/assets/props/decal_needles_1.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_needles_2",
+   "path": "game/assets/props/decal_needles_2.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_needles_3",
+   "path": "game/assets/props/decal_needles_3.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "decal_set_atlas",
+   "path": "game/assets/props/decal_set_atlas.png",
+   "kind": "decal",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_candle_flame_s",
+   "path": "game/assets/vfx/vfx_candle_flame_s.png",
+   "kind": "vfx",
+   "source": "handdrawn",
+   "license": "original (project-made)",
+   "status": "done",
+   "json": "game/assets/vfx/vfx_candle_flame_s.json",
+   "fps": 8,
+   "frames": 4,
+   "light_color": "#ffb35a"
+  }
+ ]
+}

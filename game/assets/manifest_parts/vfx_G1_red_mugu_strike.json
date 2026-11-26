@@ -1,0 +1,771 @@
+{
+ "agent": "vfx_G1_red_mugu_strike",
+ "group": "G1_red_mugu_strike",
+ "items": [
+  {
+   "id": "vfx_sinkal_proj",
+   "path": "game/assets/vfx/vfx_sinkal_proj.png",
+   "json": "game/assets/vfx/vfx_sinkal_proj.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinkal_proj.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    16,
+    16
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    7,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 60
+  },
+  {
+   "id": "vfx_sinkal_tassel_trail",
+   "path": "game/assets/vfx/vfx_sinkal_tassel_trail.png",
+   "json": "game/assets/vfx/vfx_sinkal_tassel_trail.json",
+   "kind": "vfx_ribbon_texture",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinkal_tassel_trail.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 1,
+   "frame_size": [
+    32,
+    6
+   ],
+   "fps": 1,
+   "loop": true,
+   "pivot": [
+    0,
+    3
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "mesh",
+   "beat_snap": false,
+   "max_concurrent": 60,
+   "shader": "game/shaders/vfx_hanji_ribbon.gdshader",
+   "note": "Line2D texture (TILE) + shader; not a frame animation"
+  },
+  {
+   "id": "vfx_sinjangkal_proj",
+   "path": "game/assets/vfx/vfx_sinjangkal_proj.png",
+   "json": "game/assets/vfx/vfx_sinjangkal_proj.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinjangkal_proj.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 30
+  },
+  {
+   "id": "vfx_sinjangkal_return_arc",
+   "path": "game/assets/vfx/vfx_sinjangkal_return_arc.png",
+   "json": "game/assets/vfx/vfx_sinjangkal_return_arc.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sinjangkal_return_arc.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    48,
+    24
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    24,
+    21
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": false,
+   "max_concurrent": 30
+  },
+  {
+   "id": "vfx_woldo_spin",
+   "path": "game/assets/vfx/vfx_woldo_spin.png",
+   "json": "game/assets/vfx/vfx_woldo_spin.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_woldo_spin.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:18",
+   "beat_snap": true,
+   "max_concurrent": 4
+  },
+  {
+   "id": "vfx_manwoldo_crescent",
+   "path": "game/assets/vfx/vfx_manwoldo_crescent.png",
+   "json": "game/assets/vfx/vfx_manwoldo_crescent.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_manwoldo_crescent.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    32,
+    16
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    18,
+    8
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": false,
+   "max_concurrent": 48
+  },
+  {
+   "id": "vfx_samjichang_thrust",
+   "path": "game/assets/vfx/vfx_samjichang_thrust.png",
+   "json": "game/assets/vfx/vfx_samjichang_thrust.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_samjichang_thrust.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    64,
+    16
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    2,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:18",
+   "beat_snap": true,
+   "max_concurrent": 15
+  },
+  {
+   "id": "vfx_samjichang_mark",
+   "path": "game/assets/vfx/vfx_samjichang_mark.png",
+   "json": "game/assets/vfx/vfx_samjichang_mark.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_samjichang_mark.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    12,
+    12
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    6,
+    6
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:8",
+   "beat_snap": false,
+   "max_concurrent": 20
+  },
+  {
+   "id": "vfx_saseulchang_verdict",
+   "path": "game/assets/vfx/vfx_saseulchang_verdict.png",
+   "json": "game/assets/vfx/vfx_saseulchang_verdict.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_saseulchang_verdict.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    32,
+    48
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    16,
+    43
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:12",
+   "beat_snap": false,
+   "max_concurrent": 3
+  },
+  {
+   "id": "vfx_jakdu_blades",
+   "path": "game/assets/vfx/vfx_jakdu_blades.png",
+   "json": "game/assets/vfx/vfx_jakdu_blades.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jakdu_blades.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    64,
+    32
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    32,
+    28
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:14",
+   "beat_snap": true,
+   "max_concurrent": 2
+  },
+  {
+   "id": "vfx_jakdu_shockwave",
+   "path": "game/assets/vfx/vfx_jakdu_shockwave.png",
+   "json": "game/assets/vfx/vfx_jakdu_shockwave.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jakdu_shockwave.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 4
+  },
+  {
+   "id": "vfx_daejakdu_blades",
+   "path": "game/assets/vfx/vfx_daejakdu_blades.png",
+   "json": "game/assets/vfx/vfx_daejakdu_blades.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_daejakdu_blades.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    48
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    48,
+    42
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:14",
+   "beat_snap": true,
+   "max_concurrent": 2
+  },
+  {
+   "id": "vfx_sainsageom_wave",
+   "path": "game/assets/vfx/vfx_sainsageom_wave.png",
+   "json": "game/assets/vfx/vfx_sainsageom_wave.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sainsageom_wave.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 5,
+   "frame_size": [
+    96,
+    16
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    3,
+    8
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 12
+  },
+  {
+   "id": "vfx_isippalsu_bolt",
+   "path": "game/assets/vfx/vfx_isippalsu_bolt.png",
+   "json": "game/assets/vfx/vfx_isippalsu_bolt.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_isippalsu_bolt.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    16,
+    96
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    90
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 28
+  },
+  {
+   "id": "vfx_isippalsu_constellation",
+   "path": "game/assets/vfx/vfx_isippalsu_constellation.png",
+   "json": "game/assets/vfx/vfx_isippalsu_constellation.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_isippalsu_constellation.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    64,
+    64
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    32,
+    32
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "timing": "fps:10",
+   "beat_snap": false,
+   "max_concurrent": 2
+  },
+  {
+   "id": "vfx_gakgung_arrow",
+   "path": "game/assets/vfx/vfx_gakgung_arrow.png",
+   "json": "game/assets/vfx/vfx_gakgung_arrow.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gakgung_arrow.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 1,
+   "frame_size": [
+    16,
+    4
+   ],
+   "fps": 1,
+   "loop": true,
+   "pivot": [
+    8,
+    2
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "rot16",
+   "beat_snap": true,
+   "max_concurrent": 80,
+   "note": "single frame facing +x; rotate at runtime snapped to 16 directions (rot16)"
+  },
+  {
+   "id": "vfx_gakgung_hit",
+   "path": "game/assets/vfx/vfx_gakgung_hit.png",
+   "json": "game/assets/vfx/vfx_gakgung_hit.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gakgung_hit.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 3,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    4,
+    4
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:20",
+   "beat_snap": false,
+   "max_concurrent": 80
+  },
+  {
+   "id": "vfx_jusahwajeon_arrow",
+   "path": "game/assets/vfx/vfx_jusahwajeon_arrow.png",
+   "json": "game/assets/vfx/vfx_jusahwajeon_arrow.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jusahwajeon_arrow.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 2,
+   "frame_size": [
+    20,
+    8
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    10,
+    4
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 60
+  },
+  {
+   "id": "vfx_jusahwajeon_blast",
+   "path": "game/assets/vfx/vfx_jusahwajeon_blast.png",
+   "json": "game/assets/vfx/vfx_jusahwajeon_blast.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jusahwajeon_blast.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    48,
+    48
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    24,
+    24
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:18",
+   "beat_snap": false,
+   "max_concurrent": 24
+  },
+  {
+   "id": "vfx_jangchang_thrust",
+   "path": "game/assets/vfx/vfx_jangchang_thrust.png",
+   "json": "game/assets/vfx/vfx_jangchang_thrust.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jangchang_thrust.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    80,
+    12
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    2,
+    6
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:20",
+   "beat_snap": true,
+   "max_concurrent": 10
+  },
+  {
+   "id": "vfx_pajinchang_dash",
+   "path": "game/assets/vfx/vfx_pajinchang_dash.png",
+   "json": "game/assets/vfx/vfx_pajinchang_dash.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_pajinchang_dash.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    96,
+    24
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    4,
+    12
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:20",
+   "beat_snap": true,
+   "max_concurrent": 6
+  },
+  {
+   "id": "vfx_pyeongon_swing",
+   "path": "game/assets/vfx/vfx_pyeongon_swing.png",
+   "json": "game/assets/vfx/vfx_pyeongon_swing.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_pyeongon_swing.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 5,
+   "frame_size": [
+    64,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    26,
+    40
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": true,
+   "max_concurrent": 6
+  },
+  {
+   "id": "vfx_byeongnyeok_ring",
+   "path": "game/assets/vfx/vfx_byeongnyeok_ring.png",
+   "json": "game/assets/vfx/vfx_byeongnyeok_ring.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_byeongnyeok_ring.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:16",
+   "beat_snap": false,
+   "max_concurrent": 6
+  },
+  {
+   "id": "vfx_cheoljillyeo_caltrop",
+   "path": "game/assets/vfx/vfx_cheoljillyeo_caltrop.png",
+   "json": "game/assets/vfx/vfx_cheoljillyeo_caltrop.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_cheoljillyeo_caltrop.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 2,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 4,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "blend": "normal",
+   "layer": "L03",
+   "timing": "fps:4",
+   "beat_snap": false,
+   "max_concurrent": 120
+  },
+  {
+   "id": "vfx_cheoljillyeojin_pulse",
+   "path": "game/assets/vfx/vfx_cheoljillyeojin_pulse.png",
+   "json": "game/assets/vfx/vfx_cheoljillyeojin_pulse.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_cheoljillyeojin_pulse.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    64,
+    64
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    32,
+    32
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "timing": "beat:1",
+   "beat_snap": true,
+   "max_concurrent": 6,
+   "note": "6 frames = 1 beat at 120 BPM (fps 12); scale fps = bpm/10 to stay on beat"
+  },
+  {
+   "id": "vfx_hojakdo_talisman",
+   "path": "game/assets/vfx/vfx_hojakdo_talisman.png",
+   "json": "game/assets/vfx/vfx_hojakdo_talisman.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_hojakdo_talisman.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 2,
+   "frame_size": [
+    16,
+    20
+   ],
+   "fps": 4,
+   "loop": true,
+   "pivot": [
+    8,
+    10
+   ],
+   "note": "2-frame flutter loop, fps 4 = 1 beat at 120 BPM; scale fps = bpm/30"
+  },
+  {
+   "id": "vfx_hojakdo_fear_ring",
+   "path": "game/assets/vfx/vfx_hojakdo_fear_ring.png",
+   "json": "game/assets/vfx/vfx_hojakdo_fear_ring.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_hojakdo_fear_ring.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    128,
+    128
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    64,
+    64
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "timing": "fps:14",
+   "beat_snap": true,
+   "max_concurrent": 2,
+   "note": "ink (먹) parts vanish under additive blend; red/gold carry the read"
+  },
+  {
+   "id": "vfx_status_fear",
+   "path": "game/assets/vfx/vfx_status_fear.png",
+   "json": "game/assets/vfx/vfx_status_fear.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_status_fear.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    4,
+    7
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:8",
+   "beat_snap": false,
+   "max_concurrent": 200
+  },
+  {
+   "id": "vfx_sangun_roar",
+   "path": "game/assets/vfx/vfx_sangun_roar.png",
+   "json": "game/assets/vfx/vfx_sangun_roar.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sangun_roar.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    96,
+    64
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    26,
+    52
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "timing": "fps:12",
+   "beat_snap": true,
+   "max_concurrent": 1,
+   "note": "ink (먹) parts vanish under additive blend; red/gold carry the read"
+  },
+  {
+   "id": "vfx_hanji_ribbon_shader",
+   "path": "game/shaders/vfx_hanji_ribbon.gdshader",
+   "kind": "shader",
+   "source": "handwritten",
+   "license": "original (project-made)",
+   "status": "done",
+   "note": "Line2D canvas_item shader for vfx_sinkal_tassel_trail: pixel-snapped flutter, Bayer-dithered tail tear"
+  }
+ ]
+}

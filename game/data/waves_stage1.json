@@ -1,0 +1,2245 @@
+{
+  "schema_version": "1.2",
+  "canon_v1_2_log": [
+    "캐논 v1.2 / 16 C·D 반영 (2026-11-22): geori_dwitjeon_rules.note 표시명 '선바위 굿당'"
+  ],
+  "doc": "design/08-stages-waves.md 8장 (stage_guksadang 표준 굿판). v1.1 리뷰 반영: 시간 배율(hp/dmg/spd_mult) 삭제 — 한·접촉·속도 시간 곡선은 data/enemies.json scaling(T_han/C_damage/V_speed, 07 소유)만 사용. 시련 시각·가중치는 06 정본 사본. 정예는 이 파일 elites가 표준 모드 단일 출처. min_alive(=target)/interval/batch는 스테이지 배율 적용 전 기준값. 주기 공급 ≈ combat_core kills_per_min × 1.0~1.25. v1.2(캐논 v1.2, 2026-11-21): 시련 4슬롯 180/390/750/930 + 합일 1080(모신 신령 전원), TRIAL 30·DESCEND 8, 살 우세 정산 '살 거둠', 손님신 ID 교체(boss_yeokryeo·elite_yeokgwi_ttae), 3분박 1/3박 그리드, 살기 연속식, 작두거리 순서 18:20 행렬→18:35 작두 40초.",
+  "stage_id": "stage_guksadang",
+  "mode_id": "mode_pyojun",
+  "duration_sec": 1200,
+  "boss_time_sec": 1200,
+  "forced_saja_sec": 1380,
+  "giun_hint": {
+    "first_run_sec": 652,
+    "later_sec": 120,
+    "doc": "onboarding_hints hint_giun: waves 가 Events.hint_requested(&\"giun\") 로 ui 길잡이(UiCopy.HINT.giun)에 청한다. 시련 예고·시련·중간보스 중이면 끝날 때까지 미룬다."
+  },
+  "first_run_assist": {
+    "enabled": true,
+    "runs_done_lt": 2,
+    "until_sec": 180,
+    "spawn_budget_mult": 0.8,
+    "no_wongwi_return": true,
+    "replace_elites": {
+      "elite_eodukssini": "elite_geogu_gwi"
+    },
+    "doc": "onboarding_hints.json rules.first_gutpan_assist 의 값싼 부분(마감 빌드). 조건: Save.first_run_pending() 또는 Save.runs_done() < runs_done_lt. 00:00~until_sec 스폰 목표 ×spawn_budget_mult, 어둑시니 정예 → 거구귀, 원귀 회귀 끔(haewon 이 SpawnDirector.assist_no_wongwi 를 본다). 12분 초굿 모드는 이번 빌드에서 숨김."
+  },
+  "multipliers": {
+    "stage_density": 1.0,
+    "stage_hp": 1.0,
+    "stage_dmg": 1.0,
+    "time_curves_owner": "data/enemies.json#scaling",
+    "formula": {
+      "han": "base_han * T(m) * stage_hp * S(salgi) * ladder_hp * event_hp",
+      "contact": "base_dmg * C(m) * stage_dmg",
+      "speed_common": "min(base_spd * V(m) * ladder_spd, base_spd * 1.15, common_speed_abs_cap)"
+    }
+  },
+  "director": {
+    "tick_hz": 60,
+    "cap_alive": 400,
+    "event_cap_bonus": 80,
+    "refill_per_tick": 12,
+    "spawn_ring": {
+      "r_min": 12.5,
+      "r_max": 15.0,
+      "dir_weights": {
+        "front_cone_deg": 60,
+        "front": 0.5,
+        "side": 0.35,
+        "back": 0.15
+      },
+      "idle_uniform_after_sec": 2.0,
+      "max_retries": 6
+    },
+    "recycle_radius": 22.0,
+    "recycle_exempt_tags": [
+      "elite",
+      "midboss",
+      "boss",
+      "event"
+    ],
+    "window_mult": {
+      "trial_warn": 0.8,
+      "trial": 0.6,
+      "post_trial": 0.7,
+      "post_trial_sec": 15,
+      "post_trial_ramp_sec": 10,
+      "midboss": 0.5
+    },
+    "salgi_effect_mode": "continuous",
+    "salgi_continuous": {
+      "spawn_per_point": 0.005,
+      "elite_chance_per_point": 0.005,
+      "han_per_point": 0.002,
+      "source": "canon v1.2 D-16 (= data/combat_core.json salgi continuous)"
+    },
+    "elite_trial_exclusion_sec": 10,
+    "elite_defer_if_in_trial": true,
+    "floor_ratio": 0.5,
+    "periodic_skip_if_alive_gte_target": true,
+    "periodic_interval_divided_by_window_mult": true,
+    "common_speed_abs_cap": 3.6,
+    "refill_note": "alive < target*floor_ratio 이면 틱당 최대 refill_per_tick 보충. 주기 공급은 alive >= target 이면 생략(08 5.1)",
+    "wongwi_defer_during_midboss": true
+  },
+  "first_appear_sec": {
+    "enm_dalgyal_gwisin": 0,
+    "enm_agwi": 0,
+    "enm_gaekgwi": 60,
+    "enm_cheonyeo_gwisin": 180,
+    "enm_mongdal_gwisin": 180,
+    "enm_mul_gwisin": 210,
+    "enm_hosik_wonhon": 240,
+    "enm_dokkaebi_bul": 360,
+    "enm_yeongsan": 390,
+    "enm_sangmun": 480,
+    "enm_subi": 720,
+    "enm_hwehwe_gwisin": 750,
+    "elite_eodukssini": 450
+  },
+  "geori": [
+    {
+      "id": "geori_jutang_bujeong",
+      "start_sec": 0,
+      "end_sec": 180,
+      "jangdan": "jinyangjo",
+      "bpm": 45,
+      "quant_grid": 0.25,
+      "grid_div": 4,
+      "music_switch": "6beat",
+      "bgm_cue": "mus_guksadang_jinyang",
+      "display_name_key": "geori_jutang_bujeong.name",
+      "name_ko": "주당물림·부정거리",
+      "jangdan_ko": "진양조",
+      "subtitle_ko": "굿판의 부정을 가시고 잡귀를 물린다"
+    },
+    {
+      "id": "geori_gamang_sansin",
+      "start_sec": 180,
+      "end_sec": 360,
+      "jangdan": "jungmori",
+      "bpm": 80,
+      "quant_grid": 0.5,
+      "grid_div": 2,
+      "music_switch": "bar",
+      "bgm_cue": "mus_guksadang_jungmori",
+      "display_name_key": "geori_gamang_sansin.name",
+      "name_ko": "가망청배·산신거리",
+      "jangdan_ko": "중모리",
+      "subtitle_ko": "신을 청해 모신다 — 산이 운다"
+    },
+    {
+      "id": "geori_byeolsang_daegam_jeseok",
+      "start_sec": 360,
+      "end_sec": 720,
+      "jangdan": "jungjungmori",
+      "bpm": 95,
+      "quant_grid": 0.3333,
+      "grid_div": 3,
+      "music_switch": "bar",
+      "bgm_cue": "mus_guksadang_jungjungmori",
+      "display_name_key": "geori_byeolsang_daegam_jeseok.name",
+      "name_ko": "별상·대감·제석거리",
+      "jangdan_ko": "중중모리",
+      "subtitle_ko": "손님이 들고 복을 비는 거리"
+    },
+    {
+      "id": "geori_janggun_gunung_changbu",
+      "start_sec": 720,
+      "end_sec": 1080,
+      "jangdan": "jajinmori",
+      "bpm": 120,
+      "quant_grid": 0.3333,
+      "grid_div": 3,
+      "music_switch": "bar",
+      "bgm_cue": "mus_guksadang_jajinmori",
+      "display_name_key": "geori_janggun_gunung_changbu.name",
+      "name_ko": "장군·군웅·창부거리",
+      "jangdan_ko": "자진모리",
+      "subtitle_ko": "장군이 칼을 들고 굿판을 지킨다"
+    },
+    {
+      "id": "geori_jakdu",
+      "start_sec": 1080,
+      "end_sec": 1155,
+      "jangdan": "danmori",
+      "bpm": 160,
+      "quant_grid": 0.5,
+      "grid_div": 2,
+      "music_switch": "bar",
+      "bgm_cue": "mus_guksadang_hapil_sinawi",
+      "display_name_key": "geori_jakdu.name",
+      "name_ko": "작두거리",
+      "jangdan_ko": "단모리",
+      "subtitle_ko": "신령이 모두 내려 작두를 탄다"
+    },
+    {
+      "id": "geori_dwitjeon",
+      "start_sec": 1155,
+      "end_sec": 1200,
+      "jangdan": "jinobangjin",
+      "bpm": 180,
+      "quant_grid": 0.5,
+      "grid_div": 2,
+      "music_switch": "bar",
+      "bgm_cue": "mus_guksadang_dwitjeon",
+      "display_name_key": "geori_dwitjeon.name__stage_guksadang",
+      "name_ko": "뒷전",
+      "jangdan_ko": "당악",
+      "subtitle_ko": "남은 잡귀잡신을 풀어 먹여 보낸다"
+    },
+    {
+      "id": "geori_myeongbu",
+      "start_sec": 1200,
+      "end_sec": null,
+      "jangdan": "boss",
+      "bpm": null,
+      "quant_grid": 0.5,
+      "grid_div": 2,
+      "music_switch": "immediate",
+      "bgm_cue": "mus_boss_yeokryeo_{form}",
+      "display_name_key": "geori_myeongbu.name",
+      "name_ko": "명부 대면",
+      "jangdan_ko": "보스 장단",
+      "subtitle_ko": "저승의 큰 손님을 맞는다"
+    }
+  ],
+  "tempo_heung_accel_max": 0.08,
+  "trials": [
+    {
+      "slot": 1,
+      "time_sec": 180,
+      "warn_sec": 10,
+      "type": "trial",
+      "momju_guaranteed": true,
+      "stage_weight": {
+        "deity_sansin": 1.2,
+        "deity_janggun": 1.2
+      }
+    },
+    {
+      "slot": 2,
+      "time_sec": 390,
+      "warn_sec": 10,
+      "type": "trial",
+      "momju_guaranteed": false,
+      "stage_weight": {
+        "deity_sansin": 1.2,
+        "deity_janggun": 1.2
+      }
+    },
+    {
+      "slot": 3,
+      "time_sec": 750,
+      "warn_sec": 10,
+      "type": "trial",
+      "momju_guaranteed": false,
+      "stage_weight": {
+        "deity_sansin": 1.2,
+        "deity_janggun": 1.2
+      }
+    },
+    {
+      "slot": 4,
+      "time_sec": 930,
+      "warn_sec": 10,
+      "type": "trial",
+      "momju_guaranteed": false,
+      "stage_weight": {
+        "deity_sansin": 1.2,
+        "deity_janggun": 1.2
+      }
+    },
+    {
+      "slot": 5,
+      "time_sec": 1080,
+      "warn_sec": 10,
+      "type": "hapil",
+      "momju_guaranteed": false,
+      "stage_weight": {},
+      "participants": "all_enshrined"
+    }
+  ],
+  "trial_rules": {
+    "avatar_circle_offset": 8.0,
+    "avatar_circle_radius": 6.0,
+    "min_passable_ratio": 0.8,
+    "rotate_step_deg": 45,
+    "pull_in_step": 2.0,
+    "max_duration_sec": 30,
+    "event_exclusion": {
+      "before_sec": 15,
+      "after_sec": 55
+    },
+    "descend_max_sec": 8,
+    "face_resolution": "dual_gauge_first_full",
+    "retreat_unpicked_next_trials": 1,
+    "source": "canon v1.2 D-01 (06-deities-possession.md 3.2 timing table)"
+  },
+  "minutes": [
+    {
+      "minute": 0,
+      "min_alive": 12,
+      "interval_sec": 2.0,
+      "batch": 1,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 70
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 30
+        }
+      ],
+      "pool_windows": [
+        {
+          "from_sec": 0,
+          "to_sec": 20,
+          "min_alive": 16,
+          "pool": [
+            {
+              "id": "enm_agwi",
+              "weight": 80
+            },
+            {
+              "id": "enm_dalgyal_gwisin",
+              "weight": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "minute": 1,
+      "min_alive": 24,
+      "interval_sec": 1.2,
+      "batch": 1,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 55
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 25
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 20
+        }
+      ]
+    },
+    {
+      "minute": 2,
+      "min_alive": 36,
+      "interval_sec": 1.6,
+      "batch": 2,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 50
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 25
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 25
+        }
+      ]
+    },
+    {
+      "minute": 3,
+      "min_alive": 30,
+      "interval_sec": 1.2,
+      "batch": 2,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 35
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 15
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 20
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 20
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10,
+          "from_sec": 210
+        }
+      ]
+    },
+    {
+      "minute": 4,
+      "min_alive": 50,
+      "interval_sec": 1.0,
+      "batch": 2,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 25
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 15
+        }
+      ]
+    },
+    {
+      "minute": 5,
+      "min_alive": 64,
+      "interval_sec": 1.3,
+      "batch": 3,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 20
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 20
+        }
+      ]
+    },
+    {
+      "minute": 6,
+      "min_alive": 56,
+      "interval_sec": 1.1,
+      "batch": 3,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 15
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10,
+          "from_sec": 390
+        }
+      ]
+    },
+    {
+      "minute": 7,
+      "min_alive": 90,
+      "interval_sec": 0.95,
+      "batch": 3,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 5
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 8,
+      "min_alive": 110,
+      "interval_sec": 1.1,
+      "batch": 4,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 9,
+      "min_alive": 100,
+      "interval_sec": 1.0,
+      "batch": 4,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 10,
+      "min_alive": 70,
+      "interval_sec": 0.95,
+      "batch": 4,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 11,
+      "min_alive": 150,
+      "interval_sec": 1.1,
+      "batch": 5,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 15
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 12,
+      "min_alive": 140,
+      "interval_sec": 0.95,
+      "batch": 5,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 5
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 25
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 13,
+      "min_alive": 190,
+      "interval_sec": 1.05,
+      "batch": 6,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 5
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 15
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 5
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10,
+          "from_sec": 805
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "minute": 14,
+      "min_alive": 220,
+      "interval_sec": 0.95,
+      "batch": 6,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 5
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 15
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 5
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "minute": 15,
+      "min_alive": 200,
+      "interval_sec": 0.9,
+      "batch": 6,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mul_gwisin",
+          "weight": 5
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 15
+        },
+        {
+          "id": "enm_gaekgwi",
+          "weight": 5
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "minute": 16,
+      "min_alive": 260,
+      "interval_sec": 0.95,
+      "batch": 7,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 15
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 17,
+      "min_alive": 300,
+      "interval_sec": 0.9,
+      "batch": 7,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_hosik_wonhon",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 15
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 18,
+      "min_alive": 340,
+      "interval_sec": 0.95,
+      "batch": 8,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_mongdal_gwisin",
+          "weight": 15
+        },
+        {
+          "id": "enm_cheonyeo_gwisin",
+          "weight": 10
+        },
+        {
+          "id": "enm_dokkaebi_bul",
+          "weight": 10
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 10
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 10
+        },
+        {
+          "id": "enm_subi",
+          "weight": 20
+        },
+        {
+          "id": "enm_hwehwe_gwisin",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "minute": 19,
+      "min_alive": 380,
+      "interval_sec": 1.0,
+      "batch": 9,
+      "hostile": true,
+      "pool": [
+        {
+          "id": "enm_subi",
+          "weight": 30
+        },
+        {
+          "id": "enm_yeongsan",
+          "weight": 15
+        },
+        {
+          "id": "enm_sangmun",
+          "weight": 15
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 20
+        },
+        {
+          "id": "enm_agwi",
+          "weight": 20
+        }
+      ],
+      "spawn_stop_sec": 1195,
+      "hostile_rules": [
+        {
+          "from_sec": 1140,
+          "to_sec": 1155,
+          "hostile": true
+        },
+        {
+          "from_sec": 1155,
+          "to_sec": 1200,
+          "hostile": "offering_gated"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "time_sec": 20,
+      "id": "evt_pullil_demo",
+      "params": {
+        "species": "enm_dalgyal_gwisin",
+        "count": 8,
+        "distance": 7.0,
+        "shape": "arc",
+        "han_ratio": 1.0,
+        "show_arrow": false
+      }
+    },
+    {
+      "time_sec": 40,
+      "id": "evt_pullil_demo",
+      "condition": "no_haewon_yet",
+      "params": {
+        "species": "enm_dalgyal_gwisin",
+        "count": 4,
+        "distance": 7.0,
+        "han_ratio": 0.35,
+        "show_arrow": false
+      }
+    },
+    {
+      "time_sec": 120,
+      "id": "evt_ttemolli",
+      "params": {
+        "groups": [
+          {
+            "species": [
+              "enm_dalgyal_gwisin"
+            ],
+            "count": 24,
+            "speed": 2.2,
+            "width": 4.0,
+            "direction": "perp"
+          }
+        ]
+      }
+    },
+    {
+      "time_sec": 300,
+      "id": "evt_changgwi_haengnyeol",
+      "params": {
+        "leader": "enm_hosik_wonhon",
+        "leader_count": 4,
+        "shield": "enm_dalgyal_gwisin",
+        "shield_count": 16,
+        "direction_deg": 270,
+        "from": "north",
+        "speed": 1.8
+      }
+    },
+    {
+      "time_sec": 470,
+      "id": "evt_ewossagi",
+      "params": {
+        "shape": "ring",
+        "species": [
+          "enm_yeongsan"
+        ],
+        "count": 28,
+        "radius": 9.0,
+        "shrink_speed": 0.8,
+        "stop_radius": 3.0,
+        "gaps": 1,
+        "gap_width": 2.5
+      }
+    },
+    {
+      "time_sec": 575,
+      "id": "evt_ttemolli",
+      "params": {
+        "groups": [
+          {
+            "species": [
+              "enm_gaekgwi"
+            ],
+            "count": 20,
+            "speed": 2.4,
+            "width": 4.0,
+            "direction": "perp"
+          },
+          {
+            "species": [
+              "enm_gaekgwi"
+            ],
+            "count": 20,
+            "speed": 2.4,
+            "width": 4.0,
+            "direction": "perp_opposite"
+          }
+        ]
+      }
+    },
+    {
+      "time_sec": 840,
+      "id": "evt_ewossagi",
+      "params": {
+        "shape": "ring",
+        "species": [
+          "enm_subi"
+        ],
+        "count": 40,
+        "radius": 10.0,
+        "shrink_speed": 1.0,
+        "stop_radius": 3.0,
+        "gaps": 1,
+        "gap_width": 2.5
+      }
+    },
+    {
+      "time_sec": 1020,
+      "id": "evt_ttemolli",
+      "params": {
+        "groups": [
+          {
+            "species": [
+              "enm_dalgyal_gwisin"
+            ],
+            "count": 60,
+            "speed": 2.2,
+            "width": 6.0,
+            "direction_deg": 180,
+            "from": "east"
+          },
+          {
+            "species": [
+              "enm_mongdal_gwisin"
+            ],
+            "count": 20,
+            "speed": 2.6,
+            "width": 3.0,
+            "direction_deg": 270,
+            "from": "north"
+          }
+        ]
+      }
+    },
+    {
+      "time_sec": 1125,
+      "id": "evt_ewossagi",
+      "params": {
+        "shape": "ring",
+        "species": [
+          "enm_dalgyal_gwisin",
+          "enm_mongdal_gwisin",
+          "enm_subi"
+        ],
+        "count": 60,
+        "radius": 11.0,
+        "shrink_speed": 1.0,
+        "stop_radius": 3.0,
+        "gaps": 2,
+        "gap_width": 2.5
+      }
+    },
+    {
+      "time_sec": 1155,
+      "id": "evt_sangcharim",
+      "params": {
+        "ref": "geori_dwitjeon_rules"
+      }
+    }
+  ],
+  "elites": [
+    {
+      "time_sec": 420,
+      "id": "elite_geogu_gwi",
+      "count": 1,
+      "placement": "ring",
+      "defer_if_in_trial": true
+    },
+    {
+      "time_sec": 450,
+      "id": "elite_eodukssini",
+      "count": 1,
+      "placement": "darkest_fog_edge",
+      "tutorial_card": "eodukssini"
+    },
+    {
+      "time_sec": 485,
+      "id": "elite_bulgasari",
+      "count": 1,
+      "placement": "ring"
+    },
+    {
+      "time_sec": 695,
+      "id": "elite_geogu_gwi",
+      "count": 1,
+      "placement": "ring",
+      "defer_if_midboss_alive": true
+    },
+    {
+      "time_sec": 695,
+      "id": "elite_bulgasari",
+      "count": 1,
+      "placement": "ring",
+      "defer_if_midboss_alive": true
+    },
+    {
+      "time_sec": 810,
+      "id": "elite_dueoksini",
+      "count": 1,
+      "placement": "ring"
+    },
+    {
+      "time_sec": 810,
+      "id": "elite_yeokgwi_ttae",
+      "count": 1,
+      "placement": "ring",
+      "gongsu_key": "stage_guksadang.gongsu.sonnim_1"
+    },
+    {
+      "time_sec": 860,
+      "id": "elite_eodukssini",
+      "count": 1,
+      "placement": "darkest_fog_edge"
+    },
+    {
+      "time_sec": 960,
+      "id": "elite_dueoksini",
+      "count": 2,
+      "placement": "ring",
+      "defer_if_in_trial": true
+    },
+    {
+      "time_sec": 990,
+      "id": "elite_yeokgwi_ttae",
+      "count": 2,
+      "placement": "ring",
+      "gongsu_key": "stage_guksadang.gongsu.sonnim_2"
+    },
+    {
+      "time_sec": 1050,
+      "id": "elite_eodukssini",
+      "variant": "elite_eodukssini__small",
+      "fallback": "elite_eodukssini",
+      "count": 2,
+      "placement": "darkest_fog_edge"
+    }
+  ],
+  "midboss": {
+    "time_sec": 600,
+    "pool": [
+      "mboss_daegwi",
+      "mboss_dokkaebi"
+    ],
+    "weights": [
+      50,
+      50
+    ],
+    "rng_stream": "rng_mboss",
+    "intro_sec": 2.0,
+    "time_limit_sec": 90,
+    "post_breather_sec": 20,
+    "post_breather_mult": 0.7,
+    "bgm_cue": {
+      "mboss_daegwi": "mus_mboss_daegwi",
+      "mboss_dokkaebi": "mus_mboss_dokkaebi"
+    },
+    "stinger": "stg_mboss_enter",
+    "time_limit_includes_intro": true,
+    "unresolved": {
+      "action": "exit_offscreen",
+      "reward": "none",
+      "salgi_delta": 0,
+      "line_key": "mboss.unresolved_exit"
+    },
+    "maetim_clock": "07 2.7.1 정의를 따름(캐논 3.2.2 개정 대기)"
+  },
+  "boss": {
+    "id": "boss_yeokryeo",
+    "pre_clear_sec": 1198,
+    "pre_clear_rule": {
+      "pullil": "haewon",
+      "other": "toesong",
+      "toesong_orb_ratio": 0.5
+    },
+    "silence_sec": 2.0,
+    "arena": {
+      "object": "obj_geumjul_gutcheong",
+      "radius": 11.0,
+      "outside_speed_mult": 0.5,
+      "pull_speed": 0.8
+    },
+    "form_rule": {
+      "han_if_neok_ratio_gte": 0.70,
+      "sal_if_neok_ratio_lte": 0.60,
+      "tiebreak_salgi_gte_for_sal": 50,
+      "note": "2026-11-24 리뷰: 보통 플레이 N 0.76~0.87 → 늘 한형이던 것을 한 ≥0.70 / 살 ≤0.60, 사이는 살기 50 판정으로. enemies.json boss_common.form_rule 과 같은 값이어야 한다(실제 판정은 enemies _boss_init)."
+    },
+    "forms": {
+      "han": "boss_yeokryeo__form_han",
+      "sal": "boss_yeokryeo__form_sal"
+    },
+    "adds": {
+      "min_alive": 40,
+      "interval_sec": 1.0,
+      "batch": 3,
+      "pool": [
+        {
+          "id": "enm_subi",
+          "weight": 60
+        },
+        {
+          "id": "enm_dalgyal_gwisin",
+          "weight": 40
+        }
+      ]
+    },
+    "plague_floor_cover_max": 0.4,
+    "gopuri_knot_ring": {
+      "r_min": 4.0,
+      "r_max": 9.0,
+      "count": 7
+    },
+    "spawn_stop_sec": 1195,
+    "spawn_dist_u": 8.0,
+    "intro_sec": 2.0
+  },
+  "settlement": {
+    "geori": "geori_myeongbu",
+    "saja_id": "chaser_jeoseung_saja",
+    "neok_dominant": "saja_bow",
+    "sal_dominant": "sal_geodum",
+    "sal_geodum": {
+      "saja_hostile": false,
+      "saja_chases": false,
+      "saja_contact_damage": false,
+      "lumps": 3,
+      "collect_sec_per_lump": 30,
+      "base_total_sec": 90,
+      "extension_room_sec": 180,
+      "extension_note": "180초는 살 맺힘 단 확장 여지로만"
+    },
+    "ref": "data/combat_core.json#run_end.E3_sal_geodum",
+    "bgm_cue": "mus_myeongbu_buk_solo"
+  },
+  "hazards": [
+    {
+      "id": "haz_san_angae",
+      "params": {
+        "shape": "ellipse",
+        "size": [
+          8.0,
+          5.0
+        ],
+        "drift_speed": 0.6,
+        "drift_dir_change_sec": 60,
+        "gather_sec": 4.0,
+        "disperse_sec": 3.0,
+        "light_radius_mult": 0.6,
+        "darkness_bonus": 0.3,
+        "auto_candles_per_bank": 2,
+        "candle_lit_disperses": true
+      },
+      "windows": [
+        {
+          "start_sec": 420,
+          "end_sec": 495,
+          "count": 2
+        },
+        {
+          "start_sec": 850,
+          "end_sec": 880,
+          "count": 1
+        },
+        {
+          "start_sec": 1050,
+          "end_sec": 1080,
+          "count": 3
+        }
+      ]
+    }
+  ],
+  "map": {
+    "structure": "A_infinite",
+    "chunk_size": 24,
+    "active_chunks": 3,
+    "pregen_chunks": 5,
+    "origin_chunk": "authored_guksadang_madang",
+    "sacred_radius": 10.0,
+    "ground_noise": {
+      "octaves": 4,
+      "lacunarity": 2.0,
+      "gain": 0.5,
+      "frequency": 0.035,
+      "thresholds": [
+        {
+          "lt": 0.3,
+          "class": "rough"
+        },
+        {
+          "lt": 0.75,
+          "class": "ground"
+        },
+        {
+          "lt": 1.01,
+          "class": "ground",
+          "obstacle_density_mult": 2.0
+        }
+      ]
+    },
+    "trail_path": {
+      "formula": "y = 6*sin(x/23)",
+      "width": 2.0,
+      "class": "path",
+      "speed_bonus": 0.1
+    },
+    "fortress_wall": {
+      "x_formula": "40 + 96*k",
+      "thickness": 1.5,
+      "height": "high",
+      "gate_spacing": 18.0,
+      "gate_width": 3.0
+    },
+    "obstacles": {
+      "poisson_r": 5.0,
+      "k_attempts": 20,
+      "neighbor_aware": true,
+      "table": [
+        {
+          "kind": "pine",
+          "height": "low",
+          "size": [
+            1,
+            1
+          ],
+          "weight": 55
+        },
+        {
+          "kind": "rock",
+          "height": "low",
+          "size": [
+            2,
+            2
+          ],
+          "weight": 30
+        },
+        {
+          "kind": "boulder",
+          "height": "high",
+          "size": [
+            3,
+            3
+          ],
+          "weight": 10
+        },
+        {
+          "kind": "stone_cairn_ruin",
+          "height": "low",
+          "size": [
+            1,
+            1
+          ],
+          "weight": 5
+        }
+      ]
+    },
+    "validation": {
+      "min_passable_ratio": 0.78,
+      "portal_connectivity": true,
+      "fill_pockets": true,
+      "ring_space": {
+        "radius": 3.5,
+        "min_count": 2
+      },
+      "min_gap": 1.6,
+      "max_repair_attempts": 3,
+      "fallback": "empty_chunk"
+    }
+  },
+  "objects": {
+    "per_chunk": {
+      "obj_bujeong_dok__skin_guksadang": 1.2,
+      "obj_kkeojin_chotdae__skin_guksadang": 0.8,
+      "pick_gongmul": 0.25
+    },
+    "obj_seonangdang": {
+      "chunk_chance": 0.06,
+      "min_spacing": 60.0
+    },
+    "obj_seonbawi": {
+      "position": [
+        6.0,
+        12.0
+      ],
+      "radius": 4.0,
+      "neok_bonus_per_haewon": 1,
+      "neok_bonus_cap": 30
+    },
+    "guaranteed": [
+      {
+        "time_sec": 105,
+        "id": "obj_bujeong_dok__skin_guksadang",
+        "distance": 6.0,
+        "forced_drop": "pick_gongmul"
+      },
+      {
+        "time_sec": 270,
+        "id": "obj_bujeong_dok__skin_guksadang",
+        "distance": 6.0
+      }
+    ],
+    "bujeong_dok_drops": [
+      {
+        "id": "pick_gongmul",
+        "weight": 38,
+        "low_hp_mult": 1.5,
+        "low_hp_threshold": 0.5
+      },
+      {
+        "id": "cur_wonhon_guseul__large",
+        "weight": 24
+      },
+      {
+        "id": "pick_hosinbu",
+        "weight": 14,
+        "after_sec_mult": {
+          "after_sec": 750,
+          "mult": 1.5
+        }
+      },
+      {
+        "id": "cur_yeopjeon",
+        "weight": 12,
+        "amount": 2
+      },
+      {
+        "id": "pick_chohon_bal",
+        "weight": 8,
+        "run_cap": 3
+      },
+      {
+        "id": "pick_myeongjul_sil",
+        "weight": 2,
+        "run_cap": 1
+      },
+      {
+        "id": "none",
+        "weight": 2
+      }
+    ],
+    "mercy_gongmul": {
+      "hp_threshold": 0.3,
+      "cooldown_sec": 45,
+      "distance": [
+        6.0,
+        9.0
+      ],
+      "run_cap": 4
+    },
+    "deungbul": {
+      "per_haewon": 100,
+      "max": 8,
+      "light_radius_per": 0.75,
+      "world_prop_offset_back": 2.5
+    }
+  },
+  "geori_dwitjeon_rules": {
+    "gongmulsang_count": 7,
+    "layout": "hex",
+    "spacing": 3.5,
+    "center_offset_forward": 5.0,
+    "effect_radius": 3.0,
+    "han_drain_per_sec": 0.05,
+    "bind_min": 3,
+    "daehaewon_max": 4,
+    "bonus": {
+      "3": 1.0,
+      "5": 1.5,
+      "7": 2.0
+    },
+    "consume_on_bind": true,
+    "note": "선바위 굿당 강화값(8.9). 표준은 effect_radius 2.5, han_drain 0.04, daehaewon_max 3, hungry_after_sec 20. 공물상 1개 = 음복 2회분.",
+    "start_sec": 1155,
+    "servings_per_gongmulsang": 2,
+    "hostile_rule": "offering_gated",
+    "hungry_after_sec": 25,
+    "hungry_speed_mult": 1.2,
+    "hungry_speed_clamp": "director.common_speed_abs_cap"
+  },
+  "scripted": [
+    {
+      "time_sec": 0,
+      "id": "intro_black_screen",
+      "ambient": 0.1
+    },
+    {
+      "time_sec": 3,
+      "id": "intro_janggu_deong_light",
+      "ambient_to": 0.3
+    },
+    {
+      "time_sec": 5,
+      "id": "first_spawn",
+      "species": "enm_agwi",
+      "count": 8,
+      "shape": "arc",
+      "distance": 9.0
+    },
+    {
+      "time_sec": 30,
+      "id": "momju_white_weapon_grant",
+      "with_arrow_hint": true
+    },
+    {
+      "time_sec": 90,
+      "id": "ring_guide_dotted_circle",
+      "radius": 3.0
+    },
+    {
+      "time_sec": 170,
+      "id": "gongsu_warn",
+      "key": "stage_guksadang.gongsu.trial_1"
+    },
+    {
+      "time_sec": 1070,
+      "id": "gongsu_warn_hapil",
+      "key": "gongsu.hapil_warn"
+    },
+    {
+      "time_sec": 1072,
+      "id": "stinger",
+      "cue": "stg_hapil_buildup"
+    },
+    {
+      "time_sec": 1080,
+      "id": "hapil",
+      "hero_window_sec": 2.0
+    },
+    {
+      "time_sec": 1100,
+      "id": "sm_jakdu_last_procession",
+      "duration_sec": 70,
+      "hero_window_sec": 2.0
+    },
+    {
+      "time_sec": 1115,
+      "id": "jakdu_ganglim",
+      "duration_sec": 40,
+      "hero_window_sec": 2.0
+    },
+    {
+      "time_sec": 1185,
+      "id": "gongsu",
+      "key": "stage_guksadang.gongsu.dwitjeon_send"
+    }
+  ],
+  "lighting": [
+    {
+      "start_sec": 0,
+      "ambient": 0.1
+    },
+    {
+      "start_sec": 3,
+      "ambient": 0.3
+    },
+    {
+      "start_sec": 360,
+      "ambient": 0.26
+    },
+    {
+      "start_sec": 420,
+      "ambient": 0.22
+    },
+    {
+      "start_sec": 495,
+      "ambient": 0.26
+    },
+    {
+      "start_sec": 720,
+      "ambient": 0.3
+    },
+    {
+      "start_sec": 1050,
+      "ambient": 0.2
+    },
+    {
+      "start_sec": 1080,
+      "ambient": 0.55
+    },
+    {
+      "start_sec": 1155,
+      "ambient": 0.6
+    },
+    {
+      "start_sec": 1200,
+      "ambient": 0.15
+    },
+    {
+      "start_sec": 1202,
+      "ambient": 0.35
+    }
+  ],
+  "player_light": {
+    "base_radius": 4.5,
+    "intensity": 0.85
+  },
+  "telemetry_keys": [
+    "tl_minute_snapshot",
+    "tl_death",
+    "tl_event_outcome",
+    "tl_hazard_exposure",
+    "tl_dwitjeon",
+    "tl_trial_place",
+    "tl_chunk_fallback",
+    "tl_free_roam",
+    "tl_opening",
+    "tl_supply",
+    "tl_eodukssini"
+  ],
+  "trials_source": "06-deities-possession.md 3.2(시각, 캐논 v1.2 D-01 확정) / 4.3(가중치 정본)",
+  "proposed_events": [
+    {
+      "status": "proposed",
+      "owner_def": "07",
+      "time_sec": 825,
+      "id": "evt_maeteun_tte",
+      "params": {
+        "species": "enm_yeongsan",
+        "count": 10,
+        "shared_han": true,
+        "rupture": false,
+        "group_giseak": true
+      }
+    },
+    {
+      "status": "proposed",
+      "owner_def": "07",
+      "time_sec": 975,
+      "id": "evt_maetim_kkeopjil",
+      "params": {
+        "groups": [
+          {
+            "species": "enm_sangmun",
+            "count": 4
+          },
+          {
+            "species": "enm_hwehwe_gwisin",
+            "count": 2
+          }
+        ],
+        "white_dmg_mult_shell": 0.3,
+        "shell_break_red_ratio": 0.25
+      }
+    },
+    {
+      "status": "proposed",
+      "owner_def": "07",
+      "time_sec": 1005,
+      "id": "evt_maeteun_tte",
+      "params": {
+        "species": "enm_dalgyal_gwisin",
+        "count": 12,
+        "shared_han": true,
+        "rupture": false,
+        "group_giseak": true
+      }
+    }
+  ],
+  "elites_rules": {
+    "single_source_for": [
+      "mode_pyojun",
+      "mode_jajinmori",
+      "mode_oneul",
+      "mode_chogut"
+    ],
+    "enemies_json_elite_timer_only_for": [
+      "mode_muhan",
+      "modes_without_elite_table"
+    ],
+    "salgi_extra_elite_variant": {
+      "elite_eodukssini": "elite_eodukssini__small"
+    },
+    "regular_eodukssini_per_run_max": 2
+  },
+  "derived": {
+    "kills_target_per_min": [
+      30,
+      45,
+      60,
+      85,
+      100,
+      115,
+      140,
+      160,
+      180,
+      200,
+      215,
+      230,
+      260,
+      285,
+      310,
+      335,
+      360,
+      380,
+      420,
+      450
+    ],
+    "kills_target_source": "data/combat_core.json curves_assumption.kills_per_min (02 소유, 사본)",
+    "supply_per_min": [
+      30,
+      50,
+      75,
+      100,
+      120,
+      138,
+      164,
+      189,
+      218,
+      240,
+      253,
+      273,
+      316,
+      343,
+      379,
+      400,
+      442,
+      467,
+      505,
+      540
+    ],
+    "elites_per_min": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      1,
+      0,
+      0,
+      2,
+      0,
+      2,
+      1,
+      0,
+      4,
+      2,
+      0,
+      0
+    ],
+    "elites_total": 14,
+    "chest_clock_cumulative_sec": {
+      "420": 1,
+      "510": 3,
+      "600": 3,
+      "700": 6,
+      "810": 8,
+      "870": 9,
+      "990": 13,
+      "1060": 15,
+      "1200": 15
+    },
+    "salgi_forecast": {
+      "toechi_90": {
+        "end": 110,
+        "wongwi_sec": [
+          626,
+          810,
+          989
+        ]
+      },
+      "mixed_50": {
+        "end": 56,
+        "wongwi_sec": [
+          808,
+          1102
+        ]
+      },
+      "haewon_15": {
+        "end": 15,
+        "wongwi_sec": []
+      }
+    }
+  },
+  "hero_window_rule": {
+    "min_gap_between_signature_onsets_sec": 15,
+    "no_new_major_event_within_sec": 2
+  },
+  "ci_checks": [
+    "no_time_mult_keys_in_minutes",
+    "trials_match_06",
+    "elites_per_min_rederived",
+    "elite_timer_not_in_pyojun",
+    "supply_over_kills_in_1.0_1.3",
+    "eodukssini_from_sec_gte_450"
+  ],
+  "telegraph": {
+    "_doc": "waves 연출 예고(Events.wave_warn, waves/wave_presenter.gd). warn_sec 만큼 앞서 화면 배너 + 월드 표식. 문구는 '처음 하는 사람도 해원/고리를 이해'가 목적(가이드라인). 소유: waves 구현 제안값(2026-11-22).",
+    "default_warn_sec": 3.0,
+    "events": {
+      "evt_ttemolli": {
+        "title_ko": "떼몰이",
+        "hint_ko": "한 줄로 몰려오는 떼 — 옆에서 따라 걸으며 고리로 감싸라",
+        "warn_sec": 3.5
+      },
+      "evt_ewossagi": {
+        "title_ko": "에워싸기",
+        "hint_ko": "원이 조여 온다 — 금빛 틈으로 빠져나가 바깥에서 통째로 감싸라",
+        "warn_sec": 3.5
+      },
+      "evt_changgwi_haengnyeol": {
+        "title_ko": "창귀 행렬",
+        "hint_ko": "범에게 물려 간 넋이 앞줄을 세웠다 — 앞줄을 풀어 뒤의 호식 원혼을 드러내라",
+        "warn_sec": 4.0
+      },
+      "evt_sangcharim": {
+        "title_ko": "뒷전 · 상차림",
+        "hint_ko": "공물상 셋 이상을 한 고리로 묶어라 — 대해원",
+        "warn_sec": 0.0
+      },
+      "elite": {
+        "title_ko": "정예 출현",
+        "hint_ko": "정예를 풀면 넋함, 부수면 상자",
+        "warn_sec": 2.0
+      },
+      "midboss": {
+        "title_ko": "중간보스",
+        "hint_ko": "90초 안에 풀거나 부숴라",
+        "warn_sec": 3.0
+      },
+      "boss": {
+        "title_ko": "명부의 큰 손님",
+        "hint_ko": "금줄 안에서 맞으라",
+        "warn_sec": 2.0
+      },
+      "evt_pullil_demo": {
+        "title_ko": "풀릴 기색",
+        "hint_ko": "흰 테두리가 생긴 잡귀는 베지 말고, 둘레를 돌아 풀어 보내라",
+        "warn_sec": 0.0
+      }
+    },
+    "scripted": {
+      "hapil": {
+        "title_ko": "신령 합일",
+        "hint_ko": "모신 신령이 모두 내려오신다"
+      },
+      "sm_jakdu_last_procession": {
+        "title_ko": "마지막 행렬",
+        "hint_ko": "보낸 넋들이 돌아와 함께 걷는다"
+      },
+      "jakdu_ganglim": {
+        "title_ko": "작두 강림",
+        "hint_ko": "작두 위에서 버텨라 — 정기가 낮을수록 충격파가 세진다"
+      },
+      "pre_clear": {
+        "title_ko": "퇴송",
+        "hint_ko": "풀릴 기색은 풀려 가고, 남은 잡귀는 연기처럼 물러난다"
+      },
+      "daehaewon": {
+        "title_ko": "대해원",
+        "hint_ko": ""
+      },
+      "saja_bow": {
+        "title_ko": "저승사자의 읍",
+        "hint_ko": "수고하셨소. 이 넋들은 내가 모시겠소."
+      },
+      "sal_geodum": {
+        "title_ko": "살 거둠",
+        "hint_ko": "사자가 살을 거두는 동안 깨어난 원귀를 막아라"
+      },
+      "timeout": {
+        "title_ko": "굿판이 닫힌다",
+        "hint_ko": "저승사자가 내려와 굿을 거둔다"
+      },
+      "boss_form_han": {
+        "title_ko": "한이 맺힌 손님",
+        "hint_ko": "풀어 보낸 넋이 많아, 굿판의 기운이 한(恨) 쪽으로 기울었다 — 고풀이 매듭을 풀어라"
+      },
+      "boss_form_sal": {
+        "title_ko": "살이 낀 손님",
+        "hint_ko": "거둔 넋과 쌓인 살기가 많아, 굿판의 기운이 살(煞) 쪽으로 기울었다 — 살을 깎아 내라"
+      },
+      "ring_guide": {
+        "title_ko": "길닦음",
+        "hint_ko": "흰 테두리 잡귀 둘레를 한 바퀴 돌아 길베를 닫아라 — 고리 안이 해원된다"
+      },
+      "dwitjeon_bind": {
+        "title_ko": "대해원",
+        "hint_ko": "공물상 {n}개를 묶었다"
+      },
+      "boss_resolved_haewon": {
+        "title_ko": "역려가 풀렸다",
+        "hint_ko": "이제 됐소. 손님 가시는 길, 우리도 뒤따라 가겠소."
+      },
+      "boss_resolved_toechi": {
+        "title_ko": "역려를 물렸다",
+        "hint_ko": "뒤따른 이들의 한은 아직 남았다"
+      },
+      "midboss_exit": {
+        "title_ko": "다음 굿에서 보세",
+        "hint_ko": "중간보스가 물러났다 — 보상 없음"
+      },
+      "sal_lump": {
+        "title_ko": "살 덩어리",
+        "hint_ko": "깨어난 원귀를 막아라 — 원귀를 풀거나 부수면 덩어리가 빨리 거둬진다"
+      }
+    },
+    "glyph_ko": {
+      "evt_ttemolli": "떼",
+      "evt_ewossagi": "포",
+      "evt_changgwi_haengnyeol": "창",
+      "evt_sangcharim": "상",
+      "evt_pullil_demo": "풀",
+      "elite": "정",
+      "midboss": "귀",
+      "boss": "역",
+      "hapil": "합",
+      "sm_jakdu_last_procession": "행",
+      "jakdu_ganglim": "작",
+      "pre_clear": "송",
+      "daehaewon": "해",
+      "saja_bow": "읍",
+      "sal_geodum": "살",
+      "timeout": "닫",
+      "ring_guide": "길",
+      "boss_resolved_haewon": "해",
+      "boss_resolved_toechi": "퇴",
+      "midboss_exit": "귀",
+      "sal_lump": "살",
+      "boss_form_han": "한",
+      "boss_form_sal": "살"
+    },
+    "presenter": {
+      "_doc": "waves/wave_presenter.gd 연출 수치(px = 640x360 논리 픽셀). 색은 art_palette 마스터 램프만.",
+      "banner_y": 84,
+      "banner_h": 34,
+      "banner_open_sec": 0.12,
+      "banner_close_sec": 0.25,
+      "banner_hold_sec": 3.2,
+      "banner_max_w": 560,
+      "card_y": 92,
+      "card_sec": 2.4,
+      "edge_inset_px": 14,
+      "ring_guide_sec": 8.0,
+      "ring_guide_radius_u": 3.0,
+      "band_chevron_gap_px": 40,
+      "after_fire_path_sec": 4.0,
+      "daehaewon_ring_sec": 0.6,
+      "silence_dim_alpha": 0.45
+    }
+  },
+  "jakdu_ganglim": {
+    "_doc": "18:35 작두 강림 40초(캐논 3.4 '정기 비례 역보정 무적 충격파 — 정기 낮을수록 강함'). waves 구현 제안값(2026-11-22), 02/06 확정 전 임시.",
+    "start_sec": 1115,
+    "duration_sec": 40,
+    "pulse_beats": 2,
+    "radius_u": 4.5,
+    "damage": 45.0,
+    "low_hp_bonus_max": 1.5,
+    "knockback_u": 1.4,
+    "iframe_sec": 0.25,
+    "color": "red"
+  },
+  "runtime": {
+    "_doc": "waves/spawn_director.gd 구현 상수(2026-11-22, waves 제안값). 08 5.4.1/5.4.2 기하와 7장 주인공 창 규칙의 런타임 해석.",
+    "ttemolli": {
+      "start_dist_u": 18.0,
+      "fwd_offset_u": 4.0,
+      "spacing_u": 0.9,
+      "jitter_u": 0.2,
+      "lifetime_pad_sec": 2.0,
+      "group_fwd_stagger_u": 2.5,
+      "cross_len_u": 36.0
+    },
+    "ewossagi": {
+      "gap_cone_deg": 30.0,
+      "ring_jitter_u": 0.15
+    },
+    "changgwi": {
+      "shield_dist_u": 13.0,
+      "leader_back_u": 2.5,
+      "spacing_u": 0.9,
+      "leader_spacing_u": 1.6
+    },
+    "pullil_demo": {
+      "arc_deg": 90.0
+    },
+    "first_spawn": {
+      "arc_deg": 100.0
+    },
+    "elite": {
+      "ring_u": 13.0,
+      "dark_edge_back_cone_deg": 50.0
+    },
+    "midboss": {
+      "spawn_dist_u": 9.0
+    },
+    "signature_onsets_from_scripted_hero_window": true,
+    "major_event_ids": [
+      "evt_ttemolli",
+      "evt_ewossagi",
+      "evt_changgwi_haengnyeol",
+      "elite",
+      "midboss"
+    ],
+    "hapil_spawn_stop_sec": 1.2,
+    "pre_clear": {
+      "toesong_vfx": "vfx_eodukssini_vanish",
+      "toesong_vfx_cap": 40,
+      "fallback_clear_after_sec": 0.6
+    },
+    "dwitjeon": {
+      "drain_tick_sec": 1.0,
+      "bind_slack_u": 0.6,
+      "screen_radius_u": 12.0,
+      "guide_sec": 12.0
+    },
+    "settlement": {
+      "saja_bow_sec": 6.5,
+      "timeout_sec": 3.0,
+      "sonnim_baesong_sec": 2.0,
+      "sal_geodum_trickle_min_alive": 16,
+      "progress_emit_sec": 0.25,
+      "wongwi_han_mult": 6.0
+    },
+    "boss": {
+      "adds_after_resolve": false
+    },
+    "geori_card_sec": 3.2,
+    "geori_card_min_time_sec": 3.0
+  }
+}

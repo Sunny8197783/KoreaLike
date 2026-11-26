@@ -1,0 +1,99 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_boss_tidal_bullet 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_boss_tidal_bullet 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_boss_tidal_bullet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_boss_tidal_bullet",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_boss_tidal_bullet",
+   "name": "Imugi tidal bullet",
+   "fps": 8.0,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 12,
+   "frameHeight": 12,
+   "blend": "normal",
+   "layer": "L12",
+   "color_role": "B",
+   "max_concurrent": 200,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     4,
+     4
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "12x12->16x16"
+   }
+  }
+ }
+}

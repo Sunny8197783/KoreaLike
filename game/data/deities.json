@@ -1,0 +1,3350 @@
+{
+  "schema_version": 1,
+  "doc": "design/06-deities-possession.md",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): deity_yongwang.stage_affinity.stage_jindo_ssitgim 삭제(16 A-4·D), lore.verify 넋건지기 해결(A-1)"],
+  "note": "문서(design/06-deities-possession.md)가 우선이며, 시련·빙의·합일 규칙과 수치의 정본은 06이다(캐논 v1.2 기준). 다른 섹션 JSON의 사본은 06 14.4 CI 교차 검사 대상. 재화 수량은 meta_economy.json income 소유. 캐논 v1.2 반영본(2026-11-21): R7 채택(D-01, 시련 180/390/750/930초·30초·DESCEND 8초), R8 반원 선언 불채택 → 두 게이지 동시·먼저 찬 쪽이 면(D-01), R9 명두 계승점 조건은 캐논 유지(D-26).",
+  "constants": {
+    "trial_times_s": [
+      180,
+      390,
+      750,
+      930
+    ],
+    "hapil_time_s": 1080,
+    "omen_lead_s": 10.0,
+    "descend_max_s": 8.0,
+    "confirm_s": 1.0,
+    "clear_s": 0.5,
+    "clear_push_speed": 12,
+    "spawn_block_s": 3.0,
+    "trial_duration_s": 30.0,
+    "trial_duration_by_slot_s": [30, 28, 27, 25],
+    "trial_duration_by_slot_note": "2026-11-24 review: 시련이 실패할 수 없던 문제 — 슬롯별 제한시간(25~30초). 없으면 trial_duration_s",
+    "afterglow_s": 3.0,
+    "possession_s": 1.2,
+    "circle_radius": 6,
+    "circle_offset_x": 8,
+    "circle_retry_angles_deg": [
+      30,
+      -30,
+      60,
+      -60,
+      90
+    ],
+    "circle_retry_distances": [
+      10,
+      6
+    ],
+    "circle_invalid_cell_ratio_max": 0.3,
+    "auto_pick_anchor_offset": 3,
+    "ground_radius": 12,
+    "ground_leave_dist": 14,
+    "avatar_leash": 11,
+    "phase2": {
+      "time_s": 10,
+      "wieom_pct": 40
+    },
+    "phase3": {
+      "time_s": 20,
+      "wieom_pct": 75
+    },
+    "pattern_period_scale_per_n": -0.08,
+    "avatar_speed_scale_per_n": 0.07,
+    "avatar_damage_scale_per_n": 0.2,
+    "vulnerable_mult": 1.5,
+    "avatar_contact_damage": 0,
+    "avatar_contact_push": 0.3,
+    "avatar_nonlethal": true,
+    "wieom_color_coeff": {
+      "red": 1.0,
+      "white": 0.4,
+      "union": 0.7
+    },
+    "wieom_excluded_sources": [
+      "yeongga_aura",
+      "gildakkeum_effect2",
+      "sal_related"
+    ],
+    "wieom_crit_mult": 2.0,
+    "wieom_hp_seconds": 18,
+    "wieom_hp_measured_mult": 1.2,
+    "grade_by_performance": {
+      "note": "2026-11-24 review: 점지 등급은 시련 수행이 정하고 점괘(grade_formula)는 보정치. clean = 완수·fast_s 안·피격 clean_hits 이하 → 최소 길. bonus = (가호 과제 bonus_task_pct 이상 또는 무피격) → 대길 가중 x daegil_bonus_mult. 미완 = 대길 0, 길 x incomplete_gil_mult",
+      "fast_s": 20,
+      "clean_hits": 2,
+      "bonus_task_pct": 50,
+      "daegil_bonus_mult": 2.0,
+      "incomplete_gil_mult": 0.5
+    },
+    "avatar_extra_patterns": {
+      "note": "2026-11-24 review: 슬롯 3·4 화신에 탄막과 돌진을 더한다(신령 데이터 patterns 에 덧붙임). damage = 최대 정기 %",
+      "min_n": 3,
+      "radial": {"period_s": 7.5, "tg_s": 0.9, "ways": 12, "waves": 2, "speed": 4.2, "damage_pct_max_jeonggi": 6},
+      "dash": {"period_s": 6.5, "tg_s": 0.8, "length": 9, "width": 1.4, "speed": 15, "damage_pct_max_jeonggi": 8}
+    },
+    "side_feed": {
+      "routing": "both gauges: toechi -> wieom, haewon/gildakkeum -> gaho",
+      "toechi_wieom_pct": 0.3,
+      "wieom_cap_pct": 10,
+      "haewon_gaho_pct": 0.5,
+      "gaho_cap_pct": 15,
+      "elite_toechi_wieom_pct": 3,
+      "elite_haewon_gaho_pct": 4,
+      "gildakkeum_gaho_pct": 2
+    },
+    "incomplete_mult": 0.7,
+    "incomplete_integer_rule": "max(1, floor(value*0.70)), no restore at hapil",
+    "spawn_mult_during_trial": 0.6,
+    "subi_escort": {
+      "min_n": 3,
+      "interval_s": 5,
+      "count": 6,
+      "han_mult": 0.8
+    },
+    "shockwave": {
+      "radius": 6,
+      "knockback": 4,
+      "wieom_dmg_x_base_red": 5,
+      "gaho_dmg_x_base_white": 3,
+      "incomplete_radius": 4
+    },
+    "rewards": {
+      "source_keys": {
+        "wieom": "meta_economy.json income.yeopjeon_sources.trial_wieom",
+        "gaho": "meta_economy.json income.neok_sources.trial_gaho"
+      },
+      "owner": "09-meta-economy",
+      "incomplete_currency_mult_proposal": 0.5,
+      "sinmyeong_add_pct": 10,
+      "myeongdu_point_rule": "first possession of each face (deity x face), incomplete included (canon kept, v1.2 D-26), max 12",
+      "removed": "v0.9 wieom_yeopjeon_per_n / gaho_neok_per_n (3*n)"
+    },
+    "event_queue": {
+      "queued": [
+        "mboss_spawn",
+        "wongwi_hoegwi",
+        "eodukssini_spawn",
+        "elite_forced_spawn"
+      ],
+      "release_interval_s": 1.5
+    },
+    "base_fallback_formula": "10*(1+0.1*char_level)",
+    "max_deities_per_run": 4,
+    "face_resolution": {
+      "mode": "dual_gauge_simultaneous",
+      "canon": "01 3.2.10 / canon v1.2 D-01",
+      "gauges_shown": [
+        "wieom",
+        "gaho"
+      ],
+      "face_rule": "first gauge to reach 100% decides face (complete)",
+      "timeout_face": "higher_gauge",
+      "timeout_completeness": 0.7,
+      "tie_rule": "OPEN (06 16.2) - same-frame 100% / equal gauges at timeout not defined by canon",
+      "task_objects_spawn": "always_at_CLEAR",
+      "avatar_auto_target": "red & union weapons (priority = elite); white excluded, area damage via wieom_color_coeff",
+      "removed": "v1.0 draft face_declaration half_circle_at_confirm (R8 not adopted, canon v1.2 D-01)"
+    },
+    "wieom_position_coeff": {
+      "rule": "ground_leave_only",
+      "inside": 1.0,
+      "leave_dist_exceeded": 0.5,
+      "presence_0_35_adopted": false,
+      "note": "combat_core.json trial.presence_factor_* 는 이 값을 따른다(06 3.5.1)"
+    },
+    "ground_leave": {
+      "dist": 14,
+      "hysteresis_from": 12,
+      "charge_mult": 0.5,
+      "replaces": "v0.9 gauge stop"
+    },
+    "retreat": {
+      "cooldown_trials": 1,
+      "waiting_weight_bonus": 0,
+      "gongsu_trigger": "gs_retreat"
+    },
+    "bundle_max_s": 54,
+    "free_roam_targets": {
+      "after_s": 360,
+      "min_ratio": 0.65,
+      "min_gap_to_other_event_s": 45
+    }
+  },
+  "dps_ref": {
+    "source": "04-weapons-evolution 7.4 기준 빌드 중 적 위주 구성 단일 대상 DPS (data/weapons.json est_dps 보스 열, 전탄 명중, 기준 신빨) — 리뷰 잠정값",
+    "owner": "balance bot sim (적 위주 봇, 시각별 단일 대상 DPS 중앙값)으로 이 표만 교체",
+    "mirrors": [
+      "enemies.json reference_curve_assumption (07 3.4 D(m))"
+    ],
+    "anchors_min": [
+      {
+        "min": 3,
+        "dps": 45
+      },
+      {
+        "min": 6,
+        "dps": 65
+      },
+      {
+        "min": 9,
+        "dps": 136
+      },
+      {
+        "min": 12,
+        "dps": 283
+      },
+      {
+        "min": 15,
+        "dps": 403
+      },
+      {
+        "min": 20,
+        "dps": 953
+      }
+    ],
+    "interp": "piecewise_linear",
+    "hp_formula": "round10(dps_ref(t) * wieom_hp_seconds * deity_mod)",
+    "trials": [
+      {
+        "n": 1,
+        "time_s": 180,
+        "dps": 45,
+        "hp": 810
+      },
+      {
+        "n": 2,
+        "time_s": 390,
+        "dps": 77,
+        "hp": 1390
+      },
+      {
+        "n": 3,
+        "time_s": 750,
+        "dps": 303,
+        "hp": 5450
+      },
+      {
+        "n": 4,
+        "time_s": 930,
+        "dps": 458,
+        "hp": 8240
+      }
+    ]
+  },
+  "power_types": [
+    {
+      "id": "ptype_ta",
+      "name_ko": "타(打)",
+      "desc_ko": "피해·발동형 공격"
+    },
+    {
+      "id": "ptype_hae",
+      "name_ko": "해(解)",
+      "desc_ko": "풀릴 기색·해원·백 피해 강화"
+    },
+    {
+      "id": "ptype_haeng",
+      "name_ko": "행(行)",
+      "desc_ko": "영가·행렬·길베·고리"
+    },
+    {
+      "id": "ptype_su",
+      "name_ko": "수(守)",
+      "desc_ko": "생존·방어·회복"
+    },
+    {
+      "id": "ptype_un",
+      "name_ko": "운(運)",
+      "desc_ko": "재화·상자·점괘"
+    }
+  ],
+  "grades": [
+    {
+      "id": "grade_pyeong",
+      "name_ko": "평(平)",
+      "mult": 1.0,
+      "base_weight": 70
+    },
+    {
+      "id": "grade_gil",
+      "name_ko": "길(吉)",
+      "mult": 1.3,
+      "base_weight": 25
+    },
+    {
+      "id": "grade_daegil",
+      "name_ko": "대길(大吉)",
+      "mult": 1.6,
+      "base_weight": 5
+    }
+  ],
+  "grade_formula": {
+    "L": "stat_jeomgwae/100",
+    "w_daegil": "min(30, 5*L)",
+    "w_gil": "min(50, 25*sqrt(L))",
+    "w_pyeong": "max(0, 100-w_daegil-w_gil)",
+    "apply": "per_level_increment_on_grade_axis_only",
+    "cooldown_axis": "level_cd / weighted_mult",
+    "integer_axis": "round_half_up(inc*mult)",
+    "overflow_at_hapil": "upgrade latest increment grade by one step; if daegil, increment x1.2"
+  },
+  "power_rules": {
+    "visible_per_deity": 4,
+    "designed_per_deity": 5,
+    "max_level": 3,
+    "color_rules": {
+      "face": "위엄=적, 가호=백",
+      "weapon": "원 무구 색",
+      "buff": "색 없음",
+      "red": "적 고정",
+      "white": "백 고정",
+      "none": "피해 없음"
+    },
+    "jeomji": {
+      "weight": 1.0,
+      "fresh_bias": {
+        "window_s": 60,
+        "mult": 1.5
+      },
+      "drought_guard": {
+        "last_n_jeomji": 3,
+        "force_one": true
+      }
+    },
+    "bingui_jeomji": {
+      "cards_complete": 4,
+      "cards_incomplete": 2,
+      "cards_momju_incomplete": 3,
+      "momju_complete_guarantee": "one card grade >= gil",
+      "xp_cost": 0,
+      "reroll": true,
+      "skip": false,
+      "banish": false,
+      "at_hapil": false
+    },
+    "run_visible_max": 16
+  },
+  "deities": [
+    {
+      "id": "deity_sansin",
+      "name_ko": "산신",
+      "hanja": "山神",
+      "scope": "v1",
+      "instrument": "대북",
+      "glyph": "beom_baljaguk",
+      "momju_of": [],
+      "lore": {
+        "summary": "산을 지키고 다스리는 자연신. 노인 또는 호랑이로 믿어짐. 산신도=지팡이 든 노인+호랑이. 호랑이 그림 벽사(경악법).",
+        "tags": [
+          "전승"
+        ],
+        "game_split": "위엄=범, 가호=노인 산신"
+      },
+      "stage_affinity": {
+        "stage_guksadang": 1.2
+      },
+      "avatar": {
+        "id": "avatar_sansin",
+        "name_ko": "돌진 영수 호랑이",
+        "size_px": 128,
+        "deity_mod": 1.0,
+        "move_speed": 3.2,
+        "keep_distance": [
+          5,
+          8
+        ],
+        "art_ref": "art/bosses/trial_sansin_tiger_[a-d].png",
+        "patterns": [
+          {
+            "id": "sansin_p_dolgin",
+            "name_ko": "산길 돌진",
+            "phase_min": 1,
+            "period_s": 6.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 15,
+            "hit": {
+              "shape": "line",
+              "width": 1.2,
+              "length": 10,
+              "speed": 14
+            },
+            "vulnerable_s": 1.0
+          },
+          {
+            "id": "sansin_p_pohyo",
+            "name_ko": "포효",
+            "phase_min": 1,
+            "period_s": 9.0,
+            "tg_s": 0.6,
+            "damage_pct_max_jeonggi": 0,
+            "hit": {
+              "shape": "circle",
+              "radius": 5,
+              "player_status": {
+                "domu_pct": -40,
+                "dur_s": 1.0
+              },
+              "enemy_fear_s": 2.0
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "sansin_p_dolgin2",
+            "name_ko": "겹돌진",
+            "phase_min": 2,
+            "period_s": 6.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 15,
+            "hit": {
+              "shape": "line_x2",
+              "second_tg_s": 0.5,
+              "replaces": "sansin_p_dolgin"
+            },
+            "vulnerable_s": 1.2
+          },
+          {
+            "id": "sansin_p_nakseok",
+            "name_ko": "산울음 낙석",
+            "phase_min": 3,
+            "period_s": 7.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "circles",
+              "count": 3,
+              "radius": 1.2,
+              "scatter_radius": 4
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "sansin_p_samyeon",
+            "name_ko": "세 갈래 산길",
+            "phase_min": 3,
+            "period_s": 6.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 15,
+            "hit": {
+              "shape": "triangle_x3",
+              "leg_s": 0.45,
+              "replaces": "sansin_p_dolgin2"
+            },
+            "vulnerable_s": 1.5
+          }
+        ]
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_hold"
+        ],
+        "name_ko": "길 잃은 영가 지키기",
+        "objects": [
+          {
+            "id": "obj_sangil_swimteo",
+            "name_ko": "산길 쉼터",
+            "offset_from_anchor": 5,
+            "radius": 4
+          },
+          {
+            "id": "npc_gilileun_yeongga",
+            "name_ko": "길 잃은 영가",
+            "count": 10
+          }
+        ],
+        "threats": {
+          "enemy": "enm_hosik_wonhon",
+          "interval_s": 4.0,
+          "count_formula": "3+n",
+          "abduct_contact_s": 1.5
+        },
+        "progress": {
+          "in_zone_pct_per_s": 3.2,
+          "scaled_by": "remaining_yeongga/10",
+          "haewon_hosik_pct": 4.0,
+          "toechi_hosik_pct": 1.5,
+          "credit_radius": 6,
+          "stop_when_remaining_zero": true
+        },
+        "complete_bonus": "남은 길 잃은 영가 전원 행렬 합류(상한 초과분 즉시 천도 넋 +1)",
+        "expected_s": 22,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "hosik_count": "3+n",
+        "charge_speed": "14+1.3*(n-1)"
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_sansin__wieom",
+          "name_ko": "범 위엄",
+          "effects": [
+            {
+              "stat": "stat_sinppal",
+              "op": "add_pct",
+              "value": 40,
+              "filter": "red_melee"
+            },
+            {
+              "type": "proc",
+              "id": "beom_pohyo",
+              "params": {
+                "every_hits": 8,
+                "radius": 3.5,
+                "fear_s": 1.5,
+                "elite_fear_s": 0.5,
+                "boss_immune": true,
+                "min_interval_s": 1.0
+              }
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_sansin__gaho",
+          "name_ko": "산길 가호",
+          "effects": [
+            {
+              "type": "proc",
+              "id": "npc_yeongsu_beom",
+              "params": {
+                "position": "procession_head_side",
+                "side_offset": 0.6,
+                "on_substitute_hit_fear_radius": 3,
+                "fear_s": 1.5,
+                "min_interval_s": 2.0
+              }
+            },
+            {
+              "stat": "stat_neok_sumyeong",
+              "op": "add",
+              "value": 10
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "범 탈(주황+흑 줄무늬, 송곳니)",
+          "pattern": "호피 띠",
+          "aura": "발밑 적·황 불꽃 낮은 오라 + 발톱 잔상",
+          "prop": "없음",
+          "art_ref": "art/concept/possession_variants.png#1"
+        },
+        "gaho": {
+          "head": "범 탈(한지빛 탈색, 솔잎, 흰 눈썹 수염)",
+          "pattern": "소나무·구름",
+          "aura": "한지빛 산안개 링",
+          "prop": "산신 지팡이"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_sansin_beom_baltop",
+          "name_ko": "범 발톱",
+          "type": "ptype_ta",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "proc_chance_pct": 12
+            },
+            {
+              "proc_chance_pct": 16
+            },
+            {
+              "proc_chance_pct": 20
+            }
+          ],
+          "grade_axis": "proc_chance_pct",
+          "color_rule": "face",
+          "desc_ko": "무구 적중 시 확률로 전방 3갈래 할퀴기(길이 0.8), 피해=그 타격×50%, 대상당 내부쿨 0.15s"
+        },
+        {
+          "id": "pwr_sansin_horyeong",
+          "name_ko": "호령",
+          "type": "ptype_su",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "cooldown_s": 12,
+              "radius": 3.0,
+              "fear_amp_pct": 10
+            },
+            {
+              "cooldown_s": 10,
+              "radius": 3.5,
+              "fear_amp_pct": 15
+            },
+            {
+              "cooldown_s": 8,
+              "radius": 4.0,
+              "fear_amp_pct": 20
+            }
+          ],
+          "grade_axis": "cooldown_s",
+          "color_rule": "none",
+          "desc_ko": "주기적 경악 파동, 공포 1.2s, 공포 적 받는 피해 증가"
+        },
+        {
+          "id": "pwr_sansin_sangil",
+          "name_ko": "산길 안내",
+          "type": "ptype_haeng",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "aura_radius_pct": 20,
+              "domu_on_gilbe_pct": 5
+            },
+            {
+              "aura_radius_pct": 35,
+              "domu_on_gilbe_pct": 8
+            },
+            {
+              "aura_radius_pct": 50,
+              "domu_on_gilbe_pct": 12
+            }
+          ],
+          "grade_axis": "aura_radius_pct",
+          "color_rule": "none",
+          "desc_ko": "길베 위 영가 넋두리 오라 반경 증가, 길베 위 무당 도무 증가"
+        },
+        {
+          "id": "pwr_sansin_maengho",
+          "name_ko": "맹호출림",
+          "type": "ptype_ta",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "cooldown_s": 20,
+              "dmg_x_base_red": 4
+            },
+            {
+              "cooldown_s": 17,
+              "dmg_x_base_red": 5
+            },
+            {
+              "cooldown_s": 14,
+              "dmg_x_base_red": 6
+            }
+          ],
+          "grade_axis": "dmg_x_base_red",
+          "color_rule": "red",
+          "desc_ko": "영수 범 질주: 반경 8 내 밀집 방향 길이 12 폭 1.6"
+        },
+        {
+          "id": "pwr_sansin_sanjigi",
+          "name_ko": "산지기",
+          "type": "ptype_haeng",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "tiger_fear_radius_add": 1.0,
+              "neok_sumyeong_add_s": 3
+            },
+            {
+              "tiger_fear_radius_add": 1.5,
+              "neok_sumyeong_add_s": 5
+            },
+            {
+              "tiger_fear_radius_add": 2.0,
+              "neok_sumyeong_add_s": 7
+            }
+          ],
+          "grade_axis": "neok_sumyeong_add_s",
+          "color_rule": "none",
+          "desc_ko": "영수 호랑이 경악 파동 반경 증가, 넋 수명 추가"
+        }
+      ],
+      "gongsu": {
+        "gs_omen": [
+          "산이 운다… 범이 내려온다.",
+          "솔바람 끝에 누린내가 섞이는구나."
+        ],
+        "gs_pick": [
+          "오냐, 산으로 들어왔느냐."
+        ],
+        "gs_start": [
+          "내 앞발을 받아 보아라."
+        ],
+        "gs_pass_wieom": [
+          "허허, 이빨이 제법이로구나. 내 너를 태우마."
+        ],
+        "gs_pass_gaho": [
+          "길 잃은 것들을 다 지켰구나. 이 산길은 이제 네 길이다."
+        ],
+        "gs_incomplete": [
+          "아직 덜 여물었다. 그래도 따라가 주마."
+        ],
+        "gs_possessed": [
+          "산신이 실렸다!"
+        ],
+        "gs_possessed_momju": [
+          "내 제자야, 산이 너를 안 잊었다."
+        ],
+        "gs_gildakkeum": [
+          "산길이 열린다."
+        ],
+        "gs_elite_haewon": [
+          "무서운 것은 너였느냐, 그 아이였느냐."
+        ],
+        "gs_crisis": [
+          "엎드리지 마라. 범은 등을 보이지 않는다."
+        ],
+        "gs_leave": [
+          "어디 가느냐, 산은 여기 있다."
+        ],
+        "gs_hapil_word": [
+          "산이—"
+        ],
+        "gs_boss": [
+          "저 큰 것도 산짐승만 못하다."
+        ],
+        "gs_retreat": [
+          "산은 그 자리에 있다. 다음 굿에 오너라."
+        ]
+      }
+    },
+    {
+      "id": "deity_yongwang",
+      "name_ko": "용왕",
+      "hanja": "龍王",
+      "scope": "v1",
+      "instrument": "징",
+      "glyph": "mulgyeol",
+      "momju_of": [
+        "char_simbang"
+      ],
+      "lore": {
+        "summary": "바다·강·우물의 수신. 풍어·뱃길 안전. 동해안 별신굿 용왕굿. 넋건지기(익사자 넋 건짐) 모티프.",
+        "tags": [
+          "무속"
+        ],
+        "verify": [],
+        "resolved_16": "16 A-1: 게임 표기 '넋건지기' 단일(이칭 넋건지굿·혼건지굿·수망굿, 전국에서 행함). 남도 갯마을 씻김굿판(stage_jindo_ssitgim)과 묶지 않는다(A-4)",
+        "game_split": "위엄=파도·해일, 가호=넋건지기"
+      },
+      "stage_affinity": {
+        "stage_east_sea_byeolsin": 1.3,
+        "stage_jeju_chilmeori": 1.3
+      },
+      "avatar": {
+        "id": "avatar_yongwang",
+        "name_ko": "용신 수호령",
+        "size_px": 160,
+        "deity_mod": 0.85,
+        "springs": {
+          "count": 3,
+          "layout": "triangle",
+          "radius_from_anchor": 6
+        },
+        "art_ref": "art/deities/yongwang_*, art/concept/possession_variants.png#2",
+        "patterns": [
+          {
+            "id": "yongwang_p_buchae",
+            "name_ko": "물살 부채",
+            "phase_min": 1,
+            "period_s": 3.5,
+            "tg_s": 0.5,
+            "damage_pct_max_jeonggi": 8,
+            "hit": {
+              "shape": "fan_bullets",
+              "ways": 5,
+              "bullets": 12,
+              "bullet_radius": 0.25,
+              "speed": 5
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "yongwang_p_haeil",
+            "name_ko": "해일 벽",
+            "phase_min": 1,
+            "period_s": 10.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 15,
+            "hit": {
+              "shape": "wall",
+              "width": 8,
+              "speed": 3,
+              "gap": 2.0,
+              "knockback": 2
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "yongwang_p_jamsu",
+            "name_ko": "잠수 이동",
+            "phase_min": 1,
+            "period_s": 12.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 0,
+            "hit": {
+              "shape": "teleport_spring",
+              "untargetable_s": 2.0
+            },
+            "vulnerable_s": 1.2
+          },
+          {
+            "id": "yongwang_p_soyongdori",
+            "name_ko": "소용돌이",
+            "phase_min": 2,
+            "period_s": 9.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 5,
+            "hit": {
+              "shape": "whirlpools",
+              "count": 3,
+              "radius": 1.5,
+              "pull_speed": 0.8,
+              "dur_s": 4.0,
+              "core_radius": 0.5,
+              "damage_per_s": true
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "yongwang_p_ssangbuchae",
+            "name_ko": "겹물살",
+            "phase_min": 3,
+            "period_s": 3.5,
+            "tg_s": 0.5,
+            "damage_pct_max_jeonggi": 8,
+            "hit": {
+              "shape": "spiral_bullets",
+              "bullets": 24,
+              "turns": 2,
+              "replaces": "yongwang_p_buchae"
+            },
+            "vulnerable_s": 0.0
+          }
+        ]
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_escort"
+        ],
+        "name_ko": "물에 든 넋 건지기",
+        "objects": [
+          {
+            "id": "obj_yongwangsang",
+            "name_ko": "용왕상",
+            "at": "anchor",
+            "radius": 2
+          },
+          {
+            "id": "npc_mulneok",
+            "name_ko": "물에 든 넋",
+            "count": 5,
+            "ring": [
+              7,
+              9
+            ],
+            "drift_speed": 1.0
+          }
+        ],
+        "pickup_radius": 1.5,
+        "carry_capacity_formula": "2+floor(yeongga/10)",
+        "carry_capacity_max": 4,
+        "threats": {
+          "enemy": "enm_mul_gwisin",
+          "interval_s": 6.0,
+          "count_formula": "2+n",
+          "drop_on_contact": true,
+          "drop_all_on_haeil_hit": true
+        },
+        "progress": {
+          "per_delivery_pct": 17,
+          "mulgwisin_haewon_pct": 2.5,
+          "mulgwisin_cap_pct": 20
+        },
+        "expected_s": 24,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "mulgwisin_count": "2+n",
+        "haeil_gap": "2.0-0.1333*(n-1)",
+        "bullet_speed": "5+0.4*(n-1)"
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_yongwang__wieom",
+          "name_ko": "용왕 위엄",
+          "effects": [
+            {
+              "stat": "stat_doryang",
+              "op": "add_pct",
+              "value": 25
+            },
+            {
+              "stat": "stat_yeongheom",
+              "op": "add_pct",
+              "value": 25
+            },
+            {
+              "type": "proc",
+              "id": "obj_mulgyeol",
+              "params": {
+                "spawn_every_s": 0.5,
+                "radius": 1.0,
+                "dur_s": 2.0,
+                "slow_pct": 25,
+                "knockback": 0.5,
+                "damage": 0,
+                "max_count": 8
+              }
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_yongwang__gaho",
+          "name_ko": "용궁 가호",
+          "effects": [
+            {
+              "type": "proc",
+              "id": "obj_malgeun_mul",
+              "params": {
+                "on": "haewon",
+                "radius": 1.2,
+                "dur_s": 4.0,
+                "ally_domu_pct": 10,
+                "aura_dmg_pct": 20,
+                "max_count": 6
+              }
+            },
+            {
+              "type": "proc",
+              "id": "purify_mulgwisin_pool",
+              "params": {
+                "on_touch": true
+              }
+            },
+            {
+              "stat": "stat_saenggi",
+              "op": "add",
+              "value": 1.0
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "용 머리 관(청 비늘, 뿔, 수염)",
+          "pattern": "파도 문양",
+          "aura": "발밑 물기둥 지면 링(청 30%)",
+          "prop": "용왕기"
+        },
+        "gaho": {
+          "head": "용 머리 관 + 진주·산호",
+          "pattern": "물결+연잎",
+          "aura": "맑은 물방울 상승",
+          "prop": "정화수 그릇"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_yongwang_mulbora",
+          "name_ko": "물보라",
+          "type": "ptype_ta",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "proc_chance_pct": 10
+            },
+            {
+              "proc_chance_pct": 15
+            },
+            {
+              "proc_chance_pct": 20
+            }
+          ],
+          "grade_axis": "proc_chance_pct",
+          "color_rule": "weapon",
+          "desc_ko": "투사체 적중 시 물보라 반경 1.2, 둔화 25% 1.5s, 피해=원 타격 30%"
+        },
+        {
+          "id": "pwr_yongwang_yonggung_bomul",
+          "name_ko": "용궁 보물",
+          "type": "ptype_un",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "box_upgrade_pct": 10
+            },
+            {
+              "box_upgrade_pct": 18
+            },
+            {
+              "box_upgrade_pct": 25
+            }
+          ],
+          "grade_axis": "box_upgrade_pct",
+          "color_rule": "none",
+          "desc_ko": "정예 이상 해결 시 상자 등급 +1 확률, 엽전 또는 넋 +1"
+        },
+        {
+          "id": "pwr_yongwang_mulgil",
+          "name_ko": "물길",
+          "type": "ptype_haeng",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "domu_on_gilbe_pct": 8,
+              "gilbe_add_s": 0.5
+            },
+            {
+              "domu_on_gilbe_pct": 12,
+              "gilbe_add_s": 0.8
+            },
+            {
+              "domu_on_gilbe_pct": 16,
+              "gilbe_add_s": 1.2
+            }
+          ],
+          "grade_axis": "gilbe_add_s",
+          "color_rule": "none",
+          "desc_ko": "길베 위 도무 증가, 길베 지속 증가"
+        },
+        {
+          "id": "pwr_yongwang_haeil",
+          "name_ko": "해일",
+          "type": "ptype_ta",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "cooldown_s": 18,
+              "dmg_x_base_red": 3
+            },
+            {
+              "cooldown_s": 15,
+              "dmg_x_base_red": 4
+            },
+            {
+              "cooldown_s": 12,
+              "dmg_x_base_red": 5
+            }
+          ],
+          "grade_axis": "dmg_x_base_red",
+          "color_rule": "red",
+          "desc_ko": "전방 해일 폭 6 길이 10, 6유닛/s, 넉백 3"
+        },
+        {
+          "id": "pwr_yongwang_neokgeonjigi",
+          "name_ko": "넋건지기",
+          "type": "ptype_hae",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "clear_water_radius_pct": 50,
+              "maetim_timer_speed_pct": 50
+            },
+            {
+              "clear_water_radius_pct": 75,
+              "maetim_timer_speed_pct": 25
+            },
+            {
+              "clear_water_radius_pct": 100,
+              "maetim_timer_speed_pct": 0
+            }
+          ],
+          "grade_axis": "clear_water_radius_pct",
+          "color_rule": "none",
+          "desc_ko": "맑은 물 장판 반경 증가, 장판 안 맺힘 복귀 타이머 감속/정지"
+        }
+      ],
+      "gongsu": {
+        "gs_omen": [
+          "물비린내가 오른다… 용궁 문이 열린다.",
+          "우물이 넘친다. 물 아래서 누가 부른다."
+        ],
+        "gs_pick": [
+          "물가로 왔구나."
+        ],
+        "gs_start": [
+          "파도를 건너 보아라."
+        ],
+        "gs_pass_wieom": [
+          "물결을 거슬러 왔으니, 바다가 네 편이다."
+        ],
+        "gs_pass_gaho": [
+          "물에 든 넋들, 다 건져 주었구나. 고맙다, 고맙다."
+        ],
+        "gs_incomplete": [
+          "썰물이라 반만 실린다."
+        ],
+        "gs_possessed": [
+          "용왕님이 실렸다!"
+        ],
+        "gs_possessed_momju": [
+          "내 제자야, 물이 너를 기억한다."
+        ],
+        "gs_gildakkeum": [
+          "물길이 둥글게 돈다."
+        ],
+        "gs_elite_haewon": [
+          "깊은 물에 오래 있었구나. 이제 나오너라."
+        ],
+        "gs_crisis": [
+          "숨을 길게 쉬어라. 물은 끝이 있다."
+        ],
+        "gs_leave": [
+          "물가를 떠나지 마라."
+        ],
+        "gs_hapil_word": [
+          "물이—"
+        ],
+        "gs_boss": [
+          "저것도 결국 물에 씻긴다."
+        ],
+        "gs_retreat": [
+          "물은 다시 돌아온다. 오늘은 물러나마."
+        ]
+      }
+    },
+    {
+      "id": "deity_chilseong",
+      "name_ko": "칠성",
+      "hanja": "七星",
+      "scope": "v1",
+      "instrument": "꽹과리·설쇠",
+      "glyph": "bukdu",
+      "momju_of": [
+        "char_myeongdu"
+      ],
+      "lore": {
+        "summary": "북두칠성을 인격화한 신, 짧은 명을 길게 잇는 수명장수. 칠성굿. 명다리(이름·생년월일 적은 천+실타래).",
+        "tags": [
+          "무속"
+        ],
+        "verify": [
+          "7별 도교 명칭 UI 사용 적절성"
+        ],
+        "game_split": "위엄=별의 심판, 가호=명 잇기"
+      },
+      "stage_affinity": {
+        "stage_myeongbu": 1.2
+      },
+      "avatar": {
+        "id": "avatar_chilseong",
+        "name_ko": "칠성 화신",
+        "size_px": 128,
+        "deity_mod": 0.95,
+        "teleport_fade_s": 0.4,
+        "art_ref": "art/deities/chilseong_*",
+        "patterns": [
+          {
+            "id": "chilseong_p_hoejeon",
+            "name_ko": "북두 회전탄",
+            "phase_min": 1,
+            "period_s": 4.0,
+            "tg_s": 0.5,
+            "damage_pct_max_jeonggi": 7,
+            "hit": {
+              "shape": "rotating_radial",
+              "ways": 7,
+              "angular_speed_deg": 40,
+              "speed": 4,
+              "waves": 2,
+              "waves_n4plus": 3
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "chilseong_p_nakha",
+            "name_ko": "별 낙하",
+            "phase_min": 1,
+            "period_s": 8.0,
+            "tg_s": 1.2,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "dipper_circles",
+              "count": 7,
+              "radius": 1.0,
+              "centered_on": "player"
+            },
+            "vulnerable_s": 1.5
+          },
+          {
+            "id": "chilseong_p_myeongsil",
+            "name_ko": "명실 시험",
+            "phase_min": 2,
+            "period_s": 0,
+            "tg_s": 0.0,
+            "damage_pct_max_jeonggi": 10,
+            "hit": {
+              "shape": "tether",
+              "max_dist": 10,
+              "dur_s": 10,
+              "trigger": "on_phase2_enter"
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "chilseong_p_ssangnakha",
+            "name_ko": "겹별 낙하",
+            "phase_min": 3,
+            "period_s": 8.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "dipper_circles_x2",
+              "second_tg_s": 0.6,
+              "rotate_deg": 51.4,
+              "replaces": "chilseong_p_nakha"
+            },
+            "vulnerable_s": 1.5
+          }
+        ]
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_connect"
+        ],
+        "name_ko": "칠성 별자리 잇기",
+        "objects": [
+          {
+            "id": "obj_chilseong_byeol",
+            "name_ko": "칠성 별",
+            "count": 7,
+            "spacing": [
+              3.0,
+              4.5
+            ],
+            "span": 14,
+            "names_ko": [
+              "탐랑",
+              "거문",
+              "녹존",
+              "문곡",
+              "염정",
+              "무곡",
+              "파군"
+            ]
+          }
+        ],
+        "touch_radius": 1.0,
+        "chain_timeout_formula": "stat_gilbe*1.5",
+        "round": {
+          "rotate_deg": 51.4,
+          "scale": 1.15,
+          "completion_counts_as_ring": true
+        },
+        "progress": {
+          "per_star_pct": 6.5,
+          "round_bonus_pct": 4.5,
+          "rounds_for_full": 2
+        },
+        "expected_s": 22,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "spacing_mult": "1+0.05*(n-1)",
+        "spin_waves": "2 (n>=3: 3)"
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_chilseong__wieom",
+          "name_ko": "칠성 위엄",
+          "effects": [
+            {
+              "type": "proc",
+              "id": "fx_bukdu_byeol",
+              "params": {
+                "cooldown_s": 6.0,
+                "affected_by_jangdan": true,
+                "target": "nearest_elite_or_densest",
+                "count": 7,
+                "radius": 1.0,
+                "dmg_x_base_red": 1.2,
+                "color": "red"
+              }
+            },
+            {
+              "stat": "stat_sinjang",
+              "op": "add",
+              "value": 1
+            },
+            {
+              "stat": "stat_myeongjul",
+              "op": "add",
+              "value": 1
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_chilseong__gaho",
+          "name_ko": "명다리 가호",
+          "effects": [
+            {
+              "stat": "stat_myeongjul",
+              "op": "add",
+              "value": 1
+            },
+            {
+              "stat": "stat_jeomgwae",
+              "op": "add",
+              "value": 25
+            },
+            {
+              "type": "proc",
+              "id": "ring_starlight",
+              "params": {
+                "on": "gildakkeum",
+                "count": 7,
+                "radius": 0.8,
+                "dmg_x_ring_effect2": 0.3,
+                "color": "white"
+              }
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "칠성 관(금박 별 7)",
+          "pattern": "북두 문양",
+          "aura": "머리 위 별 3 공전",
+          "prop": "칠성검",
+          "art_ref": "art/concept/possession_variants.png#3"
+        },
+        "gaho": {
+          "head": "칠성 관(은빛 별 7) + 명다리 띠",
+          "pattern": "명다리 띠 추상 문양",
+          "aura": "발밑 별빛 원(한지빛)",
+          "prop": "명다리 실타래"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_chilseong_bukdu_byeolbit",
+          "name_ko": "북두 별빛",
+          "type": "ptype_ta",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "dmg_x_face_base": 0.8
+            },
+            {
+              "dmg_x_face_base": 1.1
+            },
+            {
+              "dmg_x_face_base": 1.4
+            }
+          ],
+          "grade_axis": "dmg_x_face_base",
+          "color_rule": "face",
+          "desc_ko": "7초마다 7방향 별 탄(관통 1, 탄속 7)"
+        },
+        {
+          "id": "pwr_chilseong_yeonmyeong",
+          "name_ko": "연명 실타래",
+          "type": "ptype_su",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "heal_pct": 30,
+              "uses_per_run": 1
+            },
+            {
+              "heal_pct": 40,
+              "uses_per_run": 1
+            },
+            {
+              "heal_pct": 50,
+              "uses_per_run": 2
+            }
+          ],
+          "grade_axis": "heal_pct",
+          "color_rule": "none",
+          "desc_ko": "정기 0 시 명줄보다 먼저 발동, 회복 + 무적 2.0s"
+        },
+        {
+          "id": "pwr_chilseong_byeolgil",
+          "name_ko": "별길",
+          "type": "ptype_haeng",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "stars": 3,
+              "dmg_x_ring_effect2": 0.5
+            },
+            {
+              "stars": 5,
+              "dmg_x_ring_effect2": 0.5
+            },
+            {
+              "stars": 7,
+              "dmg_x_ring_effect2": 0.5
+            }
+          ],
+          "grade_axis": "dmg_x_ring_effect2",
+          "color_rule": "face",
+          "desc_ko": "길닦음 성립 시 고리 둘레 별 낙하(반경 1.0), 피해=효과2×0.5"
+        },
+        {
+          "id": "pwr_chilseong_pagunseong",
+          "name_ko": "파군성",
+          "type": "ptype_ta",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "gyeoldan_add_pct": 3
+            },
+            {
+              "gyeoldan_add_pct": 5
+            },
+            {
+              "gyeoldan_add_pct": 8
+            }
+          ],
+          "grade_axis": "gyeoldan_add_pct",
+          "color_rule": "red",
+          "desc_ko": "결단 증가, 결단타 시 별 낙하 1(반경 1.2, base_red_max×1.0, 내부쿨 0.5s)"
+        },
+        {
+          "id": "pwr_chilseong_myeong_itgi",
+          "name_ko": "명 잇기",
+          "type": "ptype_haeng",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "survive_chance_pct": 10
+            },
+            {
+              "survive_chance_pct": 15
+            },
+            {
+              "survive_chance_pct": 20
+            }
+          ],
+          "grade_axis": "survive_chance_pct",
+          "color_rule": "none",
+          "desc_ko": "대신 맞기 시 영가가 천도하지 않고 수명 +5초(넋 미지급)"
+        }
+      ],
+      "gongsu": {
+        "gs_omen": [
+          "북녘 하늘에 별 일곱이 내려앉는다.",
+          "명(命)을 셈하는 소리가 들린다."
+        ],
+        "gs_pick": [
+          "명을 물으러 왔느냐."
+        ],
+        "gs_start": [
+          "별을 잇거라. 끊기면 처음부터다."
+        ],
+        "gs_pass_wieom": [
+          "별빛을 뚫고 왔구나. 명이 길겠다."
+        ],
+        "gs_pass_gaho": [
+          "일곱 별을 다 이었으니, 네 명줄도 이어 주마."
+        ],
+        "gs_incomplete": [
+          "별 하나가 흐리구나. 그래도 실어 주마."
+        ],
+        "gs_possessed": [
+          "칠성님이 실리셨다."
+        ],
+        "gs_possessed_momju": [
+          "내 제자야, 네 명은 내가 쥐고 있다."
+        ],
+        "gs_gildakkeum": [
+          "명다리가 놓였다."
+        ],
+        "gs_elite_haewon": [
+          "너도 누군가의 명을 빌던 사람이었지."
+        ],
+        "gs_crisis": [
+          "아직 네 별은 지지 않았다."
+        ],
+        "gs_leave": [
+          "별을 등지지 마라."
+        ],
+        "gs_hapil_word": [
+          "별이—"
+        ],
+        "gs_boss": [
+          "저것의 명도 오늘 다한다."
+        ],
+        "gs_retreat": [
+          "별은 오늘 뜨지 않아도 지지 않는다."
+        ]
+      }
+    },
+    {
+      "id": "deity_janggun",
+      "name_ko": "장군·오방신장",
+      "hanja": "將軍·五方神將",
+      "scope": "v1",
+      "instrument": "태평소",
+      "glyph": "obanggi",
+      "momju_of": [
+        "char_baksu"
+      ],
+      "lore": {
+        "summary": "무장신 + 오방신장. 신장거리: 동달이·전복·벙거지, 오른손 적·황·청기 / 왼손 백·흑기. 실존 장군 특정 금지.",
+        "tags": [
+          "무속"
+        ],
+        "game_split": "위엄=진 꺾기, 가호=오방기 세우기"
+      },
+      "stage_affinity": {
+        "stage_guksadang": 1.2
+      },
+      "avatar": {
+        "id": "avatar_janggun",
+        "name_ko": "오방신장 수호병 무리",
+        "size_px": 128,
+        "deity_mod": 1.1,
+        "bodies": [
+          {
+            "role": "center_general",
+            "size_px": 128,
+            "banner": "황"
+          },
+          {
+            "role": "east",
+            "size_px": 96,
+            "banner": "청"
+          },
+          {
+            "role": "south",
+            "size_px": 96,
+            "banner": "적"
+          },
+          {
+            "role": "west",
+            "size_px": 96,
+            "banner": "백"
+          },
+          {
+            "role": "north",
+            "size_px": 96,
+            "banner": "흑"
+          }
+        ],
+        "shared_wieom": true,
+        "art_ref": "art/deities/janggun_*, art/concept/possession_janggun_joseon_[c|d].png",
+        "patterns": [
+          {
+            "id": "janggun_p_hyeopgong",
+            "name_ko": "사방 협공",
+            "phase_min": 1,
+            "period_s": 5.0,
+            "tg_s": 0.7,
+            "damage_pct_max_jeonggi": 10,
+            "hit": {
+              "shape": "4_lines_sequential",
+              "length": 6,
+              "width": 1,
+              "offset": 7,
+              "interval_beats": 0.5,
+              "order": [
+                "east",
+                "south",
+                "west",
+                "north"
+              ],
+              "length_n3plus": 7
+            },
+            "vulnerable_s": 1.0
+          },
+          {
+            "id": "janggun_p_jinjopgi",
+            "name_ko": "진 좁히기",
+            "phase_min": 1,
+            "period_s": 12.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "closing_square",
+              "side_from": 14,
+              "side_to": 6,
+              "dur_s": 3.0,
+              "gap": 2.0,
+              "gap_n5": 1.6,
+              "tick_s": 0.5
+            },
+            "vulnerable_s": 1.5
+          },
+          {
+            "id": "janggun_p_woldo",
+            "name_ko": "월도 휘두르기",
+            "phase_min": 2,
+            "period_s": 7.0,
+            "tg_s": 0.9,
+            "damage_pct_max_jeonggi": 15,
+            "hit": {
+              "shape": "arc",
+              "angle_deg": 270,
+              "radius": 3,
+              "dash": 2,
+              "body": "center_general"
+            },
+            "vulnerable_s": 1.2
+          },
+          {
+            "id": "janggun_p_obangjin",
+            "name_ko": "오방 진법",
+            "phase_min": 3,
+            "period_s": 14.0,
+            "tg_s": 0.6,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "sequential_slams",
+              "radius": 2.5,
+              "interval_beats": 1,
+              "order": [
+                "east",
+                "south",
+                "center",
+                "west",
+                "north"
+              ]
+            },
+            "vulnerable_s": 2.0
+          }
+        ]
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_install"
+        ],
+        "name_ko": "오방기 세우기",
+        "objects": [
+          {
+            "id": "obj_obanggi_jari",
+            "name_ko": "오방기 자리",
+            "count": 5,
+            "positions": {
+              "center": "anchor",
+              "east": 6,
+              "west": 6,
+              "south": 6,
+              "north": 6
+            },
+            "colors": {
+              "east": "청",
+              "south": "적",
+              "center": "황",
+              "west": "백",
+              "north": "흑"
+            }
+          }
+        ],
+        "install_radius": 1.2,
+        "install_accum_s": 0.8,
+        "order_required": false,
+        "topple": {
+          "enemy_contact_s": 2.0,
+          "reinstall_progress": 0
+        },
+        "slow_sinjang_near_flag": {
+          "radius": 2.5,
+          "slow_pct": 30
+        },
+        "progress": {
+          "per_flag_first_pct": 16,
+          "all_standing_pct_per_s": 2.0
+        },
+        "expected_s": 22,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "thrust_length": "6 (n>=3: 7)",
+        "square_gap": "2.0 (n=4: 1.6)",
+        "subi_topple": "n>=3"
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_janggun__wieom",
+          "name_ko": "장군 위엄",
+          "effects": [
+            {
+              "stat": "stat_jangdan",
+              "op": "add_pct",
+              "value": -10
+            },
+            {
+              "type": "proc",
+              "id": "red_projectile_pierce",
+              "params": {
+                "add": 1
+              }
+            },
+            {
+              "stat": "stat_gyeoldan",
+              "op": "add_pct",
+              "value": 5
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_janggun__gaho",
+          "name_ko": "신장 가호",
+          "effects": [
+            {
+              "type": "proc",
+              "id": "npc_sinjang_howi",
+              "params": {
+                "count": 4,
+                "orbit_radius": 1.4,
+                "angular_speed_deg": 60,
+                "substitute_hit_cooldown_s": 10
+              }
+            },
+            {
+              "stat": "stat_sinbok",
+              "op": "add",
+              "value": 3
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "장군 투구(붉은 상모 술) [캐논 '전립' — R3]",
+          "pattern": "두정갑 징 문양",
+          "aura": "발밑 X자 창날 잔광",
+          "prop": "월도"
+        },
+        "gaho": {
+          "head": "장군 투구(오색 끈 상모)",
+          "pattern": "동달이 색동 오방 5줄",
+          "aura": "사방 미니 오방기 4 홀로그램",
+          "prop": "오방신장기(오른손 적·황·청, 왼손 백·흑)"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_janggun_jingun",
+          "name_ko": "기세 진군",
+          "type": "ptype_ta",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "dmg_pct": 10
+            },
+            {
+              "dmg_pct": 15
+            },
+            {
+              "dmg_pct": 20
+            }
+          ],
+          "grade_axis": "dmg_pct",
+          "color_rule": "buff",
+          "desc_ko": "같은 방향(±30°) 2.0s 이상 이동 시 진군: 모든 무구 피해 증가, 방향 이탈 유예 0.3s"
+        },
+        {
+          "id": "pwr_janggun_obang_howi",
+          "name_ko": "오방 호위",
+          "type": "ptype_su",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "sinbok_add": 2,
+              "iframe_add_s": 0.5
+            },
+            {
+              "sinbok_add": 3,
+              "iframe_add_s": 0.7
+            },
+            {
+              "sinbok_add": 5,
+              "iframe_add_s": 1.0
+            }
+          ],
+          "grade_axis": "sinbok_add",
+          "color_rule": "none",
+          "desc_ko": "신복 증가, 피격 후 무적 연장"
+        },
+        {
+          "id": "pwr_janggun_gunung_haengjin",
+          "name_ko": "군웅 행진",
+          "type": "ptype_haeng",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "jangdan_per_stack_pct": -2
+            },
+            {
+              "jangdan_per_stack_pct": -3
+            },
+            {
+              "jangdan_per_stack_pct": -4
+            }
+          ],
+          "grade_axis": "jangdan_per_stack_pct",
+          "color_rule": "none",
+          "desc_ko": "영가 8명당 장단 감소, 최대 3중첩, 하한 40%"
+        },
+        {
+          "id": "pwr_janggun_geommu",
+          "name_ko": "칼춤",
+          "type": "ptype_ta",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "every_casts": 5,
+              "radius": 2.5,
+              "dmg_x_base_red": 1.5
+            },
+            {
+              "every_casts": 4,
+              "radius": 2.8,
+              "dmg_x_base_red": 2.0
+            },
+            {
+              "every_casts": 3,
+              "radius": 3.2,
+              "dmg_x_base_red": 2.5
+            }
+          ],
+          "grade_axis": "dmg_x_base_red",
+          "color_rule": "red",
+          "desc_ko": "적 무구 N회 발동마다 월도 회전 베기"
+        },
+        {
+          "id": "pwr_janggun_sinjanggi",
+          "name_ko": "신장기",
+          "type": "ptype_su",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "howi_cooldown_s": 8
+            },
+            {
+              "howi_cooldown_s": 6.5
+            },
+            {
+              "howi_cooldown_s": 5
+            }
+          ],
+          "grade_axis": "howi_cooldown_s",
+          "color_rule": "white",
+          "desc_ko": "신장 호위 대신 맞기 쿨 감소, 신장 접촉 적에게 백 피해(오라 공식×1.0)"
+        }
+      ],
+      "gongsu": {
+        "gs_omen": [
+          "말발굽 소리… 오방에 기가 선다.",
+          "동서남북 중앙에 신장이 내려온다."
+        ],
+        "gs_pick": [
+          "진(陣) 안으로 들었느냐."
+        ],
+        "gs_start": [
+          "사방을 막아 보아라!"
+        ],
+        "gs_pass_wieom": [
+          "물러서지 않았구나. 장하다, 내 군사로다."
+        ],
+        "gs_pass_gaho": [
+          "다섯 기를 다 세웠으니, 이 굿판이 곧 진이다."
+        ],
+        "gs_incomplete": [
+          "진이 반쯤만 섰다. 나머지는 네가 채워라."
+        ],
+        "gs_possessed": [
+          "장군님이 실렸다!"
+        ],
+        "gs_possessed_momju": [
+          "내 제자야, 칼을 들어라. 내가 왔다."
+        ],
+        "gs_gildakkeum": [
+          "진을 둘렀다!"
+        ],
+        "gs_elite_haewon": [
+          "싸움은 끝났다. 무기를 내려놓아라."
+        ],
+        "gs_crisis": [
+          "등 뒤는 신장이 지킨다. 앞만 보아라."
+        ],
+        "gs_leave": [
+          "진을 버리고 어디 가느냐!"
+        ],
+        "gs_hapil_word": [
+          "기가—"
+        ],
+        "gs_boss": [
+          "적장이 나왔다. 북을 울려라!"
+        ],
+        "gs_retreat": [
+          "진을 거두마. 다음 판에 부르거라."
+        ]
+      }
+    },
+    {
+      "id": "deity_barigongju",
+      "name_ko": "바리공주",
+      "hanja": "",
+      "scope": "v1",
+      "instrument": "해금·피리(구음)",
+      "glyph": "samsaekkot",
+      "momju_of": [
+        "char_dangol"
+      ],
+      "lore": {
+        "summary": "서울·경기 무조신. 버려진 일곱째 공주가 저승에서 무장승의 시험(물 긷기·나무 하기·불 때기)을 치르고 약수와 뼈살이·살살이·숨살이꽃으로 부모를 살림. 망자 인도.",
+        "tags": [
+          "무속"
+        ],
+        "verify": [
+          "진오기굿 말미거리 무녀 복식"
+        ],
+        "game_split": "위엄=무장승 시험, 가호=넋 인도"
+      },
+      "stage_affinity": {
+        "stage_jindo_ssitgim": 1.5,
+        "stage_myeongbu": 2.0
+      },
+      "avatar": {
+        "id": "avatar_barigongju",
+        "name_ko": "무장승",
+        "size_px": 160,
+        "deity_mod": 1.0,
+        "art_ref": "신규 (art/deities/barigongju_* 는 빙의 비주얼 참고)",
+        "patterns": [
+          {
+            "id": "bari_p_mulgitgi",
+            "name_ko": "물 긷기",
+            "phase_min": 1,
+            "period_s": 5.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 9,
+            "hit": {
+              "shape": "ripple_rings",
+              "count": 3,
+              "expand_speed": 2.5,
+              "gap_deg": 60
+            },
+            "vulnerable_s": 1.0
+          },
+          {
+            "id": "bari_p_namu",
+            "name_ko": "나무 하기",
+            "phase_min": 2,
+            "period_s": 6.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "rolling_logs",
+              "lanes": 3,
+              "lane_width": 1.2,
+              "lane_spacing": 2,
+              "speed": 6
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "bari_p_bul",
+            "name_ko": "불 때기",
+            "phase_min": 3,
+            "period_s": 8.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 6,
+            "hit": {
+              "shape": "embers",
+              "count": 4,
+              "radius": 1.4,
+              "dur_s": 4.0,
+              "tick_s": 0.5,
+              "color": "blue_black"
+            },
+            "vulnerable_s": 1.5
+          },
+          {
+            "id": "bari_p_samnyeon",
+            "name_ko": "삼년 시험",
+            "phase_min": 3,
+            "period_s": 16.0,
+            "tg_s": 1.2,
+            "damage_pct_max_jeonggi": 0,
+            "hit": {
+              "shape": "combo",
+              "parts": {
+                "bari_p_mulgitgi": 1,
+                "bari_p_namu": 2,
+                "bari_p_bul": 2
+              }
+            },
+            "vulnerable_s": 2.0
+          }
+        ]
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_escort"
+        ],
+        "name_ko": "원혼 떼를 저승 문으로",
+        "objects": [
+          {
+            "id": "obj_jeoseung_mun",
+            "name_ko": "저승 문",
+            "offset_from_anchor": 8,
+            "entry_radius": 2.5
+          },
+          {
+            "id": "npc_wonhon_tte",
+            "name_ko": "길 잃은 원혼 떼",
+            "count": 12
+          }
+        ],
+        "herding": {
+          "flee_radius": {
+            "player": 3.0,
+            "yeongga": 1.5,
+            "yeongsu_beom": 1.5,
+            "sinjang_howi": 1.5
+          },
+          "flee_speed": 2.6,
+          "idle_speed": 0.4,
+          "cohesion_radius": 2,
+          "cohesion_weight": 0.3,
+          "out_of_ground_return_s": 0.5,
+          "knockback_by_avatar": 1.5
+        },
+        "progress": {
+          "per_soul_pct": 8.5
+        },
+        "expected_s": 23,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "flee_speed": "2.6+0.2*(n-1)",
+        "log_speed": "6+0.5*(n-1)",
+        "wonhon_count": 12
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_barigongju__wieom",
+          "name_ko": "바리 위엄",
+          "effects": [
+            {
+              "type": "proc",
+              "id": "toechi_to_neok",
+              "params": {
+                "chance_pct": 20,
+                "cap_pct": 50,
+                "suppress_sal": true,
+                "neok": 1,
+                "orb_pct": 100
+              }
+            },
+            {
+              "stat": "stat_chohon",
+              "op": "add_pct",
+              "value": 30
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_barigongju__gaho",
+          "name_ko": "바리 가호",
+          "effects": [
+            {
+              "stat": "stat_haengnyeol",
+              "op": "add",
+              "value": 12
+            },
+            {
+              "type": "proc",
+              "id": "fx_yeongga_sagyeok",
+              "params": {
+                "interval_s": 3.0,
+                "range": 4,
+                "dmg_x_aura_per_s": 2,
+                "color": "white"
+              }
+            },
+            {
+              "stat": "stat_haewon_suryeon",
+              "op": "add_pct",
+              "value": 20
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "칠보 화관",
+          "pattern": "원삼 색동(적 강조)",
+          "aura": "지팡이 그림자 잔상",
+          "prop": "무장승 지팡이"
+        },
+        "gaho": {
+          "head": "칠보 화관 + 삼색꽃",
+          "pattern": "원삼 색동(한지빛)+넋전",
+          "aura": "넋전 흩날림 상승",
+          "prop": "약수병"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_barigongju_yaksu",
+          "name_ko": "약수",
+          "type": "ptype_su",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "heal_per_haewon": 0.2,
+              "heal_cap_per_s": 3
+            },
+            {
+              "heal_per_haewon": 0.35,
+              "heal_cap_per_s": 4
+            },
+            {
+              "heal_per_haewon": 0.5,
+              "heal_cap_per_s": 5
+            }
+          ],
+          "grade_axis": "heal_per_haewon",
+          "color_rule": "none",
+          "desc_ko": "해원 1당 정기 회복(초당 상한)"
+        },
+        {
+          "id": "pwr_barigongju_samsaekkot",
+          "name_ko": "삼색꽃",
+          "type": "ptype_hae",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "mark_chance_pct": 10
+            },
+            {
+              "mark_chance_pct": 15
+            },
+            {
+              "mark_chance_pct": 20
+            }
+          ],
+          "grade_axis": "mark_chance_pct",
+          "color_rule": "white",
+          "desc_ko": "풀릴 기색 진입 시 꽃 표식: 다음 백 피해 1회 ×2.0"
+        },
+        {
+          "id": "pwr_barigongju_jeoseunggil",
+          "name_ko": "저승길 안내",
+          "type": "ptype_haeng",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "radius": 2.0,
+              "dmg_x_aura_per_s": 3
+            },
+            {
+              "radius": 2.5,
+              "dmg_x_aura_per_s": 3
+            },
+            {
+              "radius": 3.0,
+              "dmg_x_aura_per_s": 3
+            }
+          ],
+          "grade_axis": "dmg_x_aura_per_s",
+          "color_rule": "face",
+          "desc_ko": "영가 천도 시 반경 내 피해=오라 초당 피해×3"
+        },
+        {
+          "id": "pwr_barigongju_mujangseung",
+          "name_ko": "무장승의 지팡이",
+          "type": "ptype_hae",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "neok_convert_add_pct": 10
+            },
+            {
+              "neok_convert_add_pct": 15
+            },
+            {
+              "neok_convert_add_pct": 20
+            }
+          ],
+          "grade_axis": "neok_convert_add_pct",
+          "color_rule": "none",
+          "desc_ko": "바리 위엄 넋 전환 확률 증가(총 상한 50%)"
+        },
+        {
+          "id": "pwr_barigongju_ogu",
+          "name_ko": "오구 행렬",
+          "type": "ptype_haeng",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "neok_sumyeong_add_s": 4,
+              "haengnyeol_add": 2
+            },
+            {
+              "neok_sumyeong_add_s": 7,
+              "haengnyeol_add": 4
+            },
+            {
+              "neok_sumyeong_add_s": 10,
+              "haengnyeol_add": 6
+            }
+          ],
+          "grade_axis": "neok_sumyeong_add_s",
+          "color_rule": "none",
+          "desc_ko": "넋 수명·행렬 상한 증가"
+        }
+      ],
+      "gongsu": {
+        "gs_omen": [
+          "저승 문틈으로 바람이 샌다… 먼 길 간 공주가 돌아온다.",
+          "약수 긷는 소리가 들린다."
+        ],
+        "gs_pick": [
+          "먼 길 가는 사람이로구나."
+        ],
+        "gs_start": [
+          "물 긷고, 나무하고, 불 때 보아라. 나도 그리 했다."
+        ],
+        "gs_pass_wieom": [
+          "무장승도 길을 비켜 주는구나."
+        ],
+        "gs_pass_gaho": [
+          "길 잃은 넋들을 다 문 앞까지 데려왔구나. 나머지는 내가 안고 가마."
+        ],
+        "gs_incomplete": [
+          "약수가 반 바가지뿐이다. 그래도 목은 축이겠지."
+        ],
+        "gs_possessed": [
+          "바리공주 실리셨다."
+        ],
+        "gs_possessed_momju": [
+          "내 자식아, 먼 길 같이 가자."
+        ],
+        "gs_gildakkeum": [
+          "저승길 닦았다. 잘 가거라."
+        ],
+        "gs_elite_haewon": [
+          "울지 마라. 나도 버려졌던 아이다."
+        ],
+        "gs_crisis": [
+          "아직 너는 이쪽 사람이다. 돌아서지 마라."
+        ],
+        "gs_leave": [
+          "길을 두고 어디로 가느냐."
+        ],
+        "gs_hapil_word": [
+          "길이—"
+        ],
+        "gs_boss": [
+          "저것도 누군가의 자식이었다."
+        ],
+        "gs_retreat": [
+          "이번 길은 네 길이 아니구나. 잘 가거라."
+        ]
+      }
+    },
+    {
+      "id": "deity_jeseok_daegam",
+      "name_ko": "제석·대감",
+      "hanja": "帝釋·大監",
+      "scope": "v1",
+      "instrument": "제금(바라)",
+      "glyph": "siru_gokkal",
+      "momju_of": [
+        "char_beopsa"
+      ],
+      "lore": {
+        "summary": "제석=생명·출산·농경 천신(흰 장삼·고깔·염주·방울·부채). 대감=터줏대감, 재운. 대감놀이: 전복+전립, 제물 실랑이·위협 후 재수 약속, 욕심 많고 놀기 좋아함. 무구 삼지창·청룡도·부채·소다리·떡시루. 관서는 무장 성격.",
+        "tags": [
+          "무속"
+        ],
+        "game_split": "위엄=대감(흥정), 가호=제석(굿상)",
+        "face_is_persona": true
+      },
+      "stage_affinity": {},
+      "avatar": {
+        "id": "avatar_jeseok_daegam",
+        "name_ko": "대감",
+        "size_px": 144,
+        "deity_mod": 1.0,
+        "speech_bubbles": true,
+        "art_ref": "art/deities/jeseok_daegam_*",
+        "patterns": [
+          {
+            "id": "daegam_p_yeopjeon",
+            "name_ko": "검은 엽전 뿌리기",
+            "phase_min": 1,
+            "period_s": 4.0,
+            "tg_s": 0.5,
+            "damage_pct_max_jeonggi": 7,
+            "hit": {
+              "shape": "fan_bullets",
+              "angle_deg": 60,
+              "bullets": 9,
+              "bullets_n5": 13,
+              "speed": 5,
+              "color": "blue_black",
+              "bubble": "옛다, 엽전이다! …가짜지만."
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "daegam_p_samjichang",
+            "name_ko": "삼지창 찌르기",
+            "phase_min": 1,
+            "period_s": 6.0,
+            "tg_s": 0.7,
+            "damage_pct_max_jeonggi": 12,
+            "hit": {
+              "shape": "3_lines",
+              "length": 5,
+              "bubble": "대감 창 맛 좀 봐라!"
+            },
+            "vulnerable_s": 0.8
+          },
+          {
+            "id": "daegam_p_siru",
+            "name_ko": "시루 엎기",
+            "phase_min": 2,
+            "period_s": 9.0,
+            "tg_s": 1.0,
+            "damage_pct_max_jeonggi": 0,
+            "hit": {
+              "shape": "circle_zone",
+              "radius": 2.5,
+              "dur_s": 4.0,
+              "player_domu_pct": -35,
+              "gutsang_offering_add": 10,
+              "bubble": "에잇, 떡이 식었다!"
+            },
+            "vulnerable_s": 1.5
+          },
+          {
+            "id": "daegam_p_samkigi",
+            "name_ko": "더 내놔라",
+            "phase_min": 2,
+            "period_s": 12.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 0,
+            "hit": {
+              "shape": "orb_vacuum",
+              "radius": 6,
+              "dur_s": 3.0,
+              "spit_on_hit_pct": 120,
+              "return_at_end_pct": 50,
+              "bubble": "더 내놔라, 더!",
+              "bubble_spit": "아이고, 체했다!"
+            },
+            "vulnerable_s": 0.0
+          },
+          {
+            "id": "daegam_p_taryeong",
+            "name_ko": "대감타령",
+            "phase_min": 3,
+            "period_s": 10.0,
+            "tg_s": 0.8,
+            "damage_pct_max_jeonggi": 7,
+            "hit": {
+              "shape": "spin_push_ring",
+              "dur_s": 2.5,
+              "push_speed": 1.2,
+              "ring_bullets": 16,
+              "bubble": "얼씨구, 대감 놀아난다!"
+            },
+            "vulnerable_s": 1.2
+          }
+        ],
+        "end_bubble": "옜다, 재수다. 잘 살아라!"
+      },
+      "gaho_task": {
+        "grammar": [
+          "grm_ring",
+          "grm_hold"
+        ],
+        "name_ko": "제석 굿상 지키기",
+        "objects": [
+          {
+            "id": "obj_gutsang",
+            "name_ko": "굿상(전물상)",
+            "at": "anchor",
+            "offering_meter": {
+              "min": 0,
+              "max": 100,
+              "start": 60
+            }
+          }
+        ],
+        "ring": {
+          "offering_add": 20,
+          "progress_pct": 16,
+          "area_bonus_pct_per_tile": 0.1,
+          "area_bonus_cap_pct": 6,
+          "min_area": 9
+        },
+        "hold": {
+          "threshold": 50,
+          "pct_per_s": 1.5
+        },
+        "threats": {
+          "enemy": "enm_agwi",
+          "interval_s": 5.0,
+          "count_formula": "3+n",
+          "drain_radius": 1.5,
+          "drain_per_agwi_per_s": 5,
+          "drain_scale": "-0.7*(n-1)"
+        },
+        "progress_side": {
+          "agwi_haewon_pct": 2.5,
+          "radius": 5,
+          "cap_pct": 20
+        },
+        "expected_s": 22,
+        "task_spawn": "always_at_clear"
+      },
+      "scaling": {
+        "agwi_count": "3+n",
+        "bullets": "9 (n=4: 13)"
+      },
+      "faces": {
+        "wieom": {
+          "id": "deity_jeseok_daegam__wieom",
+          "name_ko": "대감 위엄",
+          "effects": [
+            {
+              "stat": "stat_siju",
+              "op": "add_pct",
+              "value": 50
+            },
+            {
+              "type": "proc",
+              "id": "box_grade_up",
+              "params": {
+                "chance_pct": 25
+              }
+            },
+            {
+              "type": "proc",
+              "id": "yeopjeon_drop_mult",
+              "params": {
+                "mult": 1.3
+              }
+            }
+          ]
+        },
+        "gaho": {
+          "id": "deity_jeseok_daegam__gaho",
+          "name_ko": "제석 가호",
+          "effects": [
+            {
+              "stat": "stat_saenggi",
+              "op": "add",
+              "value": 2.0
+            },
+            {
+              "type": "proc",
+              "id": "fx_geumjul_gyeolgye",
+              "params": {
+                "interval_s": 10,
+                "radius": 3.0,
+                "dur_s": 3.0,
+                "slow_pct": 30,
+                "center": "procession_centroid"
+              }
+            },
+            {
+              "type": "meta",
+              "id": "gongdeok_mult",
+              "params": {
+                "mult": 1.25,
+                "applies": "run_end_conversion"
+              }
+            }
+          ]
+        }
+      },
+      "visual": {
+        "wieom": {
+          "head": "전립(캐논 '갓' — R3)",
+          "pattern": "전복 금박 엽전 문양",
+          "aura": "한지빛 금박 스파크 + 엽전 꿰미",
+          "prop": "부채+엽전 꿰미"
+        },
+        "gaho": {
+          "head": "흰 고깔",
+          "pattern": "흰 장삼+붉은 가사",
+          "aura": "염주알 8 공전",
+          "prop": "방울"
+        }
+      },
+      "powers": [
+        {
+          "id": "pwr_jeseok_daegam_siru",
+          "name_ko": "고양미 시루",
+          "type": "ptype_su",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "offering_heal_pct": 25,
+              "offering_drop_mult": 1.2
+            },
+            {
+              "offering_heal_pct": 40,
+              "offering_drop_mult": 1.3
+            },
+            {
+              "offering_heal_pct": 60,
+              "offering_drop_mult": 1.4
+            }
+          ],
+          "grade_axis": "offering_heal_pct",
+          "color_rule": "none",
+          "desc_ko": "공물 회복량·드롭 증가"
+        },
+        {
+          "id": "pwr_jeseok_daegam_jaesu",
+          "name_ko": "재수",
+          "type": "ptype_un",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "siju_add_pct": 10
+            },
+            {
+              "siju_add_pct": 15
+            },
+            {
+              "siju_add_pct": 25
+            }
+          ],
+          "grade_axis": "siju_add_pct",
+          "color_rule": "none",
+          "desc_ko": "시주 증가"
+        },
+        {
+          "id": "pwr_jeseok_daegam_yeomju",
+          "name_ko": "염주 고리",
+          "type": "ptype_hae",
+          "face": "common",
+          "max_level": 3,
+          "levels": [
+            {
+              "ring_dmg_pct": 20,
+              "ring_cooldown_s": 0.9
+            },
+            {
+              "ring_dmg_pct": 35,
+              "ring_cooldown_s": 0.8
+            },
+            {
+              "ring_dmg_pct": 50,
+              "ring_cooldown_s": 0.7
+            }
+          ],
+          "grade_axis": "ring_dmg_pct",
+          "color_rule": "white",
+          "desc_ko": "길닦음 효과2 피해 증가, 재사용 대기 감소"
+        },
+        {
+          "id": "pwr_jeseok_daegam_donbaram",
+          "name_ko": "돈바람",
+          "type": "ptype_un",
+          "face": "wieom",
+          "max_level": 3,
+          "levels": [
+            {
+              "red_dmg_pct_per_coin": 0.5
+            },
+            {
+              "red_dmg_pct_per_coin": 0.8
+            },
+            {
+              "red_dmg_pct_per_coin": 1.2
+            }
+          ],
+          "grade_axis": "red_dmg_pct_per_coin",
+          "color_rule": "red",
+          "desc_ko": "엽전 자동 흡인(1.0s 지연), 런 획득 엽전당 적 무구 피해 증가(상한 30%)"
+        },
+        {
+          "id": "pwr_jeseok_daegam_geumjul",
+          "name_ko": "금줄",
+          "type": "ptype_su",
+          "face": "gaho",
+          "max_level": 3,
+          "levels": [
+            {
+              "interval_s": 8,
+              "radius_add": 0.5,
+              "slow_pct": 35
+            },
+            {
+              "interval_s": 7,
+              "radius_add": 1.0,
+              "slow_pct": 40
+            },
+            {
+              "interval_s": 6,
+              "radius_add": 1.5,
+              "slow_pct": 45
+            }
+          ],
+          "grade_axis": "interval_s",
+          "color_rule": "none",
+          "desc_ko": "금줄 결계 주기·반경·둔화 강화"
+        }
+      ],
+      "gongsu": {
+        "wieom": {
+          "gs_omen": [
+            "떡시루 냄새가 난다… 대감님 행차시다!",
+            "어디 보자, 이 집 상이 얼마나 차렸나."
+          ],
+          "gs_pick": [
+            "어허, 상이 이게 다냐?"
+          ],
+          "gs_start": [
+            "대감 배 채울 만큼 놀아 보아라!"
+          ],
+          "gs_pass_wieom": [
+            "허허! 이만하면 대감이 웃는다. 재수 넣어 주마!"
+          ],
+          "gs_incomplete": [
+            "반 상(床)이다, 반 상! 그래도 봐준다."
+          ],
+          "gs_possessed": [
+            "대감님 실렸다! 재물 들어온다!"
+          ],
+          "gs_possessed_momju": [
+            "내 제자야, 대감 밑천은 다 네 것이다!"
+          ],
+          "gs_gildakkeum": [
+            "둥글둥글 복 들어온다!"
+          ],
+          "gs_elite_haewon": [
+            "배고팠지? 한 상 받고 가라."
+          ],
+          "gs_crisis": [
+            "대감 밑천 다 털리겠다, 일어나라!"
+          ],
+          "gs_leave": [
+            "상 두고 어딜 가!"
+          ],
+          "gs_hapil_word": [
+            "복이—"
+          ],
+          "gs_boss": [
+            "저놈은 상 한 번 못 받아 본 놈이다."
+          ],
+          "gs_retreat": [
+            "상 안 받고 가는 대감도 있다더냐! 다음엔 꼭 받는다!"
+          ]
+        },
+        "gaho": {
+          "gs_omen": [
+            "흰 고깔이 내려온다."
+          ],
+          "gs_pick": [
+            "정성이 보이는구나."
+          ],
+          "gs_start": [
+            "상을 지키거라. 복은 그 위에 앉는다."
+          ],
+          "gs_pass_gaho": [
+            "상을 지켜 냈구나. 명과 복을 같이 내린다."
+          ],
+          "gs_incomplete": [
+            "정성이 반이니 복도 반이다. 그래도 내린다."
+          ],
+          "gs_possessed": [
+            "제석님 실리셨다."
+          ],
+          "gs_possessed_momju": [
+            "내 제자야, 복을 안고 왔다."
+          ],
+          "gs_gildakkeum": [
+            "고깔 안에 다 담겼다."
+          ],
+          "gs_elite_haewon": [
+            "배곯던 넋아, 이제 배부르게 가거라."
+          ],
+          "gs_crisis": [
+            "아직 거둘 것이 남았다."
+          ],
+          "gs_leave": [
+            "상을 비우지 마라."
+          ],
+          "gs_hapil_word": [
+            "복이—"
+          ],
+          "gs_boss": [
+            "저것도 한 상 받으면 풀린다."
+          ],
+          "gs_retreat": [
+            "복은 다음 상에 얹어 두마."
+          ]
+        }
+      },
+      "gongsu_voice_rule": "OMEN·선택·시작은 대감 목소리 기본, 시련 해결 후에는 빙의 면 목소리(위엄=대감, 가호=제석)"
+    }
+  ],
+  "expansion_stubs": [
+    {
+      "id": "deity_jowang",
+      "name_ko": "조왕",
+      "hanja": "竈王",
+      "scope": "x1",
+      "instrument": "놋그릇·물동이 장단",
+      "hapil_word": "불이—",
+      "wieom": "부뚜막 불길 화신 / 화공 계열 화염 부여",
+      "gaho": "아궁이 불씨 지키기 / 공물 회복 ×2",
+      "head": "부뚜막 불꽃",
+      "grammar_gaho": [
+        "grm_hold"
+      ]
+    },
+    {
+      "id": "deity_seongju",
+      "name_ko": "성주",
+      "hanja": "城主",
+      "scope": "x1",
+      "instrument": "성주풀이 소리(구음)",
+      "hapil_word": "집이—",
+      "wieom": "집터 수호령 / 신복·결계",
+      "gaho": "상량 5지점 설치 / 거점 결계",
+      "head": "상량 한지",
+      "grammar_gaho": [
+        "grm_install"
+      ]
+    },
+    {
+      "id": "deity_yeongdeung",
+      "name_ko": "영등할망",
+      "hanja": "",
+      "scope": "x2",
+      "instrument": "제주 설쇠·북",
+      "hapil_word": "바람이—",
+      "wieom": "바람 화신 / 바람 경로 투사체",
+      "gaho": "배방선 호송 / 바람 길베(지속 ×2)",
+      "head": "바람 깃",
+      "grammar_gaho": [
+        "grm_escort"
+      ]
+    }
+  ],
+  "resonance": {
+    "ring_order": [
+      "deity_sansin",
+      "deity_yongwang",
+      "deity_barigongju",
+      "deity_chilseong",
+      "deity_jeseok_daegam",
+      "deity_janggun"
+    ],
+    "pairs": [
+      {
+        "id": "res_sansin_yongwang",
+        "deities": [
+          "deity_sansin",
+          "deity_yongwang"
+        ],
+        "name_ko": "산수 공명",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "on_water_zone_fear_radius_pct",
+            "params": {
+              "value": 25
+            }
+          },
+          {
+            "type": "proc",
+            "id": "on_water_zone_domu_pct",
+            "params": {
+              "value": 5
+            }
+          }
+        ]
+      },
+      {
+        "id": "res_yongwang_barigongju",
+        "deities": [
+          "deity_yongwang",
+          "deity_barigongju"
+        ],
+        "name_ko": "넋건지기 공명",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "on_water_zone_haewon_yeongga_life_add_s",
+            "params": {
+              "value": 5
+            }
+          }
+        ]
+      },
+      {
+        "id": "res_barigongju_chilseong",
+        "deities": [
+          "deity_barigongju",
+          "deity_chilseong"
+        ],
+        "name_ko": "생사 공명",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "cheondo_maxhp",
+            "params": {
+              "every": 50,
+              "pct": 5,
+              "cap_pct": 20
+            }
+          },
+          {
+            "type": "proc",
+            "id": "on_revive_procession_life_add_s",
+            "params": {
+              "value": 10
+            }
+          }
+        ]
+      },
+      {
+        "id": "res_chilseong_jeseok_daegam",
+        "deities": [
+          "deity_chilseong",
+          "deity_jeseok_daegam"
+        ],
+        "name_ko": "천신 공명",
+        "verify": true,
+        "effects": [
+          {
+            "stat": "stat_jeomgwae",
+            "op": "add",
+            "value": 20
+          },
+          {
+            "type": "proc",
+            "id": "box_open_starlight",
+            "params": {
+              "count": 7,
+              "color": "latest_face"
+            }
+          }
+        ]
+      },
+      {
+        "id": "res_jeseok_daegam_janggun",
+        "deities": [
+          "deity_jeseok_daegam",
+          "deity_janggun"
+        ],
+        "name_ko": "무장 공명",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "on_yeopjeon_jangdan_pct",
+            "params": {
+              "value": -5,
+              "dur_s": 1.0,
+              "stack": false
+            }
+          },
+          {
+            "stat": "stat_sinbok",
+            "op": "add",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "id": "res_janggun_sansin",
+        "deities": [
+          "deity_janggun",
+          "deity_sansin"
+        ],
+        "name_ko": "호위 공명",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "vs_feared",
+            "params": {
+              "pierce_add": 1,
+              "dmg_taken_pct": 10
+            }
+          }
+        ]
+      }
+    ],
+    "johwa": {
+      "id": "res_johwa",
+      "name_ko": "조화",
+      "condition": "pair faces differ",
+      "sinmyeong_charge_pct_per_pair": 8,
+      "max_pct": 24
+    },
+    "presentation": {
+      "hud": "강신 등급 6각 고리의 변 점등(오지 않은 신령 꼭짓점은 먹색으로 꺼짐)",
+      "audio": "두 신령 악기 1마디 2중주",
+      "gongsu": false,
+      "omen_preview": "후보 원 위에 새로 성립할 공명 변을 점선으로 예고"
+    },
+    "per_run_pairs": {
+      "rule": "4 of 6 ring vertices possessed",
+      "absent_adjacent": 3,
+      "absent_non_adjacent": 2,
+      "combos_with_3": 6,
+      "combos_with_2": 9
+    }
+  },
+  "stacking_rules": [
+    {
+      "id": "C1",
+      "rule": "신령 출처 % 보너스는 같은 스탯 다른 출처와 가산. 곱은 대상 상태 배율만"
+    },
+    {
+      "id": "C2",
+      "rule": "캐논 4.5 상하한 후적용"
+    },
+    {
+      "id": "C3",
+      "rule": "행렬 순서: 무당→동행령→영가. 영수 호랑이는 선두 측면 0.6. 신장 호위는 무당 공전"
+    },
+    {
+      "id": "C4",
+      "rule": "대신 맞기: 맨 앞 영가 → 신장 호위 → 무당"
+    },
+    {
+      "id": "C5",
+      "rule": "공포 피해 증가·둔화는 최댓값 1개. 둔화 상한 60%. 공포 지속 갱신"
+    },
+    {
+      "id": "C6",
+      "rule": "상자 등급 상승 확률 가산 상한 60%, 상자당 최대 +1단계"
+    },
+    {
+      "id": "C7",
+      "rule": "퇴치→넋 전환 상한 50%, 넋 전환 판정 → 살 알갱이 → 정화 순"
+    },
+    {
+      "id": "C8",
+      "rule": "부활: 연명 실타래 → 명줄 → 사망"
+    },
+    {
+      "id": "C9",
+      "rule": "오버레이: 머리 최근1, 문양 최근3, 오라·지물 최근1"
+    },
+    {
+      "id": "C10",
+      "rule": "공수 우선순위 큐, 동시 1줄"
+    },
+    {
+      "id": "C11",
+      "rule": "장판 상한: 물결 8, 맑은 물 6, 떡 3"
+    },
+    {
+      "id": "C12",
+      "rule": "길닦음 연동 별빛류 독립 발동, 같은 프레임 VFX 1회 플래시"
+    },
+    {
+      "id": "C13",
+      "rule": "기세 진군은 이동 입력 방향 기준"
+    }
+  ],
+  "hapil": {
+    "call_order": [
+      "deity_sansin",
+      "deity_yongwang",
+      "deity_chilseong",
+      "deity_janggun",
+      "deity_barigongju",
+      "deity_jeseok_daegam"
+    ],
+    "call_words": [
+      "산이—",
+      "물이—",
+      "별이—",
+      "기가—",
+      "길이—",
+      "복이—"
+    ],
+    "call_final": "다 실렸다!",
+    "face_rule": "no extra face; form decided by possessed faces",
+    "common": {
+      "owned_powers_level_add": 1,
+      "complete_incomplete": false,
+      "sinmyeong_add_pct": 50,
+      "gangsin_grade": "hap",
+      "aura": "obang_cycle_per_beat",
+      "bgm": "sinawi_possessed_instruments_plus_base",
+      "bingui_jeomji": false
+    },
+    "forms": [
+      {
+        "id": "hapil_wise",
+        "name_ko": "위세 합일",
+        "condition": "wieom >= gaho + 2",
+        "effects": [
+          {
+            "stat": "stat_gyeoldan",
+            "op": "add_pct",
+            "value": 10
+          },
+          {
+            "type": "proc",
+            "id": "hanpa_chain",
+            "params": {
+              "radius": 1.5,
+              "han_le_pct_of_hit": 50,
+              "chain": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "hapil_jabi",
+        "name_ko": "자비 합일",
+        "condition": "gaho >= wieom + 2",
+        "effects": [
+          {
+            "type": "rule",
+            "id": "pullil_threshold_add_pctp",
+            "params": {
+              "value": 10
+            }
+          },
+          {
+            "stat": "stat_haengnyeol",
+            "op": "add",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "id": "hapil_yangmyeon",
+        "name_ko": "양면 합일",
+        "condition": "else (standard 2:2; daedong 3:3)",
+        "effects": [
+          {
+            "type": "proc",
+            "id": "union_dmg_pct",
+            "params": {
+              "value": 25
+            }
+          },
+          {
+            "type": "proc",
+            "id": "grant_box",
+            "params": {
+              "rule": "opposite color of last possession face",
+              "last_wieom": "box_neokham",
+              "last_gaho": "box_gilhyung"
+            }
+          }
+        ]
+      }
+    ],
+    "participants": "possessed only (max 4); no auto 6th descent",
+    "call_rule": "subsequence of call_order filtered to possessed deities (4 beats standard)",
+    "call_beats_standard": 4
+  },
+  "gangsin_grade": [
+    {
+      "grade": 0,
+      "max_jeonggi_add": 0,
+      "sinppal_add_pct": 0
+    },
+    {
+      "grade": 1,
+      "max_jeonggi_add": 5,
+      "sinppal_add_pct": 3
+    },
+    {
+      "grade": 2,
+      "max_jeonggi_add": 10,
+      "sinppal_add_pct": 6
+    },
+    {
+      "grade": 3,
+      "max_jeonggi_add": 15,
+      "sinppal_add_pct": 9
+    },
+    {
+      "grade": 4,
+      "max_jeonggi_add": 20,
+      "sinppal_add_pct": 12
+    },
+    {
+      "grade": "hap",
+      "condition": "4 possessed + 18:00 hapil",
+      "max_jeonggi_add": 30,
+      "sinppal_add_pct": 18
+    }
+  ],
+  "order_logic": {
+    "rng_stream": "rng_deity",
+    "candidate_pool": "pool - possessed - retreated",
+    "candidate_pool_sizes_standard": [
+      6,
+      4,
+      3,
+      2
+    ],
+    "first_trial": "momju + weighted_pick(rest)",
+    "weight": "stage_affinity[d] * forced_boost(d,k)",
+    "waiting_bonus": "removed (v0.9: 1+0.5*passed)",
+    "retreat": {
+      "cooldown_trials": 1,
+      "applies_to": "unchosen candidate (not reroll-replaced)"
+    },
+    "last_two_rule": "if |candidate_pool|==2 offer both",
+    "hapil": "possessed only, no auto descent",
+    "forced": [
+      {
+        "stage": "stage_east_sea_byeolsin",
+        "deity": "deity_yongwang",
+        "by_trial": 3,
+        "satisfied_if": "appeared as candidate"
+      },
+      {
+        "stage": "stage_myeongbu",
+        "deity": "deity_barigongju",
+        "by_trial": 2,
+        "unless_momju": true,
+        "satisfied_if": "appeared as candidate"
+      }
+    ],
+    "auto_pick": {
+      "after_s": 8,
+      "tiebreak": [
+        "momju",
+        "left"
+      ],
+      "face": "decided by dual gauges after pick (06 3.5.5)"
+    },
+    "reroll": {
+      "cost": "stat_gongsu_gyojeong x1",
+      "object": "santong",
+      "dwell_s": 0.6,
+      "radius": 1.2,
+      "max_per_trial": 2,
+      "pool": "pool - possessed - current_two (retreated included)",
+      "if_pool_1": "that deity + weighted_pick(current_two)",
+      "if_pool_0": "disabled",
+      "first_trial_keep_momju": true,
+      "passed_increment": false,
+      "retreat_on_replaced": false,
+      "descend_min_remaining_s": 5.0,
+      "simbang_free_per_run": 1
+    }
+  },
+  "gongsu_system": {
+    "lane": "top_center",
+    "show_s": 2.5,
+    "fade_s": 0.3,
+    "global_cooldown_s": 12,
+    "global_cooldown_applies_priority_ge": 3,
+    "voice": "none_v1",
+    "loc_key": "<deity_id>.gongsu.<trigger>[.<face>].<n>",
+    "triggers": [
+      {
+        "id": "gs_omen",
+        "priority": 1
+      },
+      {
+        "id": "gs_pick",
+        "priority": 1
+      },
+      {
+        "id": "gs_start",
+        "priority": 1
+      },
+      {
+        "id": "gs_pass_wieom",
+        "priority": 1
+      },
+      {
+        "id": "gs_pass_gaho",
+        "priority": 1
+      },
+      {
+        "id": "gs_incomplete",
+        "priority": 1
+      },
+      {
+        "id": "gs_possessed",
+        "priority": 1
+      },
+      {
+        "id": "gs_possessed_momju",
+        "priority": 1
+      },
+      {
+        "id": "gs_hapil_word",
+        "priority": 2
+      },
+      {
+        "id": "gs_retreat",
+        "priority": 2,
+        "per_trial": 1,
+        "when": "AFTERGLOW",
+        "speaker": "retreated candidate"
+      },
+      {
+        "id": "gs_boss",
+        "priority": 3,
+        "per_run": 1
+      },
+      {
+        "id": "gs_crisis",
+        "priority": 4,
+        "cooldown_s": 60,
+        "condition": "jeonggi<25%"
+      },
+      {
+        "id": "gs_elite_haewon",
+        "priority": 5,
+        "cooldown_s": 30
+      },
+      {
+        "id": "gs_gildakkeum",
+        "priority": 6,
+        "cooldown_s": 45,
+        "condition": "area>=20"
+      },
+      {
+        "id": "gs_leave",
+        "priority": 6,
+        "per_trial": 1
+      }
+    ]
+  },
+  "mode_overrides": {
+    "mode_pyojun": {},
+    "mode_jajinmori": {
+      "trial_times_s": [
+        135,
+        293,
+        563,
+        698
+      ],
+      "hapil_time_s": 810,
+      "trial_duration_s": 24,
+      "descend_max_s": 6,
+      "hp_wieom_mult": 0.8,
+      "gaho_target_mult": 0.8,
+      "dps_ref_time": "standard-equivalent (t*1.333)"
+    },
+    "mode_muhan": {
+      "post_boss_trials": false,
+      "absent_deities_stay_absent": true,
+      "proposal_x": "10분마다 재강림(모신 신령 1, 권능 1종 등급 +1) — v1 미포함"
+    },
+    "mode_oneul": {
+      "rng_deity": "daily_seed_stream",
+      "momju": "daily_fixed_character"
+    },
+    "mode_daedong": {
+      "scope": "x1",
+      "trial_times_s": [
+        180,
+        390,
+        750,
+        930,
+        1260,
+        1470
+      ],
+      "hapil_time_s": 1620,
+      "max_deities_per_run": 6,
+      "pool": "6 + deity_jowang + deity_seongju (+stage)",
+      "candidate_pool_sizes": [
+        9,
+        7,
+        6,
+        5,
+        4,
+        3
+      ],
+      "hapil_call": "subsequence of 9-deity order, 6 beats"
+    }
+  },
+  "salpuri_dan_proposals": [
+    {
+      "dan": 3,
+      "mod": "avatar damage x1.25"
+    },
+    {
+      "dan": 6,
+      "mod": "trial 30s -> 26s"
+    },
+    {
+      "dan": 9,
+      "mod": "phase entry 3s earlier"
+    },
+    {
+      "dan": 12,
+      "mod": "incomplete 70% -> 55%"
+    },
+    {
+      "dan": 15,
+      "mod": "avatar nonlethal removed (cultural review required)"
+    }
+  ],
+  "character_mods": {
+    "char_mansin": {
+      "momju": "lobby_select",
+      "gauge_charge_mult": 1.15,
+      "face_effect_pct_mult": 1.15
+    },
+    "char_baksu": {
+      "momju": "deity_janggun"
+    },
+    "char_dangol": {
+      "momju": "deity_barigongju",
+      "face_effect_pct_mult": 0.8,
+      "sinmyeong_charge_pct_per_instrument": 10,
+      "note": "캐논 +10% 유지(v1.2 D-29, +15% 제안 보류). 4신 = +40%",
+      "default_face": "gaho"
+    },
+    "char_myeongdu": {
+      "momju": "deity_chilseong",
+      "dongja_watches_trial": true
+    },
+    "char_simbang": {
+      "momju": "deity_yongwang",
+      "free_trial_reroll_per_run": 1
+    },
+    "char_beopsa": {
+      "momju": "deity_jeseok_daegam",
+      "scope": "x1",
+      "dokgyeong_gaho_progress_pct": 10
+    },
+    "momju_bonus": {
+      "bingui_jeomji_cards_complete": 4,
+      "bingui_jeomji_cards_incomplete": 3,
+      "complete_guarantee_grade_min": "grade_gil",
+      "retreats_if_unchosen": true
+    }
+  },
+  "doc_version": "v1.2 (canon v1.2, 2026-11-21)"
+}

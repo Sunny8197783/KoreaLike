@@ -1,0 +1,146 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gongmulsang_feast 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_gongmulsang_feast 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_gongmulsang_feast 2",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_gongmulsang_feast 3",
+   "frame": {
+    "x": 64,
+    "y": 32,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gongmulsang_feast.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gongmulsang_feast",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gongmulsang_feast",
+   "name": "공물상 상차림",
+   "fps": 12,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    64,
+    32
+   ],
+   "pivot": [
+    32,
+    31
+   ],
+   "columns": 2,
+   "frameWidth": 64,
+   "frameHeight": 32,
+   "blend": "normal",
+   "layer": "L08",
+   "timing": "beat:1",
+   "beat_synced": true,
+   "max_concurrent": 8,
+   "color_role": "Y+H",
+   "beat_sync": "beat:1",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 2052,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

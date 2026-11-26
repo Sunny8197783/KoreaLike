@@ -1,0 +1,152 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_manwoldo_crescent 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_manwoldo_crescent 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_manwoldo_crescent 2",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_manwoldo_crescent 3",
+   "frame": {
+    "x": 32,
+    "y": 16,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_manwoldo_crescent.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_manwoldo_crescent",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_manwoldo_crescent",
+   "name": "Manwoldo crescent",
+   "fps": 16.0,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    32,
+    16
+   ],
+   "pivot": [
+    18,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 32,
+   "frameHeight": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_manwoldo",
+   "color_role": "R",
+   "spec_canvas": "32x16",
+   "spec_frames": 4,
+   "timing": "fps:16",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 48,
+   "scope": "v1"
+  }
+ }
+}

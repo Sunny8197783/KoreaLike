@@ -1,0 +1,42 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  48,
+  48
+ ],
+ "pivot": [
+  24,
+  44
+ ],
+ "anims": {
+  "attack": {
+   "east": 6,
+   "south": 6,
+   "west": 6
+  },
+  "move": {
+   "east": 6,
+   "north": 6,
+   "south": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "attack": [
+   48,
+   48
+  ],
+  "move": [
+   48,
+   48
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "avatar",
+  "rot": "south/east/north/west.png = move_<dir>_0 (독립 정지 rotation 반입 제외, L12)",
+  "stab": "G5 stabilize.py 2026-11-24: 루프 다수결+순서 재배열(프레임 수 유지)·idle 숨쉬기·rot=루프0·여백 (0 gen)"
+ },
+ "west": "flip_h(east)",
+ "notes": "G5 salvage 0 gen: art_post run(24색 스트립) + deboil + West flip. 런타임 미연결 → 반입 보류"
+}

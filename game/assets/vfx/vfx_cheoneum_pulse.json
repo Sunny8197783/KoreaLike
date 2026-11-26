@@ -1,0 +1,164 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_cheoneum_pulse 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_cheoneum_pulse 1",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_cheoneum_pulse 2",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_cheoneum_pulse 3",
+   "frame": {
+    "x": 576,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_cheoneum_pulse.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 768,
+   "h": 192
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_cheoneum_pulse",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_cheoneum_pulse",
+   "name": "Cheoneum pulse",
+   "fps": 16.0,
+   "loop": false,
+   "frames": 4,
+   "frameWidth": 192,
+   "frameHeight": 192,
+   "frameSize": [
+    192,
+    192
+   ],
+   "pivot": [
+    96,
+    96
+   ],
+   "columns": 4,
+   "spec": {
+    "id": "vfx_cheoneum_pulse",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_cheoneum_bangul",
+    "color_role": "P",
+    "canvas": "192x192",
+    "frames": 4,
+    "timing": "fps:16",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": true,
+    "max_concurrent": 3,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P",
+   "max_concurrent": 3,
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     9,
+     6
+    ],
+    "semi_before": 7929,
+    "blend": "normal",
+    "size": "keep 192x192"
+   }
+  },
+  "korealike": {
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

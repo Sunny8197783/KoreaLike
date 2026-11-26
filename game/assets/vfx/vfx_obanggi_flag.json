@@ -1,0 +1,169 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_obanggi_flag 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_obanggi_flag 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_obanggi_flag 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_obanggi_flag 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 32
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_obanggi_flag.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_obanggi_flag",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_obanggi_flag",
+   "name": "Obanggi flag",
+   "fps": 8,
+   "loop": true,
+   "frames": 4,
+   "frameWidth": 12,
+   "frameHeight": 24,
+   "frameSize": [
+    16,
+    32
+   ],
+   "pivot": [
+    4,
+    27
+   ],
+   "columns": 4,
+   "beats": 1,
+   "spec": {
+    "id": "vfx_obanggi_flag",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_obanggi",
+    "color_role": "D",
+    "canvas": "12x24",
+    "frames": 4,
+    "timing": "beat:1",
+    "blend": "normal",
+    "layer": "L08",
+    "beat_snap": false,
+    "max_concurrent": 5,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L08",
+   "color_role": "D",
+   "max_concurrent": 5,
+   "beat_sync": "beat:1",
+   "variants": [
+    "vfx_obanggi_flag_cheong",
+    "vfx_obanggi_flag_jeok",
+    "vfx_obanggi_flag_hwang",
+    "vfx_obanggi_flag_baek",
+    "vfx_obanggi_flag_heuk"
+   ],
+   "variant": "cheong",
+   "note_review": "ASSET-REVIEW: multi-colour sheet split; VfxLib plays every frame in frames[], so the base id now holds the first colour only. Use <id>_<colour>. Combined sheet archived in art/_review_backup/vfx_sheets/.",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     8,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "12x24->16x32"
+   }
+  }
+ }
+}

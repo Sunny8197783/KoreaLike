@@ -1,0 +1,158 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_nojatdon_chain 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_nojatdon_chain 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_nojatdon_chain 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_nojatdon_chain 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_nojatdon_chain.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_nojatdon_chain",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_nojatdon_chain",
+   "name": "Nojatdon chain",
+   "fps": 16.0,
+   "loop": true,
+   "frames": 4,
+   "frameWidth": 16,
+   "frameHeight": 6,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    0,
+    8
+   ],
+   "columns": 4,
+   "spec": {
+    "id": "vfx_nojatdon_chain",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_nojatdon",
+    "color_role": "P+Y",
+    "canvas": "line2px",
+    "frames": 4,
+    "timing": "fps:16",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": false,
+    "max_concurrent": 20,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.686,
+   "layer": "L10",
+   "color_role": "P+Y",
+   "max_concurrent": 20,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "16x6->16x16"
+   }
+  }
+ }
+}

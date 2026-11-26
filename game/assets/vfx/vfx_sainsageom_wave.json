@@ -1,0 +1,177 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_sainsageom_wave 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sainsageom_wave 1",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sainsageom_wave 2",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sainsageom_wave 3",
+   "frame": {
+    "x": 0,
+    "y": 48,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sainsageom_wave 4",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_sainsageom_wave.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 80
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_sainsageom_wave",
+    "from": 0,
+    "to": 4,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_sainsageom_wave",
+   "name": "Sainsageom wave",
+   "fps": 16.0,
+   "loop": false,
+   "frames": 5,
+   "frameSize": [
+    128,
+    16
+   ],
+   "pivot": [
+    19,
+    8
+   ],
+   "columns": 1,
+   "frameWidth": 96,
+   "frameHeight": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "96x16->128x16"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_sainsageom",
+   "color_role": "R+H",
+   "spec_canvas": "96x16",
+   "spec_frames": 5,
+   "timing": "fps:16",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 12,
+   "scope": "v1",
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

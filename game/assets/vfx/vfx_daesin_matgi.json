@@ -1,0 +1,198 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_daesin_matgi 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_daesin_matgi 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_daesin_matgi 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_daesin_matgi 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_daesin_matgi 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_daesin_matgi 5",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_daesin_matgi.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_daesin_matgi",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_daesin_matgi",
+   "name": "Daesin matgi (흰 천 막아섬)",
+   "fps": 16.0,
+   "loop": false,
+   "frames": 6,
+   "frameWidth": 24,
+   "frameHeight": 24,
+   "frameSize": [
+    32,
+    32
+   ],
+   "columns": 6,
+   "pivot": [
+    16,
+    20
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 4,
+   "palette": [
+    "#f2ece0",
+    "#fffdf6",
+    "#d6cfc1",
+    "#d2c19c",
+    "#e9dcc0",
+    "#b29d76",
+    "#857154"
+   ],
+   "color_role": "W+H",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 7,
+    "blend": "add",
+    "size": "24x24->32x32"
+   }
+  }
+ }
+}

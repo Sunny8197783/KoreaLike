@@ -1,0 +1,136 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_myeongdu_beam 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "sourceSize": {
+    "w": 12,
+    "h": 4
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_myeongdu_beam 1",
+   "frame": {
+    "x": 12,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "sourceSize": {
+    "w": 12,
+    "h": 4
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_myeongdu_beam 2",
+   "frame": {
+    "x": 24,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 12,
+    "h": 4
+   },
+   "sourceSize": {
+    "w": 12,
+    "h": 4
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_myeongdu_beam.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 36,
+   "h": 4
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_myeongdu_beam",
+    "from": 0,
+    "to": 2,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_myeongdu_beam",
+   "name": "Myeongdu beam",
+   "fps": 20.0,
+   "loop": true,
+   "frames": 3,
+   "frameWidth": 12,
+   "frameHeight": 4,
+   "frameSize": [
+    12,
+    4
+   ],
+   "pivot": [
+    0,
+    2
+   ],
+   "columns": 3,
+   "spec": {
+    "id": "vfx_myeongdu_beam",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_myeongdu",
+    "color_role": "P+Y",
+    "canvas": "beam2px",
+    "frames": 3,
+    "timing": "fps:20",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": true,
+    "max_concurrent": 8,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P+Y",
+   "max_concurrent": 8,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     3,
+     3
+    ],
+    "semi_before": 48,
+    "blend": "normal",
+    "size": "keep 12x4"
+   }
+  }
+ }
+}

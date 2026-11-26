@@ -1,0 +1,32 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  80,
+  80
+ ],
+ "pivot": [
+  40,
+  72
+ ],
+ "anims": {
+  "move": {
+   "east": 6,
+   "north": 6,
+   "south": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "move": [
+   80,
+   80
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "elite",
+  "rot": "south/east/north/west.png = move_<dir>_0 (독립 정지 rotation 반입 제외, L12)"
+ },
+ "west": "flip_h(east)",
+ "notes": "64→80 캔버스 패딩(정예 64/80/96 허용, 리사이즈 없음). 독립 정지 rotation 제외"
+}

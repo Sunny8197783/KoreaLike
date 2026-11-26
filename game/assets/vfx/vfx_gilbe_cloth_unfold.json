@@ -1,0 +1,164 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gilbe_cloth_unfold 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_gilbe_cloth_unfold 1",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_gilbe_cloth_unfold 2",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_gilbe_cloth_unfold 3",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 16
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gilbe_cloth_unfold.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 512,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gilbe_cloth_unfold",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gilbe_cloth_unfold",
+   "name": "Gilbe cloth unfold",
+   "fps": 14.0,
+   "loop": false,
+   "frames": 4,
+   "frameWidth": 96,
+   "frameHeight": 16,
+   "frameSize": [
+    128,
+    16
+   ],
+   "pivot": [
+    16,
+    8
+   ],
+   "columns": 4,
+   "spec": {
+    "id": "vfx_gilbe_cloth_unfold",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_gilbe",
+    "color_role": "P",
+    "canvas": "96x16",
+    "frames": 4,
+    "timing": "fps:14",
+    "blend": "normal",
+    "layer": "L03",
+    "beat_snap": true,
+    "max_concurrent": 4,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L03",
+   "color_role": "P",
+   "max_concurrent": 4,
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 2846,
+    "blend": "normal",
+    "size": "96x16->128x16"
+   }
+  },
+  "korealike": {
+   "impact_frame": 2,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

@@ -1,0 +1,202 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_ssukmul_pool 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_ssukmul_pool 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_ssukmul_pool 2",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_ssukmul_pool 3",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_ssukmul_pool 4",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_ssukmul_pool 5",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 100
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_ssukmul_pool.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 384,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_ssukmul_pool",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_ssukmul_pool",
+   "name": "Ssukmul pool",
+   "fps": 10.0,
+   "loop": true,
+   "frames": 6,
+   "frameWidth": 64,
+   "frameHeight": 32,
+   "frameSize": [
+    64,
+    32
+   ],
+   "pivot": [
+    32,
+    16
+   ],
+   "columns": 6,
+   "spec": {
+    "id": "vfx_ssukmul_pool",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_ssukmul",
+    "color_role": "C+P",
+    "canvas": "64x32",
+    "frames": 6,
+    "timing": "fps:10",
+    "blend": "normal",
+    "layer": "L03",
+    "beat_snap": true,
+    "max_concurrent": 6,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.654,
+   "layer": "L03",
+   "color_role": "C+P",
+   "max_concurrent": 6,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 972,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

@@ -1,0 +1,196 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_sinjangkal_proj 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinjangkal_proj 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinjangkal_proj 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinjangkal_proj 3",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinjangkal_proj 4",
+   "frame": {
+    "x": 32,
+    "y": 32,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_sinjangkal_proj 5",
+   "frame": {
+    "x": 64,
+    "y": 32,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_sinjangkal_proj.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 96,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_sinjangkal_proj",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_sinjangkal_proj",
+   "name": "Sinjangkal projectile",
+   "fps": 16.0,
+   "loop": true,
+   "frames": 6,
+   "frameSize": [
+    32,
+    32
+   ],
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 3,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     8,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_sinjangkal",
+   "color_role": "R+H",
+   "spec_canvas": "32x32",
+   "spec_frames": 6,
+   "timing": "fps:16",
+   "blend": "normal",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 30,
+   "scope": "v1"
+  }
+ }
+}

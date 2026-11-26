@@ -1,0 +1,4342 @@
+{
+ "agent": "audio",
+ "scope": "국악 장단 루프 스템(music/) + v1 SFX·스팅어·앰비언스(sfx/)",
+ "tools": [
+  "tools/audio/gugak_dsp.py",
+  "tools/audio/gugak_inst.py",
+  "tools/audio/prepare_samples.py",
+  "tools/audio/build_jangdan.py",
+  "tools/audio/build_sfx.py",
+  "tools/audio/write_audio_credits.py"
+ ],
+ "source_archive": "art/audio/src (CC0/CC-BY 원본 정리본 + SOURCES.json)",
+ "known_issues": [
+  "장구·꽹과리 CC0/CC-BY 원샷 녹음이 공개 라이브러리에 사실상 없어 막·금속 모달 합성 + 일반 북/스틱/소형 징 샘플로 만듦 — 연희자 녹음으로 교체 권장",
+  "장단 패턴은 data/audio_jangdan.json proto_patterns(verified=false) 그대로. 살풀이·엇모리·휘모리는 build_jangdan.py EXTRA_PATTERNS 보충(프로토)",
+  "선율(태평소·피리·대금·아쟁)은 합성 근사 — 실제 녹음 전 임시",
+  "추임새 '얼쑤'·무가·공수 등 보이스(VO)는 미포함(sfx_sys_sinmyeong_full, sfx_boss_knot_untie 는 VO 없이 제작)",
+  "Freesound 미리듣기(128kbps mp3) 기반 — 마스터 품질이 필요하면 원본 WAV 를 각 landing URL 에서 받아 prepare_samples.py 재실행"
+ ],
+ "items": [
+  {
+   "id": "jd_danmori_janggu",
+   "path": "game/assets/music/jd_danmori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_buk",
+   "path": "game/assets/music/jd_danmori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jing",
+   "path": "game/assets/music/jd_danmori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_kkwaenggwari",
+   "path": "game/assets/music/jd_danmori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jegeum",
+   "path": "game/assets/music/jd_danmori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_melody",
+   "path": "game/assets/music/jd_danmori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_danmori_bed",
+   "path": "game/assets/music/jd_danmori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_mix",
+   "path": "game/assets/music/jd_danmori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 160.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_janggu_h1",
+   "path": "game/assets/music/jd_danmori_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_buk_h1",
+   "path": "game/assets/music/jd_danmori_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jing_h1",
+   "path": "game/assets/music/jd_danmori_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_danmori_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jegeum_h1",
+   "path": "game/assets/music/jd_danmori_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_melody_h1",
+   "path": "game/assets/music/jd_danmori_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_danmori_bed_h1",
+   "path": "game/assets/music/jd_danmori_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_mix_h1",
+   "path": "game/assets/music/jd_danmori_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 166.4BPM loop 28.846145s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_janggu_h2",
+   "path": "game/assets/music/jd_danmori_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_buk_h2",
+   "path": "game/assets/music/jd_danmori_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jing_h2",
+   "path": "game/assets/music/jd_danmori_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_danmori_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_jegeum_h2",
+   "path": "game/assets/music/jd_danmori_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_melody_h2",
+   "path": "game/assets/music/jd_danmori_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_danmori_bed_h2",
+   "path": "game/assets/music/jd_danmori_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_danmori_mix_h2",
+   "path": "game/assets/music/jd_danmori_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리 172.8BPM loop 27.777778s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_janggu",
+   "path": "game/assets/music/jd_eotmori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_buk",
+   "path": "game/assets/music/jd_eotmori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_jing",
+   "path": "game/assets/music/jd_eotmori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_kkwaenggwari",
+   "path": "game/assets/music/jd_eotmori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_jegeum",
+   "path": "game/assets/music/jd_eotmori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_melody",
+   "path": "game/assets/music/jd_eotmori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_eotmori_bed",
+   "path": "game/assets/music/jd_eotmori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_eotmori_mix",
+   "path": "game/assets/music/jd_eotmori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "엇모리 400.0BPM loop 30.0s x20장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_janggu",
+   "path": "game/assets/music/jd_gutgeori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_buk",
+   "path": "game/assets/music/jd_gutgeori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_jing",
+   "path": "game/assets/music/jd_gutgeori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_kkwaenggwari",
+   "path": "game/assets/music/jd_gutgeori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_jegeum",
+   "path": "game/assets/music/jd_gutgeori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_melody",
+   "path": "game/assets/music/jd_gutgeori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_gutgeori_bed",
+   "path": "game/assets/music/jd_gutgeori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_gutgeori_mix",
+   "path": "game/assets/music/jd_gutgeori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "굿거리 60.0BPM loop 32.0s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_janggu",
+   "path": "game/assets/music/jd_hwimori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_buk",
+   "path": "game/assets/music/jd_hwimori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_jing",
+   "path": "game/assets/music/jd_hwimori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_kkwaenggwari",
+   "path": "game/assets/music/jd_hwimori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_jegeum",
+   "path": "game/assets/music/jd_hwimori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_melody",
+   "path": "game/assets/music/jd_hwimori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_hwimori_bed",
+   "path": "game/assets/music/jd_hwimori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_hwimori_mix",
+   "path": "game/assets/music/jd_hwimori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "휘모리 200.0BPM loop 33.6s x28장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_janggu",
+   "path": "game/assets/music/jd_jajinmori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_buk",
+   "path": "game/assets/music/jd_jajinmori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jing",
+   "path": "game/assets/music/jd_jajinmori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_kkwaenggwari",
+   "path": "game/assets/music/jd_jajinmori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jegeum",
+   "path": "game/assets/music/jd_jajinmori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_melody",
+   "path": "game/assets/music/jd_jajinmori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jajinmori_bed",
+   "path": "game/assets/music/jd_jajinmori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_mix",
+   "path": "game/assets/music/jd_jajinmori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 120.0BPM loop 32.0s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_janggu_h1",
+   "path": "game/assets/music/jd_jajinmori_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_buk_h1",
+   "path": "game/assets/music/jd_jajinmori_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jing_h1",
+   "path": "game/assets/music/jd_jajinmori_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_jajinmori_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jegeum_h1",
+   "path": "game/assets/music/jd_jajinmori_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_melody_h1",
+   "path": "game/assets/music/jd_jajinmori_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jajinmori_bed_h1",
+   "path": "game/assets/music/jd_jajinmori_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_mix_h1",
+   "path": "game/assets/music/jd_jajinmori_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 124.8BPM loop 30.769229s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_janggu_h2",
+   "path": "game/assets/music/jd_jajinmori_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_buk_h2",
+   "path": "game/assets/music/jd_jajinmori_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jing_h2",
+   "path": "game/assets/music/jd_jajinmori_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_jajinmori_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_jegeum_h2",
+   "path": "game/assets/music/jd_jajinmori_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_melody_h2",
+   "path": "game/assets/music/jd_jajinmori_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jajinmori_bed_h2",
+   "path": "game/assets/music/jd_jajinmori_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jajinmori_mix_h2",
+   "path": "game/assets/music/jd_jajinmori_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "자진모리 129.6BPM loop 29.629637s x16장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_janggu",
+   "path": "game/assets/music/jd_jinobangjin_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_buk",
+   "path": "game/assets/music/jd_jinobangjin_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jing",
+   "path": "game/assets/music/jd_jinobangjin_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_kkwaenggwari",
+   "path": "game/assets/music/jd_jinobangjin_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jegeum",
+   "path": "game/assets/music/jd_jinobangjin_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_melody",
+   "path": "game/assets/music/jd_jinobangjin_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinobangjin_bed",
+   "path": "game/assets/music/jd_jinobangjin_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_mix",
+   "path": "game/assets/music/jd_jinobangjin_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 180.0BPM loop 32.0s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_janggu_h1",
+   "path": "game/assets/music/jd_jinobangjin_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_buk_h1",
+   "path": "game/assets/music/jd_jinobangjin_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jing_h1",
+   "path": "game/assets/music/jd_jinobangjin_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_jinobangjin_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jegeum_h1",
+   "path": "game/assets/music/jd_jinobangjin_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_melody_h1",
+   "path": "game/assets/music/jd_jinobangjin_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinobangjin_bed_h1",
+   "path": "game/assets/music/jd_jinobangjin_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_mix_h1",
+   "path": "game/assets/music/jd_jinobangjin_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 187.2BPM loop 30.769229s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_janggu_h2",
+   "path": "game/assets/music/jd_jinobangjin_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_buk_h2",
+   "path": "game/assets/music/jd_jinobangjin_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jing_h2",
+   "path": "game/assets/music/jd_jinobangjin_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_jinobangjin_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_jegeum_h2",
+   "path": "game/assets/music/jd_jinobangjin_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_melody_h2",
+   "path": "game/assets/music/jd_jinobangjin_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinobangjin_bed_h2",
+   "path": "game/assets/music/jd_jinobangjin_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinobangjin_mix_h2",
+   "path": "game/assets/music/jd_jinobangjin_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "단모리(최고조) 194.4BPM loop 29.629637s x24장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_janggu",
+   "path": "game/assets/music/jd_jinyang_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_buk",
+   "path": "game/assets/music/jd_jinyang_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jing",
+   "path": "game/assets/music/jd_jinyang_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_kkwaenggwari",
+   "path": "game/assets/music/jd_jinyang_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jegeum",
+   "path": "game/assets/music/jd_jinyang_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_melody",
+   "path": "game/assets/music/jd_jinyang_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinyang_bed",
+   "path": "game/assets/music/jd_jinyang_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_mix",
+   "path": "game/assets/music/jd_jinyang_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 45.0BPM loop 32.0s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_janggu_h1",
+   "path": "game/assets/music/jd_jinyang_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_buk_h1",
+   "path": "game/assets/music/jd_jinyang_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jing_h1",
+   "path": "game/assets/music/jd_jinyang_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_jinyang_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jegeum_h1",
+   "path": "game/assets/music/jd_jinyang_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_melody_h1",
+   "path": "game/assets/music/jd_jinyang_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinyang_bed_h1",
+   "path": "game/assets/music/jd_jinyang_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_mix_h1",
+   "path": "game/assets/music/jd_jinyang_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 46.8BPM loop 30.769229s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_janggu_h2",
+   "path": "game/assets/music/jd_jinyang_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_buk_h2",
+   "path": "game/assets/music/jd_jinyang_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jing_h2",
+   "path": "game/assets/music/jd_jinyang_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_jinyang_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_jegeum_h2",
+   "path": "game/assets/music/jd_jinyang_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_melody_h2",
+   "path": "game/assets/music/jd_jinyang_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jinyang_bed_h2",
+   "path": "game/assets/music/jd_jinyang_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jinyang_mix_h2",
+   "path": "game/assets/music/jd_jinyang_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "진양조 48.6BPM loop 29.629637s x1장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_janggu",
+   "path": "game/assets/music/jd_jungjungmori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_buk",
+   "path": "game/assets/music/jd_jungjungmori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jing",
+   "path": "game/assets/music/jd_jungjungmori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_kkwaenggwari",
+   "path": "game/assets/music/jd_jungjungmori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jegeum",
+   "path": "game/assets/music/jd_jungjungmori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_melody",
+   "path": "game/assets/music/jd_jungjungmori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungjungmori_bed",
+   "path": "game/assets/music/jd_jungjungmori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_mix",
+   "path": "game/assets/music/jd_jungjungmori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 95.0BPM loop 30.315782s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_janggu_h1",
+   "path": "game/assets/music/jd_jungjungmori_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_buk_h1",
+   "path": "game/assets/music/jd_jungjungmori_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jing_h1",
+   "path": "game/assets/music/jd_jungjungmori_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_jungjungmori_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jegeum_h1",
+   "path": "game/assets/music/jd_jungjungmori_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_melody_h1",
+   "path": "game/assets/music/jd_jungjungmori_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungjungmori_bed_h1",
+   "path": "game/assets/music/jd_jungjungmori_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_mix_h1",
+   "path": "game/assets/music/jd_jungjungmori_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 98.8BPM loop 29.149796s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_janggu_h2",
+   "path": "game/assets/music/jd_jungjungmori_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_buk_h2",
+   "path": "game/assets/music/jd_jungjungmori_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jing_h2",
+   "path": "game/assets/music/jd_jungjungmori_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_jungjungmori_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_jegeum_h2",
+   "path": "game/assets/music/jd_jungjungmori_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_melody_h2",
+   "path": "game/assets/music/jd_jungjungmori_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungjungmori_bed_h2",
+   "path": "game/assets/music/jd_jungjungmori_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungjungmori_mix_h2",
+   "path": "game/assets/music/jd_jungjungmori_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중중모리 102.6BPM loop 28.070181s x12장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_janggu",
+   "path": "game/assets/music/jd_jungmori_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_buk",
+   "path": "game/assets/music/jd_jungmori_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jing",
+   "path": "game/assets/music/jd_jungmori_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_kkwaenggwari",
+   "path": "game/assets/music/jd_jungmori_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jegeum",
+   "path": "game/assets/music/jd_jungmori_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_melody",
+   "path": "game/assets/music/jd_jungmori_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungmori_bed",
+   "path": "game/assets/music/jd_jungmori_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_mix",
+   "path": "game/assets/music/jd_jungmori_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 80.0BPM loop 36.0s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_janggu_h1",
+   "path": "game/assets/music/jd_jungmori_janggu_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_buk_h1",
+   "path": "game/assets/music/jd_jungmori_buk_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jing_h1",
+   "path": "game/assets/music/jd_jungmori_jing_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_kkwaenggwari_h1",
+   "path": "game/assets/music/jd_jungmori_kkwaenggwari_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jegeum_h1",
+   "path": "game/assets/music/jd_jungmori_jegeum_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_melody_h1",
+   "path": "game/assets/music/jd_jungmori_melody_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungmori_bed_h1",
+   "path": "game/assets/music/jd_jungmori_bed_h1.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_mix_h1",
+   "path": "game/assets/music/jd_jungmori_mix_h1.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 83.2BPM loop 34.615374s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_janggu_h2",
+   "path": "game/assets/music/jd_jungmori_janggu_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_buk_h2",
+   "path": "game/assets/music/jd_jungmori_buk_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jing_h2",
+   "path": "game/assets/music/jd_jungmori_jing_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_kkwaenggwari_h2",
+   "path": "game/assets/music/jd_jungmori_kkwaenggwari_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_jegeum_h2",
+   "path": "game/assets/music/jd_jungmori_jegeum_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_melody_h2",
+   "path": "game/assets/music/jd_jungmori_melody_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_jungmori_bed_h2",
+   "path": "game/assets/music/jd_jungmori_bed_h2.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_jungmori_mix_h2",
+   "path": "game/assets/music/jd_jungmori_mix_h2.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "중모리 86.4BPM loop 33.333333s x4장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_janggu",
+   "path": "game/assets/music/jd_salpuri_janggu.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_buk",
+   "path": "game/assets/music/jd_salpuri_buk.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_jing",
+   "path": "game/assets/music/jd_salpuri_jing.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_kkwaenggwari",
+   "path": "game/assets/music/jd_salpuri_kkwaenggwari.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_jegeum",
+   "path": "game/assets/music/jd_salpuri_jegeum.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_melody",
+   "path": "game/assets/music/jd_salpuri_melody.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기); 선율은 합성 관악(연희자 녹음 대체 예정)"
+  },
+  {
+   "id": "jd_salpuri_bed",
+   "path": "game/assets/music/jd_salpuri_bed.ogg",
+   "kind": "music_stem",
+   "source": "synth(tools/audio/build_jangdan.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "jd_salpuri_mix",
+   "path": "game/assets/music/jd_salpuri_mix.ogg",
+   "kind": "music_mix",
+   "source": "synth(tools/audio/build_jangdan.py)+freesound",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "proto",
+   "note": "살풀이 70.0BPM loop 27.428571s x8장단; 패턴 proto_placeholder(국악 자문 전사본 대기)"
+  },
+  {
+   "id": "amb_east_sea_byeolsin",
+   "path": "game/assets/sfx/amb_east_sea_byeolsin.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "동해안 별신굿 바닷가 24s: 주기적 파도(8s) + 굿청 천막 펄럭 + 밧줄 삐걱 | AMB -31.1 LUFS-S, peak -18.9 dBFS, loop"
+  },
+  {
+   "id": "amb_guksadang",
+   "path": "game/assets/sfx/amb_guksadang.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "국사당 밤 산자락 베드 60s 루프: 소나무 바람 + 풀벌레(원샷은 런타임 풀) | AMB -31.1 LUFS-S, peak -18.4 dBFS, loop"
+  },
+  {
+   "id": "amb_island_bungyo",
+   "path": "game/assets/sfx/amb_island_bungyo.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "남해 외딴 섬 폐분교 24s: 형광등 험(120Hz 질감) + 바다 바람 + 문 삐걱·물방울 원샷 | AMB -32.7 LUFS-S, peak -19.3 dBFS, loop"
+  },
+  {
+   "id": "amb_jeju_chilmeori",
+   "path": "game/assets/sfx/amb_jeju_chilmeori.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "제주 칠머리당 해안 24s: 센 바람(돌풍) + 현무암 파도 + 깃 펄럭 | AMB -32.0 LUFS-S, peak -18.7 dBFS, loop"
+  },
+  {
+   "id": "amb_jindo_ssitgim",
+   "path": "game/assets/sfx/amb_jindo_ssitgim.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "남도 갯마을 갯벌 24s: 먼 갯바람 + 갯벌 거품 '뽀글' + 갈대 사락 + 드문 바람 방울(파도 없음) | AMB -30.9 LUFS-S, peak -19.3 dBFS, loop"
+  },
+  {
+   "id": "amb_lobby_sindang",
+   "path": "game/assets/sfx/amb_lobby_sindang.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신당(로비) 밤 베드 40s 루프: 실내 촛불 + 문밖 풀벌레(풍경 원샷은 런타임) | AMB -32.7 LUFS-S, peak -14.2 dBFS, loop"
+  },
+  {
+   "id": "amb_myeongbu",
+   "path": "game/assets/sfx/amb_myeongbu.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "명부 저승길 24s: 느린 삼도 물 흐름 + 끝없는 저역 + 먼 방울 + 흰 베 펄럭 | AMB -32.1 LUFS-S, peak -22.0 dBFS, loop"
+  },
+  {
+   "id": "amb_trial_field",
+   "path": "game/assets/sfx/amb_trial_field.ogg",
+   "kind": "ambience",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "시련 장 오버레이 20s 루프: 저음 허밍 + 공간감 | AMB -30.5 LUFS-S, peak -23.7 dBFS, loop"
+  },
+  {
+   "id": "sfx_amb_pungyeong",
+   "path": "game/assets/sfx/sfx_amb_pungyeong.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "먼 풍경 원샷(앰비언스): 바람에 두세 번 부딪는 처마 바람종, 멀리서 | L4 -30.0 LUFS-S, peak -15.1 dBFS"
+  },
+  {
+   "id": "sfx_amb_pungyeong__v2",
+   "path": "game/assets/sfx/sfx_amb_pungyeong__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "먼 풍경 원샷(앰비언스): 바람에 두세 번 부딪는 처마 바람종, 멀리서 | L4 -30.0 LUFS-S, peak -15.9 dBFS"
+  },
+  {
+   "id": "sfx_amb_pungyeong__v3",
+   "path": "game/assets/sfx/sfx_amb_pungyeong__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "먼 풍경 원샷(앰비언스): 바람에 두세 번 부딪는 처마 바람종, 멀리서 | L4 -30.0 LUFS-S, peak -16.4 dBFS"
+  },
+  {
+   "id": "sfx_amb_pungyeong__v4",
+   "path": "game/assets/sfx/sfx_amb_pungyeong__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "먼 풍경 원샷(앰비언스): 바람에 두세 번 부딪는 처마 바람종, 멀리서 | L4 -30.0 LUFS-S, peak -20.0 dBFS"
+  },
+  {
+   "id": "sfx_boss_knot_untie",
+   "path": "game/assets/sfx/sfx_boss_knot_untie.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "고 매듭 풀림 '툭': 무명 매듭 풀림 + 저역 (무가 VO 미포함) | L1 -16.9 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_eup",
+   "path": "game/assets/sfx/sfx_chaser_saja_eup.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사자의 읍: 도포 숙이는 천(옅게) + 깊은 숨 + 소리북 1타(엄숙 — 방울 없음, 2026-11-24) | RIT -19.4 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_step",
+   "path": "game/assets/sfx/sfx_chaser_saja_step.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보 | L3 -24.0 LUFS-S, peak -3.8 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_step__v2",
+   "path": "game/assets/sfx/sfx_chaser_saja_step__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보 | L3 -24.0 LUFS-S, peak -6.8 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_step__v3",
+   "path": "game/assets/sfx/sfx_chaser_saja_step__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보 | L3 -24.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_step__v4",
+   "path": "game/assets/sfx/sfx_chaser_saja_step__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보 | L3 -24.0 LUFS-S, peak -6.6 dBFS"
+  },
+  {
+   "id": "sfx_chaser_saja_step__threestep",
+   "path": "game/assets/sfx/sfx_chaser_saja_step__threestep.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보 | L3 -24.0 LUFS-S, peak -5.6 dBFS"
+  },
+  {
+   "id": "sfx_elite_eodukssini",
+   "path": "game/assets/sfx/sfx_elite_eodukssini.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 등장 2박(휘모리권 0.9s): 저음 드론 피치 하강 + 막힌 공기(고역 감쇄는 런타임 버스 LPF) | STG -17.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_elite_eodukssini__v2",
+   "path": "game/assets/sfx/sfx_elite_eodukssini__v2.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 등장 2박(휘모리권 0.9s): 저음 드론 피치 하강 + 막힌 공기(고역 감쇄는 런타임 버스 LPF) | STG -17.0 LUFS-S, peak -4.6 dBFS"
+  },
+  {
+   "id": "sfx_elite_eodukssini__v3",
+   "path": "game/assets/sfx/sfx_elite_eodukssini__v3.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 등장 2박(휘모리권 0.9s): 저음 드론 피치 하강 + 막힌 공기(고역 감쇄는 런타임 버스 LPF) | STG -17.0 LUFS-S, peak -5.4 dBFS"
+  },
+  {
+   "id": "sfx_elite_eodukssini__v4",
+   "path": "game/assets/sfx/sfx_elite_eodukssini__v4.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 등장 2박(휘모리권 0.9s): 저음 드론 피치 하강 + 막힌 공기(고역 감쇄는 런타임 버스 LPF) | STG -17.0 LUFS-S, peak -6.3 dBFS"
+  },
+  {
+   "id": "sfx_elite_wongwi",
+   "path": "game/assets/sfx/sfx_elite_wongwi.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "원귀(정예) 등장: 종 소리 -5반음 + 붉은 눈 점등 '칙' + 저역 | L3 -24.0 LUFS-S, peak -10.0 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi",
+   "path": "game/assets/sfx/sfx_enm_agwi.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -4.0 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__v2",
+   "path": "game/assets/sfx/sfx_enm_agwi__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -3.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__v3",
+   "path": "game/assets/sfx/sfx_enm_agwi__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -3.8 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__v4",
+   "path": "game/assets/sfx/sfx_enm_agwi__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -4.5 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__v5",
+   "path": "game/assets/sfx/sfx_enm_agwi__v5.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -4.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__v6",
+   "path": "game/assets/sfx/sfx_enm_agwi__v6.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -6.0 dBFS"
+  },
+  {
+   "id": "sfx_enm_agwi__steal",
+   "path": "game/assets/sfx/sfx_enm_agwi__steal.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무) | L3 -24.0 LUFS-S, peak -9.6 dBFS"
+  },
+  {
+   "id": "sfx_enm_cheonyeo_gwisin",
+   "path": "game/assets/sfx/sfx_enm_cheonyeo_gwisin.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "처녀귀신: 머리 휘날림 '사아' + 낮은 '휘잉'(저역 쉬익) — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -10.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_cheonyeo_gwisin__v2",
+   "path": "game/assets/sfx/sfx_enm_cheonyeo_gwisin__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "처녀귀신: 머리 휘날림 '사아' + 낮은 '휘잉'(저역 쉬익) — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -9.9 dBFS"
+  },
+  {
+   "id": "sfx_enm_cheonyeo_gwisin__v3",
+   "path": "game/assets/sfx/sfx_enm_cheonyeo_gwisin__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "처녀귀신: 머리 휘날림 '사아' + 낮은 '휘잉'(저역 쉬익) — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -10.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_cheonyeo_gwisin__v4",
+   "path": "game/assets/sfx/sfx_enm_cheonyeo_gwisin__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "처녀귀신: 머리 휘날림 '사아' + 낮은 '휘잉'(저역 쉬익) — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -10.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_dalgyal_gwisin",
+   "path": "game/assets/sfx/sfx_enm_dalgyal_gwisin.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "달걀귀신 등장: 매끈한 '뽁' | L3 -24.0 LUFS-S, peak -12.1 dBFS"
+  },
+  {
+   "id": "sfx_enm_dokkaebi_bul",
+   "path": "game/assets/sfx/sfx_enm_dokkaebi_bul.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "도깨비불: 불꽃 일렁 + 불씨 '팍' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_dokkaebi_bul__v2",
+   "path": "game/assets/sfx/sfx_enm_dokkaebi_bul__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "도깨비불: 불꽃 일렁 + 불씨 '팍' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.2 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_dokkaebi_bul__v3",
+   "path": "game/assets/sfx/sfx_enm_dokkaebi_bul__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "도깨비불: 불꽃 일렁 + 불씨 '팍' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -4.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_dokkaebi_bul__v4",
+   "path": "game/assets/sfx/sfx_enm_dokkaebi_bul__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "도깨비불: 불꽃 일렁 + 불씨 '팍' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.1 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_gaekgwi",
+   "path": "game/assets/sfx/sfx_enm_gaekgwi.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "객귀: 무의미 음절 속삭임 + 붙는 '스윽' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.1 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_gaekgwi__v2",
+   "path": "game/assets/sfx/sfx_enm_gaekgwi__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "객귀: 무의미 음절 속삭임 + 붙는 '스윽' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -3.3 dBFS"
+  },
+  {
+   "id": "sfx_enm_gaekgwi__v3",
+   "path": "game/assets/sfx/sfx_enm_gaekgwi__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "객귀: 무의미 음절 속삭임 + 붙는 '스윽' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.7 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_gaekgwi__v4",
+   "path": "game/assets/sfx/sfx_enm_gaekgwi__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "객귀: 무의미 음절 속삭임 + 붙는 '스윽' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -3.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_hosik_wonhon",
+   "path": "game/assets/sfx/sfx_enm_hosik_wonhon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호식 원혼: 낮은 짐승 숨 + 먼 메아리 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -7.5 dBFS"
+  },
+  {
+   "id": "sfx_enm_hosik_wonhon__v2",
+   "path": "game/assets/sfx/sfx_enm_hosik_wonhon__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호식 원혼: 낮은 짐승 숨 + 먼 메아리 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -11.3 dBFS"
+  },
+  {
+   "id": "sfx_enm_hosik_wonhon__v3",
+   "path": "game/assets/sfx/sfx_enm_hosik_wonhon__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호식 원혼: 낮은 짐승 숨 + 먼 메아리 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -8.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_hosik_wonhon__v4",
+   "path": "game/assets/sfx/sfx_enm_hosik_wonhon__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호식 원혼: 낮은 짐승 숨 + 먼 메아리 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -12.1 dBFS"
+  },
+  {
+   "id": "sfx_enm_hwehwe_gwisin",
+   "path": "game/assets/sfx/sfx_enm_hwehwe_gwisin.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "훼훼귀신: 가위눌림 압박 드론(맥놀이) + 먹먹한 공기 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_hwehwe_gwisin__v2",
+   "path": "game/assets/sfx/sfx_enm_hwehwe_gwisin__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "훼훼귀신: 가위눌림 압박 드론(맥놀이) + 먹먹한 공기 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.8 dBFS"
+  },
+  {
+   "id": "sfx_enm_hwehwe_gwisin__v3",
+   "path": "game/assets/sfx/sfx_enm_hwehwe_gwisin__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "훼훼귀신: 가위눌림 압박 드론(맥놀이) + 먹먹한 공기 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.6 dBFS"
+  },
+  {
+   "id": "sfx_enm_hwehwe_gwisin__v4",
+   "path": "game/assets/sfx/sfx_enm_hwehwe_gwisin__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "훼훼귀신: 가위눌림 압박 드론(맥놀이) + 먹먹한 공기 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_mongdal_gwisin",
+   "path": "game/assets/sfx/sfx_enm_mongdal_gwisin.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "몽달귀신: 발 끌기 → 돌진 '휙' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -26.5 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_mongdal_gwisin__v2",
+   "path": "game/assets/sfx/sfx_enm_mongdal_gwisin__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "몽달귀신: 발 끌기 → 돌진 '휙' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -27.2 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_mongdal_gwisin__v3",
+   "path": "game/assets/sfx/sfx_enm_mongdal_gwisin__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "몽달귀신: 발 끌기 → 돌진 '휙' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_mongdal_gwisin__v4",
+   "path": "game/assets/sfx/sfx_enm_mongdal_gwisin__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "몽달귀신: 발 끌기 → 돌진 '휙' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -4.5 dBFS"
+  },
+  {
+   "id": "sfx_enm_mul_gwisin",
+   "path": "game/assets/sfx/sfx_enm_mul_gwisin.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "물귀신: 물 고이는 탁한 '꾸르륵' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -10.1 dBFS"
+  },
+  {
+   "id": "sfx_enm_mul_gwisin__v2",
+   "path": "game/assets/sfx/sfx_enm_mul_gwisin__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "물귀신: 물 고이는 탁한 '꾸르륵' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -9.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_mul_gwisin__v3",
+   "path": "game/assets/sfx/sfx_enm_mul_gwisin__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "물귀신: 물 고이는 탁한 '꾸르륵' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -8.5 dBFS"
+  },
+  {
+   "id": "sfx_enm_mul_gwisin__v4",
+   "path": "game/assets/sfx/sfx_enm_mul_gwisin__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "물귀신: 물 고이는 탁한 '꾸르륵' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -6.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_proj_generic",
+   "path": "game/assets/sfx/sfx_enm_proj_generic.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "적 탄(공용): 저역 쉬익 250Hz-1.5kHz | L3 -24.0 LUFS-S, peak -10.1 dBFS"
+  },
+  {
+   "id": "sfx_enm_proj_generic__v2",
+   "path": "game/assets/sfx/sfx_enm_proj_generic__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "적 탄(공용): 저역 쉬익 250Hz-1.5kHz | L3 -24.0 LUFS-S, peak -11.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_sangmun",
+   "path": "game/assets/sfx/sfx_enm_sangmun.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "상문: 마른 종이 바스락 + 낮은 단2도 놋그릇 경고 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -25.2 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_sangmun__v2",
+   "path": "game/assets/sfx/sfx_enm_sangmun__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "상문: 마른 종이 바스락 + 낮은 단2도 놋그릇 경고 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.8 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_sangmun__v3",
+   "path": "game/assets/sfx/sfx_enm_sangmun__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "상문: 마른 종이 바스락 + 낮은 단2도 놋그릇 경고 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -25.1 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_sangmun__v4",
+   "path": "game/assets/sfx/sfx_enm_sangmun__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "상문: 마른 종이 바스락 + 낮은 단2도 놋그릇 경고 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.7 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_subi",
+   "path": "game/assets/sfx/sfx_enm_subi.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "수비: 작은 발 사락 군집 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.1 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_subi__v2",
+   "path": "game/assets/sfx/sfx_enm_subi__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "수비: 작은 발 사락 군집 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_enm_subi__v3",
+   "path": "game/assets/sfx/sfx_enm_subi__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "수비: 작은 발 사락 군집 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -3.4 dBFS"
+  },
+  {
+   "id": "sfx_enm_subi__v4",
+   "path": "game/assets/sfx/sfx_enm_subi__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "수비: 작은 발 사락 군집 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -6.8 dBFS"
+  },
+  {
+   "id": "sfx_enm_yeongsan",
+   "path": "game/assets/sfx/sfx_enm_yeongsan.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "영산: 흉살 장판 낮은 '지직' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -12.6 dBFS"
+  },
+  {
+   "id": "sfx_enm_yeongsan__v2",
+   "path": "game/assets/sfx/sfx_enm_yeongsan__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "영산: 흉살 장판 낮은 '지직' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -12.2 dBFS"
+  },
+  {
+   "id": "sfx_enm_yeongsan__v3",
+   "path": "game/assets/sfx/sfx_enm_yeongsan__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "영산: 흉살 장판 낮은 '지직' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.1 dBFS"
+  },
+  {
+   "id": "sfx_enm_yeongsan__v4",
+   "path": "game/assets/sfx/sfx_enm_yeongsan__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "영산: 흉살 장판 낮은 '지직' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB) | L3 -24.0 LUFS-S, peak -13.1 dBFS"
+  },
+  {
+   "id": "sfx_evo_reveal",
+   "path": "game/assets/sfx/sfx_evo_reveal.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무구 진화·결합 공개 1.7s: 역재생 놋그릇 스웰 0.5s → 장구 덩 + 방울 토리 상행 화음(D-E-G-A-B) + 한지 펄럭 | STG -17.0 LUFS-S, peak -5.9 dBFS"
+  },
+  {
+   "id": "sfx_evt_gongmulsang",
+   "path": "game/assets/sfx/sfx_evt_gongmulsang.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "뒷전 공물상 차림 2s: 놋그릇·나무 제기 놓이는 소리 군집 + 잡귀 발 '사락사락' 몰려듦 | RIT -19.0 LUFS-S, peak -8.2 dBFS"
+  },
+  {
+   "id": "sfx_evt_gongmulsang__v2",
+   "path": "game/assets/sfx/sfx_evt_gongmulsang__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "뒷전 공물상 차림 2s: 놋그릇·나무 제기 놓이는 소리 군집 + 잡귀 발 '사락사락' 몰려듦 | RIT -19.0 LUFS-S, peak -6.9 dBFS"
+  },
+  {
+   "id": "sfx_pick_hosinbu",
+   "path": "game/assets/sfx/sfx_pick_hosinbu.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호신부 획득: 붉은 부적 종이 '사락' + 작은 방울 | L2 -20.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_pick_neok",
+   "path": "game/assets/sfx/sfx_pick_neok.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋 획득: 부드러운 한지 '사락' + 맑은 바람 | L2 -20.0 LUFS-S, peak -7.1 dBFS"
+  },
+  {
+   "id": "sfx_pick_wonhon",
+   "path": "game/assets/sfx/sfx_pick_wonhon.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "원혼 구슬 흡수: 소/__m 중/__l 대. 런타임 토리 사다리(해원보다 -8dB, 한 옥타브 아래) | L4 -30.0 LUFS-S, peak -13.1 dBFS"
+  },
+  {
+   "id": "sfx_pick_wonhon__m",
+   "path": "game/assets/sfx/sfx_pick_wonhon__m.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "원혼 구슬 흡수: 소/__m 중/__l 대. 런타임 토리 사다리(해원보다 -8dB, 한 옥타브 아래) | L4 -30.0 LUFS-S, peak -13.5 dBFS"
+  },
+  {
+   "id": "sfx_pick_wonhon__l",
+   "path": "game/assets/sfx/sfx_pick_wonhon__l.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "원혼 구슬 흡수: 소/__m 중/__l 대. 런타임 토리 사다리(해원보다 -8dB, 한 옥타브 아래) | L4 -30.0 LUFS-S, peak -13.3 dBFS"
+  },
+  {
+   "id": "sfx_pick_yeopjeon",
+   "path": "game/assets/sfx/sfx_pick_yeopjeon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "엽전 획득: 놋엽전 '짤랑' (도깨비 가짜 엽전은 런타임 -1반음) | L2 -20.0 LUFS-S, peak -3.3 dBFS"
+  },
+  {
+   "id": "sfx_pick_yeopjeon__v2",
+   "path": "game/assets/sfx/sfx_pick_yeopjeon__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "엽전 획득: 놋엽전 '짤랑' (도깨비 가짜 엽전은 런타임 -1반음) | L2 -20.0 LUFS-S, peak -5.6 dBFS"
+  },
+  {
+   "id": "sfx_pick_yeopjeon__v3",
+   "path": "game/assets/sfx/sfx_pick_yeopjeon__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "엽전 획득: 놋엽전 '짤랑' (도깨비 가짜 엽전은 런타임 -1반음) | L2 -20.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_plr_death",
+   "path": "game/assets/sfx/sfx_plr_death.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쓰러짐: 무복 천 + 방울 떨어져 3회 튐 | L1 -16.0 LUFS-S, peak -5.4 dBFS"
+  },
+  {
+   "id": "sfx_plr_dodge",
+   "path": "game/assets/sfx/sfx_plr_dodge.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "접신 회피: 공기 휘익 + 옅은 방울 1음 | L2 -20.0 LUFS-S, peak -3.3 dBFS"
+  },
+  {
+   "id": "sfx_plr_hit",
+   "path": "game/assets/sfx/sfx_plr_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "피격: 둔탁한 천 타격 + 짧은 숨 | L1 -16.0 LUFS-S, peak -1.7 dBFS"
+  },
+  {
+   "id": "sfx_plr_hit__v2",
+   "path": "game/assets/sfx/sfx_plr_hit__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "피격: 둔탁한 천 타격 + 짧은 숨 | L1 -16.0 LUFS-S, peak -1.4 dBFS"
+  },
+  {
+   "id": "sfx_plr_hit_blocked",
+   "path": "game/assets/sfx/sfx_plr_hit_blocked.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호신부 방어: 종이-금속 '챙' + 소멸 꼬리 0.4s | L1 -16.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_plr_levelup_ready",
+   "path": "game/assets/sfx/sfx_plr_levelup_ready.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 직전(레벨업): 바람 들이쉬는 0.3s 스웰 + 끝 방울 | RIT -19.0 LUFS-S, peak -8.1 dBFS"
+  },
+  {
+   "id": "sfx_plr_revive",
+   "path": "game/assets/sfx/sfx_plr_revive.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "되살아남(명줄): 깊은 들숨 → 방울 상행 3음 + 장구 덩(따뜻하게) | STG -17.0 LUFS-S, peak -2.8 dBFS"
+  },
+  {
+   "id": "sfx_plr_step",
+   "path": "game/assets/sfx/sfx_plr_step.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -7.7 dBFS"
+  },
+  {
+   "id": "sfx_plr_step__v2",
+   "path": "game/assets/sfx/sfx_plr_step__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -6.9 dBFS"
+  },
+  {
+   "id": "sfx_plr_step__v3",
+   "path": "game/assets/sfx/sfx_plr_step__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -8.0 dBFS"
+  },
+  {
+   "id": "sfx_plr_step__v4",
+   "path": "game/assets/sfx/sfx_plr_step__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -5.7 dBFS"
+  },
+  {
+   "id": "sfx_plr_step__v5",
+   "path": "game/assets/sfx/sfx_plr_step__v5.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -7.5 dBFS"
+  },
+  {
+   "id": "sfx_plr_step__v6",
+   "path": "game/assets/sfx/sfx_plr_step__v6.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감 | L3 -24.0 LUFS-S, peak -6.1 dBFS"
+  },
+  {
+   "id": "sfx_sys_cheondo",
+   "path": "game/assets/sfx/sfx_sys_cheondo.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "천도: 상승하는 바람 + 고음 방울 트레몰로 0.6s | RIT -19.0 LUFS-S, peak -7.5 dBFS"
+  },
+  {
+   "id": "sfx_sys_deungbul",
+   "path": "game/assets/sfx/sfx_sys_deungbul.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "굿판 등불 점화: 촛불 '훅' + 풍경 1음 | RIT -23.4 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_doryang",
+   "path": "game/assets/sfx/sfx_sys_doryang.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방 만다라 도량: 방울 오방 차임(토리 5음 상행, 청·적·황·백·흑) + 2.4s 낮은 허밍(D 저음, 서서히 잦아듦) | RIT -19.0 LUFS-S, peak -5.8 dBFS"
+  },
+  {
+   "id": "sfx_sys_eoduk_grow",
+   "path": "game/assets/sfx/sfx_sys_eoduk_grow.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 성장 루프 3s: 낮게 들이쉬는 숨(−7반음) + 55Hz 맥동 + 먹먹한 저역 바람(관심을 먹는 소리) | L3 -30.1 LUFS-S, peak -18.9 dBFS, loop"
+  },
+  {
+   "id": "sfx_sys_eoduk_heart",
+   "path": "game/assets/sfx/sfx_sys_eoduk_heart.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "어둑시니 정적 심장: 64BPM 루프(4박), 모노 | RIT -26.7 LUFS-S, peak -6.7 dBFS, loop"
+  },
+  {
+   "id": "sfx_sys_eoduk_shrink",
+   "path": "game/assets/sfx/sfx_sys_eoduk_shrink.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "어둑시니 축소 루프 2s: 공기 빠지는 고역 '쉬이—'(떨림). 런타임 축소 속도 비례 피치 상승 | L3 -30.0 LUFS-S, peak -18.1 dBFS, loop"
+  },
+  {
+   "id": "sfx_sys_gilbe_close_ready",
+   "path": "game/assets/sfx/sfx_sys_gilbe_close_ready.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "닫힘 가능 큐: 0.18s 상승 쉬머 → 한국 손종 '팅'(D6 위 A, 짧은 감쇠) | RIT -19.0 LUFS-S, peak -9.3 dBFS"
+  },
+  {
+   "id": "sfx_sys_gilbe_loop",
+   "path": "game/assets/sfx/sfx_sys_gilbe_loop.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 루프 4s: 흰 무명이 바닥을 스치는 '사아—' (대역 노이즈 + 느린 결 LFO + 옅은 천 펄럭). 런타임 볼륨 = 이동속도 | RIT -24.9 LUFS-S, peak -10.9 dBFS, loop"
+  },
+  {
+   "id": "sfx_sys_gildakkeum",
+   "path": "game/assets/sfx/sfx_sys_gildakkeum.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길닦음 '덩'(고리 닫힘): 장구 덩 + 서브 D + 넋전 꽃잎 상승. __m/__l = 고리 면적 중·대 | L1 -16.0 LUFS-S, peak -2.0 dBFS"
+  },
+  {
+   "id": "sfx_sys_gildakkeum__m",
+   "path": "game/assets/sfx/sfx_sys_gildakkeum__m.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길닦음 '덩'(고리 닫힘): 장구 덩 + 서브 D + 넋전 꽃잎 상승. __m/__l = 고리 면적 중·대 | L1 -17.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_gildakkeum__l",
+   "path": "game/assets/sfx/sfx_sys_gildakkeum__l.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길닦음 '덩'(고리 닫힘): 장구 덩 + 서브 D + 넋전 꽃잎 상승. __m/__l = 고리 면적 중·대 | L1 -16.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_giun_cross",
+   "path": "game/assets/sfx/sfx_sys_giun_cross.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "굿판의 기운 50% 경계: 넋쪽 = 맑은 방울 한 점(기본) / __sal 살쪽 = 낮은 바람 한 숨. 판정 톤 아님 — 아주 작게 | L3 -24.0 LUFS-S, peak -16.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_giun_cross__sal",
+   "path": "game/assets/sfx/sfx_sys_giun_cross__sal.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "굿판의 기운 50% 경계: 넋쪽 = 맑은 방울 한 점(기본) / __sal 살쪽 = 낮은 바람 한 숨. 판정 톤 아님 — 아주 작게 | L3 -24.0 LUFS-S, peak -10.4 dBFS"
+  },
+  {
+   "id": "sfx_sys_gyeoldanta",
+   "path": "game/assets/sfx/sfx_sys_gyeoldanta.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "결단타: 칼날 '싹' + 금속 여운 0.25s (한 파열보다 고역 +4dB) | L1 -18.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_gyeoldanta__v2",
+   "path": "game/assets/sfx/sfx_sys_gyeoldanta__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "결단타: 칼날 '싹' + 금속 여운 0.25s (한 파열보다 고역 +4dB) | L1 -18.3 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_gyeoldanta__v3",
+   "path": "game/assets/sfx/sfx_sys_gyeoldanta__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "결단타: 칼날 '싹' + 금속 여운 0.25s (한 파열보다 고역 +4dB) | L1 -18.3 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_haewon",
+   "path": "game/assets/sfx/sfx_sys_haewon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 '딸랑': 놋쇠 방울 단타 D5(옥타브0) / __oct1 D6. 런타임 토리 사다리 pitch_scale | L1 -16.0 LUFS-S, peak -4.1 dBFS"
+  },
+  {
+   "id": "sfx_sys_haewon__v2",
+   "path": "game/assets/sfx/sfx_sys_haewon__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 '딸랑': 놋쇠 방울 단타 D5(옥타브0) / __oct1 D6. 런타임 토리 사다리 pitch_scale | L1 -16.0 LUFS-S, peak -3.9 dBFS"
+  },
+  {
+   "id": "sfx_sys_haewon__v3",
+   "path": "game/assets/sfx/sfx_sys_haewon__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 '딸랑': 놋쇠 방울 단타 D5(옥타브0) / __oct1 D6. 런타임 토리 사다리 pitch_scale | L1 -16.0 LUFS-S, peak -3.9 dBFS"
+  },
+  {
+   "id": "sfx_sys_haewon__oct1",
+   "path": "game/assets/sfx/sfx_sys_haewon__oct1.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 '딸랑': 놋쇠 방울 단타 D5(옥타브0) / __oct1 D6. 런타임 토리 사다리 pitch_scale | L1 -16.0 LUFS-S, peak -4.4 dBFS"
+  },
+  {
+   "id": "sfx_sys_haewon_elite",
+   "path": "game/assets/sfx/sfx_sys_haewon_elite.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "정예 해원: 방울 군 하강 아르페지오 + 숨 한 호흡 + 해금 하모닉 1.2s | L1 -16.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa",
+   "path": "game/assets/sfx/sfx_sys_hanpa.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -16.6 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa__v2",
+   "path": "game/assets/sfx/sfx_sys_hanpa__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -17.4 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa__v3",
+   "path": "game/assets/sfx/sfx_sys_hanpa__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -17.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa__agg2",
+   "path": "game/assets/sfx/sfx_sys_hanpa__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -16.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa__agg3",
+   "path": "game/assets/sfx/sfx_sys_hanpa__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -16.0 LUFS-S, peak -3.3 dBFS"
+  },
+  {
+   "id": "sfx_sys_hanpa__agg4",
+   "path": "game/assets/sfx/sfx_sys_hanpa__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어 | L1 -16.0 LUFS-S, peak -1.8 dBFS"
+  },
+  {
+   "id": "sfx_sys_maedeup_lock",
+   "path": "game/assets/sfx/sfx_sys_maedeup_lock.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "매듭 잠금 '툭': 무명 매듭이 조여 적 무구를 막는다(나무 둔탁 + 천) | L2 -21.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_maedeup_lock__v2",
+   "path": "game/assets/sfx/sfx_sys_maedeup_lock__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "매듭 잠금 '툭': 무명 매듭이 조여 적 무구를 막는다(나무 둔탁 + 천) | L2 -21.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_maetim",
+   "path": "game/assets/sfx/sfx_sys_maetim.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "맺힘 복귀: 풀리던 매듭이 다시 조인다 — 무명 '끼익' 하행 + 둔탁한 '툭'(방울 없음 = 음이 꺼진다) | RIT -19.0 LUFS-S, peak -3.4 dBFS"
+  },
+  {
+   "id": "sfx_sys_oreum_end",
+   "path": "game/assets/sfx/sfx_sys_oreum_end.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 오름 종료: 하행 바람 + 장구 마지막 덩(약) | RIT -19.0 LUFS-S, peak -4.0 dBFS"
+  },
+  {
+   "id": "sfx_sys_oreum_start",
+   "path": "game/assets/sfx/sfx_sys_oreum_start.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 오름 시작: 장구 겹채 몰이 0.5s → 다음 박 강타 | RIT -19.0 LUFS-S, peak -5.0 dBFS"
+  },
+  {
+   "id": "sfx_sys_pullil_enter",
+   "path": "game/assets/sfx/sfx_sys_pullil_enter.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "풀릴 기색: 낮은 숨 내쉼 + 방울 장식음 1개(치음 A) | RIT -19.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_sys_pullil_enter__v2",
+   "path": "game/assets/sfx/sfx_sys_pullil_enter__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "풀릴 기색: 낮은 숨 내쉼 + 방울 장식음 1개(치음 A) | RIT -19.0 LUFS-S, peak -6.3 dBFS"
+  },
+  {
+   "id": "sfx_sys_pungyeong",
+   "path": "game/assets/sfx/sfx_sys_pungyeong.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 풍경 한 겹: 처마 바람종 D6 단음(런타임 토리 사다리 피치) — 방울 '딸랑' 위에 맑은 여운 | RIT -20.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_pungyeong__v2",
+   "path": "game/assets/sfx/sfx_sys_pungyeong__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 풍경 한 겹: 처마 바람종 D6 단음(런타임 토리 사다리 피치) — 방울 '딸랑' 위에 맑은 여운 | RIT -19.0 LUFS-S, peak -5.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_pungyeong__v3",
+   "path": "game/assets/sfx/sfx_sys_pungyeong__v3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 풍경 한 겹: 처마 바람종 D6 단음(런타임 토리 사다리 피치) — 방울 '딸랑' 위에 맑은 여운 | RIT -19.0 LUFS-S, peak -3.8 dBFS"
+  },
+  {
+   "id": "sfx_sys_pungyeong__v4",
+   "path": "game/assets/sfx/sfx_sys_pungyeong__v4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해원 풍경 한 겹: 처마 바람종 D6 단음(런타임 토리 사다리 피치) — 방울 '딸랑' 위에 맑은 여운 | RIT -20.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_sal_drop",
+   "path": "game/assets/sfx/sfx_sys_sal_drop.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "살 덩어리 떨어짐: 축축하고 낮은 '둑'(비음정, 짧게) | L3 -24.0 LUFS-S, peak -12.9 dBFS"
+  },
+  {
+   "id": "sfx_sys_sal_drop__v2",
+   "path": "game/assets/sfx/sfx_sys_sal_drop__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "살 덩어리 떨어짐: 축축하고 낮은 '둑'(비음정, 짧게) | L3 -24.0 LUFS-S, peak -12.6 dBFS"
+  },
+  {
+   "id": "sfx_sys_sinmyeong_full",
+   "path": "game/assets/sfx/sfx_sys_sinmyeong_full.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 만충: 장구 굴림 1박 → 덩 (추임새 '얼쑤' VO 미포함 — 보이스 녹음 필요) | RIT -19.0 LUFS-S, peak -4.0 dBFS"
+  },
+  {
+   "id": "sfx_sys_sinmyeong_tick",
+   "path": "game/assets/sfx/sfx_sys_sinmyeong_tick.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 25/50/75%: 장구 '기덕' 장식(꽹과리 아님). 기본=25 / __50 기덕+방울 / __75 기기덕+방울 두 음 | RIT -19.0 LUFS-S, peak -1.6 dBFS"
+  },
+  {
+   "id": "sfx_sys_sinmyeong_tick__50",
+   "path": "game/assets/sfx/sfx_sys_sinmyeong_tick__50.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 25/50/75%: 장구 '기덕' 장식(꽹과리 아님). 기본=25 / __50 기덕+방울 / __75 기기덕+방울 두 음 | RIT -21.0 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_sinmyeong_tick__75",
+   "path": "game/assets/sfx/sfx_sys_sinmyeong_tick__75.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신명 25/50/75%: 장구 '기덕' 장식(꽹과리 아님). 기본=25 / __50 기덕+방울 / __75 기기덕+방울 두 음 | RIT -20.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_wongwi_rise",
+   "path": "game/assets/sfx/sfx_sys_wongwi_rise.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "원귀 회귀: 역재생 모래 상승 → 결집 충격. 기본=25%, __50/__75 저역 강화 | RIT -19.0 LUFS-S, peak -3.1 dBFS"
+  },
+  {
+   "id": "sfx_sys_wongwi_rise__50",
+   "path": "game/assets/sfx/sfx_sys_wongwi_rise__50.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "원귀 회귀: 역재생 모래 상승 → 결집 충격. 기본=25%, __50/__75 저역 강화 | RIT -19.0 LUFS-S, peak -2.4 dBFS"
+  },
+  {
+   "id": "sfx_sys_wongwi_rise__75",
+   "path": "game/assets/sfx/sfx_sys_wongwi_rise__75.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "원귀 회귀: 역재생 모래 상승 → 결집 충격. 기본=25%, __50/__75 저역 강화 | RIT -19.0 LUFS-S, peak -2.5 dBFS"
+  },
+  {
+   "id": "sfx_sys_yeongga_join",
+   "path": "game/assets/sfx/sfx_sys_yeongga_join.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "영가 합류: 작은 종종걸음 3보 + 종이 사락 | RIT -22.4 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_yeongga_join__v2",
+   "path": "game/assets/sfx/sfx_sys_yeongga_join__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "영가 합류: 작은 종종걸음 3보 + 종이 사락 | RIT -22.3 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_sys_yeongga_substitute",
+   "path": "game/assets/sfx/sfx_sys_yeongga_substitute.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "대신 맞기: 넋전 종이 흩날림 + 놋그릇 '웅'(징 아님) | RIT -19.0 LUFS-S, peak -3.0 dBFS"
+  },
+  {
+   "id": "sfx_trl_avatar_smile",
+   "path": "game/assets/sfx/sfx_trl_avatar_smile.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "화신의 미소(시련 성공·종료): 따뜻한 저음 숨 + 바람 잦아듦 + 먼 풍경 | RIT -19.0 LUFS-S, peak -6.2 dBFS"
+  },
+  {
+   "id": "sfx_trl_avatar_telegraph",
+   "path": "game/assets/sfx/sfx_trl_avatar_telegraph.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "화신 공격 예고 0.4s: 낮은 가죽 떨림이 올라오고 끝에 나무 '딱'(피하라는 신호 — 비음정) | L2 -20.0 LUFS-S, peak -7.8 dBFS"
+  },
+  {
+   "id": "sfx_trl_avatar_telegraph__v2",
+   "path": "game/assets/sfx/sfx_trl_avatar_telegraph__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "화신 공격 예고 0.4s: 낮은 가죽 떨림이 올라오고 끝에 나무 '딱'(피하라는 신호 — 비음정) | L2 -20.0 LUFS-S, peak -7.8 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui",
+   "path": "game/assets/sfx/sfx_trl_bingui.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__sansin",
+   "path": "game/assets/sfx/sfx_trl_bingui__sansin.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -5.0 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__yongwang",
+   "path": "game/assets/sfx/sfx_trl_bingui__yongwang.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -6.0 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__chilseong",
+   "path": "game/assets/sfx/sfx_trl_bingui__chilseong.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -2.0 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__janggun",
+   "path": "game/assets/sfx/sfx_trl_bingui__janggun.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -4.5 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__barigongju",
+   "path": "game/assets/sfx/sfx_trl_bingui__barigongju.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_trl_bingui__jeseok_daegam",
+   "path": "game/assets/sfx/sfx_trl_bingui__jeseok_daegam.ogg",
+   "kind": "stinger_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity> | STG -17.0 LUFS-S, peak -5.2 dBFS"
+  },
+  {
+   "id": "sfx_trl_circle_enter",
+   "path": "game/assets/sfx/sfx_trl_circle_enter.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "화신 원 진입: 경계 통과 '쉬잉' | RIT -19.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_trl_confirm_ring",
+   "path": "game/assets/sfx/sfx_trl_confirm_ring.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "확인 링 1s: 토리 5음 상행 | RIT -19.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_trl_gaho_step",
+   "path": "game/assets/sfx/sfx_trl_gaho_step.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "가호 게이지 10%: 높은 방울 틱 | RIT -19.0 LUFS-S, peak -8.8 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_connect_star",
+   "path": "game/assets/sfx/sfx_trl_grm_connect_star.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "별 잇기(칠성 가호): 꽹과리 '갠' 1음(칠성 예약 악기 — 칠성 시련 전용). 런타임 별 번호마다 토리 상행 피치 | RIT -19.0 LUFS-S, peak -1.9 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_escort_arrive",
+   "path": "game/assets/sfx/sfx_trl_grm_escort_arrive.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호송 도착: 넋이 닿을 때 맑은 물방울 + 방울 한 쌍(상행 4도) | RIT -19.0 LUFS-S, peak -7.1 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_escort_arrive__v2",
+   "path": "game/assets/sfx/sfx_trl_grm_escort_arrive__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호송 도착: 넋이 닿을 때 맑은 물방울 + 방울 한 쌍(상행 4도) | RIT -19.0 LUFS-S, peak -6.6 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_hold_loop",
+   "path": "game/assets/sfx/sfx_trl_grm_hold_loop.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "거점 유지 진척 루프 4s: 산신 쉼터의 낮은 허밍(D 저음 화음, 숨 쉬듯 맥동). 런타임 진척 비례 피치 0→+7반음 | RIT -24.7 LUFS-S, peak -13.8 dBFS, loop"
+  },
+  {
+   "id": "sfx_trl_grm_install",
+   "path": "game/assets/sfx/sfx_trl_grm_install.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 세움(장군 가호): 깃대 꽂힘 '쿵'(소리북 + 대나무) + 오색 천 펄럭. 런타임 다섯 자리 = 토리 5음 피치 | RIT -19.0 LUFS-S, peak -5.2 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_install__v2",
+   "path": "game/assets/sfx/sfx_trl_grm_install__v2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 세움(장군 가호): 깃대 꽂힘 '쿵'(소리북 + 대나무) + 오색 천 펄럭. 런타임 다섯 자리 = 토리 5음 피치 | RIT -19.0 LUFS-S, peak -4.2 dBFS"
+  },
+  {
+   "id": "sfx_trl_grm_ring_capture",
+   "path": "game/assets/sfx/sfx_trl_grm_ring_capture.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "고리 포획 성공: 길닦음 덩 재사용 + 굿상 놋그릇 울림 | RIT -19.0 LUFS-S, peak -5.1 dBFS"
+  },
+  {
+   "id": "sfx_trl_hapil",
+   "path": "game/assets/sfx/sfx_trl_hapil.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC-BY 4.0 구성요소 포함(cdrk) + CC0 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신령 합일 HAPIL_CALL(4신 공용판): 단모리 160BPM 4박, 박마다 1신 강타 → 4박째 전원 + 스웰 | STG -17.0 LUFS-S, peak -4.1 dBFS"
+  },
+  {
+   "id": "sfx_trl_omen",
+   "path": "game/assets/sfx/sfx_trl_omen.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "시련 예고: 먼 바람 + 신장대 방울이 멀리서 | RIT -19.0 LUFS-S, peak -7.7 dBFS"
+  },
+  {
+   "id": "sfx_trl_sinjangdae",
+   "path": "game/assets/sfx/sfx_trl_sinjangdae.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신장대 강림(시련 시작): 대나무 '탁' 꽂힘 + 오색 천 펄럭 + 방울 | RIT -19.0 LUFS-S, peak -3.6 dBFS"
+  },
+  {
+   "id": "sfx_trl_timeout_warn",
+   "path": "game/assets/sfx/sfx_trl_timeout_warn.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "시련 10초 남음: 장구 '기덕' 2회(1s 주기로 런타임 반복) | RIT -19.0 LUFS-S, peak -1.7 dBFS"
+  },
+  {
+   "id": "sfx_trl_wieom_step",
+   "path": "game/assets/sfx/sfx_trl_wieom_step.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "위엄 게이지 10%: 소리북 틱(대북 아님). 런타임 토리 사다리 피치 | RIT -19.0 LUFS-S, peak -4.9 dBFS"
+  },
+  {
+   "id": "sfx_ui_back",
+   "path": "game/assets/sfx/sfx_ui_back.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "뒤로: 장구 '쿵'(북편) 약 | UI -22.0 LUFS-S, peak -8.7 dBFS"
+  },
+  {
+   "id": "sfx_ui_banish",
+   "path": "game/assets/sfx/sfx_ui_banish.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "금기: 붉은 인장 '쿵' + 종이 접힘 | UI -22.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_ui_card_hover",
+   "path": "game/assets/sfx/sfx_ui_card_hover.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 카드 포커스: 기본(빙의 전)=장구 / __red 나무 '탁' / __white 방울 | UI -22.0 LUFS-S, peak -7.1 dBFS"
+  },
+  {
+   "id": "sfx_ui_card_hover__red",
+   "path": "game/assets/sfx/sfx_ui_card_hover__red.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 카드 포커스: 기본(빙의 전)=장구 / __red 나무 '탁' / __white 방울 | UI -22.0 LUFS-S, peak -3.9 dBFS"
+  },
+  {
+   "id": "sfx_ui_card_hover__white",
+   "path": "game/assets/sfx/sfx_ui_card_hover__white.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 카드 포커스: 기본(빙의 전)=장구 / __red 나무 '탁' / __white 방울 | UI -22.0 LUFS-S, peak -13.9 dBFS"
+  },
+  {
+   "id": "sfx_ui_card_select",
+   "path": "game/assets/sfx/sfx_ui_card_select.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 선택: 붓 한 획 '쓱' + 인장 찍힘 '톡' | UI -22.0 LUFS-S, peak -8.7 dBFS"
+  },
+  {
+   "id": "sfx_ui_confirm",
+   "path": "game/assets/sfx/sfx_ui_confirm.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "확인: 장구 '덕'(채편) 단타 | UI -22.0 LUFS-S, peak -3.8 dBFS"
+  },
+  {
+   "id": "sfx_ui_error",
+   "path": "game/assets/sfx/sfx_ui_error.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "불가: 나무 '톡' 2회(낮게) | UI -22.0 LUFS-S, peak -4.6 dBFS"
+  },
+  {
+   "id": "sfx_ui_jeomji_open",
+   "path": "game/assets/sfx/sfx_ui_jeomji_open.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "점지 화면 열림: 한지 두루마리 펼침 + 방울 1음 | UI -22.0 LUFS-S, peak -9.5 dBFS"
+  },
+  {
+   "id": "sfx_ui_nav",
+   "path": "game/assets/sfx/sfx_ui_nav.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "포커스 이동: 한지 넘기는 아주 짧은 '삭' | UI -22.8 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_ui_pause_in",
+   "path": "game/assets/sfx/sfx_ui_pause_in.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "일시정지: 바람 잦아듦 | UI -22.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_ui_pause_out",
+   "path": "game/assets/sfx/sfx_ui_pause_out.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "재개: 바람 다시 일어남 + 장구 '덕' | UI -22.0 LUFS-S, peak -3.1 dBFS"
+  },
+  {
+   "id": "sfx_ui_reroll",
+   "path": "game/assets/sfx/sfx_ui_reroll.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "다시 묻기(재점): 산가지 흔들기 | UI -22.0 LUFS-S, peak -5.9 dBFS"
+  },
+  {
+   "id": "sfx_ui_settle_tick",
+   "path": "game/assets/sfx/sfx_ui_settle_tick.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "정산 카운트: 놋엽전 틱 | UI -22.0 LUFS-S, peak -9.6 dBFS"
+  },
+  {
+   "id": "sfx_ui_settle_total",
+   "path": "game/assets/sfx/sfx_ui_settle_total.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "정산 합계: 장구 덩 + 방울 | UI -22.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_ui_skip",
+   "path": "game/assets/sfx/sfx_ui_skip.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "물림: 종이 미끄러지는 '스윽' | UI -22.0 LUFS-S, peak -10.1 dBFS"
+  },
+  {
+   "id": "sfx_ui_title_start",
+   "path": "game/assets/sfx/sfx_ui_title_start.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "타이틀 시작: 장구 '덩' 한 번 + 촛불 켜짐 | UI -22.0 LUFS-S, peak -5.6 dBFS"
+  },
+  {
+   "id": "sfx_ui_unlock",
+   "path": "game/assets/sfx/sfx_ui_unlock.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "해금: 방울 상행 3음 + 종이 '팔락' | UI -22.0 LUFS-S, peak -11.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_bangul",
+   "path": "game/assets/sfx/sfx_wpn_bangul.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 박 펄스: 방울 1타(토리 음, 런타임 피치) / __aura 오라 트레몰로 루프 | L2 -20.0 LUFS-S, peak -11.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_bangul__aura",
+   "path": "game/assets/sfx/sfx_wpn_bangul__aura.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 박 펄스: 방울 1타(토리 음, 런타임 피치) / __aura 오라 트레몰로 루프 | L2 -25.5 LUFS-S, peak -8.8 dBFS, loop"
+  },
+  {
+   "id": "sfx_wpn_bangul_hit",
+   "path": "game/assets/sfx/sfx_wpn_bangul_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 음파 '찡' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_bangul_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_bangul_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 음파 '찡' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_bangul_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_bangul_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 음파 '찡' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_bangul_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_bangul_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "방울 음파 '찡' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae",
+   "path": "game/assets/sfx/sfx_wpn_buchae.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 부치기: 한지 부채 '촤악' + 바람 / __hit 부드러운 '훅' | L2 -20.0 LUFS-S, peak -2.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae__hit",
+   "path": "game/assets/sfx/sfx_wpn_buchae__hit.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 부치기: 한지 부채 '촤악' + 바람 / __hit 부드러운 '훅' | L2 -20.0 LUFS-S, peak -4.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae_hit",
+   "path": "game/assets/sfx/sfx_wpn_buchae_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 바람 '훅' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_buchae_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 바람 '훅' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_buchae_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 바람 '훅' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_buchae_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_buchae_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "부채 바람 '훅' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_cheoljillyeo",
+   "path": "game/assets/sfx/sfx_wpn_cheoljillyeo.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "철질려 살포: 마름쇠 흩뿌림 '차르륵' | L2 -20.0 LUFS-S, peak -8.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_cheoljillyeo_hit",
+   "path": "game/assets/sfx/sfx_wpn_cheoljillyeo_hit.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "철질려 마름쇠 '팅' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_cheoljillyeo_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_cheoljillyeo_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "철질려 마름쇠 '팅' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_cheoljillyeo_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_cheoljillyeo_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "철질려 마름쇠 '팅' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_cheoljillyeo_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_cheoljillyeo_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "철질려 마름쇠 '팅' 집계 4티어 | L2 -20.0 LUFS-S, peak -9.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung",
+   "path": "game/assets/sfx/sfx_wpn_gakgung.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 발사: 시위 '팅' + 화살 바람 / __hit '퍽' | L2 -20.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung__hit",
+   "path": "game/assets/sfx/sfx_wpn_gakgung__hit.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 발사: 시위 '팅' + 화살 바람 / __hit '퍽' | L2 -20.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung_hit",
+   "path": "game/assets/sfx/sfx_wpn_gakgung_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 화살 '퍽' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_gakgung_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 화살 '퍽' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_gakgung_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 화살 '퍽' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gakgung_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_gakgung_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "각궁 화살 '퍽' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gilbe",
+   "path": "game/assets/sfx/sfx_wpn_gilbe.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 펼침: 흰 무명 '촤아' 길게 깔림 | L2 -20.0 LUFS-S, peak -4.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gilbe_hit",
+   "path": "game/assets/sfx/sfx_wpn_gilbe_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 무명 '휙' 집계 4티어 | L2 -20.0 LUFS-S, peak -1.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gilbe_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_gilbe_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 무명 '휙' 집계 4티어 | L2 -21.7 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gilbe_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_gilbe_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 무명 '휙' 집계 4티어 | L2 -21.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_gilbe_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_gilbe_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "길베 무명 '휙' 집계 4티어 | L2 -20.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_hojakdo",
+   "path": "game/assets/sfx/sfx_wpn_hojakdo.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호작도 세화 펼침: 한지 두루마리 '촤락' + 낮은 숨(호랑이 그림의 기세) | L2 -20.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_hojakdo_hit",
+   "path": "game/assets/sfx/sfx_wpn_hojakdo_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호작도 경악 파동 '훙' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_hojakdo_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_hojakdo_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호작도 경악 파동 '훙' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_hojakdo_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_hojakdo_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호작도 경악 파동 '훙' 집계 4티어 | L2 -20.0 LUFS-S, peak -8.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_hojakdo_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_hojakdo_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "호작도 경악 파동 '훙' 집계 4티어 | L2 -20.0 LUFS-S, peak -9.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jakdu",
+   "path": "game/assets/sfx/sfx_wpn_jakdu.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "작두 설치: 날이 땅에 박히는 '척' + 쇠 떨림 | L2 -20.0 LUFS-S, peak -2.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jakdu_hit",
+   "path": "game/assets/sfx/sfx_wpn_jakdu_hit.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "작두 충격 '쾅' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jakdu_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_jakdu_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "작두 충격 '쾅' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jakdu_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_jakdu_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "작두 충격 '쾅' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jakdu_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_jakdu_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "작두 충격 '쾅' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jangchang",
+   "path": "game/assets/sfx/sfx_wpn_jangchang.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "장창 직선 연타: 짧은 '슉' | L2 -20.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jangchang_hit",
+   "path": "game/assets/sfx/sfx_wpn_jangchang_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "장창 연타 '탁' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jangchang_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_jangchang_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "장창 연타 '탁' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jangchang_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_jangchang_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "장창 연타 '탁' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jangchang_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_jangchang_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "장창 연타 '탁' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_janggu",
+   "path": "game/assets/sfx/sfx_wpn_janggu.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "장구 충격파: 실제 장구 '덩'(무구 그리드 착지, 음악의 일부) | L2 -20.0 LUFS-S, peak -1.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_janggu_hit",
+   "path": "game/assets/sfx/sfx_wpn_janggu_hit.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "장구 충격파 '덕' 집계 4티어 | L2 -20.0 LUFS-S, peak -1.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_janggu_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_janggu_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "장구 충격파 '덕' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_janggu_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_janggu_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "장구 충격파 '덕' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_janggu_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_janggu_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "장구 충격파 '덕' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon",
+   "path": "game/assets/sfx/sfx_wpn_jijeon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 투척: 종이돈 흩날림 '촤르르' / __hit 종이 '팔락' | L2 -22.9 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon__hit",
+   "path": "game/assets/sfx/sfx_wpn_jijeon__hit.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 투척: 종이돈 흩날림 '촤르르' / __hit 종이 '팔락' | L2 -24.7 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon_hit",
+   "path": "game/assets/sfx/sfx_wpn_jijeon_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 종이돈 '팔락' 집계 4티어 | L2 -22.9 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_jijeon_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 종이돈 '팔락' 집계 4티어 | L2 -20.5 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_jijeon_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 종이돈 '팔락' 집계 4티어 | L2 -20.0 LUFS-S, peak -1.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_jijeon_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_jijeon_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "지전 종이돈 '팔락' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_myeongdu__hum",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu__hum.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "명두 공전: 놋거울 '우웅' 루프 / __ray 빛줄기 쉬머 + 반사 '띵' | L2 -25.8 LUFS-S, peak -14.6 dBFS, loop"
+  },
+  {
+   "id": "sfx_wpn_myeongdu",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "명두 공전: 놋거울 '우웅' 루프 / __ray 빛줄기 쉬머 + 반사 '띵' | L2 -20.0 LUFS-S, peak -9.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_myeongdu_hit",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu_hit.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "명두 놋거울 '띵' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_myeongdu_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "명두 놋거울 '띵' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_myeongdu_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "명두 놋거울 '띵' 집계 4티어 | L2 -20.0 LUFS-S, peak -8.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_myeongdu_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_myeongdu_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "명두 놋거울 '띵' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_neokjeon",
+   "path": "game/assets/sfx/sfx_wpn_neokjeon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋전 공전: 종이 인형 '사르륵' | L2 -27.3 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_neokjeon_hit",
+   "path": "game/assets/sfx/sfx_wpn_neokjeon_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋전 한지 '삭' 집계 4티어 | L2 -20.0 LUFS-S, peak -1.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_neokjeon_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_neokjeon_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋전 한지 '삭' 집계 4티어 | L2 -21.3 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_neokjeon_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_neokjeon_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋전 한지 '삭' 집계 4티어 | L2 -24.0 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_neokjeon_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_neokjeon_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "넋전 한지 '삭' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_obanggi",
+   "path": "game/assets/sfx/sfx_wpn_obanggi.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 꽂음: 깃발 '펄럭' + 대나무 '탁' | L2 -20.0 LUFS-S, peak -1.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_obanggi_hit",
+   "path": "game/assets/sfx/sfx_wpn_obanggi_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 천 '팍' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_obanggi_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_obanggi_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 천 '팍' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_obanggi_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_obanggi_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 천 '팍' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_obanggi_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_obanggi_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "오방기 천 '팍' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_pyeongon",
+   "path": "game/assets/sfx/sfx_wpn_pyeongon.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "편곤 휘두름: 사슬 '찰랑' + 무거운 '부웅' | L2 -20.0 LUFS-S, peak -2.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_pyeongon_hit",
+   "path": "game/assets/sfx/sfx_wpn_pyeongon_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "편곤 '콱' + 사슬 집계 4티어 | L2 -20.0 LUFS-S, peak -4.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_pyeongon_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_pyeongon_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "편곤 '콱' + 사슬 집계 4티어 | L2 -20.0 LUFS-S, peak -7.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_pyeongon_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_pyeongon_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "편곤 '콱' + 사슬 집계 4티어 | L2 -20.0 LUFS-S, peak -7.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_pyeongon_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_pyeongon_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "편곤 '콱' + 사슬 집계 4티어 | L2 -20.0 LUFS-S, peak -5.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sainsageom",
+   "path": "game/assets/sfx/sfx_wpn_sainsageom.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사인참사검 검기: 칼 뽑는 '스링' + 밝은 휘익 | L2 -20.0 LUFS-S, peak -9.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sainsageom_hit",
+   "path": "game/assets/sfx/sfx_wpn_sainsageom_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사인참사검 검기 '챙' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sainsageom_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_sainsageom_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사인참사검 검기 '챙' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sainsageom_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_sainsageom_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사인참사검 검기 '챙' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.1 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sainsageom_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_sainsageom_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사인참사검 검기 '챙' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_samjichang",
+   "path": "game/assets/sfx/sfx_wpn_samjichang.ogg",
+   "kind": "sfx",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "삼지창 찌르기: 짧은 '쓱' 돌진 + 세 갈래 쇠 끝 반짝 | L2 -20.0 LUFS-S, peak -3.5 dBFS"
+  },
+  {
+   "id": "sfx_wpn_samjichang_hit",
+   "path": "game/assets/sfx/sfx_wpn_samjichang_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "삼지창 적중 '폭' 3연 관통 집계 4티어 | L2 -20.0 LUFS-S, peak -5.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_samjichang_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_samjichang_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "삼지창 적중 '폭' 3연 관통 집계 4티어 | L2 -20.0 LUFS-S, peak -5.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_samjichang_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_samjichang_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "삼지창 적중 '폭' 3연 관통 집계 4티어 | L2 -20.0 LUFS-S, peak -7.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_samjichang_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_samjichang_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "삼지창 적중 '폭' 3연 관통 집계 4티어 | L2 -20.0 LUFS-S, peak -8.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal",
+   "path": "game/assets/sfx/sfx_wpn_sinkal.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 던짐: 백지술 펄럭 휘익 / __return 귀환 역방향 / __hit 종이칼 '싹' + __agg2~4 | L2 -20.0 LUFS-S, peak -7.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal__return",
+   "path": "game/assets/sfx/sfx_wpn_sinkal__return.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 던짐: 백지술 펄럭 휘익 / __return 귀환 역방향 / __hit 종이칼 '싹' + __agg2~4 | L2 -20.0 LUFS-S, peak -7.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal__hit",
+   "path": "game/assets/sfx/sfx_wpn_sinkal__hit.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 던짐: 백지술 펄럭 휘익 / __return 귀환 역방향 / __hit 종이칼 '싹' + __agg2~4 | L2 -22.2 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal_hit",
+   "path": "game/assets/sfx/sfx_wpn_sinkal_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 적중 '싹' 집계 4티어 | L2 -20.0 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_sinkal_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 적중 '싹' 집계 4티어 | L2 -20.0 LUFS-S, peak -2.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_sinkal_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 적중 '싹' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sinkal_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_sinkal_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "신칼 적중 '싹' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.9 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sogeum",
+   "path": "game/assets/sfx/sfx_wpn_sogeum.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "소금 결계: 소금 뿌림 '사르르' 원 | L2 -20.0 LUFS-S, peak -5.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sogeum_hit",
+   "path": "game/assets/sfx/sfx_wpn_sogeum_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "소금 알갱이 '사각' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sogeum_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_sogeum_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "소금 알갱이 '사각' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sogeum_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_sogeum_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "소금 알갱이 '사각' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_sogeum_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_sogeum_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "소금 알갱이 '사각' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.6 dBFS"
+  },
+  {
+   "id": "sfx_wpn_ssukmul",
+   "path": "game/assets/sfx/sfx_wpn_ssukmul.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쑥물 바가지 뿌림: 물 '촤' + 방울 둘 | L2 -20.0 LUFS-S, peak -3.7 dBFS"
+  },
+  {
+   "id": "sfx_wpn_ssukmul_hit",
+   "path": "game/assets/sfx/sfx_wpn_ssukmul_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쑥물 물방울 '톡' 집계 4티어 | L2 -20.0 LUFS-S, peak -3.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_ssukmul_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_ssukmul_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쑥물 물방울 '톡' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_ssukmul_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_ssukmul_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쑥물 물방울 '톡' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.2 dBFS"
+  },
+  {
+   "id": "sfx_wpn_ssukmul_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_ssukmul_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "쑥물 물방울 '톡' 집계 4티어 | L2 -20.0 LUFS-S, peak -7.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo",
+   "path": "game/assets/sfx/sfx_wpn_woldo.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 회전: 반달날 '슈우웅' / __hit 묵직한 '척' | L2 -20.0 LUFS-S, peak -6.3 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo__hit",
+   "path": "game/assets/sfx/sfx_wpn_woldo__hit.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 회전: 반달날 '슈우웅' / __hit 묵직한 '척' | L2 -20.0 LUFS-S, peak -1.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo_hit",
+   "path": "game/assets/sfx/sfx_wpn_woldo_hit.ogg",
+   "kind": "sfx",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 적중 '척' 집계 4티어 | L2 -20.0 LUFS-S, peak -4.4 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo_hit__agg2",
+   "path": "game/assets/sfx/sfx_wpn_woldo_hit__agg2.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 적중 '척' 집계 4티어 | L2 -20.0 LUFS-S, peak -5.0 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo_hit__agg3",
+   "path": "game/assets/sfx/sfx_wpn_woldo_hit__agg3.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 적중 '척' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.8 dBFS"
+  },
+  {
+   "id": "sfx_wpn_woldo_hit__agg4",
+   "path": "game/assets/sfx/sfx_wpn_woldo_hit__agg4.ogg",
+   "kind": "sfx_variant",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "월도 적중 '척' 집계 4티어 | L2 -20.0 LUFS-S, peak -6.2 dBFS"
+  },
+  {
+   "id": "stg_boss_silence",
+   "path": "game/assets/sfx/stg_boss_silence.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "20:00 보스 정적: 심장 2박 → 2.0s 소리북 1타(긴 잔향) | STG -17.1 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "stg_bridge_gullim",
+   "path": "game/assets/sfx/stg_bridge_gullim.ogg",
+   "kind": "stinger",
+   "source": "synth(tools/audio/build_sfx.py)",
+   "license": "프로젝트 원작(코드 합성)",
+   "status": "done",
+   "note": "굴림 브리지 3.0s: 장구 채편 굴림 크레셴도(가속) + 바람 라이저 → 끝 = 거리 경계 T 정각(착지는 stg_geori_land) | STG -17.4 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "stg_death",
+   "path": "game/assets/sfx/stg_death.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "사망: 소리북 1타 + 하행 숨(음악 LPF 는 런타임) | STG -17.6 LUFS-S, peak -1.2 dBFS"
+  },
+  {
+   "id": "stg_geori_land",
+   "path": "game/assets/sfx/stg_geori_land.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "거리 전환 착지: 장구 덩 + 서브 드롭(신령 악기는 런타임 합류) | STG -17.0 LUFS-S, peak -1.4 dBFS"
+  },
+  {
+   "id": "stg_mboss_enter",
+   "path": "game/assets/sfx/stg_mboss_enter.ogg",
+   "kind": "stinger",
+   "source": "synth+freesound(tools/audio/build_sfx.py)",
+   "license": "CC0 구성요소 + 프로젝트 원작 합성",
+   "status": "done",
+   "note": "보스/중간보스 등장 1장단(자진모리 120BPM, 2.0s): 역재생 놋쇠 → 장구 덩 + 대북 + 저역 | STG -17.0 LUFS-S, peak -3.4 dBFS"
+  }
+ ]
+}

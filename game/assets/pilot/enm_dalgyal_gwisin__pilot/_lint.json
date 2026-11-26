@@ -1,0 +1,269 @@
+{
+ "entity": "enm_dalgyal_gwisin__pilot",
+ "kind": "sprite",
+ "meta": {
+  "dir": "C:\\Users\\김태양\\Desktop\\KoreaLike\\game\\assets\\pilot\\enm_dalgyal_gwisin__pilot",
+  "tier": "common_s",
+  "role": "enemy",
+  "canvas_spec": [
+   32
+  ],
+  "canvas_actual": "32x32",
+  "pivot": [
+   16,
+   29
+  ],
+  "pivot_src": "tier",
+  "palette": "strip:art\\palettes\\enm_dalgyal_gwisin__pilot.png",
+  "frames": 16,
+  "anims": [
+   "move"
+  ]
+ },
+ "summary": {
+  "PASS": 19,
+  "FAIL": 0,
+  "WARN": 0,
+  "N/A": 4
+ },
+ "checks": [
+  {
+   "id": "L1",
+   "name": "캔버스",
+   "status": "PASS",
+   "value": {
+    "32x32": 16
+   },
+   "detail": "사양 [32]"
+  },
+  {
+   "id": "L2",
+   "name": "알파",
+   "status": "PASS",
+   "value": {
+    "semi_px": 0,
+    "semi_frames_pct": 0.0
+   },
+   "detail": "0<a<255 픽셀 0개 (0.00% of canvas px)"
+  },
+  {
+   "id": "L3",
+   "name": "팔레트 소속",
+   "status": "PASS",
+   "value": {
+    "off_colors": 0,
+    "off_px_pct": 0.0,
+    "compliance_pct": 100.0
+   },
+   "detail": "기준 strip:art\\palettes\\enm_dalgyal_gwisin__pilot.png, 마스터 최근접 평균 ΔE2000 0.00"
+  },
+  {
+   "id": "L4",
+   "name": "색 수",
+   "status": "PASS",
+   "value": {
+    "entity_colors": 7,
+    "budget": 12,
+    "frame_max": 7
+   },
+   "detail": "엔티티 전 프레임·방향 합집합"
+  },
+  {
+   "id": "L5",
+   "name": "예약 백",
+   "status": "PASS",
+   "value": {
+    "px": 0,
+    "colors": []
+   },
+   "detail": "#f2ece0 ±ΔE2000 6"
+  },
+  {
+   "id": "L6",
+   "name": "예약 청",
+   "status": "N/A",
+   "value": null,
+   "detail": "플레이어 계열만"
+  },
+  {
+   "id": "L7",
+   "name": "외곽선",
+   "status": "PASS",
+   "value": {
+    "outline_1a1a1a_pct": 100.0,
+    "dark_outer_pct": 100.0
+   },
+   "detail": "실루엣 외곽(4이웃 투명) 픽셀 890개 중 #1a1a1a ≥95%"
+  },
+  {
+   "id": "L8",
+   "name": "여백",
+   "status": "PASS",
+   "value": {
+    "left": 8,
+    "right": 8,
+    "top": 8,
+    "bottom": 2
+   },
+   "detail": "최소 사방 2 / 위 2. 위반: -"
+  },
+  {
+   "id": "L9",
+   "name": "피벗",
+   "status": "PASS",
+   "value": {
+    "foot_min": 29,
+    "foot_max": 29,
+    "pivot_y": 29,
+    "bad_frames": 0
+   },
+   "detail": "모든 프레임 발끝 = 피벗 y ±1"
+  },
+  {
+   "id": "L10",
+   "name": "방향 중심",
+   "status": "PASS",
+   "value": {
+    "worst_range_px": 1.0,
+    "worst_anim": "move",
+    "pivot_x": 16
+   },
+   "detail": "애니별 0프레임 방향간 bbox 중심 x 범위: {\"move\": 1.0}"
+  },
+  {
+   "id": "L11",
+   "name": "몸 높이",
+   "status": "PASS",
+   "value": {
+    "height": 22,
+    "target": [
+     18,
+     24
+    ],
+    "over_pct": 0.0
+   },
+   "detail": "move_south_0.png 기준"
+  },
+  {
+   "id": "L12",
+   "name": "정지↔이동",
+   "status": "N/A",
+   "value": {},
+   "detail": "위반 방향: -"
+  },
+  {
+   "id": "L13",
+   "name": "루프 일관성",
+   "status": "PASS",
+   "value": {
+    "area_var_pct": 0.4,
+    "area_worst": "move_east",
+    "cx_range": 0.0,
+    "cx_worst": null
+   },
+   "detail": "루프 애니 ['move']. 위반 0묶음"
+  },
+  {
+   "id": "L14",
+   "name": "고립 픽셀",
+   "status": "PASS",
+   "value": {
+    "isolated_pct": 0.25,
+    "worst_frame_pct": 0.6,
+    "worst_frame": "move_east_2.png",
+    "avg_cluster_px": 15.19
+   },
+   "detail": "내부(외곽 제외) 8이웃 같은 RGB 없음 >8% FAIL, 평균 클러스터 <2.5 WARN"
+  },
+  {
+   "id": "L15",
+   "name": "미러 정책",
+   "status": "PASS",
+   "value": {
+    "west_files": 4,
+    "flip_of_east": 4,
+    "independent": 0
+   },
+   "detail": "독립 생성 west는 FAIL(flip_h(E)와 픽셀 동일한 파생본은 허용, --strict-west면 전부 FAIL)"
+  },
+  {
+   "id": "L16",
+   "name": "방향 의상 일관성",
+   "status": "PASS",
+   "value": {
+    "S-E": 1.0,
+    "S-N": 1.0
+   },
+   "detail": "정지 프레임 내부 상위 8색(마스터 스냅) 겹침 <75% WARN → G0 육안 확인"
+  },
+  {
+   "id": "L17",
+   "name": "광원",
+   "status": "PASS",
+   "value": 0.0669,
+   "detail": "move_south_0.png 좌반−우반 평균 상대휘도(추정 지표)"
+  },
+  {
+   "id": "L18",
+   "name": "명도 띠",
+   "status": "PASS",
+   "value": {
+    "max_lum": 0.433,
+    "cap": 0.45,
+    "px_over": 0
+   },
+   "detail": "적 몸 상대휘도 상한"
+  },
+  {
+   "id": "L19",
+   "name": "VFX",
+   "status": "N/A",
+   "value": null,
+   "detail": "VFX 시트 입력에서만"
+  },
+  {
+   "id": "L20",
+   "name": "import 회귀",
+   "status": "PASS",
+   "value": {
+    "import_files": 16,
+    "bad": 0
+   },
+   "detail": ""
+  },
+  {
+   "id": "L21",
+   "name": "앵커",
+   "status": "N/A",
+   "value": null,
+   "detail": "앵커 필수 대상 아님(--require-anchors로 강제)"
+  },
+  {
+   "id": "L22",
+   "name": "workbench 점수",
+   "status": "PASS",
+   "value": 100.0,
+   "detail": "목표 ≥85"
+  },
+  {
+   "id": "L23",
+   "name": "끓음",
+   "status": "PASS",
+   "value": {
+    "move_south": {
+     "max_pct": 17.4,
+     "raw_max_pct": 17.4
+    },
+    "move_east": {
+     "max_pct": 20.1,
+     "raw_max_pct": 20.1
+    },
+    "move_north": {
+     "max_pct": 16.9,
+     "raw_max_pct": 16.9
+    }
+   },
+   "detail": "인접 프레임 변경(±1px 정렬 보정) idle ≤25%, 이동 ≤45%, idle_0↔이동_0 ≤20%. 최악 move_east. 위반: -"
+  }
+ ]
+}

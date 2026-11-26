@@ -1,0 +1,248 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_bangul_aura 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 1",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 2",
+   "frame": {
+    "x": 320,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 3",
+   "frame": {
+    "x": 480,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 4",
+   "frame": {
+    "x": 640,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 5",
+   "frame": {
+    "x": 800,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 6",
+   "frame": {
+    "x": 960,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  },
+  {
+   "filename": "vfx_bangul_aura 7",
+   "frame": {
+    "x": 1120,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 160
+   },
+   "duration": 63
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_bangul_aura.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1280,
+   "h": 160
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_bangul_aura",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_bangul_aura",
+   "name": "Bangul aura",
+   "fps": 16,
+   "loop": true,
+   "frames": 8,
+   "frameWidth": 160,
+   "frameHeight": 160,
+   "frameSize": [
+    160,
+    160
+   ],
+   "pivot": [
+    80,
+    80
+   ],
+   "columns": 8,
+   "beats": 1,
+   "spec": {
+    "id": "vfx_bangul_aura",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_bangul",
+    "color_role": "P",
+    "canvas": "160x160",
+    "frames": 8,
+    "timing": "beat:1",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": false,
+    "max_concurrent": 1,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P",
+   "max_concurrent": 1,
+   "beat_sync": "beat:1",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     9,
+     6
+    ],
+    "semi_before": 10813,
+    "blend": "normal",
+    "size": "keep 160x160"
+   }
+  }
+ }
+}

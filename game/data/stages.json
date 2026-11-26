@@ -1,0 +1,682 @@
+{
+  "schema_version": "1.0",
+  "doc": "design/08-stages-waves.md 8~10장(v1 스테이지 3종) 정의. 캐논 8.3이 08 소유로 지정, 캐논 v1.2 C-37로 신설(2026-11-21). v1 스테이지 수 3(D-09). 분 단위 스폰·이벤트·정예 시각은 data/waves_<stage>.json, 스폰 디렉터 공통 표는 data/spawn_tables.json이 소유한다. 적 수치·시간 곡선은 data/enemies.json(07), 시련 가중은 06 4.3이 정본이고 여기는 사본이다.",
+  "canon_version": "1.2",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): stage_guksadang 표시명 '선바위 굿당'(name_fallback_* 삭제), stage_jindo_ssitgim 표시명 '남도 갯마을 씻김굿판'·respect_rules_ref·concept_art 인페인트·trial_stage_weight_note(16 A-4·D)"],
+  "v1_stage_ids": [
+    "stage_guksadang",
+    "stage_jindo_ssitgim",
+    "stage_east_sea_byeolsin"
+  ],
+  "later_stage_ids": {
+    "x1": [
+      "stage_jeju_chilmeori",
+      "stage_myeongbu"
+    ],
+    "x2": [
+      "stage_island_bungyo"
+    ],
+    "x2_candidate": [
+      "stage_hwarinwon"
+    ],
+    "_note": "08 11~13장. 이 파일에는 아직 정의하지 않는다"
+  },
+  "common": {
+    "run_length_sec": 1200,
+    "boss_time_sec": 1200,
+    "forced_saja_sec": 1380,
+    "origin_chunk": {
+      "size": 24,
+      "sacred_radius": 10.0,
+      "rule": "원점에 손으로 만든 굿판 마당 청크 1개(08 2.7)"
+    },
+    "chunk": {
+      "size": 24,
+      "active": 3,
+      "pregen": 5,
+      "rng_stream": "rng_chunk"
+    },
+    "boss_arena": {
+      "object": "obj_geumjul_gutcheong",
+      "radius": 11.0,
+      "outside_speed_mult": 0.5,
+      "pull_speed": 0.8,
+      "soft_boundary": "canon v1.2 D-10 허용(보스전 한정)"
+    },
+    "geori_skeleton_ref": "08 7장 (모든 스테이지 공통 20분 비트, 시련 180/390/750/930 + 합일 1080)",
+    "jangdan_ref": "data/waves_stage1.json#geori (08 6.1)"
+  },
+  "stages": [
+    {
+      "id": "stage_guksadang",
+      "order": 1,
+      "scope": "v1",
+      "name_key": "stage_guksadang.name",
+      "name_ko": "선바위 굿당",
+      "name_long_ko": "인왕산 선바위 굿당",
+      "name_note": "가상 굿당 표시명(16 A-4·D). 실명 '국사당'은 도감 [전승] 역사 설명에서만 쓴다. 지정번호 표기 금지. ID stage_guksadang 유지",
+      "region_gut": "서울 인왕산(가상 '선바위 굿당') / 서울 재수굿·진오기굿 (캐논 4.7)",
+      "lore_tags": {
+        "place": "전승",
+        "layout": "각색"
+      },
+      "map_structure": "A_infinite",
+      "multipliers": {
+        "stage_density": 1.0,
+        "stage_hp": 1.0,
+        "stage_dmg": 1.0
+      },
+      "midboss_pool": [
+        "mboss_daegwi",
+        "mboss_dokkaebi"
+      ],
+      "midboss_weights": [
+        50,
+        50
+      ],
+      "boss": "boss_yeokryeo",
+      "boss_bgm_cue": "mus_boss_yeokryeo_{form}",
+      "stage_elite": "elite_yeokgwi_ttae",
+      "guest_npc": "npc_byeolsang_sonnim",
+      "guest_npc_note": "손님신은 적이 아니다. 대접·배웅 대상(캐논 v1.2 D-03, 07 정의)",
+      "trial_stage_weight": {
+        "deity_sansin": 1.2,
+        "deity_janggun": 1.2
+      },
+      "unique_ritual_ko": "뒷전 풀어먹이기 강화",
+      "unique_ritual_ref": "08 8.9 / data/waves_stage1.json#geori_dwitjeon_rules",
+      "dwitjeon_display_key": "geori_dwitjeon.name__stage_guksadang",
+      "dwitjeon_display_ko": "뒷전",
+      "unlock": {
+        "type": "default"
+      },
+      "concept_art": {
+        "path": "art/stages/stage1_guksadang.png",
+        "status": "exists"
+      },
+      "tilesets": [
+        "art/tilesets/stage1_earth_grass",
+        "art/tilesets/stage1_earth_stone"
+      ],
+      "hazards": [
+        "haz_san_angae"
+      ],
+      "unique_events": [
+        "evt_changgwi_haengnyeol"
+      ],
+      "bgm_prefix": "mus_guksadang",
+      "music_color_layer_ko": "서울굿 삼현육각 계열(피리·대금·해금)",
+      "respect_rules_ref": "08 8.2.1 (실존 성소: 당집·선바위·무신도 비공격·비복제, 사전 고지·자문)",
+      "waves_file": "data/waves_stage1.json",
+      "waves_status": "exists",
+      "map_ref": "data/waves_stage1.json#map",
+      "objects_ref": "data/waves_stage1.json#objects",
+      "lighting_ref": "data/waves_stage1.json#lighting",
+      "elites_per_run": 14
+    },
+    {
+      "id": "stage_jindo_ssitgim",
+      "order": 2,
+      "scope": "v1",
+      "name_key": "stage_jindo_ssitgim.name",
+      "name_ko": "남도 갯마을 씻김굿판",
+      "name_note": "가상 지명 표시명(16 B-2·D). '진도'·진도씻김굿은 도감 [전승] 역사 설명에서만 쓴다. ID stage_jindo_ssitgim 유지",
+      "region_gut": "남도 갯마을(가상 지명) / 남도 씻김굿 계통 (캐논 4.7)",
+      "lore_tags": {
+        "rite": "무속",
+        "village_layout": "각색"
+      },
+      "map_structure": "A_infinite",
+      "multipliers": {
+        "stage_density": 1.1,
+        "stage_hp": 1.25,
+        "stage_dmg": 1.1
+      },
+      "midboss_pool": [
+        "mboss_gumiho",
+        "mboss_daegwi"
+      ],
+      "midboss_weights": [
+        50,
+        50
+      ],
+      "boss": "boss_wongyeol",
+      "boss_bgm_cue": "mus_boss_wongyeol_{form}",
+      "trial_stage_weight": {
+        "deity_barigongju": 1.5
+      },
+      "trial_stage_weight_note": "06 4.3의 이 스테이지 용왕 ×1.2는 지역 존중 규칙(08 9.2.1, 16 A-4·D: 바다·넋건지기 연상 금지)으로 넣지 않는다. deities.json deity_yongwang.stage_affinity에서도 삭제",
+      "unique_ritual_ko": "고풀이·씻김·길닦음",
+      "unique_ritual": {
+        "gildakkeum_area_mult": 1.2,
+        "ref": "08 9.9"
+      },
+      "dwitjeon_display_key": "geori_dwitjeon.name__stage_jindo_ssitgim",
+      "dwitjeon_display_ko": "종천멕이",
+      "unlock": {
+        "type": "stage_clear",
+        "stage": "stage_guksadang",
+        "mode": "mode_pyojun"
+      },
+      "concept_art": {
+        "path": "art/stages/stage_jindo_ssitgim.png",
+        "status": "inpaint_required",
+        "note": "갯벌·물골·흰 길베 구성은 적합. 상단 수평선 수면 띠만 08 9.2.1 위반 → 재생성하지 않고 상단 약 15%를 산 능선·노을로 인페인트(16 A-4, D-50·C-26 닫음)"
+      },
+      "hazards": [
+        "haz_gaetgol_jinheuk",
+        "haz_gaet_angae"
+      ],
+      "hazard_params": {
+        "haz_gaetgol_jinheuk": {
+          "cycle_sec": 240,
+          "phases": [
+            {
+              "id": "dry",
+              "start": 0,
+              "end": 100,
+              "floor": "mud"
+            },
+            {
+              "id": "warn",
+              "start": 100,
+              "end": 120
+            },
+            {
+              "id": "rise",
+              "start": 120,
+              "end": 220,
+              "floor": "mud_deep",
+              "temp_jilbe_on_sangyeo_path": 3
+            },
+            {
+              "id": "settle",
+              "start": 220,
+              "end": 240
+            }
+          ],
+          "boss_fight": "dry_locked",
+          "color_rule": "흙갈·먹빛, 청색 물결·포말·백색 금지",
+          "stinger": "stg_jinheuk_oreum"
+        },
+        "haz_gaet_angae": {
+          "base": "haz_san_angae",
+          "size": [
+            12.0,
+            7.0
+          ],
+          "max_banks": 2,
+          "drift": "sangyeo_path_west_to_east",
+          "drift_speed": 0.5,
+          "active_sec": [
+            720,
+            1050
+          ],
+          "light_radius_mult": 0.65,
+          "auto_candles_per_bank": 1
+        }
+      },
+      "unique_events": [
+        "evt_gohon_eongkim",
+        "evt_sangyeo_honbul"
+      ],
+      "bgm_prefix": "mus_jindo",
+      "music_color_layer_ko": "남도 시나위(아쟁·대금·구음), 계면조 선율감",
+      "respect_rules_ref": "08 9.2.1 + 16 A-4·D (물때·바다 기믹·배·익사·물에 잠긴 형상 금지, 물귀신 스폰 금지, 넋건지기 과제 금지, 노란 리본·4월 16일·학생 단체 원혼 금지, 도감 고정 문구)",
+      "map": {
+        "origin": "초가 2채(high 6×4), 돌담(low), 마당 질베 십자 2줄, 굿상, sacred R10",
+        "biome_noise": {
+          "seed_offset": 7919,
+          "frequency": 0.02,
+          "thresholds": [
+            {
+              "lt": 0.4,
+              "biome": "village"
+            },
+            {
+              "lt": 0.52,
+              "biome": "sand_edge"
+            },
+            {
+              "lt": 1.01,
+              "biome": "tidal_flat"
+            }
+          ]
+        },
+        "tidal_flat_floor": {
+          "lowland_lt": 0.35,
+          "default": "mud"
+        },
+        "gaetgol": {
+          "noise": "ridged",
+          "abs_lt": 0.06,
+          "width": [
+            1.5,
+            2.5
+          ],
+          "floor": "mud",
+          "floor_rise": "mud_deep"
+        },
+        "sangyeo_path": {
+          "formula": "y = 4*sin(x/31)",
+          "width": 2.5,
+          "class": "path",
+          "speed_bonus": 0.1
+        },
+        "madang_jilbe": {
+          "village_chunk_chance": 0.3,
+          "length": 12.0,
+          "dirs_deg": [
+            0,
+            90
+          ]
+        },
+        "obstacles": {
+          "poisson_r": 5.5,
+          "village": [
+            {
+              "kind": "choga",
+              "height": "high",
+              "size": [
+                6,
+                4
+              ],
+              "weight": 10
+            },
+            {
+              "kind": "stone_wall_piece",
+              "height": "low",
+              "size": [
+                4,
+                1
+              ],
+              "weight": 35
+            },
+            {
+              "kind": "jangdokdae",
+              "height": "low",
+              "size": [
+                2,
+                2
+              ],
+              "weight": 20
+            },
+            {
+              "kind": "straw_stack",
+              "height": "low",
+              "size": [
+                3,
+                1
+              ],
+              "weight": 15
+            }
+          ],
+          "tidal_flat": [
+            {
+              "kind": "reed_clump",
+              "height": "low",
+              "size": [
+                1,
+                1
+              ],
+              "weight": 15
+            },
+            {
+              "kind": "jangseung",
+              "height": "low",
+              "size": [
+                1,
+                1
+              ],
+              "weight": 5
+            }
+          ],
+          "forbidden_props": [
+            "boat",
+            "fishing_gear",
+            "net"
+          ]
+        }
+      },
+      "objects": {
+        "per_chunk": {
+          "obj_bujeong_dok__skin_jindo": 1.0,
+          "obj_kkeojin_chotdae__skin_jindo": 0.9
+        },
+        "obj_seonangdang": {
+          "chunk_chance": 0.05,
+          "min_spacing": 60.0,
+          "biome": "village"
+        }
+      },
+      "lighting": [
+        {
+          "start_sec": 0,
+          "ambient": 0.1
+        },
+        {
+          "start_sec": 3,
+          "ambient": 0.34
+        },
+        {
+          "start_sec": 720,
+          "ambient": 0.28
+        },
+        {
+          "start_sec": 1050,
+          "ambient": 0.22
+        },
+        {
+          "start_sec": 1080,
+          "ambient": 0.55
+        },
+        {
+          "start_sec": 1155,
+          "ambient": 0.62
+        },
+        {
+          "start_sec": 1200,
+          "ambient": 0.15
+        },
+        {
+          "start_sec": 1202,
+          "ambient": 0.32
+        }
+      ],
+      "waves_file": "data/waves_stage2.json",
+      "waves_status": "planned (08 9.8 타임라인이 원본, 99 3장 순서 10)",
+      "elites_per_run": 13
+    },
+    {
+      "id": "stage_east_sea_byeolsin",
+      "order": 3,
+      "scope": "v1",
+      "cut_order": 1,
+      "cut_note": "일정 지연 시 첫 무료 업데이트로 이동(캐논 5.1)",
+      "name_key": "stage_east_sea_byeolsin.name",
+      "name_ko": "동해안 별신굿 바닷가",
+      "region_gut": "경북·강원 동해안 어촌 / 동해안 별신굿 (캐논 4.7)",
+      "lore_tags": {
+        "rite": "무속",
+        "beach_layout": "각색"
+      },
+      "map_structure": "B_horizontal_band",
+      "multipliers": {
+        "stage_density": 1.2,
+        "stage_hp": 1.55,
+        "stage_dmg": 1.2
+      },
+      "midboss_pool": [
+        "mboss_dokkaebi",
+        "mboss_gangcheori"
+      ],
+      "midboss_weights": [
+        50,
+        50
+      ],
+      "boss": "boss_imugi",
+      "boss_bgm_cue": "mus_boss_imugi_{form}",
+      "trial_stage_weight": {
+        "deity_yongwang": 1.3
+      },
+      "trial_guaranteed_candidate": {
+        "deity": "deity_yongwang",
+        "by_trial_slot": 3,
+        "by_time_sec": 750,
+        "rule": "3차 시련 추첨 때까지 후보로 나온 적이 없으면 후보 A = 용왕(06 4.3 정본)"
+      },
+      "unique_ritual_ko": "용왕 연동 + 파도 썰물 보물",
+      "unique_ritual_ref": "08 10.9 (용왕 빙의 시 파도 반전은 [CANON-REQUEST])",
+      "dwitjeon_display_key": "geori_dwitjeon.name__stage_east_sea_byeolsin",
+      "dwitjeon_display_ko": "거리굿",
+      "unlock": {
+        "type": "stage_clear",
+        "stage": "stage_jindo_ssitgim",
+        "mode": "mode_pyojun"
+      },
+      "concept_art": {
+        "path": "art/stages/stage_east_sea_byeolsin.png",
+        "status": "exists"
+      },
+      "hazards": [
+        "haz_pado"
+      ],
+      "hazard_params": {
+        "haz_pado": {
+          "states_sec": {
+            "warn": 3.0,
+            "surge": 1.2,
+            "hold": 4.0,
+            "recede": 2.0,
+            "wet": 4.0
+          },
+          "surge_line_y": [
+            -10,
+            -3
+          ],
+          "hold": {
+            "player_speed_mult": 0.65,
+            "push_y": 1.2,
+            "walker_speed_mult": 0.5,
+            "floater_and_yeongga": "unaffected",
+            "mul_gwisin_speed_mult": 1.3,
+            "mul_gwisin_puddle_duration_mult": 2.0
+          },
+          "wet_speed_mult": 0.9,
+          "ebb_treasure": {
+            "chance": 0.3,
+            "y_range": [
+              -10,
+              -5
+            ],
+            "rng_stream": "rng_drop"
+          },
+          "period_by_time": [
+            {
+              "from_sec": 0,
+              "to_sec": 60,
+              "period_sec": null
+            },
+            {
+              "from_sec": 60,
+              "to_sec": 720,
+              "period_sec": 50
+            },
+            {
+              "from_sec": 720,
+              "to_sec": 1080,
+              "period_sec": 40
+            },
+            {
+              "from_sec": 1080,
+              "to_sec": 1155,
+              "period_sec": 30
+            },
+            {
+              "from_sec": 1155,
+              "to_sec": 1200,
+              "period_sec": null
+            }
+          ],
+          "dae": {
+            "id": "haz_pado__dae",
+            "time_sec": 990,
+            "warn_sec": 5.0,
+            "surge_line_y": 4,
+            "hold_sec": 6.0
+          },
+          "boss_fight": "off"
+        }
+      },
+      "unique_events": [],
+      "bgm_prefix": "mus_eastsea",
+      "music_color_layer_ko": "동해안 무악(쇠·장구·징·바라 중심의 화려한 쇠가락)",
+      "map": {
+        "band": {
+          "axis": "x",
+          "width": 30,
+          "y_bands": [
+            {
+              "y": [
+                10,
+                16
+              ],
+              "zone": "village"
+            },
+            {
+              "y": [
+                -4,
+                10
+              ],
+              "zone": "beach",
+              "class": "ground"
+            },
+            {
+              "y": [
+                -10,
+                -4
+              ],
+              "zone": "wet_sand",
+              "class": "rough"
+            },
+            {
+              "y": [
+                -14,
+                -10
+              ],
+              "zone": "shallow_sea",
+              "class": "shallow"
+            },
+            {
+              "y_below": -14,
+              "zone": "deep_sea",
+              "class": "blocked",
+              "floater_until_y": -20
+            }
+          ],
+          "north_wall_y": 16
+        },
+        "origin": "굿청 천막 high 10×6 (0,+6), 지화·탑등, 굿상, 용왕상 자리 (0,−4), sacred R10(띠 안 클리핑)",
+        "obstacles": {
+          "poisson_r": 6.0,
+          "village": [
+            {
+              "kind": "storehouse",
+              "height": "high",
+              "size": [
+                5,
+                3
+              ],
+              "weight": 25
+            },
+            {
+              "kind": "wall",
+              "height": "low",
+              "size": [
+                4,
+                1
+              ],
+              "weight": 40
+            },
+            {
+              "kind": "drying_rack",
+              "height": "low",
+              "size": [
+                3,
+                1
+              ],
+              "weight": 35
+            }
+          ],
+          "beach": [
+            {
+              "kind": "fishing_boat",
+              "height": "high",
+              "size": [
+                5,
+                2
+              ],
+              "weight": 20,
+              "max_per_chunk": 1
+            },
+            {
+              "kind": "gear_box",
+              "height": "low",
+              "size": [
+                1,
+                1
+              ],
+              "weight": 40
+            },
+            {
+              "kind": "anchor_rope",
+              "height": "low",
+              "size": [
+                2,
+                1
+              ],
+              "weight": 40
+            }
+          ]
+        }
+      },
+      "objects": {
+        "per_chunk": {
+          "obj_bujeong_dok__skin_eastsea": 1.0,
+          "obj_kkeojin_chotdae__skin_eastsea": 0.8
+        },
+        "bujeong_dok_zone_split": {
+          "beach": 0.7,
+          "village": 0.3
+        },
+        "obj_seonangdang__skin_eastsea": {
+          "chunk_chance": 0.08,
+          "zone": "village"
+        }
+      },
+      "lighting": [
+        {
+          "start_sec": 0,
+          "ambient": 0.1
+        },
+        {
+          "start_sec": 3,
+          "ambient": 0.32
+        },
+        {
+          "start_sec": 360,
+          "ambient": 0.28
+        },
+        {
+          "start_sec": 720,
+          "ambient": 0.3
+        },
+        {
+          "start_sec": 1080,
+          "ambient": 0.55
+        },
+        {
+          "start_sec": 1155,
+          "ambient": 0.62
+        },
+        {
+          "start_sec": 1200,
+          "ambient": 0.15
+        },
+        {
+          "start_sec": 1202,
+          "ambient": 0.3
+        }
+      ],
+      "boss_arena_override": {
+        "center_y_clamp": [
+          -3,
+          5
+        ]
+      },
+      "waves_file": "data/waves_stage3.json",
+      "waves_status": "planned (08 10.8 타임라인이 원본, 99 3장 순서 10)",
+      "elites_per_run": 12
+    }
+  ]
+}

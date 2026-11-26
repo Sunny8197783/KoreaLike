@@ -1,0 +1,199 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_woldo_spin 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  },
+  {
+   "filename": "vfx_woldo_spin 1",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  },
+  {
+   "filename": "vfx_woldo_spin 2",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  },
+  {
+   "filename": "vfx_woldo_spin 3",
+   "frame": {
+    "x": 0,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  },
+  {
+   "filename": "vfx_woldo_spin 4",
+   "frame": {
+    "x": 128,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  },
+  {
+   "filename": "vfx_woldo_spin 5",
+   "frame": {
+    "x": 256,
+    "y": 128,
+    "w": 128,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 128
+   },
+   "duration": 56
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_woldo_spin.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 384,
+   "h": 256
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_woldo_spin",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_woldo_spin",
+   "name": "Woldo spin",
+   "fps": 18.0,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    128,
+    128
+   ],
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 3,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "96x96->128x128"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_woldo",
+   "color_role": "R",
+   "spec_canvas": "96x96",
+   "spec_frames": 6,
+   "timing": "fps:18",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 4,
+   "scope": "v1",
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

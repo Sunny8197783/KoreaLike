@@ -1,0 +1,31 @@
+{
+ "doc": "art_lint VFX 시트 FAIL 중 사양상 예외(2026-11-24, vfx). 리사이즈 금지 규칙 때문에 패딩으로 {16,32,64,128}에 넣을 수 없거나(>128 화면 공간·대형), 가로 리본·빔·셰이더 데이터 텍스처라 프레임 규격이 적용되지 않는 시트. vfx/tools/vfx_art_fix.py NO_PAD_CANVAS 규칙과 같다.",
+ "lint": {
+  "total": 161,
+  "pass": 137,
+  "fail_waived": 24,
+  "fixed_this_run": [
+   "vfx_eodukssini_body (96x96 -> 128x128 피벗 기준 패딩, 원본 art/_legacy_runtime/vfx/)"
+  ]
+ },
+ "waived": {
+  "L19_size_over_128_screen_or_large": [
+   "vfx_bangul_aura 160",
+   "vfx_cheoneum_pulse 192",
+   "vfx_union_sanullim 192",
+   "vfx_saja_begareugi 256x64",
+   "vfx_status_gawi 320x180",
+   "vfx_sinmyeong_oreum_border 640x360",
+   "vfx_hwasin_won(+6 신령 변주) 404x412",
+   "vfx_trial_block_wall(+6 신령 변주) 404x436"
+  ],
+  "L19_ribbon_beam": [
+   "vfx_begareugi_shimmer 32x8 (canvas ribbon)",
+   "vfx_sinkal_tassel_trail 32x6 (ribbon)",
+   "vfx_myeongdu_beam 12x4 (beam2px 타일)"
+  ],
+  "L3_L4_data_texture": [
+   "vfx_bingui_pattern_tiles: RGB 채널이 색이 아니라 인코딩(R=램프 단계, G=보조, B=색동 인덱스) — 팔레트 스냅하면 셰이더 vfx_bingui_pattern_sweep 가 깨진다"
+  ]
+ }
+}

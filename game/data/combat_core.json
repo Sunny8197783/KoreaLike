@@ -1,0 +1,1685 @@
+{
+  "_meta": {
+    "doc": "design/02-core-loop-combat.md",
+    "version": "0.11",
+    "units": "u = 1 tile = 32px; time in seconds unless noted",
+    "canon": "design/01-concept-and-canon.md v1.2",
+    "canon_v1_2_log": [
+      "16 C·D 잔존 정리 (2026-11-22): run_end.E3_sal_geodum.reward_ref의 구 키 saja_trial_* 언급 제거(C-19)"
+    ],
+    "note": "[NEW] keys are proposals from section 02. canon_request flags default to canon behavior until approved. v0.10: values owned by other sections are references (*_ref keys), not copies. See 02 0.2 ownership table and 26 review log. v0.11 (2026-11-21): canon v1.2 decisions applied (D-01, D-02, D-16~D-18, D-20, D-21, D-34, D-45, D-47, D-48, D-52, C-22). See 02 '캐논 v1.2 반영 로그'.",
+    "ownership": {
+      "02_owns": [
+        "han",
+        "results",
+        "yeongga",
+        "gilbe",
+        "ring",
+        "sinmyeong",
+        "byeoksa",
+        "player",
+        "status (player side + enemy effect definitions)",
+        "revive",
+        "hosin",
+        "knockback (player)",
+        "xp",
+        "chest (grades, probabilities, reward counts, contents rule)",
+        "run_end (flow)",
+        "curves_assumption",
+        "salgi effect formula + expected curve",
+        "companions (data/companions.json, canon 8.3, C-37)"
+      ],
+      "refs": {
+        "quantize_impl": "05 3.2.2a phase_carry (canonical algorithm, canon v1.2 D-21)",
+        "jeomji_generation": "05 10-11 / stats.json jeomji",
+        "ritual_ref": "04 2.8 / weapons.json ritual_ref_by_level (canon v1.1 3.2.3a)",
+        "trial": "06 3 / deities.json constants",
+        "enemy_contact_and_resist": "07 2.4, 2.6, 3.2 / enemies.json",
+        "elites_and_events": "08 5 / waves_stage1.json",
+        "currency_amounts": "09 2-3 / meta_economy.json income"
+      }
+    }
+  },
+  "sim": {
+    "fixed_step_hz": 60,
+    "rng_streams": [
+      "rng_chunk",
+      "rng_spawn",
+      "rng_event",
+      "rng_mboss",
+      "rng_ai",
+      "rng_combat",
+      "rng_drop",
+      "rng_jeomji",
+      "rng_deity",
+      "rng_box",
+      "rng_fx"
+    ],
+    "rng_streams_ref": "14 3.13.1 / data/tech/data_tables_registry.json rng_streams (canon v1.2 D-48)",
+    "rng_streams_used_by_02": {
+      "crit_dodge": "rng_combat",
+      "drop": "rng_drop",
+      "chest": "rng_box",
+      "jeomji": "rng_jeomji",
+      "fx": "rng_fx"
+    }
+  },
+  "input": {
+    "stick_deadzone_inner": 0.2,
+    "stick_deadzone_outer": 0.95,
+    "analog_full_speed": true,
+    "eight_dir_snap_option": false,
+    "mouse_move_stop_radius_u": 0.5,
+    "menu_input_lock": 0.35,
+    "menu_require_key_release": true
+  },
+  "move": {
+    "base_speed_u": 4.0,
+    "speed_cap_mult": 2.0,
+    "accel_time": 0.06,
+    "decel_time": 0.05,
+    "crowd_slow_per_enemy": 0.06,
+    "crowd_slow_floor": 0.55,
+    "total_slow_floor": 0.4,
+    "terrain_slow": {
+      "mul_gwisin_pool": 0.25,
+      "heukmul": 0.35,
+      "mudflat_jindo": 0.15,
+      "gamum": 0.0
+    },
+    "facing_sprite_hysteresis_deg": 10
+  },
+  "camera": {
+    "internal_resolution": [
+      640,
+      360
+    ],
+    "visible_u": [
+      20.0,
+      11.25
+    ],
+    "zoom_locked": true,
+    "deadzone_u": 0.25,
+    "lookahead_u": 1.0,
+    "lookahead_max_u": 1.5,
+    "lookahead_rate": 4.0,
+    "follow_rate": 10.0,
+    "max_offset_u": 1.6,
+    "boss_frame_weight": 0.2,
+    "boss_player_safe_box": 0.6,
+    "wongwi_focus_weight": 0.3,
+    "wongwi_focus_time": 1.2,
+    "letterbox_px": 8
+  },
+  "shake": {
+    "decay_per_sec": 1.8,
+    "exponent": 2,
+    "max_offset_px": [
+      3,
+      3
+    ],
+    "roll": false,
+    "noise_freq": [
+      18.0,
+      27.0
+    ],
+    "option_default_scale": 1.0
+  },
+  "hitstop": {
+    "time_scale": 0.0,
+    "clock_model": "dual_clock: game_tick stops during hitstop, beat_tick keeps running; grid boundaries passed during hitstop are not caught up (14 3.9.1, canon v1.2 D-47)",
+    "music_continues": true,
+    "stack_rule": "max_remaining",
+    "post_cooldown_low_tier": 0.3,
+    "budget_window": 10.0,
+    "budget_ms": 400,
+    "events_ms": {
+      "gildakkeum": 80,
+      "gildakkeum_large": 110,
+      "elite_result": 60,
+      "player_hit_big": 50,
+      "hosin": 70,
+      "sinmyeong_oreum_start": 100,
+      "bingui": 120,
+      "mboss_result": 150,
+      "revive": 200,
+      "boss_result": 200,
+      "eodukssini_vanish": 150,
+      "byeoksa_oreum_start": 80
+    },
+    "local_freeze_frames": 2,
+    "local_freeze_dmg_ratio": 0.25,
+    "t2_budget_ms": 200,
+    "t4_min_ms": 100,
+    "max_single_ms": 200
+  },
+  "feedback_tiers": {
+    "T0": {
+      "trauma": [
+        0.0,
+        0.0
+      ],
+      "hitstop_ms": 0,
+      "particles": [
+        0,
+        6
+      ]
+    },
+    "T1": {
+      "trauma": [
+        0.05,
+        0.15
+      ],
+      "hitstop_ms": 0,
+      "particles": [
+        6,
+        12
+      ]
+    },
+    "T2": {
+      "trauma": [
+        0.25,
+        0.45
+      ],
+      "hitstop_ms": [
+        50,
+        80
+      ],
+      "particles": [
+        12,
+        24
+      ]
+    },
+    "T3": {
+      "trauma": [
+        0.5,
+        0.8
+      ],
+      "hitstop_ms": [
+        100,
+        150
+      ],
+      "particles": [
+        24,
+        40
+      ]
+    },
+    "T4": {
+      "trauma": [
+        0.8,
+        1.0
+      ],
+      "hitstop_ms": [
+        150,
+        200
+      ],
+      "particles": [
+        40,
+        40
+      ]
+    }
+  },
+  "flash": {
+    "fullscreen_max_per_sec": 3,
+    "red_hit_tint_frames": 2,
+    "white_hit_tint": "#e9dcc0",
+    "reserved_white": "#f2ece0"
+  },
+  "feel": {
+    "_doc": "GAME_FEEL.md 6 (2026-11-22). 연출 레이어 전용 수치(시뮬레이션 무변경, 넉백 거리 모델·국소 정지 제외). 코드: player/player.gd, enemies/enemy_manager.gd, autoload/juice.gd, run/game_camera.gd, projectiles/projectile_pool.gd, vfx/*",
+    "walk": {
+      "fps": 12,
+      "ratio_min": 0.8,
+      "ratio_max": 1.6,
+      "frames": 8
+    },
+    "idle": {
+      "fps": 6,
+      "frames": 4,
+      "beat_sync_min_ms": 70
+    },
+    "move_on_sq": 16,
+    "move_off_sq": 9,
+    "stop_finish_window_f": 1,
+    "stop_finish_speed": 1.5,
+    "tilt": {
+      "deg": 5,
+      "max_px": 2,
+      "rate": 14,
+      "band_hys": 0.15
+    },
+    "recoil": {
+      "px": 2,
+      "steps_ticks": [
+        2,
+        3
+      ]
+    },
+    "squash": {
+      "land": [
+        2,
+        1,
+        6
+      ],
+      "start": [
+        -2,
+        0,
+        4
+      ],
+      "turn": [
+        0,
+        -1,
+        3
+      ],
+      "hurt": [
+        2,
+        1,
+        6
+      ],
+      "cap_player": [
+        2,
+        1
+      ],
+      "cap_common": [
+        2,
+        1
+      ],
+      "cap_elite": [
+        3,
+        2
+      ],
+      "cap_boss": [
+        4,
+        2
+      ]
+    },
+    "iframe_blink_ticks": [
+      6,
+      3
+    ],
+    "hurt": {
+      "frames": [
+        1,
+        3
+      ],
+      "ticks_per_frame": 4
+    },
+    "death": {
+      "fps": 10,
+      "hold_s": 0.6,
+      "hitstop_ms": 150,
+      "result_delay_s": 1.4
+    },
+    "enemy": {
+      "fps": 8,
+      "jitter": 0.1,
+      "ratio_min": 0.8,
+      "ratio_max": 1.6,
+      "still_v": 4,
+      "dir_min_hold_s": 0.25
+    },
+    "dir": {
+      "ew_half": 55,
+      "ns_half": 35,
+      "hys": 10
+    },
+    "enemy_flash": {
+      "ticks": 2,
+      "min_interval_ticks": 12,
+      "color": "#e9dcc0",
+      "big_min_interval_ticks": 30,
+      "big_dmg_ratio": 0.01,
+      "big_mode": "outline"
+    },
+    "enemy_hit_squash": [
+      [
+        2,
+        1,
+        3
+      ],
+      [
+        1,
+        0,
+        3
+      ]
+    ],
+    "nudge": {
+      "px": 1,
+      "ticks": 2
+    },
+    "toechi_seq_ticks": [
+      2,
+      4,
+      3
+    ],
+    "haewon_rise_every_ticks": 6,
+    "proj": {
+      "spin_frames": 8,
+      "spin_fps": 16,
+      "scale_allowed": [
+        1,
+        2
+      ],
+      "lift_player": 16,
+      "lift_enemy": 10
+    },
+    "spark": {
+      "fx": "vfx_hit_spark_red",
+      "frames": 4,
+      "fps": 20,
+      "per_frame_cap": 12,
+      "per_enemy_ms": 100
+    },
+    "shake": {
+      "min_px_threshold": 0.35,
+      "sample_hz": 30,
+      "cap_px": 3,
+      "boss_cap_px": 4
+    },
+    "flash": {
+      "alpha_cap": 0.3,
+      "min_gap_s": 0.33,
+      "crowd_ratio": 0.4
+    },
+    "dmg_num": {
+      "rise_px": 8,
+      "life_ticks": 36,
+      "merge_s": 0.15,
+      "max_visible": 32,
+      "cluster_s": 0.25,
+      "cluster_px": 24,
+      "cluster_py": 24,
+      "local_px": 40,
+      "local_py": 32,
+      "local_cap": 2,
+      "near_px": 56,
+      "near_cap": 3
+    },
+    "shadow": {
+      "alpha": 0.45,
+      "player": [
+        18,
+        5
+      ],
+      "common_s": [
+        12,
+        3
+      ],
+      "common_m": [
+        14,
+        4
+      ],
+      "common_l": [
+        18,
+        4
+      ]
+    },
+    "weight_tiers": {
+      "_doc": "무구 무게 등급(리뷰 hitfeel 2026-11-24): 0 경 / 1 중 / 2 중량. 국소 정지 틱 = freeze_ticks[w](경·중은 피해 ≥ 한 최대치×local_freeze_dmg_ratio 또는 치명일 때만, 중량은 항상). 넛지(넉백 0 타격) px·틱, 스쿼시 1단 틱도 등급별. thrust = 찌르기·관통 계열: kb 가 없으면 thrust_kb_u(light 등급) 넉백. 목록에 없는 무구·무구 외 출처(-1)는 default.",
+      "default": 1,
+      "freeze_ticks": [
+        1,
+        2,
+        3
+      ],
+      "heavy_always_freeze": true,
+      "squash_ticks": [
+        2,
+        3,
+        4
+      ],
+      "nudge_px": [
+        1,
+        2,
+        2
+      ],
+      "nudge_ticks": [
+        2,
+        3,
+        3
+      ],
+      "thrust_kb_u": 0.3,
+      "heavy": [
+        "wpn_woldo",
+        "wpn_jakdu",
+        "wpn_pyeongon",
+        "wpn_janggu",
+        "evo_manwoldo",
+        "evo_daejakdu",
+        "evo_byeongnyeok_pyeongon",
+        "evo_hapjangdan",
+        "union_jakdu_dari",
+        "union_sanullim"
+      ],
+      "light": [
+        "wpn_bangul",
+        "wpn_cheoljillyeo",
+        "wpn_neokjeon",
+        "wpn_gilbe",
+        "wpn_ssukmul",
+        "wpn_obanggi",
+        "evo_cheoneum_bangul",
+        "evo_cheoljillyeojin",
+        "evo_neokkkotbi",
+        "evo_begareugi",
+        "evo_sammul_ssitgim",
+        "evo_obangjin"
+      ],
+      "thrust": [
+        "wpn_samjichang",
+        "wpn_jangchang",
+        "wpn_sainsageom",
+        "evo_saseulchang",
+        "evo_pajinchang",
+        "evo_isippalsugeom"
+      ]
+    }
+  },
+  "aim": {
+    "screen_margin_u": 1.0,
+    "white_giseak_bonus": 0.5,
+    "red_excludes": [
+      "elite_eodukssini"
+    ],
+    "spread_cluster_radius_u": 2.0,
+    "spread_adjust_deg": 10,
+    "white_no_target_delay_beats": 1,
+    "red_excludes_giseak_general": true,
+    "red_projectile_passes_giseak_general": {
+      "consume_pierce": false,
+      "still_resolve_hit": true,
+      "once_per_target": true
+    },
+    "white_excludes_avatar": true,
+    "avatar_excluded_all_when_face_gaho": false,
+    "avatar_face_rule_note": "withdrawn with half-circle face declaration (canon v1.2 D-01: wieom/gaho gauges run simultaneously, first to 100% decides). Avatar = red/union aim target, white excluded."
+  },
+  "damage": {
+    "variance": 0.0,
+    "crit_mult": 2.0,
+    "white_crit": false,
+    "min_damage": 1,
+    "puri_base": 3.0,
+    "puri_cap": 6.0,
+    "gyeoldan_base": 0.05,
+    "gyeoldan_cap": 0.5,
+    "sinppal_cap": 10.0,
+    "same_tick_order": [
+      "ring",
+      "white",
+      "red",
+      "dot",
+      "maetim_timer"
+    ]
+  },
+  "caps": {
+    "player_projectiles": 600,
+    "enemy_projectiles": 600,
+    "enemy_projectiles_ref": "runtime cap owner = 07 11.1 / enemies.json caps (canon v1.2 D-45). 14 perf 1500/2000 = tech hard caps (different meaning)",
+    "damage_numbers": 40,
+    "sfx_voices_per_instrument": 4,
+    "haewon_pillars_per_frame": 24,
+    "toechi_particles_per_frame": 40,
+    "flam_ms": 15
+  },
+  "han": {
+    "giseak_threshold": 0.35,
+    "giseak_move_mult": 0.7,
+    "giseak_general_move_mult": 0.4,
+    "giseak_general_contact_mult": 0.3,
+    "giseak_duration": 12.0,
+    "giseak_duration_gaekgwi": 16.0,
+    "giseak_duration_repeat": 8.0,
+    "maetim_return_ratio": 0.6,
+    "maetim_return_ratio_common": 0.45,
+    "maetim_return_ratio_scope": "0.45 = common/minion, 0.6 = elite+ (canon v1.2 D-20; 07 enemies.json global_rules.maetim is canonical)",
+    "maetim_warn_time": [
+      3.0,
+      1.0
+    ],
+    "maetim_warn_hz": [
+      4,
+      8
+    ],
+    "maetim_timer_resets_on_damage": false,
+    "knot_lock_min_han": 1,
+    "maetim_return_grace": 3.0,
+    "maetim_return_grace_scope": "common/minion (07 maetim.common_nonhostile_after_recover_s)",
+    "maetim_return_grace_rules": {
+      "contact_damage": false,
+      "ranged_attack": false,
+      "move_mult": 0.7
+    },
+    "elite_maetim_clock": "no_damage_accum (07 2.7.1)",
+    "knot_glyph_stages": [
+      [
+        1,
+        "loose"
+      ],
+      [
+        3,
+        "tight"
+      ],
+      [
+        6,
+        "taut_pulse_1.2hz"
+      ]
+    ],
+    "giseak_general_behavior_ref": "07 2.7 / enemies.json global_rules.giseak.common_overlay (canonical, canon v1.2 D-20): slow wander x0.4, contact x0.3"
+  },
+  "results": {
+    "toechi": {
+      "orb_ratio": 1.0,
+      "sal_algaengi": 1,
+      "salgi": 0.02,
+      "salgi_elite": 1,
+      "salgi_mboss": 5,
+      "sinmyeong": 0.001,
+      "salgi_ref": "canon 3.2.6"
+    },
+    "haewon": {
+      "orb_ratio": 0.6,
+      "yeongga": 1,
+      "sinmyeong": 0.004,
+      "sinmyeong_elite_bonus": 0.05,
+      "neokduri_sec_elite": 2.0,
+      "neok_ref": "09 meta_economy.income.neok_sources.haewon"
+    },
+    "baeung": {
+      "species_kind": [
+        "yokai",
+        "beast"
+      ],
+      "yeongga": 0,
+      "neok_ref": "09 income.neok_sources.haewon + procession_full_instant_cheondo_bonus",
+      "sinmyeong": 0.009,
+      "counts_as_haewon": true,
+      "source": "canon v1.1 3.2.2"
+    }
+  },
+  "yeongga": {
+    "join_time": 0.35,
+    "cheondo_fx_time": 0.5,
+    "breadcrumb_min_step_u": 0.1,
+    "breadcrumb_length_u": 30.0,
+    "first_offset_u": 0.6,
+    "spacing_u": 0.45,
+    "cap_base": 24,
+    "cap_max": 60,
+    "lifetime_base": 30.0,
+    "lifetime_max": 60.0,
+    "fade_last_sec": 5.0,
+    "aura_radius_u": 0.5,
+    "aura_fallback_base": 10,
+    "aura_stack_cap": 8,
+    "substitute_cooldown": 2.0,
+    "substitute_iframe": 0.2,
+    "substitute_excludes_hazard": true,
+    "substitute_excludes_ranged": true,
+    "substitute_min_train": 8,
+    "substitute_cost": 2,
+    "substitute_tuning_note": "2026-11-24 review: cd 0.5->2.0, off at train<=8, 2 yeongga cheondo per substitute, ranged excluded (survival tension; target hp<75% dwell 25~40%)",
+    "telemetry_hp_low_ratio": 0.75,
+    "heavy_hit_rule_enabled": false,
+    "heavy_hit_threshold_ratio": 0.25,
+    "heavy_hit_per_yeongga": 25,
+    "heavy_hit_max_yeongga": 5,
+    "cheondo_neok": {
+      "_ref": "09 meta_economy.income.neok_sources",
+      "lifetime": "cheondo",
+      "substitute": "cheondo",
+      "ring": "cheondo_in_ring",
+      "gaze": "cheondo",
+      "overflow": "procession_full_instant_cheondo_bonus",
+      "saja": "cheondo"
+    },
+    "cheondo_sinmyeong": 0.005,
+    "aura_ref": "ritual_ref",
+    "aura_ratio_of_ritual_ref": 0.15,
+    "aura_tick": "grid_g",
+    "overflow_neok_mult": 1.0,
+    "canon_request_R8_overflow_neok_mult": 0.5,
+    "ripe": {
+      "id": "sys_neok_mureigeum",
+      "stage_sec": [
+        0,
+        10,
+        20
+      ],
+      "aura_mult": [
+        1.0,
+        1.5,
+        2.0
+      ],
+      "ring_neok_mult": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "resets_on_ring_extend": false
+    }
+  },
+  "gilbe": {
+    "min_step_u": 0.1,
+    "duration_base": 4.0,
+    "duration_max": 8.0,
+    "sinmyeong_mult": 2.0,
+    "width_px": 6,
+    "alpha_no_yeongga": 0.35,
+    "alpha_with_yeongga": 0.7,
+    "fade_last_sec": 0.5,
+    "break_jump_u": 0.5
+  },
+  "ring": {
+    "snap_u": 1.5,
+    "snap_auto_knot_u": 2.5,
+    "snap_sinmyeong_u": 2.5,
+    "dangol_snap_mult": 1.2,
+    "exclude_recent_sec": 0.5,
+    "min_points": 8,
+    "min_area_tiles": 9,
+    "cooldown": 1.0,
+    "grid_u": 1.0,
+    "area_counts_interior_only": true,
+    "effect_zone_includes_boundary": true,
+    "pick_oldest_candidate": true,
+    "dmg_boss_mult": 0.5,
+    "heal_per_yeongga": 0.01,
+    "heal_cap": 0.1,
+    "sinmyeong_per_haewon": 0.02,
+    "sinmyeong_cap": 0.15,
+    "mandala_area": 60,
+    "mandala_duration": 6.0,
+    "mandala_sinppal": 0.15,
+    "mandala_enemy_slow": 0.2,
+    "sal_cleanse_per_grain": 0.02,
+    "fx_max_delay_ms": 250,
+    "trauma_base": 0.25,
+    "trauma_per_area": 0.0025,
+    "trauma_cap": 0.5,
+    "guide_first_runs": 3,
+    "dmg_ref": "ritual_ref",
+    "dmg_ritual_ref_sum_mult": 2.0,
+    "dmg_fallback_sum": 10,
+    "min_targets_for_effect": {
+      "giseak": 1,
+      "or_enemies": 3
+    },
+    "empty_ring_silent": true,
+    "cheondo_rule": {
+      "remaining_life_lte_sec": 10,
+      "others_life_add_sec": 5,
+      "others_burst": {
+        "radius_u": 1.0,
+        "aura_tick_mult": 4
+      }
+    },
+    "heal_window_sec": 10,
+    "telemetry_accidental_flag": true,
+    "gate_accidental_ratio_max": 0.2,
+    "bulk_release_han_pct": 50,
+    "bulk_bonus_min_haewon": 3,
+    "bulk_bonus_sinmyeong": 0.05,
+    "big_ring_xp_area": 30,
+    "big_ring_xp_mult": 1.5,
+    "n_weight_by_cause": {
+      "ring": 1.0,
+      "white": 0.5,
+      "white_sinmyeong": 0.5
+    },
+    "bulk_note": "2026-11-24 review: ring zone commons/minions with han<=50% released at once, rest forced into giseak at han 1; >=3 released -> orb pull + sinmyeong +5%; area>=30 -> xp x1.5; target ring_haewon_share>=25%"
+  },
+  "salgi": {
+    "grain_cap": 200,
+    "grain_merge_radius_u": 1.5,
+    "grain_merge_scale": 0.15,
+    "offscreen_merge_dist_u": 30.0,
+    "thresholds": [
+      25,
+      50,
+      75
+    ],
+    "threshold_warn_margin": 0.5,
+    "wongwi_fx_time": 1.2,
+    "effect_mode": "continuous",
+    "effect_continuous": {
+      "spawn_per_point": 0.005,
+      "elite_chance_per_point": 0.005,
+      "han_per_point": 0.002
+    },
+    "effect_continuous_source": "canon v1.2 D-16 (per salgi point +0.5% spawn / +0.5% elite / +0.2% han)",
+    "wongwi_count": {
+      "grains_per_wongwi": 30,
+      "min": 1,
+      "max": 3,
+      "source": "canon v1.1 3.2.6"
+    },
+    "disabled_on_profile_run": [
+      1
+    ],
+    "expected_curve_ref": "02 9.3"
+  },
+  "jangdan": {
+    "geori": [
+      {
+        "id": "geori_jutang_bujeong",
+        "start": 0,
+        "bpm": 45,
+        "grid_div": 4
+      },
+      {
+        "id": "geori_gamang_sansin",
+        "start": 180,
+        "bpm": 80,
+        "grid_div": 2
+      },
+      {
+        "id": "geori_byeolsang_daegam_jeseok",
+        "start": 360,
+        "bpm": 95,
+        "grid_div": 3,
+        "meter": "3-bun-bak (bpm = dotted beat), grid 1/3 beat (canon v1.2 D-18)"
+      },
+      {
+        "id": "geori_janggun_gunung_changbu",
+        "start": 720,
+        "bpm": 120,
+        "grid_div": 3,
+        "meter": "3-bun-bak (bpm = dotted beat), grid 1/3 beat (canon v1.2 D-18)"
+      },
+      {
+        "id": "geori_jakdu",
+        "start": 1080,
+        "bpm": 160,
+        "grid_div": 2
+      },
+      {
+        "id": "geori_dwitjeon",
+        "start": 1155,
+        "bpm": 180,
+        "grid_div": 2
+      }
+    ],
+    "transition_crossfade_beats": 4,
+    "cooldown_floor": 0.4,
+    "cooldown_floor_sinmyeong": 0.25,
+    "quantize_rule": "phase_carry",
+    "quantize_overflow": "phase lag > 1 grid is discarded (ideal_t = t + P_eff), 05 3.2.2a",
+    "heung_max": 0.08,
+    "heung_steps": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.34,
+        0.04
+      ],
+      [
+        0.67,
+        0.08
+      ]
+    ],
+    "quantize_impl_ref": "05 3.2.2a phase_carry (canonical, canon v1.2 D-21; canon wording '잔여 이월(위상 이월)'). weapons.json geori_grid must match geori[].grid_div",
+    "p_eff": "max(min_period, cd_base*max(F, stat_jangdan), g)",
+    "ceil_forbidden": true,
+    "card_label": "average_fire_rate_delta_pct"
+  },
+  "sinmyeong": {
+    "gain": {
+      "haewon": 0.004,
+      "cheondo": 0.005,
+      "ring_per_haewon": 0.02,
+      "ring_cap": 0.15,
+      "elite_haewon": 0.05,
+      "toechi": 0.001
+    },
+    "dangol_layer_bonus": 0.1,
+    "oreum_duration": 15.0,
+    "oreum_gain_ignored": true,
+    "jangdan_bonus": -0.15,
+    "target_uptime": [
+      0.15,
+      0.25
+    ],
+    "dangol_layer_stack": "additive",
+    "dangol_bonus_cap": 0.5,
+    "R3_status": "approved (canon v1.2 D-17), default ON (05 3.2.2b)",
+    "post_oreum_window": 20,
+    "post_oreum_gain_mult": 0.5,
+    "min_gap_after_oreum": 45,
+    "uptime_cap": 0.25
+  },
+  "chuimsae": {
+    "combo_window": 2.0,
+    "haewon_steps": [
+      {
+        "combo": 20,
+        "text": "얼씨구",
+        "px": 24,
+        "sec": 0.8
+      },
+      {
+        "combo": 40,
+        "text": "좋다",
+        "px": 28,
+        "sec": 0.9
+      },
+      {
+        "combo": 80,
+        "text": "잘한다",
+        "px": 34,
+        "sec": 1.0
+      },
+      {
+        "combo": 150,
+        "text": "그렇지!",
+        "px": 42,
+        "sec": 1.2
+      }
+    ],
+    "toechi_steps": [
+      {
+        "combo": 20,
+        "text": "물렀거라",
+        "px": 24,
+        "sec": 0.8
+      },
+      {
+        "combo": 40,
+        "text": "옳지!",
+        "px": 28,
+        "sec": 0.9
+      },
+      {
+        "combo": 80,
+        "text": "썩 물렀거라!",
+        "px": 34,
+        "sec": 1.0
+      },
+      {
+        "combo": 150,
+        "text": "시원하다!",
+        "px": 42,
+        "sec": 1.2
+      }
+    ],
+    "separate_counters": true,
+    "slam_max_per_sec": 1,
+    "toechi_outline": "#c8322d"
+  },
+  "status": {
+    "st_bongbak": {
+      "target": "enemy",
+      "duration": 1.0,
+      "tag": "tag_bongbak",
+      "grade_response_ref": "07 2.6 / enemies.json status_profiles"
+    },
+    "st_dunhwa": {
+      "target": "enemy",
+      "stack": "multiplicative",
+      "floor_ref": "07 2.6 (floor 0.30 = max slow 70%)",
+      "grade_response_ref": "07 2.6"
+    },
+    "st_hwasang": {
+      "target": "enemy",
+      "color": "red",
+      "ticks": 3,
+      "tick_interval": 0.5,
+      "ratio_of_hit": 0.15,
+      "stack": "strongest",
+      "tag": "tag_hwagong"
+    },
+    "st_gyeongjik": {
+      "target": "enemy",
+      "duration_halfbeats": 1,
+      "grade_response_ref": "07 2.6 / enemies.json status_profiles"
+    },
+    "st_pyosik": {
+      "target": "enemy",
+      "duration": 6.0,
+      "dmg_taken_bonus": 0.1,
+      "elite_plus_only": true
+    },
+    "st_gawi": {
+      "target": "player",
+      "move_slow": 0.4,
+      "duration": 1.5,
+      "dr_immune": 3.0,
+      "stacks": false,
+      "trigger_ref": "07 (hwehwe proximity, 3 stacks to trigger)",
+      "owner": "02"
+    },
+    "st_sangmunsal": {
+      "target": "player",
+      "saenggi_zero": true,
+      "duration": 5.0
+    },
+    "st_gamum": {
+      "target": "player",
+      "saenggi_stop": true,
+      "while_inside": true
+    },
+    "st_heukmul": {
+      "target": "player",
+      "move_slow": 0.35,
+      "while_inside": true
+    },
+    "st_yeokbyeong": {
+      "target": "player",
+      "dps": 2,
+      "linger": 1.0,
+      "substitute_blocks": false
+    },
+    "st_hollim": {
+      "target": "player",
+      "yeongga_lost": 3
+    },
+    "st_gyeongak": {
+      "target": "enemy",
+      "duration": 1.5,
+      "flee_speed": 0.7,
+      "no_contact_damage": true,
+      "tag": "tag_gyeongak",
+      "alias_of": "st_gongpo",
+      "grade_response_ref": "07 2.6 / enemies.json status_profiles"
+    },
+    "_prefix": "st_"
+  },
+  "tags": {
+    "red": [
+      "tag_guta",
+      "tag_jasang",
+      "tag_hwagong",
+      "tag_gyeongak",
+      "tag_bongbak",
+      "tag_byeoksa"
+    ],
+    "white": [
+      "tag_dallaem",
+      "tag_gongmul",
+      "tag_ssitgim",
+      "tag_sogeum",
+      "tag_gwangmyeong",
+      "tag_indo"
+    ]
+  },
+  "player": {
+    "base_hp": 100,
+    "iframe_hit": 0.4,
+    "iframe_dodge": 0.2,
+    "iframe_shield": 0.4,
+    "armor_min_ratio": 0.2,
+    "armor_cap": 30,
+    "dodge_cap": 0.5,
+    "dodge_contact_only": true,
+    "blink_period": 0.067,
+    "blink_alpha": [
+      1.0,
+      0.45
+    ],
+    "low_hp_ratio": 0.25,
+    "hit_hitstop_threshold": 0.1,
+    "hit_trauma": [
+      0.3,
+      0.45
+    ],
+    "gyeongmun_max_layers": 2,
+    "hit_order": [
+      "iframe",
+      "dodge",
+      "substitute",
+      "hosinbu_shield",
+      "armor"
+    ],
+    "iframe_substitute": 0.2,
+    "shield_pickup_id": "pick_hosinbu"
+  },
+  "enemy_baseline": {
+    "contact_cooldown": 0.5,
+    "_ref": "07 3.2 contact = contact_dmg(species) x C(m), C(m)=1+0.06m (enemies.json scaling.C_damage). waves dmg_mult is NOT multiplied.",
+    "avg_general_contact_quote": {
+      "formula": "5*C(m)",
+      "m0": 5,
+      "m10": 8,
+      "m20": 11
+    },
+    "elite_contact_quote": "8..14 * C(m)"
+  },
+  "hosin": {
+    "id": "sys_momju_hosin",
+    "trigger_hp_ratio": 0.3,
+    "iframe": 1.0,
+    "push_radius_u": 3.5,
+    "push_general_u": 2.0,
+    "push_elite_u": 0.5,
+    "damage": 0,
+    "cooldown": 90.0
+  },
+  "revive": {
+    "slowmo_scale": 0.3,
+    "slowmo_real_sec": 0.5,
+    "hp_ratio": 0.5,
+    "iframe": 2.0,
+    "wave_radius_u": 6.0,
+    "wave_haewon_giseak_general": true,
+    "wave_knockback_u": 3.0,
+    "wave_fear_sec": 1.5,
+    "owner": "02 12.6 (stats.json constants.myeongjul and 05 6.7 follow)",
+    "sal_geodum_addon": "E3: saja pushes 6u wave on revive"
+  },
+  "knockback": {
+    "grades_u": {
+      "light": 0.3,
+      "medium": 0.8,
+      "heavy": 1.5
+    },
+    "apply_time": 0.12,
+    "recover_time": 0.05,
+    "mass_factor": {
+      "general": 1.0,
+      "elite": 0.25,
+      "mboss": 0.1,
+      "boss": 0.0,
+      "avatar": 0.0
+    },
+    "giseak_factor": 0.5,
+    "dr_window": 0.3,
+    "dr_mult": 0.5,
+    "max_disp_per_half_sec_u": 3.0,
+    "player_default": false,
+    "player_exceptions": {
+      "elite_dueoksini_slam": {
+        "disp_u": 0.8,
+        "time": 0.15,
+        "input_keep": 0.6,
+        "owner_note": "player knockback owned by 02; enemies.json dueok_slam.knockback_u -> 0.8"
+      },
+      "elite_geogu_gwi_suction": {
+        "pull_u_per_s": 1.5
+      },
+      "boss_special_max_u": 1.5
+    }
+  },
+  "eodukssini": {
+    "size_start": 1.0,
+    "size_min_vanish": 0.3,
+    "size_max": 3.0,
+    "cone_half_angle_deg": 45,
+    "cone_range_u": 12.0,
+    "rate_in_cone": 0.04,
+    "rate_out_cone": -0.08,
+    "rate_gazer": -0.12,
+    "lantern_growth_mult": 0.5,
+    "red_hit_growth": 0.03,
+    "red_hit_growth_cap_per_sec": 0.15,
+    "white_hit_shrink": 0.02,
+    "gazer_corridor_u": 0.6,
+    "gazer_time": 2.0,
+    "gazer_max": 1,
+    "base_speed_u": 2.4,
+    "speed_size_exponent": -0.5,
+    "darkness_size_steps": [
+      [
+        2.0,
+        0.15
+      ],
+      [
+        3.0,
+        0.3
+      ]
+    ],
+    "silence_lead_sec": 0.8,
+    "silence_duck_db": -30,
+    "silence_false_release_sec": 0.5,
+    "vanish_counts_as": "haewon_elite_no_yeongga",
+    "first_profile_run": 3,
+    "small_variant": {
+      "size_start": 0.6,
+      "size_min_vanish": 0.4,
+      "size_max": 1.5,
+      "silence_drop": false,
+      "drop": "cur_wonhon_guseul__large"
+    },
+    "veteran_after_silences": 3,
+    "veteran_red_hit_growth": 0.015,
+    "veteran_red_hit_growth_cap_per_sec": 0.075
+  },
+  "trial": {
+    "_owner": "06 3 / deities.json constants",
+    "face_rule_ref": "canon v1.2 D-01: 4 trials 03:00/06:30/12:30/15:30 (180/390/750/930 s), 30 s + DESCEND max 8 s, two gauges simultaneous, first full decides; owner 06 / deities.json constants",
+    "resolve_hit_route": "trial_contribution (no han/hp, key trial_gauge)",
+    "aim": "see aim.white_excludes_avatar (face-based exclusion withdrawn, canon v1.2 D-01)",
+    "presence_factor": "withdrawn (R4)",
+    "bingui_fx_sec": 1.2,
+    "bingui_hitstop_ms": 120,
+    "spawn_windows_ref": "08 5.6 / waves_stage1.json director.window_mult"
+  },
+  "xp": {
+    "req_formula": "round(c0 + c1*(L-1) + c2*(L-1)^2 + (L > c3_from ? c3*(L-c3_from)^3 : 0))",
+    "req_c0": 5,
+    "req_c1": 6,
+    "req_c2": 0.13,
+    "req_c3": 0.5,
+    "req_c3_from": 30,
+    "req_c3_note": "core 2026-11-24: late accel so adaptive-spawn kill surges keep 14min+ jeomji gap >=30s; target 40-45 jeomji/run (bot seed11 Lv58->~46, seed2 Lv40->~38)",
+    "orb_tiers": {
+      "small": [
+        1,
+        4
+      ],
+      "medium": [
+        5,
+        19
+      ],
+      "large": [
+        20,
+        999999
+      ]
+    },
+    "orb_size_lpx": {
+      "small": 6,
+      "medium": 8,
+      "large": 10,
+      "source": "canon v1.2 D-52"
+    },
+    "orb_color": {
+      "small": "teal variant of blue (cr ramp), separated from enemy bullet blue #2a5caa",
+      "medium": "yellow",
+      "large": "red",
+      "source": "canon v1.2 D-34 / C-24"
+    },
+    "orb_merge_count": 300,
+    "orb_merge_count_ref": "runtime 300 = enemies.json caps.wonhon_orbs (canon v1.2 D-45). tech/perf_budgets.json caps.orb_tech_hard_cap 1500 (+ orb_stress_scene_max 2000) = tech hard cap",
+    "orb_merge_radius_u": 2.0,
+    "magnet_base_u": 2.0,
+    "magnet_accel_time": 0.25,
+    "magnet_max_speed_u": 12.0,
+    "orb_despawn": false,
+    "owner": "02 (confirmed v0.10)",
+    "expected_level_20m": {
+      "T_toechi90": 56,
+      "M_mixed50": 49,
+      "H_toechi15": 44,
+      "no_salgi_feedback": {
+        "T": 50,
+        "H": 43
+      }
+    }
+  },
+  "jeomji": {
+    "enter_time_real": 0.25,
+    "card_stagger": 0.06,
+    "card_anim": 0.22,
+    "queue_transition": 0.15,
+    "resume_ramp": 0.2,
+    "resume_iframe": 0.75,
+    "slots": {
+      "weapon": 6,
+      "passive": 6,
+      "weapon_max_lv": 8,
+      "passive_max_lv": 5,
+      "deity_power_max_lv": 3
+    },
+    "momju_white_weapon_at": 30,
+    "momju_white_weapon_pause": false,
+    "generation_ref": "05 10-11 / stats.json jeomji (single owner: weights, 4th card, guarantees, skip refund, fillers)",
+    "input_lock_sec": 0.35,
+    "input_require_key_release": true
+  },
+  "chest": {
+    "tiers": [
+      "jg_sogil",
+      "jg_junggil",
+      "jg_daegil"
+    ],
+    "rewards": {
+      "jg_sogil": 1,
+      "jg_junggil": 3,
+      "jg_daegil": 5
+    },
+    "box_gilhyung": {
+      "base": {
+        "jg_daegil": 0.03,
+        "jg_junggil": 0.12
+      },
+      "cap": {
+        "jg_daegil": 0.25,
+        "jg_junggil": 0.4
+      },
+      "coins": 7,
+      "bonus_currency_ref": "09 income.yeopjeon_sources.box_gilhyung_* (grade-independent)",
+      "wongwi_grade_up_guaranteed": 1,
+      "mboss_min_grade": "jg_junggil"
+    },
+    "box_neokham": {
+      "base": {
+        "jg_daegil": 0.08,
+        "jg_junggil": 0.22
+      },
+      "cap": {
+        "jg_daegil": 0.3,
+        "jg_junggil": 0.45
+      },
+      "story_fragment": true,
+      "bonus_currency_ref": "09 income.neok_sources.box_neokham_* (grade-independent)",
+      "eodukssini_gwangmyeong_upgrade": 1,
+      "eodukssini_gwangmyeong_window_sec": 3.0,
+      "mboss_min_grade": "jg_junggil"
+    },
+    "luck_scaling": "linear_J",
+    "no_bad_outcome": true,
+    "fallback": {
+      "yeopjeon_ref": "09 income.yeopjeon_sources.box_fallback_per_slot",
+      "gongmul_heal": 0.2,
+      "gongmul_if_hp_below": 0.7
+    },
+    "skip_after": 0.3,
+    "result_rolled_before_fx": true,
+    "saseul_seugi": {
+      "chance": 0.5,
+      "fx_sec": 0.8,
+      "fail_yeopjeon_ref": "09 income.yeopjeon_sources.saseul_seugi_fail",
+      "pauses": false
+    },
+    "tier_names": {
+      "jg_sogil": "소길",
+      "jg_junggil": "중길",
+      "jg_daegil": "대길"
+    },
+    "luck": {
+      "J": "clamp(jeomgwae/100, 0.5, 3.0)",
+      "formula": "p = min(cap, base*J); sogil = 1 - daegil - junggil"
+    },
+    "grade_up": {
+      "daegam_wieom_ref": "06 (current 0.25)",
+      "simbang_pp": 0.1,
+      "independent_rolls": true,
+      "step": 1
+    },
+    "contents": {
+      "slot1": "union > evolution > upgrade (evo/union max 1 per box, 04 6.2)",
+      "upgrade_target": "highest_level_owned_weapon_below_8 > highest_level_passive > lowest_level_power > fallback",
+      "new_items": false,
+      "banished_excluded": true
+    }
+  },
+  "pickups": {
+    "pick_gongmul": {
+      "heal": 0.2
+    },
+    "pick_chohon_bal": {
+      "pull_time": 1.5
+    },
+    "pick_myeongjul_sil": {
+      "myeongjul": 1,
+      "max_per_run": 1,
+      "owner_note": "run cap 1 owned by 02; 07/enemies.json max_per_run 2 -> 1"
+    },
+    "obj_gutpan_deungbul": {
+      "haewon_per_lamp": 100,
+      "max": 8,
+      "radius_u": 6.0,
+      "eodukssini_growth_mult": 0.5,
+      "eodukssini_spawn_per_lamp": -0.1
+    },
+    "obj_gongmulsang": {
+      "start_sec": 1155,
+      "duration_sec": 45,
+      "only_fed_nonhostile": true,
+      "hungry_after_sec": 20,
+      "hungry_status": "st_gumjurim",
+      "hungry_speed_mult": 1.2,
+      "values_ref": "08 waves_stage1.json geori_dwitjeon_rules",
+      "color": "white"
+    },
+    "pick_hosinbu": {
+      "block": 1,
+      "max_layers": 2,
+      "cleanse": [
+        "st_gawi"
+      ]
+    }
+  },
+  "run_end": {
+    "E1_gutpan_kkaejim": {
+      "ui": "ui_gutpan_kkaejim",
+      "slowmo_scale": 0.2,
+      "slowmo_real_sec": 0.8,
+      "convert": 1.0
+    },
+    "E4_timeout": {
+      "time": 1380,
+      "convert": 1.0,
+      "saja_descends": true,
+      "chase": false,
+      "fx_sec": 3.0
+    },
+    "E5_quit": {
+      "convert": 1.0
+    },
+    "neok_ratio_ref": "canon v1.1 3.2.6 sys_neok_ratio; N_final = N +/- 0.10",
+    "E2_saja_bow": {
+      "condition": "boss_resolved && N_final>=0.50",
+      "reward_ref": "09 settlement.saja_bow_gongdeok_mult"
+    },
+    "E3_sal_geodum": {
+      "condition": "boss_resolved && N_final<0.50",
+      "saja_chases": false,
+      "saja_hostile": false,
+      "lumps": 3,
+      "lump_ring_radius_u": 9.0,
+      "collect_sec_per_lump": 30,
+      "base_total_sec": 90,
+      "canon_cap_sec": 180,
+      "canon_cap_use": "180 s only as sal_maetim_dan (살 맺힘 단) extension room (canon v1.2 D-02)",
+      "wongwi_per_lump": 1,
+      "escort_per_lump": 8,
+      "kill_wongwi_completes_lump": true,
+      "hp_zero": "revive if myeongjul else end_as_clear",
+      "drops": false,
+      "ending": "saja bows to the mudang and leaves (canon 3.4). No hat-removal / 'acknowledges byeoksa' line (canon v1.2 D-02)",
+      "reward_ref": "09 meta_economy settlement.sal_geodum_* (sal_geodum_base_s 90, sal_geodum_bokjeon_mult_max 0.5, sal_geodum_wongwi 3; p = max(t/90, wongwi_done/3))"
+    },
+    "E7_epilogue": {
+      "id": "ep_eunsil_gopuri",
+      "trigger": "profile flag ready && boss_resolved && not deferred",
+      "skips_saja": true,
+      "order": [
+        "boss_resolved",
+        "epilogue",
+        "settlement (E2 or E3 max by boss form)",
+        "credits"
+      ],
+      "flags_ref": "09/14 flags.ep_eunsil_gopuri_{ready,seen,ending_*}",
+      "ui_ref": "11 scr_epilogue, scr_credits"
+    },
+    "mode_overrides": {
+      "_ref": "08 14 / canon v1.1 4.9",
+      "mode_chogut": {
+        "boss_time": 660
+      },
+      "mode_pyojun": {
+        "boss_time": 1200,
+        "timeout": 1380
+      }
+    }
+  },
+  "curves_assumption": {
+    "kills_per_min": [
+      30,
+      45,
+      60,
+      85,
+      100,
+      115,
+      140,
+      160,
+      180,
+      200,
+      215,
+      230,
+      260,
+      285,
+      310,
+      335,
+      360,
+      380,
+      420,
+      450
+    ],
+    "xp_per_kill": [
+      1,
+      1,
+      1,
+      1.4,
+      1.5,
+      1.6,
+      1.9,
+      2.0,
+      2.1,
+      2.2,
+      2.3,
+      2.4,
+      2.8,
+      3.0,
+      3.2,
+      3.4,
+      3.6,
+      3.8,
+      4.2,
+      4.5
+    ],
+    "elites_per_min": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      1,
+      0,
+      0,
+      2,
+      0,
+      2,
+      1,
+      0,
+      4,
+      2,
+      0,
+      0
+    ],
+    "onscreen_enemies_target": [
+      15,
+      25,
+      35,
+      40,
+      50,
+      60,
+      80,
+      90,
+      100,
+      110,
+      120,
+      135,
+      150,
+      170,
+      190,
+      210,
+      230,
+      250,
+      280,
+      300
+    ],
+    "expected_level_mixed_end_of_min": [
+      3,
+      5,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      19,
+      21,
+      23,
+      25,
+      28,
+      31,
+      34,
+      37,
+      40,
+      43,
+      46,
+      49
+    ],
+    "elites_toechi_able_per_min": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      2,
+      0,
+      2,
+      0,
+      0,
+      4,
+      0,
+      0,
+      0
+    ],
+    "elites_source": "waves_stage1.json elites (reservation, 14 incl. 4 eodukssini); enemies.json elite_timer is muhan/no-reservation mode only (08 5.5). v0.11: first elite 06:45 -> 07:00 (time_sec 420, 08 canonical, C-32); 9.3/17.2 derived curves not re-simulated (shift < 15 s)",
+    "expected_salgi_end_of_min": {
+      "T": [
+        0.5,
+        1.4,
+        2.4,
+        4.0,
+        5.8,
+        8.0,
+        11.6,
+        14.6,
+        19.1,
+        23.1,
+        34.7,
+        41.8,
+        47.5,
+        57.9,
+        66.2,
+        74.4,
+        91.2,
+        101.4,
+        113.0,
+        118.1
+      ],
+      "M": [
+        0.3,
+        0.8,
+        1.4,
+        2.2,
+        3.2,
+        4.4,
+        6.3,
+        8.0,
+        10.4,
+        12.5,
+        17.3,
+        21.0,
+        23.9,
+        29.2,
+        33.3,
+        37.2,
+        43.9,
+        48.6,
+        55.0,
+        57.7
+      ],
+      "H": [
+        0.1,
+        0.2,
+        0.4,
+        0.7,
+        1.0,
+        1.3,
+        1.9,
+        2.4,
+        3.1,
+        3.7,
+        5.1,
+        6.1,
+        6.9,
+        8.1,
+        9.1,
+        10.1,
+        11.9,
+        13.1,
+        14.5,
+        15.0
+      ]
+    },
+    "wongwi_return_times": {
+      "T": [
+        "10:00",
+        "13:25",
+        "16:00"
+      ],
+      "M": [
+        "13:20",
+        "18:15"
+      ],
+      "H": []
+    },
+    "profiles_toechi_ratio": {
+      "T": 0.9,
+      "M": 0.5,
+      "H": 0.15
+    },
+    "sinmyeong_uptime_3min_blocks": {
+      "M": [
+        0.0,
+        0.17,
+        0.17,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "H": [
+        0.08,
+        0.17,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "T": [
+        0.0,
+        0.0,
+        0.08,
+        0.16,
+        0.09,
+        0.17
+      ]
+    },
+    "model_notes": "salgi continuous spawn feedback 1+0.005*salgi; wongwi 1-3 per return processed over 60s; dwitjeon toechi x0.2 from 1155s; no cleanse/collect; replace with 08 director output + 09 bots"
+  },
+  "byeoksa": {
+    "id_gauge": "gauge_byeoksa_gise",
+    "id_oreum": "sys_byeoksa_oreum",
+    "id_collect": "sys_sal_geodugi",
+    "collect_radius_u": 0.6,
+    "collect_ignores_magnet": true,
+    "collect_reduces_salgi": false,
+    "collected_excluded_from_wongwi": true,
+    "gain_per_grain": 0.006,
+    "gain_wongwi_toechi": 0.1,
+    "decay": 0.0,
+    "oreum_sec": 8.0,
+    "oreum_gyeoldan_add": 0.1,
+    "shockwave": {
+      "radius_u": 1.5,
+      "dmg_ratio_of_hit": 0.3,
+      "color": "red",
+      "chain": false,
+      "gyeoldan_roll": false
+    },
+    "oreum_gain_ignored": true,
+    "post_oreum_window": 20,
+    "post_oreum_gain_mult": 0.5,
+    "min_gap_after_oreum": 45,
+    "hitstop_ms": 80,
+    "disabled_on_profile_run": [
+      1
+    ],
+    "source": "canon v1.1 3.2.6b"
+  }
+}

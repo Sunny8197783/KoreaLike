@@ -1,0 +1,79 @@
+{
+ "size": [
+  80,
+  80
+ ],
+ "pivot": [
+  40,
+  74
+ ],
+ "anims": {
+  "bingui": {
+   "south": 8
+  },
+  "death": {
+   "south": 7
+  },
+  "gut_dance": {
+   "south": 9
+  },
+  "hurt": {
+   "south": 6,
+   "east": 6,
+   "north": 6,
+   "west": 6
+  },
+  "idle": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "jakdu_dance": {
+   "south": 6
+  },
+  "walk": {
+   "south": 8,
+   "east": 8,
+   "north": 8,
+   "west": 8
+  }
+ },
+ "frame_size": {
+  "bingui": [
+   80,
+   80
+  ],
+  "death": [
+   80,
+   80
+  ],
+  "gut_dance": [
+   80,
+   80
+  ],
+  "hurt": [
+   80,
+   80
+  ],
+  "idle": [
+   80,
+   80
+  ],
+  "jakdu_dance": [
+   80,
+   80
+  ],
+  "walk": [
+   80,
+   80
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "run",
+  "tier": "player",
+  "source": "game\\assets\\sprites\\char_mansin"
+ },
+ "pixellab_id": "9746530f-bf66-4773-b1ed-c692a556ba3b"
+}

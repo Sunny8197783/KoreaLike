@@ -1,0 +1,72 @@
+{
+ "frames": [
+  {
+   "filename": "prop_sinjangdae_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "prop_sinjangdae_1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 1000
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_sinjangdae_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 64
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 1,
+   "loop": true,
+   "frameWidth": 16,
+   "frameHeight": 64,
+   "columns": 2,
+   "pivot": {
+    "x": 8,
+    "y": 61
+   }
+  },
+  "korealike": {
+   "anim": "cloth sway 2 frames, 1 beat each"
+  }
+ }
+}

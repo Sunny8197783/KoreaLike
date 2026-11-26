@@ -1,0 +1,118 @@
+{
+ "frames": [
+  {
+   "filename": "lm_guksadang_dangjip_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 128
+   },
+   "duration": 167
+  },
+  {
+   "filename": "lm_guksadang_dangjip_1",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 128
+   },
+   "duration": 167
+  },
+  {
+   "filename": "lm_guksadang_dangjip_2",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 128
+   },
+   "duration": 167
+  },
+  {
+   "filename": "lm_guksadang_dangjip_3",
+   "frame": {
+    "x": 576,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 128
+   },
+   "duration": 167
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "lm_guksadang_dangjip_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 768,
+   "h": 128
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 6,
+   "loop": true,
+   "frameWidth": 192,
+   "frameHeight": 128,
+   "columns": 4,
+   "pivot": {
+    "x": 96,
+    "y": 120
+   }
+  },
+  "korealike": {
+   "anim": "window candle flicker",
+   "light_color": "#ffb35a",
+   "collision": "foundation rect"
+  }
+ }
+}

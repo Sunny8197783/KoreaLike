@@ -1,0 +1,2140 @@
+{
+  "schema": "soulpath.meta_economy",
+  "version": 2,
+  "doc": "design/09-meta-economy.md",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): uiroe unlock 문구 '선바위 굿당 클리어'·'남도 갯마을 씻김굿판 개방'", "16 C·D 잔존 정리 (2026-11-22): settlement.sal_geodum_note에서 구 키 언급 제거(구 키 대응은 canon_ids.json aliases·09 반영 로그)"],
+  "canon": "v1.2 기준 (2026-11-21 반영, design/09-meta-economy.md 끝 '캐논 v1.2 반영 로그')",
+  "note": "모든 비용·일회성 보상은 econ_price_scale 곱 적용 전 기준가(게임 표시가 = 기준가 x 2.1, 100 단위 반올림). 인게임 드롭량(income.*_sources)은 스케일하지 않는다. 수치는 밸런스 튜닝 대상, 규칙은 01 캐논 준수.",
+  "income": {
+    "owner_note": "넋·엽전의 모든 인게임 획득량은 이 블록이 단일 원본이다. 02/04/06/07/08 문서와 enemies.json·combat_core.json·waves_*.json은 키를 참조한다.",
+    "conversion": {
+      "cur_neok_to_cur_gongdeok": 1.0,
+      "cur_yeopjeon_to_cur_bokjeon": 1.0,
+      "apply_stat": "stat_siju",
+      "siju_applied": "정산 시 1회만(드롭 시점에는 곱하지 않음)"
+    },
+    "neok_sources": {
+      "haewon": 1,
+      "cheondo": 1,
+      "cheondo_in_ring": 2,
+      "procession_full_instant_cheondo_bonus": 1,
+      "box_neokham_elite": 60,
+      "box_neokham_wongwi": 80,
+      "mboss_haewon_neokham": 300,
+      "boss_han_neokham_total": 1500,
+      "boss_han_neokham_count": 2,
+      "trial_gaho": 40,
+      "trial_incomplete_mult": 0.5,
+      "elite_haewon_direct": 0
+    },
+    "yeopjeon_sources": {
+      "box_gilhyung_elite": 330,
+      "box_gilhyung_wongwi": 440,
+      "box_gilhyung_mboss": 1000,
+      "box_gilhyung_boss_sal_total": 1800,
+      "box_gilhyung_boss_sal_count": 2,
+      "trial_wieom": 40,
+      "trial_incomplete_mult": 0.5,
+      "mboss_dokkaebi_haewon_rain": 400,
+      "box_fallback_per_slot": 20,
+      "saseul_seugi_fail": 20,
+      "bujeong_dok_drop": 2,
+      "normal_ghost": 0,
+      "daegam_wieom_box_mult": 1.3
+    },
+    "box_rules": {
+      "box_contents": "확정 부가(등급 무관). 등급(소길/중길/대길)과 강화 수 1/3/5는 02 18장·combat_core.chest 소유",
+      "unopened_at_run_end": "런 종료 시 미개봉 상자는 확정 부가 재화만 지급",
+      "evolution_per_box": "04 6.2 (상자당 진화·결합 1건)"
+    },
+    "settlement": {
+      "eoullim_band": [
+        0.35,
+        0.65
+      ],
+      "eoullim_metric": "sys_neok_ratio N (캐논 3.2.6a). r_h 폐기(C-17)",
+      "eoullim_mult": 1.15,
+      "saja_bow_gongdeok_mult": 1.5,
+      "sal_geodum_bokjeon_mult_max": 0.5,
+      "timeout_gongdeok_mult": 1.0,
+      "timeout_gongdeok_per_knot": 0.05,
+      "timeout_knots_max": 7,
+      "timeout_note": "23:00 저승사자가 판을 거둠(TIMEOUT_SAJA, 보스 미해결): 사망과 구분. 공덕 x(1.0 + 0.05 x 푼 매듭 수, 0..7), 읍 x1.5 없음, 재가집 의뢰 미완료.",
+      "sal_geodum_base_s": 90,
+      "sal_geodum_wongwi": 3,
+      "sal_geodum_progress": "p = max(거둠 경과초/90, 막아 낸 원귀 수/3), B x (1 + 0.5 p)",
+      "sal_geodum_note": "살 우세 정산 '살 거둠'(캐논 v1.2 D-02, 02 run_end.E3_sal_geodum): 사자 비적대·추격·접촉 피해 없음, 살 덩어리 3 x 30초.",
+      "jeseok_gaho_gongdeok_mult": 1.25,
+      "dan_mult_per_dan": 0.05,
+      "uiroe_currency_mult_max": 1.2
+    },
+    "mode_mult": {
+      "mode_pyojun": 1.0,
+      "mode_jajinmori": 0.9,
+      "mode_muhan": {
+        "0-30m": 1.0,
+        "30-40m": 0.6,
+        "40m+": 0.3
+      },
+      "mode_oneul": 1.0,
+      "mode_oneul_practice": 1.0,
+      "mode_daedong": 1.0,
+      "opt_ppareun_gaemak": 1.0,
+      "opt_ppareun_gaemak_note": "빠른 개막(캐논 3.4, 08 14.7): 그 모드 배율 그대로(보정 x1.0), 순위표 기록 제외, 오늘의 굿판에서 사용 불가"
+    },
+    "mode_oneul_completion_bonus": {
+      "cur_gongdeok": 3000,
+      "cur_bokjeon": 3000,
+      "when": "그날 기록 시도 1회 완료(사망 포함). 연습 런은 없음"
+    },
+    "stage_mult": {
+      "stage_guksadang": 1.0,
+      "stage_jindo_ssitgim": 1.1,
+      "stage_east_sea_byeolsin": 1.2,
+      "stage_jeju_chilmeori": 1.25,
+      "stage_myeongbu": 1.3
+    },
+    "afk_rule": {
+      "window_s": 60,
+      "inactive_if_all_zero": [
+        "damage_dealt",
+        "damage_taken",
+        "haewon",
+        "toechi",
+        "move_input"
+      ],
+      "beopsa_ward_damage_counts_as_activity": true,
+      "income_mult_while_afk": 0.0,
+      "modes": [
+        "mode_muhan"
+      ]
+    },
+    "model_assumptions": {
+      "N20_kills": 4360,
+      "kills_curve": "combat_core.curves_assumption.kills_per_min",
+      "E20_elites_reserved": 14,
+      "elites_source": "waves_stage1.json elites (+0.05*floor(salgi/10)/슬롯)",
+      "salgi_formula": "05 3.4.1 연속식, 기대 곡선은 02 9장 소유"
+    },
+    "reference_run_R_std_actual": 19000,
+    "reference_run_R_std_base": 9050,
+    "econ_price_scale": 2.1,
+    "econ_price_scale_applies_to": [
+      "모든 해금 가격",
+      "일회성 재화 보상(업적·해원록·벽사록·단 첫 클리어·의례서·오늘의 굿판 보너스)",
+      "롱테일 단가",
+      "나눔 환전 최소 단위"
+    ],
+    "econ_price_scale_rounding": 100
+  },
+  "weapons": [
+    {
+      "id": "wpn_sinkal",
+      "name_ko": "신칼",
+      "color": "red",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_woldo",
+      "name_ko": "월도",
+      "color": "red",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_gakgung",
+      "name_ko": "각궁",
+      "color": "red",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_samjichang",
+      "name_ko": "삼지창",
+      "color": "red",
+      "tier": 1,
+      "default_unlocked": false,
+      "cost": 2000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_jangchang",
+      "name_ko": "장창",
+      "color": "red",
+      "tier": 1,
+      "default_unlocked": false,
+      "cost": 2000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_pyeongon",
+      "name_ko": "편곤",
+      "color": "red",
+      "tier": 2,
+      "default_unlocked": false,
+      "cost": 9000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 2,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_jakdu",
+      "name_ko": "작두",
+      "color": "red",
+      "tier": 2,
+      "default_unlocked": false,
+      "cost": 9000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 2,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_hojakdo",
+      "name_ko": "호작도 세화",
+      "color": "red",
+      "tier": 3,
+      "default_unlocked": false,
+      "cost": 20000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 4,
+      "discover_condition": "누적 경악(공포) 부여 500회 또는 산신 위엄 빙의 1회"
+    },
+    {
+      "id": "wpn_cheoljillyeo",
+      "name_ko": "철질려",
+      "color": "red",
+      "tier": 3,
+      "default_unlocked": false,
+      "cost": 20000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 4,
+      "discover_condition": "한 굿판에서 살기 50 도달 1회"
+    },
+    {
+      "id": "wpn_sainsageom",
+      "name_ko": "사인참사검",
+      "color": "red",
+      "tier": 4,
+      "default_unlocked": false,
+      "cost": 40000,
+      "currency": "cur_bokjeon",
+      "gate_same_color_purchased": 6,
+      "discover_condition": "스테이지 보스 살형 퇴치 1회"
+    },
+    {
+      "id": "wpn_bangul",
+      "name_ko": "방울",
+      "color": "white",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_buchae",
+      "name_ko": "부채",
+      "color": "white",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_jijeon",
+      "name_ko": "지전",
+      "color": "white",
+      "tier": 0,
+      "default_unlocked": true,
+      "cost": 0,
+      "currency": null,
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_neokjeon",
+      "name_ko": "넋전",
+      "color": "white",
+      "tier": 1,
+      "default_unlocked": false,
+      "cost": 2000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_ssukmul",
+      "name_ko": "쑥물 바가지",
+      "color": "white",
+      "tier": 1,
+      "default_unlocked": false,
+      "cost": 2000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 0,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_obanggi",
+      "name_ko": "오방기",
+      "color": "white",
+      "tier": 2,
+      "default_unlocked": false,
+      "cost": 9000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 2,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_janggu",
+      "name_ko": "장구",
+      "color": "white",
+      "tier": 2,
+      "default_unlocked": false,
+      "cost": 9000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 2,
+      "discover_condition": null
+    },
+    {
+      "id": "wpn_gilbe",
+      "name_ko": "길베",
+      "color": "white",
+      "tier": 3,
+      "default_unlocked": false,
+      "cost": 20000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 4,
+      "discover_condition": "한 번의 길닦음으로 20 해원 1회"
+    },
+    {
+      "id": "wpn_sogeum",
+      "name_ko": "소금",
+      "color": "white",
+      "tier": 3,
+      "default_unlocked": false,
+      "cost": 20000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 4,
+      "discover_condition": "누적 살 알갱이 정화 300개(고리 포함)"
+    },
+    {
+      "id": "wpn_myeongdu",
+      "name_ko": "명두",
+      "color": "white",
+      "tier": 4,
+      "default_unlocked": false,
+      "cost": 40000,
+      "currency": "cur_gongdeok",
+      "gate_same_color_purchased": 6,
+      "discover_condition": "어둑시니 소멸 5회"
+    }
+  ],
+  "characters": [
+    {
+      "id": "char_mansin",
+      "name_ko": "만신",
+      "cost_gongdeok": 0,
+      "condition_text": "기본",
+      "condition": null,
+      "scope": "v1"
+    },
+    {
+      "id": "char_baksu",
+      "name_ko": "박수무당",
+      "cost_gongdeok": 5000,
+      "condition_text": "위엄 면 빙의 누적 3회",
+      "condition": {
+        "counter": "cnt_bingui_wieom_total",
+        "gte": 3
+      },
+      "scope": "v1"
+    },
+    {
+      "id": "char_dangol",
+      "name_ko": "단골",
+      "cost_gongdeok": 5000,
+      "condition_text": "해원 누적 500",
+      "condition": {
+        "counter": "cnt_haewon_total",
+        "gte": 500
+      },
+      "scope": "v1"
+    },
+    {
+      "id": "char_myeongdu",
+      "name_ko": "명두",
+      "cost_gongdeok": 20000,
+      "condition_text": "동행령 1종 해금(해원록 동행령 또는 벽사록 호위 신장)",
+      "condition": {
+        "counter": "cnt_companions_unlocked",
+        "gte": 1
+      },
+      "scope": "v1"
+    },
+    {
+      "id": "char_simbang",
+      "name_ko": "심방",
+      "cost_gongdeok": 20000,
+      "condition_text": "길흉 상자 누적 30개 개봉",
+      "condition": {
+        "counter": "cnt_box_gilhyung_opened",
+        "gte": 30
+      },
+      "scope": "v1"
+    },
+    {
+      "id": "char_beopsa",
+      "name_ko": "법사 (x1)",
+      "cost_gongdeok": 40000,
+      "condition_text": "어둑시니 정적 드롭 누적 10회",
+      "condition": {
+        "counter": "cnt_eodukssini_silence",
+        "gte": 10
+      },
+      "scope": "x1"
+    }
+  ],
+  "forge": {
+    "forge_gongsu": {
+      "name": "다시 묻기(재점)",
+      "name_old": "공수 교정",
+      "stat": "stat_gongsu_gyojeong",
+      "costs": [
+        2000,
+        6000,
+        12000,
+        22000,
+        36000
+      ],
+      "max_rank": 5
+    },
+    "forge_mullim": {
+      "name": "물림",
+      "stat": "stat_mullim",
+      "costs": [
+        1500,
+        5000,
+        12000
+      ],
+      "max_rank": 3,
+      "refund_rule": "02 점지 소유 (09는 랭크·가격만 소유)"
+    },
+    "forge_geumgi": {
+      "name": "금기",
+      "stat": "stat_geumgi",
+      "costs": [
+        3000,
+        8000,
+        16000,
+        26000,
+        40000
+      ],
+      "max_rank": 5
+    },
+    "per_run_max_with_lineage": {
+      "stat_gongsu_gyojeong": 6,
+      "stat_mullim": 4,
+      "stat_geumgi": 6
+    }
+  },
+  "shrines": {
+    "deities": [
+      "deity_sansin",
+      "deity_yongwang",
+      "deity_chilseong",
+      "deity_janggun",
+      "deity_barigongju",
+      "deity_jeseok_daegam"
+    ],
+    "levels": [
+      {
+        "level": 1,
+        "name": "청신(請神)",
+        "jeongseong_gongdeok": 0,
+        "jemul_bokjeon": 0,
+        "req_bingui": 1,
+        "req_both_faces": false,
+        "auto": true,
+        "ui_ko": "신령이 먼저 찾아와 신단이 차려진다(봉헌 없음)",
+        "grants": [
+          "만신 몸주신 선택 가능",
+          "공수 1단계 대사",
+          "신단 차림(촛불·정화수) 시각"
+        ]
+      },
+      {
+        "level": 2,
+        "name": "청배(請陪)",
+        "jeongseong_gongdeok": 15000,
+        "jemul_bokjeon": 0,
+        "req_bingui": 10,
+        "req_both_faces": false,
+        "auto": false,
+        "ui_ko": "정성을 올려 신단을 모신다(정성 그릇에 부분 봉헌 누적, 가격표 없음)",
+        "grants": [
+          "청배 표식: 출정 전 1신령 지정 → 06:30(2번째) 시련 후보 보장",
+          "공수 2단계 대사"
+        ]
+      },
+      {
+        "level": 3,
+        "name": "대접(待接)",
+        "jeongseong_gongdeok": 30000,
+        "jemul_bokjeon": 20000,
+        "req_bingui": 30,
+        "req_both_faces": true,
+        "auto": false,
+        "ui_ko": "정성(공덕)과 제물(복전)을 갖춰 신령을 대접한다(각각 누적 그릇)",
+        "grants": [
+          "빙의 오버레이 이색(異色) 팔레트",
+          "신령 내력 3편(도감)",
+          "공수 3단계 대사",
+          "신단 정성 애니메이션"
+        ]
+      }
+    ],
+    "free_at_start": [
+      {
+        "deity": "deity_sansin",
+        "level": 1
+      }
+    ],
+    "offering_ui": "가격표 대신 '정성 그릇'(누적 바). 부분 봉헌 가능, 환불 없음"
+  },
+  "myeongdu": {
+    "points_source": "신령 면(12) 첫 빙의 시 1점, 최대 12",
+    "collection": [
+      {
+        "id": "myeongdu_sansin__wieom",
+        "deity": "deity_sansin",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_sansin__gaho",
+        "deity": "deity_sansin",
+        "face": "face_gaho"
+      },
+      {
+        "id": "myeongdu_yongwang__wieom",
+        "deity": "deity_yongwang",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_yongwang__gaho",
+        "deity": "deity_yongwang",
+        "face": "face_gaho"
+      },
+      {
+        "id": "myeongdu_chilseong__wieom",
+        "deity": "deity_chilseong",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_chilseong__gaho",
+        "deity": "deity_chilseong",
+        "face": "face_gaho"
+      },
+      {
+        "id": "myeongdu_janggun__wieom",
+        "deity": "deity_janggun",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_janggun__gaho",
+        "deity": "deity_janggun",
+        "face": "face_gaho"
+      },
+      {
+        "id": "myeongdu_barigongju__wieom",
+        "deity": "deity_barigongju",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_barigongju__gaho",
+        "deity": "deity_barigongju",
+        "face": "face_gaho"
+      },
+      {
+        "id": "myeongdu_jeseok_daegam__wieom",
+        "deity": "deity_jeseok_daegam",
+        "face": "face_wieom"
+      },
+      {
+        "id": "myeongdu_jeseok_daegam__gaho",
+        "deity": "deity_jeseok_daegam",
+        "face": "face_gaho"
+      }
+    ],
+    "power_index_cap": 25,
+    "respec": {
+      "cost": 0,
+      "where": "hub_myeongdu_dan",
+      "when": "로비에서 언제나"
+    },
+    "branches": {
+      "A": "정기 갈래 (신어머니 계보)",
+      "B": "신빨 갈래 (장군 계보)",
+      "C": "넋 갈래 (바리 계보)",
+      "D": "복 갈래 (대감 계보)"
+    },
+    "nodes": [
+      {
+        "id": "myd_a1_mumyeong_jeogori",
+        "branch": "A",
+        "tier": 1,
+        "name_ko": "무명 저고리",
+        "effect_ko": "정기 +10",
+        "stat": "stat_jeonggi",
+        "value": 10,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_a2_jeonghwa_sabal",
+        "branch": "A",
+        "tier": 1,
+        "name_ko": "정화수 사발",
+        "effect_ko": "생기 +0.15/s",
+        "stat": "stat_saenggi",
+        "value": 0.15,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_a3_geumjul",
+        "branch": "A",
+        "tier": 2,
+        "name_ko": "금줄",
+        "effect_ko": "신복 +1",
+        "stat": "stat_sinbok",
+        "value": 1,
+        "points": 1,
+        "unlock_cost": 7500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_a1_mumyeong_jeogori"
+        ],
+        "power_index": 2.0
+      },
+      {
+        "id": "myd_a4_jeopsin",
+        "branch": "A",
+        "tier": 2,
+        "name_ko": "접신 발걸음",
+        "effect_ko": "접신 회피 +3%p",
+        "stat": "stat_jeopsin_hoepi",
+        "value": 3,
+        "points": 2,
+        "unlock_cost": 7500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_a2_jeonghwa_sabal"
+        ],
+        "power_index": 3.0
+      },
+      {
+        "id": "myd_a5_meokmul_gyeongmun",
+        "branch": "A",
+        "tier": 3,
+        "name_ko": "먹물 경문",
+        "effect_ko": "출정 시 경문 각인 1개 보유",
+        "stat": "pick_hosinbu",
+        "value": 1,
+        "points": 2,
+        "unlock_cost": 18000,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_a3_geumjul",
+          "myd_a4_jeopsin"
+        ],
+        "power_index": 3.0
+      },
+      {
+        "id": "myd_a6_chilseong_myeongdari",
+        "branch": "A",
+        "tier": 4,
+        "name_ko": "칠성 명다리",
+        "effect_ko": "명줄 +1",
+        "stat": "stat_myeongjul",
+        "value": 1,
+        "points": 3,
+        "unlock_cost": 32000,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_a5_meokmul_gyeongmun"
+        ],
+        "power_index": 6.0
+      },
+      {
+        "id": "myd_b1_sinppal",
+        "branch": "B",
+        "tier": 1,
+        "name_ko": "벼린 날",
+        "effect_ko": "신빨 +4%",
+        "stat": "stat_sinppal",
+        "value": 4,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [],
+        "power_index": 2.5
+      },
+      {
+        "id": "myd_b2_gise",
+        "branch": "B",
+        "tier": 1,
+        "name_ko": "시위 당김",
+        "effect_ko": "기세 +8%",
+        "stat": "stat_gise",
+        "value": 8,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [],
+        "power_index": 1.0
+      },
+      {
+        "id": "myd_b3_doryang",
+        "branch": "B",
+        "tier": 2,
+        "name_ko": "넓은 도량",
+        "effect_ko": "도량 +6%",
+        "stat": "stat_doryang",
+        "value": 6,
+        "points": 1,
+        "unlock_cost": 7500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_b1_sinppal",
+          "myd_b2_gise"
+        ],
+        "power_index": 2.0
+      },
+      {
+        "id": "myd_b4_gyeoldan",
+        "branch": "B",
+        "tier": 2,
+        "name_ko": "결단",
+        "effect_ko": "결단 +2%p",
+        "stat": "stat_gyeoldan",
+        "value": 2,
+        "points": 2,
+        "unlock_cost": 7500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_b1_sinppal"
+        ],
+        "power_index": 3.0
+      },
+      {
+        "id": "myd_b5_jangdan",
+        "branch": "B",
+        "tier": 3,
+        "name_ko": "잦은 가락",
+        "effect_ko": "장단 -3%",
+        "stat": "stat_jangdan",
+        "value": -3,
+        "points": 2,
+        "unlock_cost": 18000,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_b3_doryang",
+          "myd_b4_gyeoldan"
+        ],
+        "power_index": 3.5
+      },
+      {
+        "id": "myd_b6_sinjang",
+        "branch": "B",
+        "tier": 4,
+        "name_ko": "신장 한 분",
+        "effect_ko": "신장 수 +1",
+        "stat": "stat_sinjang",
+        "value": 1,
+        "points": 3,
+        "unlock_cost": 32000,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_b5_jangdan"
+        ],
+        "power_index": 6.0
+      },
+      {
+        "id": "myd_c1_haengnyeol",
+        "branch": "C",
+        "tier": 1,
+        "name_ko": "긴 행렬",
+        "effect_ko": "행렬 상한 +2",
+        "stat": "stat_haengnyeol",
+        "value": 2,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_c2_neok_sumyeong",
+        "branch": "C",
+        "tier": 1,
+        "name_ko": "느린 이별",
+        "effect_ko": "넋 수명 +3초",
+        "stat": "stat_neok_sumyeong",
+        "value": 3,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_c3_gilbe",
+        "branch": "C",
+        "tier": 2,
+        "name_ko": "긴 무명",
+        "effect_ko": "길베 +0.3초",
+        "stat": "stat_gilbe",
+        "value": 0.3,
+        "points": 1,
+        "unlock_cost": 7500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_c1_haengnyeol",
+          "myd_c2_neok_sumyeong"
+        ],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_c4_haewon_suryeon",
+        "branch": "C",
+        "tier": 2,
+        "name_ko": "해원 숙련",
+        "effect_ko": "해원 숙련 +5%",
+        "stat": "stat_haewon_suryeon",
+        "value": 5,
+        "points": 1,
+        "unlock_cost": 7500,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_c2_neok_sumyeong"
+        ],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_c5_puri",
+        "branch": "C",
+        "tier": 3,
+        "name_ko": "풀이 손",
+        "effect_ko": "풀이 +0.2 (x3.0→x3.2)",
+        "stat": "stat_puri",
+        "value": 0.2,
+        "points": 2,
+        "unlock_cost": 18000,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_c3_gilbe",
+          "myd_c4_haewon_suryeon"
+        ],
+        "power_index": 3.5
+      },
+      {
+        "id": "myd_c6_neokmaji",
+        "branch": "C",
+        "tier": 4,
+        "name_ko": "넋맞이",
+        "effect_ko": "00:30에 영가 3 합류 + 행렬 상한 +2",
+        "stat": "special_neokmaji",
+        "value": 3,
+        "points": 3,
+        "unlock_cost": 32000,
+        "currency": "cur_gongdeok",
+        "prereq_any_of": [
+          "myd_c5_puri"
+        ],
+        "power_index": 4.0
+      },
+      {
+        "id": "myd_d1_chohon",
+        "branch": "D",
+        "tier": 1,
+        "name_ko": "부르는 손",
+        "effect_ko": "초혼 +0.3유닛",
+        "stat": "stat_chohon",
+        "value": 0.3,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [],
+        "power_index": 0.5
+      },
+      {
+        "id": "myd_d2_domu",
+        "branch": "D",
+        "tier": 1,
+        "name_ko": "가벼운 발",
+        "effect_ko": "도무 +4%",
+        "stat": "stat_domu",
+        "value": 4,
+        "points": 1,
+        "unlock_cost": 2500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_d3_jeomgwae",
+        "branch": "D",
+        "tier": 2,
+        "name_ko": "엽전 점",
+        "effect_ko": "점괘 +10",
+        "stat": "stat_jeomgwae",
+        "value": 10,
+        "points": 1,
+        "unlock_cost": 7500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_d1_chohon",
+          "myd_d2_domu"
+        ],
+        "power_index": 1.0
+      },
+      {
+        "id": "myd_d4_siju",
+        "branch": "D",
+        "tier": 2,
+        "name_ko": "대감 셈",
+        "effect_ko": "시주 +5%",
+        "stat": "stat_siju",
+        "value": 5,
+        "points": 2,
+        "unlock_cost": 7500,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_d1_chohon"
+        ],
+        "power_index": 0.0
+      },
+      {
+        "id": "myd_d5_gongsu",
+        "branch": "D",
+        "tier": 3,
+        "name_ko": "한 번 더 묻기",
+        "effect_ko": "다시 묻기 +1/런",
+        "stat": "stat_gongsu_gyojeong",
+        "value": 1,
+        "points": 2,
+        "unlock_cost": 18000,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_d3_jeomgwae",
+          "myd_d4_siju"
+        ],
+        "power_index": 1.5
+      },
+      {
+        "id": "myd_d6_geumgi_mullim",
+        "branch": "D",
+        "tier": 4,
+        "name_ko": "가릴 것 가리기",
+        "effect_ko": "금기 +1, 물림 +1/런",
+        "stat": "stat_geumgi+stat_mullim",
+        "value": 1,
+        "points": 3,
+        "unlock_cost": 32000,
+        "currency": "cur_bokjeon",
+        "prereq_any_of": [
+          "myd_d5_gongsu"
+        ],
+        "power_index": 2.0
+      }
+    ]
+  },
+  "singirok": {
+    "haewonrok": {
+      "piece_reward_G": 200,
+      "species_complete_G": 1000,
+      "piece_rules": {
+        "normal": [
+          "그 종 첫 해원(캐논)",
+          "그 종 해원 누적 150",
+          "종별 사연 조건 sc_* 1회"
+        ],
+        "elite": [
+          "넋함 1번째",
+          "넋함 2번째",
+          "넋함 3번째"
+        ],
+        "mboss": [
+          "해원 1회",
+          "해원 2회",
+          "해원 3회"
+        ],
+        "boss": [
+          "한형 고풀이 1회",
+          "살 맺힘 단 3 이상에서 고풀이",
+          "살 맺힘 단 8 이상에서 고풀이"
+        ],
+        "owner": "09 (07 2.11과 enemies.json sayeon은 이 값을 참조)"
+      },
+      "sayeon_conditions": {
+        "enm_dalgyal_gwisin": {
+          "key": "sc_ring_species_20",
+          "ko": "길닦음 1회로 달걀귀신 20체 해원",
+          "target": 20,
+          "scope": "single_ring"
+        },
+        "enm_agwi": {
+          "key": "sc_agwi_before_gongmul_30",
+          "ko": "아귀가 노린 공물에 닿기 전에 해원, 누적 30",
+          "target": 30,
+          "scope": "profile"
+        },
+        "enm_gaekgwi": {
+          "key": "sc_gaekgwi_attached_10",
+          "ko": "착(着)이 붙은 적과 함께 해원, 누적 10",
+          "target": 10,
+          "scope": "profile"
+        },
+        "enm_cheonyeo_gwisin": {
+          "key": "sc_cheonyeo_mid_volley_25",
+          "ko": "탄막을 쏘는 중에 해원, 누적 25",
+          "target": 25,
+          "scope": "profile"
+        },
+        "enm_mongdal_gwisin": {
+          "key": "sc_mongdal_mid_dash_25",
+          "ko": "돌진하는 중에 해원, 누적 25",
+          "target": 25,
+          "scope": "profile"
+        },
+        "enm_mul_gwisin": {
+          "key": "sc_mul_in_puddle_20",
+          "ko": "자기 웅덩이 위에서 해원, 누적 20",
+          "target": 20,
+          "scope": "profile"
+        },
+        "enm_hosik_wonhon": {
+          "key": "sc_hosik_in_sansin_gaho_10",
+          "ko": "산신 가호 시련 중에 해원 10 (한 굿판)",
+          "target": 10,
+          "scope": "run"
+        },
+        "enm_dokkaebi_bul": {
+          "key": "sc_dokkaebi_bul_8_lamps",
+          "ko": "굿판 등불 8개를 모두 밝힌 굿판에서 해원",
+          "target": 1,
+          "scope": "run"
+        },
+        "enm_yeongsan": {
+          "key": "sc_yeongsan_on_hyungsal_20",
+          "ko": "흉살 장판 위에서 해원, 누적 20",
+          "target": 20,
+          "scope": "profile"
+        },
+        "enm_sangmun": {
+          "key": "sc_sangmun_while_cursed_10",
+          "ko": "상문살에 걸린 상태에서 해원 10",
+          "target": 10,
+          "scope": "profile"
+        },
+        "enm_subi": {
+          "key": "sc_subi_dwitjeon_ring_30",
+          "ko": "뒷전거리 공물상 고리로 수비 30 해원 (한 굿판)",
+          "target": 30,
+          "scope": "run"
+        },
+        "enm_hwehwe_gwisin": {
+          "key": "sc_hwehwe_pinned_10",
+          "ko": "경문 각인 없이 가위눌림 상태에서 해원 10",
+          "target": 10,
+          "scope": "profile"
+        }
+      },
+      "milestones": [
+        {
+          "pieces": 18,
+          "reward_G": 5000,
+          "extra": "title_haewon_ipmun"
+        },
+        {
+          "pieces": 36,
+          "reward_G": 10000,
+          "extra": "길베 마당 확장(다리·연못) + stage_myeongbu 해금 조건 충족(x1)"
+        },
+        {
+          "pieces": 54,
+          "reward_G": 15000,
+          "extra": "cos_mubok_sobok"
+        },
+        {
+          "pieces": 72,
+          "reward_G": 30000,
+          "extra": "에필로그 '베가르기' 로비 연출 + title_haewon_girokja"
+        }
+      ]
+    },
+    "byeoksarok": {
+      "thresholds": {
+        "normal": [
+          100,
+          600,
+          2500
+        ],
+        "elite": [
+          10,
+          40,
+          120
+        ],
+        "mboss": [
+          1,
+          5,
+          15
+        ],
+        "boss": [
+          1,
+          3,
+          8
+        ]
+      },
+      "elite_count_note": "원귀 퇴치는 원본 종에 +5로 집계",
+      "damage_bonus_pct": [
+        3,
+        6,
+        10
+      ],
+      "damage_bonus_applies_to": "red_weapons_only",
+      "tier_reward_B": 200,
+      "species_complete_B": 1000,
+      "milestones": [
+        {
+          "tiers": 18,
+          "reward_B": 5000,
+          "extra": "comp_sinjang_dong + title_byeoksa_ipmun"
+        },
+        {
+          "tiers": 36,
+          "reward_B": 10000,
+          "extra": "comp_sinjang_seo + 대장간 확장(담금질 못) + stage_myeongbu 해금 조건 충족(x1, CANON-REQUEST)"
+        },
+        {
+          "tiers": 54,
+          "reward_B": 15000,
+          "extra": "comp_sinjang_nam + cos_mubok_jeollip"
+        },
+        {
+          "tiers": 72,
+          "reward_B": 30000,
+          "extra": "comp_sinjang_buk + 에필로그 '사자의 읍' 로비 연출 + title_byeoksarok"
+        }
+      ]
+    },
+    "sinjang_companions": [
+      {
+        "id": "comp_sinjang_dong",
+        "name_ko": "동방 신장",
+        "unlock": "벽사록 단계 합 18",
+        "effect_ko": "한 파열 시 10% 확률로 0.5유닛 안 다른 적 1체에 그 피해의 50% 연쇄(적 피해)"
+      },
+      {
+        "id": "comp_sinjang_seo",
+        "name_ko": "서방 신장",
+        "unlock": "벽사록 단계 합 36",
+        "effect_ko": "정예 퇴치 시 경문 각인 1 (런당 최대 3)"
+      },
+      {
+        "id": "comp_sinjang_nam",
+        "name_ko": "남방 신장",
+        "unlock": "벽사록 단계 합 54",
+        "effect_ko": "원귀 회귀 직후 15초 동안 신빨 +20%"
+      },
+      {
+        "id": "comp_sinjang_buk",
+        "name_ko": "북방 신장",
+        "unlock": "벽사록 단계 합 72",
+        "effect_ko": "무당이 지나간 살 알갱이를 거둬 결단 +0.5%p 누적(런 내 최대 +5%p). 거둔 알갱이는 원귀 회귀 재료에서 빠진다(살기 수치는 그대로)"
+      }
+    ],
+    "hint": {
+      "id": "seogo_bigyeol",
+      "name": "비결 두루마리",
+      "currency": "cur_gongdeok",
+      "cost": 500,
+      "targets": "evo_* 20 + union_* v1 4 = 24"
+    },
+    "uiryeseo": [
+      {
+        "id": "uir_a1_byeoksa_ildo",
+        "archetype_ko": "벽사 일도",
+        "condition_ko": "뒷전 이전 넋 비율 N ≤ 0.20",
+        "requires_held_at_clear": [
+          "evo_daejakdu|evo_isippalsugeom"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a1"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a2_gildakkeum_haengnyeol",
+        "archetype_ko": "길닦음 행렬",
+        "condition_ko": "뒷전 이전 넋 비율 N ≥ 0.85",
+        "requires_held_at_clear": [
+          "evo_begareugi|evo_cheoneum_bangul"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a2"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a3_ijungju",
+        "archetype_ko": "깎고 푸는 이중주",
+        "condition_ko": "넋 비율 N 0.40~0.60",
+        "requires_held_at_clear": [
+          "union_neoksinkal"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a3"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a4_hwagong_jeonghwa",
+        "archetype_ko": "화공 정화",
+        "condition_ko": "넋 비율 N 0.20~0.40",
+        "requires_held_at_clear": [
+          "union_sogeumsal"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a4"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a5_chilseong_myeonggyeong",
+        "archetype_ko": "칠성 명경",
+        "condition_ko": "넋 비율 N 0.30~0.50",
+        "requires_held_at_clear": [
+          "union_chilseong_myeonggyeonggeom"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a5"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a6_jakdu_dari",
+        "archetype_ko": "작두다리",
+        "condition_ko": "넋 비율 N 0.45~0.65, 정기 30% 이하에서 보스 해결",
+        "requires_held_at_clear": [
+          "union_jakdu_dari"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a6"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a7_obang_jinji",
+        "archetype_ko": "오방 진지",
+        "condition_ko": "넋 비율 N 0.30~0.50",
+        "requires_held_at_clear": [
+          "evo_obangjin",
+          "evo_cheoljillyeojin"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a7"
+        },
+        "source": "04-weapons-evolution 9장"
+      },
+      {
+        "id": "uir_a8_jangdan_pokju",
+        "archetype_ko": "장단 폭주",
+        "condition_ko": "넋 비율 N 0.50~0.70, 신명 오름 5회 이상",
+        "requires_held_at_clear": [
+          "evo_hapjangdan",
+          "evo_pajinchang"
+        ],
+        "reward": {
+          "cur_gongdeok": 1000,
+          "cur_bokjeon": 1000,
+          "cosmetic": "cos_nakgwan_a8"
+        },
+        "source": "04-weapons-evolution 9장"
+      }
+    ],
+    "completion_weights": {
+      "sayeon": 0.3,
+      "byeoksarok": 0.3,
+      "evo_union": 0.15,
+      "myeongdu": 0.15,
+      "neokduri": 0.1
+    }
+  },
+  "uiroe": {
+    "id": "sys_jaegajip_uiroe",
+    "open": "3번째 굿판 종료 후(첫 클리어 전이라도)",
+    "offers": 3,
+    "pick": "0 또는 1",
+    "pool_target_v1": 24,
+    "pool_target_cut_line_3": 12,
+    "pool_target_x1": 30,
+    "modes": [
+      "mode_pyojun"
+    ],
+    "excluded_modes": [
+      "mode_oneul",
+      "mode_jajinmori",
+      "mode_muhan"
+    ],
+    "deity_guarantee_slot": "06:30",
+    "deity_guarantee_slot_note": "2번째 시련(캐논 v1.2 D-01: 03:00/06:30/12:30/15:30). 03:00 몸주신 보장과 겹치지 않음. 같은 슬롯 청배 표식과의 중복 처리는 06 확인 대상",
+    "reward_caps": {
+      "currency_mult_max": 1.2,
+      "one_currency_only": true,
+      "record_x2_note": "지정 종: 해원 시 사연 조각 판정 x2, 퇴치 시 벽사록 집계 x2"
+    },
+    "reward_requires": "표준 굿판 클리어(보스 해결). 사망 시 의뢰 보상 없음, 일반 정산은 그대로",
+    "refresh": "의뢰를 받은 굿판이 끝나면 그 1장만 교체. 받지 않은 의뢰는 3런 동안 유지",
+    "samples": [
+      {
+        "id": "uiroe_bada_adeul",
+        "sayeon_ko": "바다에서 돌아오지 못한 아들",
+        "mods": {
+          "species_weight": {
+            "enm_mul_gwisin": 2.0
+          },
+          "deity_guarantee": "deity_yongwang"
+        },
+        "reward": {
+          "record_x2": {
+            "enm_mul_gwisin": 2
+          }
+        },
+        "unlock": "동해안 개방"
+      },
+      {
+        "id": "uiroe_jangsa",
+        "sayeon_ko": "장사가 안 되는 집",
+        "mods": {
+          "deity_guarantee": "deity_jeseok_daegam",
+          "mboss_fixed": "mboss_dokkaebi"
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_yeopjeon": 1.2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_honrye",
+        "sayeon_ko": "혼례를 못 치르고 간 딸",
+        "mods": {
+          "species_weight": {
+            "enm_cheonyeo_gwisin": 2.0,
+            "enm_mongdal_gwisin": 1.5
+          }
+        },
+        "reward": {
+          "record_x2": {
+            "enm_cheonyeo_gwisin": 2,
+            "enm_mongdal_gwisin": 2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_horangi",
+        "sayeon_ko": "산에서 범에게 물려 간 할아버지",
+        "mods": {
+          "species_weight": {
+            "enm_hosik_wonhon": 2.0
+          },
+          "deity_guarantee": "deity_sansin"
+        },
+        "reward": {
+          "record_x2": {
+            "enm_hosik_wonhon": 2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_yeokbyeong",
+        "sayeon_ko": "마마가 돈 마을",
+        "mods": {
+          "elite_extra": {
+            "elite_yeokgwi_ttae": 2
+          }
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_yeopjeon": 1.2
+          }
+        },
+        "unlock": "선바위 굿당 클리어"
+      },
+      {
+        "id": "uiroe_jesa_eomneun",
+        "sayeon_ko": "제사 지내 줄 이 없는 넋들",
+        "mods": {
+          "species_weight": {
+            "enm_agwi": 1.5,
+            "enm_gaekgwi": 1.5
+          }
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_neok": 1.2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_sangyeo",
+        "sayeon_ko": "상엿소리 없이 묻힌 사람들",
+        "mods": {
+          "species_weight": {
+            "enm_yeongsan": 2.0,
+            "enm_sangmun": 1.5
+          }
+        },
+        "reward": {
+          "record_x2": {
+            "enm_yeongsan": 2,
+            "enm_sangmun": 2
+          }
+        },
+        "unlock": "남도 갯마을 씻김굿판 개방"
+      },
+      {
+        "id": "uiroe_gamum",
+        "sayeon_ko": "가뭄 든 바닷마을",
+        "mods": {
+          "mboss_fixed": "mboss_gangcheori"
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_neok": 1.2
+          }
+        },
+        "unlock": "동해안 개방"
+      },
+      {
+        "id": "uiroe_dokkaebi",
+        "sayeon_ko": "밤마다 불이 떠다니는 고개",
+        "mods": {
+          "species_weight": {
+            "enm_dokkaebi_bul": 2.0
+          }
+        },
+        "reward": {
+          "record_x2": {
+            "enm_dokkaebi_bul": 2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_kkum",
+        "sayeon_ko": "밤마다 가위눌리는 집",
+        "mods": {
+          "species_weight": {
+            "enm_hwehwe_gwisin": 2.0
+          },
+          "deity_guarantee": "deity_chilseong"
+        },
+        "reward": {
+          "record_x2": {
+            "enm_hwehwe_gwisin": 2
+          }
+        },
+        "unlock": "기본"
+      },
+      {
+        "id": "uiroe_byeoksa",
+        "sayeon_ko": "원귀가 들끓는 폐가",
+        "mods": {
+          "salgi_base_add": 15,
+          "deity_guarantee": "deity_janggun"
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_yeopjeon": 1.2
+          }
+        },
+        "unlock": "원귀 회귀 3회 겪기"
+      },
+      {
+        "id": "uiroe_bari",
+        "sayeon_ko": "버려진 딸을 기리는 굿",
+        "mods": {
+          "deity_guarantee": "deity_barigongju",
+          "neok_sumyeong_add_s": -3
+        },
+        "reward": {
+          "currency_mult": {
+            "cur_neok": 1.2
+          }
+        },
+        "unlock": "단골 해금"
+      }
+    ]
+  },
+  "ladder_rules": {
+    "display_name_ko": "살 맺힘 단",
+    "display_name_old": "살풀이 단",
+    "clear_fx_name_ko": "살풀이 (단을 깨면 정산 ③에서 살풀이춤 컷)",
+    "open": "아무 스테이지나 표준 굿판 첫 클리어",
+    "gating": "global",
+    "advance_counts_modes": [
+      "mode_pyojun",
+      "mode_muhan(20:00 보스 해결 시점)"
+    ],
+    "advance_excluded_modes": [
+      "mode_jajinmori",
+      "mode_oneul"
+    ],
+    "modifiers_apply_modes": [
+      "mode_pyojun",
+      "mode_jajinmori",
+      "mode_muhan"
+    ],
+    "records": [
+      "ladder.max_dan_cleared (전역, 게이트)",
+      "ladder.best_dan_by_char (배지)",
+      "ladder.best_dan_by_stage (표시 전용 기록)"
+    ],
+    "income_mult_per_dan": 0.05,
+    "hook_owner": "08-stages-waves 14.5 (훅 변수 → 웨이브 변수 매핑만)"
+  },
+  "ladder_salpuri_dan": [
+    {
+      "dan": 1,
+      "id": "dan_01",
+      "name_ko": "부정(不淨)",
+      "pressure": "sal",
+      "modifier_ko": "런 시작 살기 10 (기본 0)",
+      "hooks": {
+        "salgi_base_add": 10
+      },
+      "income_mult": 1.05,
+      "first_clear_reward": {
+        "cur_gongdeok": 300,
+        "cur_bokjeon": 300,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 2,
+      "id": "dan_02",
+      "name_ko": "맺힘",
+      "pressure": "han",
+      "modifier_ko": "맺힘 복귀 12초→10초 (2회차 8초→7초)",
+      "hooks": {
+        "maetim_return_s": [
+          10,
+          7
+        ]
+      },
+      "income_mult": 1.1,
+      "first_clear_reward": {
+        "cur_gongdeok": 600,
+        "cur_bokjeon": 600,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 3,
+      "id": "dan_03",
+      "name_ko": "드센 정예",
+      "pressure": "common",
+      "modifier_ko": "정예 한 +25%, 정예 예약 슬롯 추가 확률 +0.10",
+      "hooks": {
+        "elite_hp_mult": 1.25,
+        "elite_extra_chance_add": 0.1
+      },
+      "income_mult": 1.15,
+      "first_clear_reward": {
+        "cur_gongdeok": 900,
+        "cur_bokjeon": 900,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 4,
+      "id": "dan_04",
+      "name_ko": "이른 회귀",
+      "pressure": "sal",
+      "modifier_ko": "원귀 회귀 임계 25/50/75 → 20/45/70",
+      "hooks": {
+        "wongwi_thresholds": [
+          20,
+          45,
+          70
+        ]
+      },
+      "income_mult": 1.2,
+      "first_clear_reward": {
+        "cur_gongdeok": 1200,
+        "cur_bokjeon": 1200,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 5,
+      "id": "dan_05",
+      "name_ko": "짧은 넋",
+      "pressure": "han",
+      "modifier_ko": "넋 수명 -5초 (기본 30→25)",
+      "hooks": {
+        "neok_sumyeong_add_s": -5
+      },
+      "income_mult": 1.25,
+      "first_clear_reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "cosmetic": "cos_mubok_dan05"
+      }
+    },
+    {
+      "dan": 6,
+      "id": "dan_06",
+      "name_ko": "까다로운 시련",
+      "pressure": "common",
+      "modifier_ko": "시련 제한 30→25초(캐논 v1.2 시련 30초 기준 비례 환산, 임시값), 미완 빙의 효과 70%→60%",
+      "hooks": {
+        "trial_limit_s": 25,
+        "trial_incomplete_eff": 0.6
+      },
+      "income_mult": 1.3,
+      "first_clear_reward": {
+        "cur_gongdeok": 1800,
+        "cur_bokjeon": 1800,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 7,
+      "id": "dan_07",
+      "name_ko": "바쁜 잡귀",
+      "pressure": "common",
+      "modifier_ko": "일반 잡귀 이동속도 +10%, 출현량 +10%",
+      "hooks": {
+        "normal_spd_mult": 1.1,
+        "spawn_mult": 1.1
+      },
+      "income_mult": 1.35,
+      "first_clear_reward": {
+        "cur_gongdeok": 2100,
+        "cur_bokjeon": 2100,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 8,
+      "id": "dan_08",
+      "name_ko": "재촉하는 사자",
+      "pressure": "sal",
+      "modifier_ko": "저승사자 강제 강림 23:00→22:30, 살 거둠 덩어리당 30초→40초(기본 90초→120초, 캐논 상한 180초 이내)",
+      "hooks": {
+        "forced_saja_s": 1350,
+        "sal_geodum_lump_s": 40
+      },
+      "hooks_note": "saja_spd_mult 삭제(캐논 v1.2 D-02: 사자는 쫓지 않음). sal_geodum_lump_s는 combat_core run_end.E3_sal_geodum.collect_sec_per_lump 덮어쓰기. 진척 p의 시간 분모는 단 적용 총 거둠 시간(3 x 40 = 120초)",
+      "income_mult": 1.4,
+      "first_clear_reward": {
+        "cur_gongdeok": 2400,
+        "cur_bokjeon": 2400,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 9,
+      "id": "dan_09",
+      "name_ko": "깊은 어둠",
+      "pressure": "common",
+      "modifier_ko": "어둑시니 상시: 첫 등장 07:30→05:00, 이후 맵에 최소 1체 유지",
+      "hooks": {
+        "eodukssini_first_s": 300,
+        "eodukssini_min_alive": 1
+      },
+      "income_mult": 1.45,
+      "first_clear_reward": {
+        "cur_gongdeok": 2700,
+        "cur_bokjeon": 2700,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 10,
+      "id": "dan_10",
+      "name_ko": "빈 상(床)",
+      "pressure": "common",
+      "modifier_ko": "공물 회복 20%→12%, 경문 각인 드롭 -50%",
+      "hooks": {
+        "gongmul_heal": 0.12,
+        "gyeongmun_drop_mult": 0.5
+      },
+      "income_mult": 1.5,
+      "first_clear_reward": {
+        "cur_gongdeok": 3000,
+        "cur_bokjeon": 3000,
+        "cosmetic": "cos_mubok_dan10"
+      }
+    },
+    {
+      "dan": 11,
+      "id": "dan_11",
+      "name_ko": "거느린 대장",
+      "pressure": "common",
+      "modifier_ko": "중간보스 한 +30%, 졸개 소환량 x1.5",
+      "hooks": {
+        "mboss_hp_mult": 1.3,
+        "mboss_minion_mult": 1.5
+      },
+      "income_mult": 1.55,
+      "first_clear_reward": {
+        "cur_gongdeok": 3300,
+        "cur_bokjeon": 3300,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 12,
+      "id": "dan_12",
+      "name_ko": "굳은 한",
+      "pressure": "han",
+      "modifier_ko": "풀릴 기색 임계 35%→25%",
+      "hooks": {
+        "pullil_threshold": 0.25
+      },
+      "income_mult": 1.6,
+      "first_clear_reward": {
+        "cur_gongdeok": 3600,
+        "cur_bokjeon": 3600,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 13,
+      "id": "dan_13",
+      "name_ko": "쌓이는 살",
+      "pressure": "sal",
+      "modifier_ko": "일반 퇴치 살기 +0.02→+0.03, 원귀 한 x4→x5",
+      "hooks": {
+        "salgi_per_normal_toechi": 0.03,
+        "wongwi_hp_mult": 5
+      },
+      "income_mult": 1.65,
+      "first_clear_reward": {
+        "cur_gongdeok": 3900,
+        "cur_bokjeon": 3900,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 14,
+      "id": "dan_14",
+      "name_ko": "깊은 매듭",
+      "pressure": "common",
+      "modifier_ko": "한형 매듭 7→9, 살형 합신 소환 +1단계, 보스 한 +20%",
+      "hooks": {
+        "gopuri_knots": 9,
+        "sal_boss_summon_step_add": 1,
+        "boss_hp_mult": 1.2
+      },
+      "income_mult": 1.7,
+      "first_clear_reward": {
+        "cur_gongdeok": 4200,
+        "cur_bokjeon": 4200,
+        "cosmetic": null
+      }
+    },
+    {
+      "dan": 15,
+      "id": "dan_15",
+      "name_ko": "마지막 맺힘",
+      "pressure": "common",
+      "modifier_ko": "길닦음 최소 면적 9→14타일², 재사용 1.0→1.5초, 적 탄속 +10%",
+      "hooks": {
+        "ring_min_area": 14,
+        "ring_cooldown_s": 1.5,
+        "enemy_bullet_spd_mult": 1.1
+      },
+      "income_mult": 1.75,
+      "first_clear_reward": {
+        "cur_gongdeok": 4500,
+        "cur_bokjeon": 4500,
+        "cosmetic": "cos_gilbe_geumbak"
+      }
+    }
+  ],
+  "mode_oneul": {
+    "source_of_truth": "08-stages-waves 14.4",
+    "unlock": "첫 굿판 완료(사망 포함)",
+    "seed": "hash(\"soulpath-daily-\" + YYYYMMDD(UTC) + season_salt)  (14 3.13 형식)",
+    "character": "시드로 v1 무당 5종 중 1명 고정(선택 없음)",
+    "attempts": "하루 1회 기록 시도 + 연습 무제한(기록·일일 보너스·순위표 없음)",
+    "dan": "무시(고정 수정자)",
+    "cheongbae_mark": "사용 불가",
+    "uiroe": "사용 불가",
+    "ladder_or_stage_unlock": "인정하지 않음",
+    "crash_policy": "기록 시도는 이어하기 불가. run_journal 마지막 기록 시점 점수로 확정(crashed=true)"
+  },
+  "longtail": [
+    {
+      "id": "lt_yeondeung",
+      "name": "회향 연등",
+      "currency": "cur_gongdeok",
+      "cost": 1000,
+      "max": 108
+    },
+    {
+      "id": "lt_punggyeong",
+      "name": "대장간 풍경",
+      "currency": "cur_bokjeon",
+      "cost": 1000,
+      "max": 108
+    }
+  ],
+  "exchange_nanum": {
+    "id": "xchg_nanum",
+    "rate": {
+      "cur_gongdeok_to_cur_bokjeon": [
+        2,
+        1
+      ],
+      "cur_bokjeon_to_cur_gongdeok": [
+        2,
+        1
+      ]
+    },
+    "min_lot": 1000,
+    "where": [
+      "hub_sindang",
+      "hub_daejanggan"
+    ],
+    "daily_cap": null
+  },
+  "facilities": [
+    {
+      "id": "hub_sindang",
+      "open_when": "처음부터(첫 굿판 이후 로비 진입 시)",
+      "currency": "cur_gongdeok"
+    },
+    {
+      "id": "hub_gutpan_mun",
+      "open_when": "처음부터",
+      "currency": null
+    },
+    {
+      "id": "hub_singirok_seogo",
+      "open_when": "첫 굿판 종료(해원 또는 퇴치 1회 기록)",
+      "currency": "cur_gongdeok"
+    },
+    {
+      "id": "hub_myeongdu_dan",
+      "open_when": "명두 계승점 1점 획득(첫 빙의)",
+      "currency": "mixed"
+    },
+    {
+      "id": "hub_daejanggan",
+      "open_when": "복전 1 이상 보유 또는 2번째 굿판 종료",
+      "currency": "cur_bokjeon"
+    },
+    {
+      "id": "hub_gilbe_madang",
+      "open_when": "공간은 처음부터, 건너감 연출은 첫 종 사연 완성 시",
+      "currency": "cur_gongdeok(회향)"
+    }
+  ],
+  "sindang_v1": {
+    "doc": "신당 로비 v1 운영값(2026-11-26 '거의 완성' 빌드). 소유: meta(game/meta, autoload/save.gd). 걷는 허브(09 5.1)는 x1로 미루고 한 화면 신당 + 시설 메뉴로 낸다.",
+    "first_run_direct": true,
+    "first_run_note": "첫 실행은 타이틀 → 바로 초굿(첫 굿판). 첫 굿판이 끝나면(사망·클리어·물리기) 그때부터 타이틀 → 신당(11 3.1).",
+    "weapon_offering_open_after_runs": 1,
+    "danjang_open_after_runs": 1,
+    "singirok_open_after_runs": 1,
+    "uiroe_open_after_runs": 3,
+    "uiroe_v1_pool": [
+      "uiroe_jangsa",
+      "uiroe_honrye",
+      "uiroe_horangi",
+      "uiroe_jesa_eomneun",
+      "uiroe_dokkaebi",
+      "uiroe_kkum",
+      "uiroe_bari"
+    ],
+    "uiroe_unlock_rules": {
+      "기본": null,
+      "단골 해금": {
+        "char": "char_dangol"
+      }
+    },
+    "uiroe_thanks_ko": "이제 편히 잠들겠지요.",
+    "char_condition_override": {
+      "char_myeongdu": {
+        "counter": "cnt_runs",
+        "gte": 5,
+        "text": "굿판 다섯 번 치르기 (v1 임시: 동행령 해금 대신)"
+      }
+    },
+    "box_count_rule": "길흉 상자 개봉 수는 v1에서 '정예 이상 퇴치 수'로 센다(상자 시스템 연결 전 임시)",
+    "settle_neok_ratio_metric": "v1: 해원 수 / (해원 + 퇴치) — sys_neok_ratio 가중식 연결 전 임시",
+    "autotest_profile": "user://save_profile_autotest.json (봇·헤드리스 검증은 실제 프로필을 건드리지 않는다)"
+  },
+  "sindang_danjang": {
+    "doc": "신당 단장(丹粧) — 신단을 꾸며 영구 강화. 명두 계보도(10장) 노드의 효과값을 랭크로 나눈 v1 대체판(계승점 예산 없이 재화 봉헌). 효과는 런 시작 시 Game.stats 에 더한다(run_started). 가격은 기준가(econ_price_scale 곱 전).",
+    "unit_rule": "per_rank 는 stat 원단위 가산(stat_sinppal 1.0 기준 +0.04 = +4%).",
+    "items": [
+      {
+        "id": "dj_chotbul",
+        "name_ko": "촛불",
+        "hanja": "燭",
+        "flavor_ko": "신단에 촛불을 더 밝힌다.",
+        "effect_ko": "정기 +10",
+        "stat": "stat_jeonggi",
+        "per_rank": 10,
+        "max_rank": 3,
+        "costs": [
+          600,
+          2000,
+          5000
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "prop_chotdae_pair",
+        "source_node": "myd_a1_mumyeong_jeogori"
+      },
+      {
+        "id": "dj_jeonghwasu",
+        "name_ko": "정화수",
+        "hanja": "井華水",
+        "flavor_ko": "새벽 첫 우물물을 사발에 떠 올린다.",
+        "effect_ko": "신복 +1 (받는 피해 감소)",
+        "stat": "stat_sinbok",
+        "per_rank": 1,
+        "max_rank": 2,
+        "costs": [
+          900,
+          4000
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "jeonghwasu",
+        "source_node": "myd_a3_geumjul"
+      },
+      {
+        "id": "dj_yeondeung",
+        "name_ko": "연등",
+        "hanja": "燃燈",
+        "flavor_ko": "길 잃은 넋이 신당을 찾아오게 등을 건다.",
+        "effect_ko": "넋 수명 +3초 (영가가 오래 머문다)",
+        "stat": "stat_neok_sumyeong",
+        "per_rank": 3,
+        "max_rank": 2,
+        "costs": [
+          600,
+          3000
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "prop_yeondeung",
+        "source_node": "myd_c2_neok_sumyeong"
+      },
+      {
+        "id": "dj_neokjeon",
+        "name_ko": "넋전",
+        "hanja": "魂錢",
+        "flavor_ko": "넋을 오린 한지를 줄줄이 건다.",
+        "effect_ko": "영가 행렬 상한 +2",
+        "stat": "stat_haengnyeol",
+        "per_rank": 2,
+        "max_rank": 2,
+        "costs": [
+          800,
+          3500
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "prop_neokjeon_line",
+        "source_node": "myd_c1_haengnyeol"
+      },
+      {
+        "id": "dj_gilbe",
+        "name_ko": "길베",
+        "hanja": "길베",
+        "flavor_ko": "저승길을 닦을 무명을 한 자 더 마련한다.",
+        "effect_ko": "길베 +0.3초 (고리를 더 크게)",
+        "stat": "stat_gilbe",
+        "per_rank": 0.3,
+        "max_rank": 2,
+        "costs": [
+          1000,
+          4500
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "gilbe",
+        "source_node": "myd_c3_gilbe"
+      },
+      {
+        "id": "dj_puri",
+        "name_ko": "고풀이 매듭",
+        "hanja": "解結",
+        "flavor_ko": "맺힌 매듭을 미리 풀어 둔다.",
+        "effect_ko": "풀이 +0.2 (풀릴 기색 피해 배율)",
+        "stat": "stat_puri",
+        "per_rank": 0.2,
+        "max_rank": 2,
+        "costs": [
+          1500,
+          6000
+        ],
+        "currency": "cur_gongdeok",
+        "prop": "maedeup",
+        "source_node": "myd_c5_puri"
+      },
+      {
+        "id": "dj_musindo",
+        "name_ko": "무신도",
+        "hanja": "巫神圖",
+        "flavor_ko": "모신 신령의 그림을 한 폭 더 건다.",
+        "effect_ko": "신빨 +4% (모든 피해)",
+        "stat": "stat_sinppal",
+        "per_rank": 0.04,
+        "max_rank": 3,
+        "costs": [
+          600,
+          2000,
+          5000
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "prop_musindo_hanging",
+        "source_node": "myd_b1_sinppal"
+      },
+      {
+        "id": "dj_obanggi",
+        "name_ko": "오방기",
+        "hanja": "五方旗",
+        "flavor_ko": "다섯 방위의 기를 꽂아 굿판을 넓힌다.",
+        "effect_ko": "도량 +6% (공격 범위)",
+        "stat": "stat_doryang",
+        "per_rank": 0.06,
+        "max_rank": 2,
+        "costs": [
+          900,
+          4000
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "prop_obanggi_bundle",
+        "source_node": "myd_b3_doryang"
+      },
+      {
+        "id": "dj_sinjangdae",
+        "name_ko": "신장대",
+        "hanja": "神將竿",
+        "flavor_ko": "신장을 부르는 대를 세운다.",
+        "effect_ko": "결단 +2%p (마무리 일격 확률)",
+        "stat": "stat_gyeoldan",
+        "per_rank": 0.02,
+        "max_rank": 2,
+        "costs": [
+          1200,
+          5000
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "prop_sinjangdae",
+        "source_node": "myd_b4_gyeoldan"
+      },
+      {
+        "id": "dj_geumjul",
+        "name_ko": "금줄",
+        "hanja": "禁줄",
+        "flavor_ko": "부정을 막는 새끼줄을 친다.",
+        "effect_ko": "초혼 +0.3유닛 (구슬 끌어오기)",
+        "stat": "stat_chohon",
+        "per_rank": 0.3,
+        "max_rank": 2,
+        "costs": [
+          600,
+          2500
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "prop_geumjul_seg",
+        "source_node": "myd_d1_chohon"
+      },
+      {
+        "id": "dj_jipsin",
+        "name_ko": "짚신",
+        "hanja": "짚신",
+        "flavor_ko": "굿판에 신고 갈 새 짚신을 삼는다.",
+        "effect_ko": "도무 +4% (이동 속도)",
+        "stat": "stat_domu",
+        "per_rank": 0.04,
+        "max_rank": 2,
+        "costs": [
+          800,
+          3500
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "jipsin",
+        "source_node": "myd_d2_domu"
+      },
+      {
+        "id": "dj_jangdok",
+        "name_ko": "곳간 장독",
+        "hanja": "庫",
+        "flavor_ko": "재가집 시주가 넉넉해지도록 곳간을 채운다.",
+        "effect_ko": "시주 +5% (정산 공덕·복전)",
+        "stat": "stat_siju",
+        "per_rank": 0.05,
+        "max_rank": 2,
+        "costs": [
+          1500,
+          6000
+        ],
+        "currency": "cur_bokjeon",
+        "prop": "prop_jangdok",
+        "source_node": "myd_d4_siju"
+      }
+    ]
+  }
+}

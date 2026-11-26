@@ -1,0 +1,195 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gildakkeum_fill 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  },
+  {
+   "filename": "vfx_gildakkeum_fill 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  },
+  {
+   "filename": "vfx_gildakkeum_fill 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  },
+  {
+   "filename": "vfx_gildakkeum_fill 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  },
+  {
+   "filename": "vfx_gildakkeum_fill 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  },
+  {
+   "filename": "vfx_gildakkeum_fill 5",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 67
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gildakkeum_fill.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gildakkeum_fill",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gildakkeum_fill",
+   "name": "Gildakkeum fill (셀 지화 채움)",
+   "fps": 15.0,
+   "loop": false,
+   "frames": 6,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "frameSize": [
+    32,
+    32
+   ],
+   "columns": 6,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": true,
+   "max_concurrent": 2,
+   "palette": [
+    "#fffdf6",
+    "#d6cfc1",
+    "#f2ece0",
+    "#e9dcc0",
+    "#b29d76",
+    "#d2c19c"
+   ],
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     8,
+     6
+    ],
+    "semi_before": 2376,
+    "blend": "add",
+    "size": "keep 32x32"
+   }
+  }
+ }
+}

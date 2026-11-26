@@ -1,0 +1,196 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 2",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 3",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 4",
+   "frame": {
+    "x": 64,
+    "y": 64,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_cheoljillyeojin_pulse 5",
+   "frame": {
+    "x": 128,
+    "y": 64,
+    "w": 64,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 64
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_cheoljillyeojin_pulse.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 128
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_cheoljillyeojin_pulse",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_cheoljillyeojin_pulse",
+   "name": "Cheoljillyeojin pulse",
+   "fps": 12,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    64,
+    64
+   ],
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 3,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_cheoljillyeojin",
+   "color_role": "R",
+   "spec_canvas": "64x64",
+   "spec_frames": 6,
+   "timing": "beat:1",
+   "blend": "add",
+   "layer": "L03",
+   "beat_snap": true,
+   "max_concurrent": 6,
+   "scope": "v1"
+  }
+ }
+}

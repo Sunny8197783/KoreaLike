@@ -1,0 +1,133 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gakgung_hit 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_gakgung_hit 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_gakgung_hit 2",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gakgung_hit.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gakgung_hit",
+    "from": 0,
+    "to": 2,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gakgung_hit",
+   "name": "Gakgung hit",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 3,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "8x8->16x16"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_gakgung",
+   "color_role": "R",
+   "spec_canvas": "8x8",
+   "spec_frames": 3,
+   "timing": "fps:20",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 80,
+   "scope": "v1",
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

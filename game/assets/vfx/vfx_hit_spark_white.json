@@ -1,0 +1,177 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_hit_spark_white 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_white 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_white 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_white 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "hand-drawn grid recipe (art/pilot/_scripts/fix_r3_vfx.py)",
+  "version": "1",
+  "image": "vfx_hit_spark_white.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_hit_spark_white",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_hit_spark_white",
+   "name": "Hit spark white",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "frameWidth": 16,
+   "frameHeight": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "hit_spark",
+   "owner": "weapon_white",
+   "spec_canvas": "16x16",
+   "spec_frames": 4,
+   "timing": "fps:20",
+   "blend": "normal",
+   "pilot": false,
+   "palette": [
+    "#b29d76",
+    "#d2c19c",
+    "#e9dcc0",
+    "#fffdf6"
+   ],
+   "colors": 4,
+   "source": "palette swap of vfx_hit_spark_red (jk -> hj, core #fffdf6), 0 gen, 2026-11-24 vfx",
+   "impact_frame": 0,
+   "impact_frames": [
+    0,
+    1
+   ],
+   "phases": {
+    "impact": [
+     0,
+     1
+    ],
+    "fade": [
+     2,
+     3
+    ]
+   },
+   "note": "white weapon hit spark: same frames/impact_frame as red; hj ramp, #fffdf6 flash core only (bk #f2ece0 reserved for pullil)",
+   "spec": "art_style_v1",
+   "judge_frames": [
+    0,
+    1
+   ]
+  }
+ }
+}

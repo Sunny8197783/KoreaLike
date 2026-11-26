@@ -1,0 +1,205 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_obangjin_pillar_cheong 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_obangjin_pillar_cheong 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_obangjin_pillar_cheong 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_obangjin_pillar_cheong 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_obangjin_pillar_cheong 4",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_obangjin_pillar_cheong 5",
+   "frame": {
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_obangjin_pillar_cheong.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 96,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_obangjin_pillar_cheong",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_obangjin_pillar",
+   "name": "Obangjin pillar",
+   "fps": 14,
+   "loop": false,
+   "frames": 6,
+   "frameWidth": 16,
+   "frameHeight": 64,
+   "frameSize": [
+    16,
+    64
+   ],
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "spec": {
+    "id": "vfx_obangjin_pillar",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_obangjin",
+    "color_role": "D+P",
+    "canvas": "16x64",
+    "frames": 6,
+    "timing": "beat:1",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": true,
+    "max_concurrent": 5,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "D+P",
+   "max_concurrent": 5,
+   "beat_sync": "beat:1",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "variant": "cheong",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     8,
+     6
+    ],
+    "semi_before": 658,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

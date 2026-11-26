@@ -1,0 +1,69 @@
+{
+ "frames": [
+  {
+   "filename": "prop_neokjeon_line_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 16
+   },
+   "duration": 500
+  },
+  {
+   "filename": "prop_neokjeon_line_1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 16
+   },
+   "duration": 500
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_neokjeon_line_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 16
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 2,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 16,
+   "columns": 2,
+   "pivot": {
+    "x": 32,
+    "y": 1
+   }
+  }
+ }
+}

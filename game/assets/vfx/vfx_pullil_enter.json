@@ -1,0 +1,151 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_pullil_enter 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_pullil_enter 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_pullil_enter 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_pullil_enter 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_pullil_enter.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_pullil_enter",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_pullil_enter",
+   "name": "Pullil enter (고 매듭 느슨해짐)",
+   "fps": 16.0,
+   "loop": false,
+   "frames": 4,
+   "frameWidth": 12,
+   "frameHeight": 8,
+   "frameSize": [
+    16,
+    16
+   ],
+   "columns": 4,
+   "pivot": [
+    8,
+    11
+   ],
+   "blend": "normal",
+   "layer": "L11",
+   "beat_snap": false,
+   "max_concurrent": 300,
+   "palette": [
+    "#1a1a1a",
+    "#f2ece0",
+    "#fffdf6",
+    "#d6cfc1"
+   ],
+   "color_role": "W",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     3,
+     3
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "12x8->16x16"
+   }
+  }
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "enm_dalgyal_gwisin__pilot__move_south.png": {
+  "anim": "move",
+  "dir": "south",
+  "frames": 4,
+  "frame_size": [
+   32,
+   32
+  ],
+  "pivot": [
+   16,
+   29
+  ]
+ },
+ "enm_dalgyal_gwisin__pilot__move_east.png": {
+  "anim": "move",
+  "dir": "east",
+  "frames": 4,
+  "frame_size": [
+   32,
+   32
+  ],
+  "pivot": [
+   16,
+   29
+  ]
+ },
+ "enm_dalgyal_gwisin__pilot__move_north.png": {
+  "anim": "move",
+  "dir": "north",
+  "frames": 4,
+  "frame_size": [
+   32,
+   32
+  ],
+  "pivot": [
+   16,
+   29
+  ]
+ },
+ "enm_dalgyal_gwisin__pilot__move_west.png": {
+  "anim": "move",
+  "dir": "west",
+  "frames": 4,
+  "frame_size": [
+   32,
+   32
+  ],
+  "pivot": [
+   16,
+   29
+  ]
+ }
+}

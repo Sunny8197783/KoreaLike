@@ -1,0 +1,24 @@
+== art_lint: enm_dalgyal_gwisin  (tier=common_s, canvas=48x48, pivot=[24, 45], palette=entity:enm_dalgyal_gwisin__pilot(9), frames=24)
+  L1   캔버스            FAIL  {"48x48": 24}                                                사양 [32]
+  L2   알파             PASS  {"semi_px": 0, "semi_frames_pct": 0.0}                       0<a<255 픽셀 0개 (0.00% of canvas px)
+  L3   팔레트 소속         PASS  {"off_colors": 0, "off_px_pct": 0.0, "compliance_pct": 10... 기준 entity:enm_dalgyal_gwisin__pilot(9), 마스터 최근접 평균 ΔE2000 0.00
+  L4   색 수            PASS  {"entity_colors": 8, "budget": 12, "frame_max": 8}           엔티티 전 프레임·방향 합집합
+  L5   예약 백           PASS  {"px": 0, "colors": []}                                      #f2ece0 ±ΔE2000 6
+  L6   예약 청           N/A   null                                                         플레이어 계열만
+  L7   외곽선            PASS  {"outline_1a1a1a_pct": 100.0, "dark_outer_pct": 100.0}       실루엣 외곽(4이웃 투명) 픽셀 2423개 중 #1a1a1a ≥95%
+  L8   여백             PASS  {"left": 9, "right": 9, "top": 2, "bottom": 2}               최소 사방 2 / 위 2. 위반: -
+  L9   피벗             PASS  {"foot_min": 45, "foot_max": 45, "pivot_y": 45, "bad_fram... 모든 프레임 발끝 = 피벗 y ±1
+  L10  방향 중심          PASS  {"worst_range_px": 0.5, "worst_anim": "move", "pivot_x": 24} 애니별 0프레임 방향간 bbox 중심 x 범위: {"move": 0.5, "rot": 0.0}
+  L11  몸 높이           FAIL  {"height": 44, "target": [18, 24], "over_pct": 83.3}         south.png 기준, +15% 초과 → 7.2 재생성 조건 1
+  L12  정지↔이동          PASS  {"south": {"idle": "south.png", "move": "move_south_0.png... 위반 방향: -
+  L13  루프 일관성         PASS  {"area_var_pct": 8.1, "area_worst": "move_east", "cx_rang... 루프 애니 ['move']. 위반 0묶음
+  L14  고립 픽셀          PASS  {"isolated_pct": 0.0, "worst_frame_pct": 0.0, "worst_fram... 내부(외곽 제외) 8이웃 같은 RGB 없음 >8% FAIL, 평균 클러스터 <2.5 WARN
+  L15  미러 정책          PASS  {"west_files": 5, "flip_of_east": 5, "independent": 0}       독립 생성 west는 FAIL(flip_h(E)와 픽셀 동일한 파생본은 허용, --strict-west면 전부 FAIL)
+  L16  방향 의상 일관성      PASS  {"S-E": 1.0, "S-N": 1.0}                                     정지 프레임 내부 상위 8색(마스터 스냅) 겹침 <75% WARN → G0 육안 확인
+  L17  광원             WARN  -0.017                                                       south.png 좌반−우반 평균 상대휘도(추정 지표)
+  L18  명도 띠           PASS  {"max_lum": 0.433, "cap": 0.45, "px_over": 0}                적 몸 상대휘도 상한
+  L19  VFX            N/A   null                                                         VFX 시트 입력에서만
+  L20  import 회귀      N/A   {"import_files": 0}                                          전역 검사는 --imports game/
+  L21  앵커             N/A   null                                                         앵커 필수 대상 아님(--require-anchors로 강제)
+  L22  workbench 점수   WARN  null                                                         미측정: pixelart_workbench score 결과를 --workbench-score/--workbench 로 전달
+  -> PASS 14 / FAIL 2 / WARN 2 / N/A 4

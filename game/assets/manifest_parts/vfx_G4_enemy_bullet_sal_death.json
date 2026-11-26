@@ -1,0 +1,614 @@
+{
+ "agent": "vfx_G4_enemy_bullet_sal_death",
+ "items": [
+  {
+   "id": "vfx_sal_grain_idle",
+   "path": "game/assets/vfx/vfx_sal_grain_idle.png",
+   "json": "game/assets/vfx/vfx_sal_grain_idle.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 6,
+   "loop": true,
+   "frameSize": [
+    12,
+    12
+   ],
+   "blend": "normal",
+   "layer": "L05",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_sal_grain_idle.js",
+   "desc": "살 알갱이: 먹빛 응어리+붉은 눈 6fps 맥동 (8px 기본)"
+  },
+  {
+   "id": "vfx_sal_grain_idle_s",
+   "path": "game/assets/vfx/vfx_sal_grain_idle_s.png",
+   "json": "game/assets/vfx/vfx_sal_grain_idle_s.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 6,
+   "loop": true,
+   "frameSize": [
+    12,
+    12
+   ],
+   "blend": "normal",
+   "layer": "L05",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_sal_grain_idle.js",
+   "desc": "살 알갱이 소형(5px) 변형"
+  },
+  {
+   "id": "vfx_sal_grain_idle_l",
+   "path": "game/assets/vfx/vfx_sal_grain_idle_l.png",
+   "json": "game/assets/vfx/vfx_sal_grain_idle_l.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 6,
+   "loop": true,
+   "frameSize": [
+    12,
+    12
+   ],
+   "blend": "normal",
+   "layer": "L05",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_sal_grain_idle.js",
+   "desc": "살 알갱이 대형(11px) 변형"
+  },
+  {
+   "id": "vfx_sal_merge",
+   "path": "game/assets/vfx/vfx_sal_merge.png",
+   "json": "game/assets/vfx/vfx_sal_merge.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 5,
+   "fps": 12,
+   "loop": false,
+   "frameSize": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L05",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_sal_merge.js",
+   "desc": "살 병합: 먹물 방울 두 개가 끈적하게 합쳐지고 눈 플레어"
+  },
+  {
+   "id": "vfx_wongwi_rise",
+   "path": "game/assets/vfx/vfx_wongwi_rise.png",
+   "json": "game/assets/vfx/vfx_wongwi_rise.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 13,
+   "fps": 12,
+   "loop": false,
+   "frameSize": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_wongwi_rise.js",
+   "desc": "원귀 회귀: 알갱이가 먹 실로 풀려 떠오름(끝에 붉은 눈)"
+  },
+  {
+   "id": "vfx_wongwi_form",
+   "path": "game/assets/vfx/vfx_wongwi_form.png",
+   "json": "game/assets/vfx/vfx_wongwi_form.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 11,
+   "fps": 10,
+   "loop": false,
+   "frameSize": [
+    96,
+    96
+   ],
+   "blend": "normal",
+   "layer": "L08",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_wongwi_form.js",
+   "desc": "원귀 형성: 실이 바닥에서 빨려들어 먹 연기 형체+붉은 눈 2개 점화"
+  },
+  {
+   "id": "vfx_wongwi_eye_aura",
+   "path": "game/assets/vfx/vfx_wongwi_eye_aura.png",
+   "json": "game/assets/vfx/vfx_wongwi_eye_aura.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    64,
+    64
+   ],
+   "blend": "add",
+   "layer": "L08",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_wongwi_eye_aura.js",
+   "desc": "정예 원귀 붉은 눈 잔광 오라(add)"
+  },
+  {
+   "id": "vfx_cheonyeo_bullet",
+   "path": "game/assets/vfx/vfx_cheonyeo_bullet.png",
+   "json": "game/assets/vfx/vfx_cheonyeo_bullet.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 2,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L12",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_cheonyeo_bullet.js",
+   "desc": "처녀귀신 탄: 청 눈물방울 8x8, 먹 머리카락 한 올 감김"
+  },
+  {
+   "id": "vfx_cheonyeo_bullet_petal",
+   "path": "game/assets/vfx/vfx_cheonyeo_bullet_petal.png",
+   "json": "game/assets/vfx/vfx_cheonyeo_bullet_petal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 5,
+   "fps": 12,
+   "loop": false,
+   "frameSize": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_cheonyeo_bullet_petal.js",
+   "desc": "처녀귀신 해원: 탄이 흰 꽃잎으로 바뀌어 떨어짐"
+  },
+  {
+   "id": "vfx_mongdal_dash_tell",
+   "path": "game/assets/vfx/vfx_mongdal_dash_tell.png",
+   "json": "game/assets/vfx/vfx_mongdal_dash_tell.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 10,
+   "loop": true,
+   "frameSize": [
+    16,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_mongdal_dash_tell.js",
+   "desc": "몽달 돌진 예고: 청 점선 16x8 타일(행진)"
+  },
+  {
+   "id": "vfx_mongdal_dash_tell_end",
+   "path": "game/assets/vfx/vfx_mongdal_dash_tell_end.png",
+   "json": "game/assets/vfx/vfx_mongdal_dash_tell_end.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 10,
+   "loop": true,
+   "frameSize": [
+    12,
+    12
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_mongdal_dash_tell_end.js",
+   "desc": "몽달 돌진 예고 끝: 청 짚신 자국"
+  },
+  {
+   "id": "vfx_mul_puddle_dark",
+   "path": "game/assets/vfx/vfx_mul_puddle_dark.png",
+   "json": "game/assets/vfx/vfx_mul_puddle_dark.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 6,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    48,
+    24
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_mul_puddle_dark.js",
+   "desc": "물귀신 웅덩이: 먹+청 검은 물, 물속 손 두 개 일렁임"
+  },
+  {
+   "id": "vfx_mul_puddle_clear",
+   "path": "game/assets/vfx/vfx_mul_puddle_clear.png",
+   "json": "game/assets/vfx/vfx_mul_puddle_clear.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 6,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    48,
+    24
+   ],
+   "blend": "normal",
+   "layer": "L03",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_mul_puddle_clear.js",
+   "desc": "물귀신 해원: 청록 맑은 물+한지 꽃잎"
+  },
+  {
+   "id": "vfx_gaekgwi_tether",
+   "path": "game/assets/vfx/vfx_gaekgwi_tether.png",
+   "json": "game/assets/vfx/vfx_gaekgwi_tether.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 2,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    16,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L12",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_gaekgwi_tether.js",
+   "desc": "객귀 착: 청 1px 넋 실 타일(가로 반복)"
+  },
+  {
+   "id": "vfx_hazard_generic",
+   "path": "game/assets/vfx/vfx_hazard_generic.png",
+   "json": "game/assets/vfx/vfx_hazard_generic.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_hazard_generic.js",
+   "desc": "공용 장판 스탬프: 먹 얼룩+청 테두리+청 핏줄"
+  },
+  {
+   "id": "vfx_hazard_generic_fill",
+   "path": "game/assets/vfx/vfx_hazard_generic_fill.png",
+   "json": "game/assets/vfx/vfx_hazard_generic_fill.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_hazard_generic_fill.js",
+   "desc": "공용 장판 내부 이음매 없는 16px 타일"
+  },
+  {
+   "id": "vfx_hazard_telegraph",
+   "path": "game/assets/vfx/vfx_hazard_telegraph.png",
+   "json": "game/assets/vfx/vfx_hazard_telegraph.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 10,
+   "loop": true,
+   "frameSize": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_hazard_telegraph.js",
+   "desc": "장판 예고: 청 점선 원(스케일하여 사용)"
+  },
+  {
+   "id": "vfx_status_sangmunsal",
+   "path": "game/assets/vfx/vfx_status_sangmunsal.png",
+   "json": "game/assets/vfx/vfx_status_sangmunsal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 6,
+   "loop": true,
+   "frameSize": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L13",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_status_sangmunsal.js",
+   "desc": "상문살 아이콘: 청 요령(상여 방울)+삼베 끈"
+  },
+  {
+   "id": "vfx_status_gawi",
+   "path": "game/assets/vfx/vfx_status_gawi.png",
+   "json": "game/assets/vfx/vfx_status_gawi.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 6,
+   "loop": true,
+   "frameSize": [
+    320,
+    180
+   ],
+   "blend": "multiply",
+   "layer": "L17",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_status_gawi.js",
+   "desc": "가위눌림: 화면 가장자리 먹 손자국 multiply 320x180"
+  },
+  {
+   "id": "vfx_geogu_inhale",
+   "path": "game/assets/vfx/vfx_geogu_inhale.png",
+   "json": "game/assets/vfx/vfx_geogu_inhale.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 6,
+   "fps": 12,
+   "loop": true,
+   "frameSize": [
+    128,
+    64
+   ],
+   "blend": "normal",
+   "layer": "L12",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_geogu_inhale.js",
+   "desc": "거구귀 흡입: 입 앞 청 소용돌이 깔때기 128x64"
+  },
+  {
+   "id": "vfx_bulgasari_iron_absorb",
+   "path": "game/assets/vfx/vfx_bulgasari_iron_absorb.png",
+   "json": "game/assets/vfx/vfx_bulgasari_iron_absorb.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 12,
+   "loop": true,
+   "frameSize": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_bulgasari_iron_absorb.js",
+   "desc": "불가사리 쇠 흡수: 달군 쇳조각 파티클 8x8"
+  },
+  {
+   "id": "vfx_dueoksini_slam",
+   "path": "game/assets/vfx/vfx_dueoksini_slam.png",
+   "json": "game/assets/vfx/vfx_dueoksini_slam.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 7,
+   "fps": 14,
+   "loop": false,
+   "frameSize": [
+    128,
+    64
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_dueoksini_slam.js",
+   "desc": "두억시니 내려찍기: 청 점선 원 -> 청백 플래시 -> 먹 충격 균열"
+  },
+  {
+   "id": "vfx_eodukssini_body",
+   "path": "game/assets/vfx/vfx_eodukssini_body.png",
+   "json": "game/assets/vfx/vfx_eodukssini_body.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 8,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    96,
+    96
+   ],
+   "blend": "normal",
+   "layer": "L08",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_eodukssini_body.js",
+   "desc": "어둑시니 몸: 먹 구름 메타볼(시트 폴백, 셰이더는 .gdshader)"
+  },
+  {
+   "id": "vfx_eodukssini_body_shader",
+   "path": "game/assets/vfx/vfx_eodukssini_body.gdshader",
+   "kind": "shader",
+   "source": "handwritten",
+   "license": "project-original",
+   "status": "done",
+   "desc": "어둑시니 몸 Godot canvas_item 셰이더(노이즈 메타볼, 1px 스냅, grow)"
+  },
+  {
+   "id": "vfx_eodukssini_vanish",
+   "path": "game/assets/vfx/vfx_eodukssini_vanish.png",
+   "json": "game/assets/vfx/vfx_eodukssini_vanish.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 11,
+   "fps": 12,
+   "loop": false,
+   "frameSize": [
+    128,
+    128
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_eodukssini_vanish.js",
+   "desc": "어둑시니 소멸 정적 드롭: 가로 띠로 찢겨 흰 선->흰 점"
+  },
+  {
+   "id": "vfx_boss_tidal_bullet",
+   "path": "game/assets/vfx/vfx_boss_tidal_bullet.png",
+   "json": "game/assets/vfx/vfx_boss_tidal_bullet.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 2,
+   "fps": 8,
+   "loop": true,
+   "frameSize": [
+    12,
+    12
+   ],
+   "blend": "normal",
+   "layer": "L12",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_boss_tidal_bullet.js",
+   "desc": "이무기 해일탄: 청 물방울 비늘탄 12x12"
+  },
+  {
+   "id": "vfx_boss_plague_portal",
+   "path": "game/assets/vfx/vfx_boss_plague_portal.png",
+   "json": "game/assets/vfx/vfx_boss_plague_portal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 9,
+   "fps": 10,
+   "loop": false,
+   "frameSize": [
+    48,
+    48
+   ],
+   "blend": "normal",
+   "layer": "L02",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_boss_plague_portal.js",
+   "desc": "역신 분리 소환: 두창 반점 번짐+잡귀 손/머리 기어나옴"
+  },
+  {
+   "id": "vfx_drought_to_rain",
+   "path": "game/assets/vfx/vfx_drought_to_rain.png",
+   "json": "game/assets/vfx/vfx_drought_to_rain.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 9,
+   "fps": 10,
+   "loop": false,
+   "frameSize": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L03",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_drought_to_rain.js",
+   "desc": "강철이 해원: 가뭄 균열 타일에 단비+청록 물기 번짐"
+  },
+  {
+   "id": "vfx_go_maedeup_idle",
+   "path": "game/assets/vfx/vfx_go_maedeup_idle.png",
+   "json": "game/assets/vfx/vfx_go_maedeup_idle.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 4,
+   "fps": 4,
+   "loop": true,
+   "frameSize": [
+    24,
+    24
+   ],
+   "blend": "normal",
+   "layer": "L08",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_go_maedeup_idle.js",
+   "desc": "고 매듭: 흰 무명천 매듭+먹 스밈, 박자 프레임0"
+  },
+  {
+   "id": "vfx_go_maedeup_untie",
+   "path": "game/assets/vfx/vfx_go_maedeup_untie.png",
+   "json": "game/assets/vfx/vfx_go_maedeup_untie.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 9,
+   "fps": 14,
+   "loop": false,
+   "frameSize": [
+    48,
+    48
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_go_maedeup_untie.js",
+   "desc": "고 매듭 풀림 툭: 흰 플래시+천 두 갈래(add)"
+  },
+  {
+   "id": "vfx_salgwi_hapsin",
+   "path": "game/assets/vfx/vfx_salgwi_hapsin.png",
+   "json": "game/assets/vfx/vfx_salgwi_hapsin.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "license": "project-original (pixelfx MIT tooling)",
+   "status": "done",
+   "frames": 11,
+   "fps": 12,
+   "loop": false,
+   "frameSize": [
+    128,
+    128
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "pixelfx_src": "tools/vendor/pixelfx/src/fx/korean/vfx_salgwi_hapsin.js",
+   "desc": "살귀 합신: 붉은 눈 먹 덩어리들이 소용돌이로 빨려 하나로"
+  }
+ ]
+}

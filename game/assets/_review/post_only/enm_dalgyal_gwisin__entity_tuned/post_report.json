@@ -1,0 +1,116 @@
+{
+ "entity": "enm_dalgyal_gwisin",
+ "mode": "run",
+ "in": "C:\\Users\\김태양\\Desktop\\KoreaLike\\game\\assets\\sprites\\enm_dalgyal_gwisin",
+ "out": "C:\\Users\\김태양\\Desktop\\KoreaLike\\game\\assets\\_review\\post_only\\enm_dalgyal_gwisin__entity_tuned",
+ "tier": "common_s",
+ "frames_in": 24,
+ "sizes_in": {
+  "48x48": 24
+ },
+ "colors_in": 87,
+ "steps": [
+  {
+   "step": "[1] alpha_binarize",
+   "semi_px_fixed": 102,
+   "rule": "a>=128→255, a<128→0"
+  },
+  {
+   "step": "[1] canvas_unify(pivot pad, no resize)",
+   "canvas": 48,
+   "pivot": [
+    24,
+    45
+   ],
+   "clipped_px": 0,
+   "max_shift_x": 1,
+   "max_shift_y": 2,
+   "fallback": "몸 30x44가 사양 캔버스 32·피벗 [16, 29]·여백(사방 2/위 2)에 안 들어감 → 48 캔버스로 패딩(리사이즈 금지). 7.2 조건 1 재생성 대상"
+  },
+  {
+   "step": "[5a] palette_snap",
+   "palette": "entity:enm_dalgyal_gwisin__pilot(9)",
+   "metric": "CIEDE2000 nearest",
+   "lum_fit_scale": 0.72,
+   "px": 13979,
+   "changed_px": 13979,
+   "mean_de": 6.445
+  },
+  {
+   "step": "[5b] outline_1a1a1a",
+   "recolored_px": 253,
+   "rule": "실루엣 외곽(4이웃 투명) 전부 #1a1a1a (sel-out 없음, 16px 아이콘 포함)"
+  },
+  {
+   "step": "[5c] isolated_removal",
+   "replaced_px": 277,
+   "passes": 2,
+   "keep_de": 15.0,
+   "protect": []
+  },
+  {
+   "step": "[6] pivot_align",
+   "canvas": 48,
+   "pivot": [
+    24,
+    45
+   ],
+   "clipped_px": 0,
+   "max_shift_x": 0,
+   "max_shift_y": 0,
+   "fallback": "몸 30x44가 사양 캔버스 32·피벗 [16, 29]·여백(사방 2/위 2)에 안 들어감 → 48 캔버스로 패딩(리사이즈 금지). 7.2 조건 1 재생성 대상"
+  },
+  {
+   "step": "west_policy",
+   "mode": "flip",
+   "removed_original_west": 5,
+   "generated_from_east": 5
+  }
+ ],
+ "canvas": 48,
+ "pivot": [
+  24,
+  45
+ ],
+ "layout": {
+  "spec_canvas": [
+   32
+  ],
+  "target": 32,
+  "pivot_spec": [
+   16,
+   29
+  ],
+  "need_w": 30,
+  "need_h": 44,
+  "fallback": "몸 30x44가 사양 캔버스 32·피벗 [16, 29]·여백(사방 2/위 2)에 안 들어감 → 48 캔버스로 패딩(리사이즈 금지). 7.2 조건 1 재생성 대상"
+ },
+ "colors_out": 8,
+ "frames_out": 24,
+ "files": [
+  "south.png",
+  "east.png",
+  "north.png",
+  "west.png",
+  "move_south_0.png",
+  "move_south_1.png",
+  "move_south_2.png",
+  "move_south_3.png",
+  "move_east_0.png",
+  "move_east_1.png",
+  "move_east_2.png",
+  "move_east_3.png",
+  "move_north_0.png",
+  "move_north_1.png",
+  "move_north_2.png",
+  "move_north_3.png",
+  "move_west_0.png",
+  "move_west_1.png",
+  "move_west_2.png",
+  "move_west_3.png",
+  "spawn_south_0.png",
+  "spawn_south_1.png",
+  "spawn_south_2.png",
+  "spawn_south_3.png"
+ ]
+}

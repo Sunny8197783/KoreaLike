@@ -1,0 +1,71 @@
+{
+ "entity": "vfx_hit_spark_red__pilot",
+ "kind": "vfx",
+ "meta": {
+  "sheet": "C:\\Users\\김태양\\Desktop\\KoreaLike\\game\\assets\\pilot\\vfx_hit_spark_red__pilot\\vfx_hit_spark_red__pilot.png",
+  "tier": "vfx",
+  "frames": 4,
+  "list_entry": null,
+  "palette": "master"
+ },
+ "summary": {
+  "PASS": 5,
+  "FAIL": 0,
+  "WARN": 0,
+  "N/A": 0
+ },
+ "checks": [
+  {
+   "id": "L2",
+   "name": "알파",
+   "status": "PASS",
+   "value": {
+    "semi_px": 0,
+    "blend": "normal"
+   },
+   "detail": "블렌드 지정 시트는 반투명 허용(WARN 기록)"
+  },
+  {
+   "id": "L3",
+   "name": "팔레트 소속",
+   "status": "PASS",
+   "value": {
+    "off_colors": 0,
+    "compliance_pct": 100.0
+   },
+   "detail": "마스터"
+  },
+  {
+   "id": "L4",
+   "name": "색 수",
+   "status": "PASS",
+   "value": {
+    "colors": 5,
+    "budget": 6
+   },
+   "detail": ""
+  },
+  {
+   "id": "L5",
+   "name": "예약 백",
+   "status": "PASS",
+   "value": {
+    "px": 0
+   },
+   "detail": "color_role="
+  },
+  {
+   "id": "L19",
+   "name": "VFX",
+   "status": "PASS",
+   "value": {
+    "sizes": [
+     "16x16"
+    ],
+    "fps_meta": 20,
+    "fps_list": null
+   },
+   "detail": "art_vfx_list 항목 없음"
+  }
+ ]
+}

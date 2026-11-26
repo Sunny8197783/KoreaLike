@@ -1,0 +1,99 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gaekgwi_tether 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_gaekgwi_tether 1",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gaekgwi_tether.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 16,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gaekgwi_tether",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gaekgwi_tether",
+   "name": "Gaekgwi tether",
+   "fps": 8.0,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    0,
+    8
+   ],
+   "columns": 1,
+   "frameWidth": 16,
+   "frameHeight": 8,
+   "blend": "normal",
+   "layer": "L12",
+   "color_role": "B",
+   "max_concurrent": 40,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     3,
+     3
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "16x8->16x16"
+   }
+  }
+ }
+}

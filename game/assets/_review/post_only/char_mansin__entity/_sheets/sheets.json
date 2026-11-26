@@ -1,0 +1,262 @@
+{
+ "char_mansin__rot_south.png": {
+  "anim": "rot",
+  "dir": "south",
+  "frames": 1,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__rot_east.png": {
+  "anim": "rot",
+  "dir": "east",
+  "frames": 1,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__rot_north.png": {
+  "anim": "rot",
+  "dir": "north",
+  "frames": 1,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__rot_west.png": {
+  "anim": "rot",
+  "dir": "west",
+  "frames": 1,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__bingui_south.png": {
+  "anim": "bingui",
+  "dir": "south",
+  "frames": 8,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__death_south.png": {
+  "anim": "death",
+  "dir": "south",
+  "frames": 7,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__gut_dance_south.png": {
+  "anim": "gut_dance",
+  "dir": "south",
+  "frames": 9,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__hurt_south.png": {
+  "anim": "hurt",
+  "dir": "south",
+  "frames": 6,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__hurt_east.png": {
+  "anim": "hurt",
+  "dir": "east",
+  "frames": 6,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__hurt_north.png": {
+  "anim": "hurt",
+  "dir": "north",
+  "frames": 6,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__hurt_west.png": {
+  "anim": "hurt",
+  "dir": "west",
+  "frames": 6,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__idle_south.png": {
+  "anim": "idle",
+  "dir": "south",
+  "frames": 4,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__idle_east.png": {
+  "anim": "idle",
+  "dir": "east",
+  "frames": 4,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__idle_north.png": {
+  "anim": "idle",
+  "dir": "north",
+  "frames": 4,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__idle_west.png": {
+  "anim": "idle",
+  "dir": "west",
+  "frames": 4,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__jakdu_dance_south.png": {
+  "anim": "jakdu_dance",
+  "dir": "south",
+  "frames": 6,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__walk_south.png": {
+  "anim": "walk",
+  "dir": "south",
+  "frames": 8,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__walk_east.png": {
+  "anim": "walk",
+  "dir": "east",
+  "frames": 8,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__walk_north.png": {
+  "anim": "walk",
+  "dir": "north",
+  "frames": 8,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ },
+ "char_mansin__walk_west.png": {
+  "anim": "walk",
+  "dir": "west",
+  "frames": 8,
+  "frame_size": [
+   80,
+   80
+  ],
+  "pivot": [
+   40,
+   74
+  ]
+ }
+}

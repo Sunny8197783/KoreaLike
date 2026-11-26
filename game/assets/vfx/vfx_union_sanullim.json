@@ -1,0 +1,230 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_union_sanullim 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 1",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 2",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 3",
+   "frame": {
+    "x": 0,
+    "y": 192,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 4",
+   "frame": {
+    "x": 192,
+    "y": 192,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 5",
+   "frame": {
+    "x": 384,
+    "y": 192,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 6",
+   "frame": {
+    "x": 0,
+    "y": 384,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sanullim 7",
+   "frame": {
+    "x": 192,
+    "y": 384,
+    "w": 192,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 192
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_union_sanullim.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 576,
+   "h": 576
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_union_sanullim",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_union_sanullim",
+   "name": "Union sanullim (산울림) [x1 placeholder]",
+   "fps": 12.0,
+   "loop": false,
+   "frames": 8,
+   "frameSize": [
+    192,
+    192
+   ],
+   "pivot": [
+    96,
+    96
+   ],
+   "columns": 3,
+   "frameWidth": 192,
+   "frameHeight": 192,
+   "blend": "add",
+   "layer": "L10",
+   "scope": "x1",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     10,
+     6
+    ],
+    "semi_before": 17667,
+    "blend": "add",
+    "size": "keep 192x192"
+   }
+  }
+ }
+}

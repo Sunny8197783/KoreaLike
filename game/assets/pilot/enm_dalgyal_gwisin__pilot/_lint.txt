@@ -1,0 +1,25 @@
+== art_lint: enm_dalgyal_gwisin__pilot  (tier=common_s, canvas=32x32, pivot=[16, 29], palette=strip:art\palettes\enm_dalgyal_gwisin__pilot.png, frames=16)
+  L1   캔버스            PASS  {"32x32": 16}                                                사양 [32]
+  L2   알파             PASS  {"semi_px": 0, "semi_frames_pct": 0.0}                       0<a<255 픽셀 0개 (0.00% of canvas px)
+  L3   팔레트 소속         PASS  {"off_colors": 0, "off_px_pct": 0.0, "compliance_pct": 10... 기준 strip:art\palettes\enm_dalgyal_gwisin__pilot.png, 마스터 최근접 평균 ΔE2000 0.00
+  L4   색 수            PASS  {"entity_colors": 7, "budget": 12, "frame_max": 7}           엔티티 전 프레임·방향 합집합
+  L5   예약 백           PASS  {"px": 0, "colors": []}                                      #f2ece0 ±ΔE2000 6
+  L6   예약 청           N/A   null                                                         플레이어 계열만
+  L7   외곽선            PASS  {"outline_1a1a1a_pct": 100.0, "dark_outer_pct": 100.0}       실루엣 외곽(4이웃 투명) 픽셀 890개 중 #1a1a1a ≥95%
+  L8   여백             PASS  {"left": 8, "right": 8, "top": 8, "bottom": 2}               최소 사방 2 / 위 2. 위반: -
+  L9   피벗             PASS  {"foot_min": 29, "foot_max": 29, "pivot_y": 29, "bad_fram... 모든 프레임 발끝 = 피벗 y ±1
+  L10  방향 중심          PASS  {"worst_range_px": 1.0, "worst_anim": "move", "pivot_x": 16} 애니별 0프레임 방향간 bbox 중심 x 범위: {"move": 1.0}
+  L11  몸 높이           PASS  {"height": 22, "target": [18, 24], "over_pct": 0.0}          move_south_0.png 기준
+  L12  정지↔이동          N/A   {}                                                           위반 방향: -
+  L13  루프 일관성         PASS  {"area_var_pct": 0.4, "area_worst": "move_east", "cx_rang... 루프 애니 ['move']. 위반 0묶음
+  L14  고립 픽셀          PASS  {"isolated_pct": 0.25, "worst_frame_pct": 0.6, "worst_fra... 내부(외곽 제외) 8이웃 같은 RGB 없음 >8% FAIL, 평균 클러스터 <2.5 WARN
+  L15  미러 정책          PASS  {"west_files": 4, "flip_of_east": 4, "independent": 0}       독립 생성 west는 FAIL(flip_h(E)와 픽셀 동일한 파생본은 허용, --strict-west면 전부 FAIL)
+  L16  방향 의상 일관성      PASS  {"S-E": 1.0, "S-N": 1.0}                                     정지 프레임 내부 상위 8색(마스터 스냅) 겹침 <75% WARN → G0 육안 확인
+  L17  광원             PASS  0.067                                                        move_south_0.png 좌반−우반 평균 상대휘도(추정 지표)
+  L18  명도 띠           PASS  {"max_lum": 0.433, "cap": 0.45, "px_over": 0}                적 몸 상대휘도 상한
+  L19  VFX            N/A   null                                                         VFX 시트 입력에서만
+  L20  import 회귀      PASS  {"import_files": 16, "bad": 0}                               
+  L21  앵커             N/A   null                                                         앵커 필수 대상 아님(--require-anchors로 강제)
+  L22  workbench 점수   PASS  100.0                                                        목표 ≥85
+  L23  끓음             PASS  {"move_south": {"max_pct": 17.4, "raw_max_pct": 17.4}, "m... 인접 프레임 변경(±1px 정렬 보정) idle ≤25%, 이동 ≤45%, idle_0↔이동_0 ≤20%. 최악 move_east. 위반: -
+  -> PASS 19 / FAIL 0 / WARN 0 / N/A 4

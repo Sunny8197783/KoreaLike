@@ -1,0 +1,19 @@
+{
+  "stage": "stage_guksadang",
+  "tile_size": 32,
+  "format": "PixelLab Wang tileset15 (4x4, 16 tiles). Slice with each tile's bounding_box in <id>.metadata.json; pick tiles by corners NW/NE/SW/SE (lower/upper).",
+  "view": "low top-down",
+  "terrains": {
+    "earth": {"base_tile_id": "fcac3d72-ef59-4c77-94eb-95db91deda17", "desc": "굿당 마당 흙 (공용 흙 베이스)", "walkable": true},
+    "grass": {"base_tile_id": "4666e3c5-7fd3-4374-8ffd-098819f7eba8", "desc": "산풀+들꽃", "walkable": true},
+    "stone_pave": {"base_tile_id": "ee97bad8-0248-4751-b3a3-9615dbbb609c", "desc": "화강암 판석 포장", "walkable": true},
+    "needles": {"base_tile_id": "0afc7a2a-a14d-4789-b656-88ff4b2495ee", "desc": "솔잎 깔린 흙", "walkable": true},
+    "granite": {"base_tile_id": "0f664f1b-6f08-4775-9e20-4f966b89063e", "desc": "노출 화강암 바닥(보행 가능)", "walkable": true}
+  },
+  "sets": [
+    {"id": "tile_guksadang_earth_grass", "lower": "earth", "upper": "grass", "pixellab_id": "bddf3b2b-b769-462a-84c8-1d31b75e9c57", "note": "기존 art/tilesets/stage1_earth_grass 개명"},
+    {"id": "tile_guksadang_earth_stone", "lower": "earth", "upper": "stone_pave", "pixellab_id": "cd437cba-4dab-4e64-b743-667a1c53a913", "note": "기존 stage1_earth_stone 개명. 회색 흙 팔레트를 공용 흙 팔레트로 리맵, 전면-흙 타일은 earth_grass 것과 바이트 동일로 교체 (원본: art/tilesets/tile_guksadang_earth_stone_greyearth_orig.png)"},
+    {"id": "tile_guksadang_earth_needles", "lower": "earth", "upper": "needles", "pixellab_id": "cb1cd359-b46b-4bfe-8e43-a5b7ddcf2b6f", "note": "lower_base_tile_id 체이닝 — 흙 타일 바이트 동일 검증. 솔잎 채도/명도 밤 톤으로 낮춤 (원본: art/tilesets/tile_guksadang_earth_needles_raw.png)"},
+    {"id": "tile_guksadang_grass_rock", "lower": "grass", "upper": "granite", "pixellab_id": "4645b7ba-a2b4-4571-8343-d7d2700ffe44", "note": "grass 베이스 체이닝 — 풀 타일 바이트 동일 검증. 화강암 명도 0.78배 (원본: art/tilesets/tile_guksadang_grass_rock_raw.png)"}
+  ]
+}

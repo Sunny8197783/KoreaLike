@@ -1,0 +1,1002 @@
+{
+  "_meta": {
+    "owner_section": "14-tech-production",
+    "doc": "design/14-tech-production.md (4.2 데이터 테이블 레지스트리, 3.13 RNG 스트림 레지스트리)",
+    "version": "0.3",
+    "updated": "2026-11-21",
+    "changelog": [
+      "0.2: 실제 data/ 디렉터리 기준으로 재작성. combat_core/characters/weapons = exists. stages/spawn_tables/trials/canon_ids/loc csv 삭제. waves_<stage>.json 패턴, data/narrative/*.json 4종 추가. 권능 검증 designed 5 / visible 4. weapons archetype_id enum 요청. canon_ids.json 대신 01 문서 ID 추출 스크립트. rng_streams 레지스트리 추가.",
+      "0.3 (캐논 v1.2, 2026-11-21): C-37 신규 파일 등록(companions, stages, spawn_tables, 진도·동해안 waves_<stage>, balance_targets). 실제 data/에 있으나 빠져 있던 canon_ids.json(01)·narrative/cast_canon.json(10) 등록. D-01 시련 상수 검사(4회 180/390/750/930초, 30초 + DESCEND 8초)로 교체. D-21 양자화 phase_carry·그리드 일치, D-45 적 탄 600·구슬 병합 300, D-01 시련 슬롯 교차 검사 추가. C-05 st_gyeongak 정본. C-22 별칭 사용 경고, C-34 문서 링크 검사를 검증 파이프라인에 추가. D-44 load_target을 GDScript 1차로.",
+      "0.3 잔존 정리(캐논 v1.2, 2026-11-21): xc_quantize.current → phase_carry·grid_div = geori_grid 일치, enemies 상태 키 note 사실 정정(st_gyeongak·st_gawi 반영 완료, st_mulgwisin_son만 combat_core 미등록), 구 ID boss_yeoksin·elite_byeolsang_sonnim 규칙을 canon_ids.json aliases 전용으로(01 §8.1.1), xc_gawi mirrors·current 갱신.",
+      "캐논 v1.2 / 16 C·D 반영 (2026-11-22): cast_canon note 문옥단, planned 웨이브 파일 표시명 '남도 갯마을 씻김굿판'"
+    ],
+    "status_values": [
+      "exists",
+      "pattern_exists",
+      "requested_field",
+      "planned"
+    ],
+    "status_notes": {
+      "exists": "파일이 data/에 있다. 소유 섹션 파일이 원본",
+      "pattern_exists": "파일명 패턴. 적어도 1개 파일이 있다(예: waves_stage1.json)",
+      "requested_field": "파일은 있으나 검증에 필요한 필드를 소유 섹션에 요청한 상태. 필드가 생기기 전까지 해당 규칙은 warn",
+      "planned": "캐논 8.3이 소유를 지정했으나 아직 파일이 없다(C-37). 파일이 생기기 전까지 경로 존재 검사는 warn, 생기면 exists로 바꾸고 error로 올린다"
+    },
+    "load_values": [
+      "boot",
+      "lobby_enter",
+      "stage_enter",
+      "build_time",
+      "test_fixture",
+      "tools_ci"
+    ],
+    "severity_values": {
+      "error": "머지 차단",
+      "warn": "머지 허용, PR 코멘트. 소유 섹션 수정 대기 중인 규칙"
+    },
+    "rule": "이미 있는 파일은 소유 섹션 파일이 원본. 이 레지스트리는 이름·소유자·적재 시점·기술 검증 규칙만 고정한다. 새 data 파일은 이 레지스트리에 먼저 등록해야 CI가 읽는다(미등록 파일 = error).",
+    "canon": "v1.2"
+  },
+  "id_source": {
+    "canon_ids_json": "data/canon_ids.json (있음, 01-concept-and-canon 소유)",
+    "canon_ids_json_role": "aliases(구 ID → 정본 ID, 캐논 8.1.1 별칭 표와 같음), prefix_aliases, doc_map(파일명 치환표)의 데이터 원본. 구 ID는 이 파일 aliases와 캐논 8.1.1 표에만 남긴다(D-03, C-22)",
+    "replacement": "tools/extract_canon_ids.py (ID 목록 대조용으로 유지)",
+    "input": "design/01-concept-and-canon.md 4장(레지스트리 표)과 8.1(접두사 표)",
+    "method": "마크다운 표·본문에서 `<접두사>_[a-z0-9_]+` 패턴을 추출하고 8.1 접두사 표에 있는 접두사만 남긴다. 결과 build/canon_ids.gen.json(커밋하지 않음)을 data/canon_ids.json ids와 대조한다",
+    "section_prefixes": {
+      "st_": "상태이상. 원본 02-core-loop-combat 11.3 / data/combat_core.json status (sts_ 금지)",
+      "rng_": "RNG 스트림. 원본 이 파일 rng_streams",
+      "ev_ / EV_": "텔레메트리·이벤트. 원본 data/tech/telemetry_events.json, 14 §3.11",
+      "pwr_ / ptype_": "신령 권능. 원본 data/deities.json",
+      "arc_": "무구 행동 아키타입. 원본 14 §3.5.1",
+      "jd_": "장단. 원본 data/audio_jangdan.json"
+    },
+    "section_prefix_rule": "섹션이 만든 [NEW] 접두사는 section_prefixes에 등록된 것만 참조 무결성 검사의 대상 ID로 인정한다. 미등록 접두사 = warn",
+    "unknown_canon_prefix": "error"
+  },
+  "tables": [
+    {
+      "path": "data/canon_ids.json",
+      "status": "exists",
+      "owner": "01-concept-and-canon",
+      "load": "build_time",
+      "note": "별칭(aliases)·접두사 별칭·doc_map 원본. 구 ID가 남는 유일한 데이터 파일",
+      "validation": [
+        {
+          "rule": "aliases 값이 ids에 있는 정본 ID",
+          "severity": "error"
+        },
+        {
+          "rule": "doc_map.files가 design/ 실제 파일명과 일치(15는 planned)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/combat_core.json",
+      "status": "exists",
+      "owner": "02-core-loop-combat",
+      "prefix": "상수, st_",
+      "load": "boot",
+      "load_target": "soulsim 상수 블록(1차 GDScript, D-44)",
+      "validation": [
+        {
+          "rule": "캐논 상수 일치: han.pullil_threshold 0.35, 기색 12초. 일반 잡귀 맺힘 복귀 한 45% + 3초 비적대, 기색 배회 이동 ×0.4·접촉 ×0.3(D-20, 원본 07 enemies.json global_rules)",
+          "severity": "warn",
+          "note": "02 정리 대기(현재 60%). 정리되면 error"
+        },
+        {
+          "rule": "status 키는 모두 st_ 접두사",
+          "severity": "error"
+        },
+        {
+          "rule": "sim.rng_streams의 모든 값이 rng_streams 레지스트리 ID(또는 alias)",
+          "severity": "warn"
+        },
+        {
+          "rule": "jangdan.quantize_rule = \"phase_carry\"(D-21/C-06). carry_over·carry_cap 키 금지",
+          "severity": "warn",
+          "note": "02 정리 대기. 정리되면 error"
+        }
+      ]
+    },
+    {
+      "path": "data/stats.json",
+      "status": "exists",
+      "owner": "05-stats-passives",
+      "prefix": "stat_",
+      "load": "boot",
+      "load_target": "StatBlock",
+      "validation": [
+        {
+          "rule": "stats 25개, floor/cap이 캐논 4.5와 일치",
+          "severity": "error"
+        },
+        {
+          "rule": "_meta.ops = 5종(flat, add_pct, mult, floor_override, cap_override)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/passives.json",
+      "status": "exists",
+      "owner": "05-stats-passives",
+      "prefix": "psv_",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "passives 16개, _meta.rules.max_level 5, levels 배열 길이 5",
+          "severity": "error"
+        },
+        {
+          "rule": "modifiers[].op ∈ stats.json _meta.ops",
+          "severity": "error"
+        },
+        {
+          "rule": "pair_weapons·evolutions[].weapon/evo가 weapons.json에 존재",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/characters.json",
+      "status": "exists",
+      "owner": "03-characters",
+      "prefix": "char_",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "start_weapons의 모든 ID가 weapons.json weapons[].id에 존재",
+          "severity": "error"
+        },
+        {
+          "rule": "momju가 deities.json deities[].id에 존재",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/weapons.json",
+      "status": "requested_field",
+      "owner": "04-weapons-evolution",
+      "prefix": "wpn_, evo_, union_",
+      "load": "boot",
+      "load_target": "아키타입 파라미터 표(soulsim, 1차 GDScript)",
+      "validation": [
+        {
+          "rule": "weapons 20, evolutions 20, unions 6 (캐논 4.3)",
+          "severity": "error"
+        },
+        {
+          "rule": "weapons[].max_level 8, levels 길이 8",
+          "severity": "error"
+        },
+        {
+          "rule": "weapons[].archetype_id ∈ 14 §3.5.1 13종 enum. 기존 archetype 필드는 자유 텍스트 설명으로 유지. evolutions[]는 archetype_id 생략 시 recipe 기반 무구의 값을 상속, unions[]는 arc_composite 고정",
+          "severity": "warn",
+          "note": "archetype_id 필드 추가를 04에 요청(14 §16.2). 필드가 생기면 error로 올린다"
+        }
+      ],
+      "archetype_enum": [
+        "arc_boomerang",
+        "arc_spin_melee",
+        "arc_thrust",
+        "arc_ground_burst",
+        "arc_beam_line",
+        "arc_aim_nearest",
+        "arc_cone",
+        "arc_trail_drop",
+        "arc_pulse_self",
+        "arc_aura",
+        "arc_orbit",
+        "arc_scatter",
+        "arc_zone"
+      ],
+      "archetype_enum_union_only": [
+        "arc_composite"
+      ]
+    },
+    {
+      "path": "data/deities.json",
+      "status": "exists",
+      "owner": "06-deities-possession",
+      "prefix": "deity_, avatar_, face_(조합 키 deity_*__wieom/gaho), pwr_, ptype_, grm_",
+      "load": "boot",
+      "note": "시련(위엄 화신 avatar, 가호 과제 gaho_task, 시련 시각·제한 시간 constants)이 이 파일에 들어 있다. 별도 trials.json은 만들지 않는다",
+      "validation": [
+        {
+          "rule": "deities 6개, 각 faces에 wieom·gaho 2개",
+          "severity": "error"
+        },
+        {
+          "rule": "권능: power_rules.designed_per_deity = 5, visible_per_deity = 4. 각 deity.powers 길이 = designed_per_deity(5). 점지 노출 수는 visible_per_deity(4)를 넘지 않음",
+          "severity": "error"
+        },
+        {
+          "rule": "powers[].type ∈ power_types(ptype_ 5종)",
+          "severity": "error"
+        },
+        {
+          "rule": "gaho_task.grammar[] ∈ grm_ 5종(ring, hold, connect, escort, install)",
+          "severity": "error"
+        },
+        {
+          "rule": "constants.trial_times_s = [180, 390, 750, 930], trial_duration_s = 30.0, descend_max_s = 8.0 (캐논 v1.2 D-01/C-01). 시련 4회",
+          "severity": "error"
+        },
+        {
+          "rule": "rng_stream 값이 rng_streams 레지스트리 ID",
+          "severity": "error"
+        },
+        {
+          "rule": "시련 면 결정은 위엄·가호 두 게이지 동시 진행, 먼저 찬 쪽(D-01). constants.face_declaration이 다른 방식이면 경고",
+          "severity": "warn",
+          "note": "06 정리 대기"
+        }
+      ]
+    },
+    {
+      "path": "data/enemies.json",
+      "status": "exists",
+      "owner": "07-enemies-bosses",
+      "prefix": "enm_, elite_, mboss_, boss_, chaser_, st_",
+      "load": "boot",
+      "load_target": "EnemyStore 타입 표",
+      "validation": [
+        {
+          "rule": "티어별 결과 필드 필수: enemies·minions·midbosses = haewon_result + toechi_result, elites = toechi_path + vanish_result, bosses = form_sal + form_han",
+          "severity": "error"
+        },
+        {
+          "rule": "status_profiles·statuses_on_player 키는 st_ 접두사이고 combat_core.json status 키와 같은 ID(별칭 금지)",
+          "severity": "warn",
+          "note": "정본 st_gyeongak(C-05) 반영 완료. st_gongpo는 aliases와 alias_old에만(enemies·weapons·stats.json 키는 st_gyeongak). st_gawi_nullim → st_gawi 반영 완료(enemies.json statuses_on_player 키 st_gawi, st_gawi_nullim은 aliases·alias_old에만). 남은 건: st_mulgwisin_son은 enemies.json statuses_on_player에만 있고 combat_core.json status에 없음 → 02 등록 대기"
+        },
+        {
+          "rule": "caps.common_active ≤ perf_budgets enemy_hard_cap(2,500)",
+          "severity": "error"
+        },
+        {
+          "rule": "caps.enemy_projectiles(600)·wonhon_orbs(300)이 런타임 상한 원본(07 §11.1, D-45). perf_budgets의 1,500/2,000은 기술 하드 캡이며 이 값과 비교하지 않는다",
+          "severity": "error"
+        },
+        {
+          "rule": "손님신 관련 정본 ID: boss_yeokryeo, elite_yeokgwi_ttae, npc_byeolsang_sonnim(D-03). 구 ID boss_yeoksin·elite_byeolsang_sonnim은 data/canon_ids.json aliases에만(다른 테이블 등장 시 error, 캐논 01 §8.1.1 치환 원칙)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/waves_<stage>.json",
+      "status": "pattern_exists",
+      "existing": [
+        "data/waves_stage1.json"
+      ],
+      "owner": "08-stages-waves",
+      "prefix": "stage_, geori_, mode_",
+      "load": "stage_enter",
+      "note": "스테이지당 파일 1개. 파일명 접미사는 순번(stage1, stage2 …, v1 스테이지 3개: D-09)이고 stage_id 필드가 원본 키. 스테이지 메타는 data/stages.json, 스폰 풀은 data/spawn_tables.json(08, C-37)",
+      "validation": [
+        {
+          "rule": "stage_id가 캐논 stage_ ID, mode_id가 캐논 mode_ ID",
+          "severity": "error"
+        },
+        {
+          "rule": "director.cap_alive + director.event_cap_bonus ≤ enemy_hard_cap(2,500)",
+          "severity": "error"
+        },
+        {
+          "rule": "minutes[].pool[].id, midboss.pool[], boss가 enemies.json에 존재",
+          "severity": "error"
+        },
+        {
+          "rule": "모든 rng_stream 값이 rng_streams 레지스트리 ID",
+          "severity": "error"
+        },
+        {
+          "rule": "duration_sec 1200, forced_saja_sec 1380 (캐논 3.4)",
+          "severity": "error"
+        },
+        {
+          "rule": "trials 슬롯 = deities.json constants.trial_times_s(4회). 5회 구조 금지(D-01). 18:00 신령 합일 = 모신 신령 전원",
+          "severity": "warn",
+          "note": "waves_stage1.json은 08 정리 대기(현재 5슬롯)"
+        }
+      ],
+      "planned": [
+        "남도 갯마을 씻김굿판(stage_jindo_ssitgim) 웨이브 파일",
+        "동해안(stage_east_sea_byeolsin) 웨이브 파일"
+      ]
+    },
+    {
+      "path": "data/stages.json",
+      "status": "planned",
+      "owner": "08-stages-waves",
+      "prefix": "stage_",
+      "load": "boot",
+      "note": "C-37. 스테이지 메타(웨이브 파일 경로, use_flow_field 등). v1 스테이지 3(D-09)",
+      "validation": [
+        {
+          "rule": "stages[].id가 캐논 stage_ ID. 별칭 stage_island_asylum 금지(정본 stage_island_bungyo, C-22)",
+          "severity": "error"
+        },
+        {
+          "rule": "각 stage의 웨이브 파일이 data/waves_<stage>.json으로 존재",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/spawn_tables.json",
+      "status": "planned",
+      "owner": "08-stages-waves",
+      "load": "stage_enter",
+      "note": "C-37. 스폰 풀·가중치. 08 스폰 디렉터가 읽는다",
+      "validation": [
+        {
+          "rule": "풀의 적 ID가 enemies.json에 존재. 구 ID(boss_yeoksin, elite_byeolsang_sonnim) 금지",
+          "severity": "error"
+        },
+        {
+          "rule": "rng_stream 값이 rng_streams 레지스트리 ID",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/companions.json",
+      "status": "planned",
+      "owner": "02-core-loop-combat",
+      "prefix": "comp_",
+      "load": "boot",
+      "note": "C-37. 동행령",
+      "validation": [
+        {
+          "rule": "comp_dongja는 기색 예고·귀띔만, 전투 판정 필드 없음(D-27/C-28)",
+          "severity": "error"
+        },
+        {
+          "rule": "companions[].id가 캐논 comp_ ID",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/balance_targets.json",
+      "status": "exists",
+      "owner": "15-balance",
+      "owner_note": "15-balance.md 신설 전까지 14가 02·04·05·07·09 목표치를 모아 임시 작성(캐논 8.3, C-37)",
+      "load": "tools_ci",
+      "load_target": "헤드리스 봇 리포트(14 §7.2)",
+      "validation": [
+        {
+          "rule": "targets 각 항목의 source가 실제 문서 번호(01~15)를 가리킴",
+          "severity": "warn"
+        },
+        {
+          "rule": "status ∈ _meta.status_values",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/meta_economy.json",
+      "status": "exists",
+      "owner": "09-meta-economy",
+      "prefix": "hub_, cur_, ladder_, myeongdu",
+      "load": "lobby_enter",
+      "validation": [
+        {
+          "rule": "가격 ≥ 0, 노드 선행 조건 순환 없음",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/achievements.json",
+      "status": "exists",
+      "owner": "09-meta-economy",
+      "prefix": "ach_",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "Steam 업적 API 이름과 1:1",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/save_profile.example.json",
+      "status": "exists",
+      "owner": "09-meta-economy",
+      "load": "test_fixture",
+      "validation": [
+        {
+          "rule": "data/tech/save_profile.schema.json 통과",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/audio_jangdan.json",
+      "status": "exists",
+      "owner": "12-audio",
+      "prefix": "jd_, geori_",
+      "load": "boot",
+      "load_target": "BeatClock 템포 맵",
+      "validation": [
+        {
+          "rule": "tiers[].bpm_base > 0, bpm_heung 길이 ∈ {1, 3}(흥 3단계 또는 고정 템포)",
+          "severity": "error"
+        },
+        {
+          "rule": "tiers[].weapon_grid_div는 1 이상 정수, weapon_grid_ms ≥ 캐논 하한(12-audio가 정함)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/audio_music_layers.json",
+      "status": "exists",
+      "owner": "12-audio",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/audio_mix.json",
+      "status": "exists",
+      "owner": "12-audio",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "voices 예산 합 ≤ 64",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/audio_sfx.json",
+      "status": "exists",
+      "owner": "12-audio",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "sfx[].id 중복 없음",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/art_palette.json",
+      "status": "exists",
+      "owner": "13-art-direction",
+      "load": "build_time",
+      "validation": [
+        {
+          "rule": "예약색 규칙(캐논 6.1)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/art_render_layers.json",
+      "status": "exists",
+      "owner": "13-art-direction",
+      "load": "build_time",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/art_anim_specs.json",
+      "status": "exists",
+      "owner": "13-art-direction",
+      "load": "build_time",
+      "validation": [
+        {
+          "rule": "entities 키가 캐논 ID",
+          "severity": "warn"
+        }
+      ]
+    },
+    {
+      "path": "data/art_vfx_list.json",
+      "status": "exists",
+      "owner": "13-art-direction",
+      "load": "build_time",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/ui_hud_layout.json",
+      "status": "exists",
+      "owner": "11-ux-ui-hud",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/accessibility_options.json",
+      "status": "exists",
+      "owner": "11-ux-ui-hud",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/input_bindings.json",
+      "status": "exists",
+      "owner": "11-ux-ui-hud",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "게임플레이 액션 = 이동 1개 + 메뉴(캐논 P5)",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/onboarding_hints.json",
+      "status": "exists",
+      "owner": "11-ux-ui-hud",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/feedback_matrix.json",
+      "status": "exists",
+      "owner": "11-ux-ui-hud",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/narrative/cast_canon.json",
+      "status": "exists",
+      "owner": "10-narrative-world",
+      "load": "boot",
+      "note": "무당 개인 이름·나이 정본(C-04): 한서리 31 / 강무진 38 / 문옥단 64 / 윤연이 20 / 고해월 47 / 최도경 75",
+      "validation": [
+        {
+          "rule": "characters.json char_*.lore_name이 이 파일과 일치",
+          "severity": "warn",
+          "note": "03 정리 대기. 정리되면 error"
+        }
+      ]
+    },
+    {
+      "path": "data/narrative/gongsu_lines.json",
+      "status": "exists",
+      "owner": "10-narrative-world",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "lines[] 한국어 본문 26자 이하(10 §6), 자막 1줄 픽셀 폭 300px 이하",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/narrative/story_beats.json",
+      "status": "exists",
+      "owner": "10-narrative-world",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "beats 트리거 ID가 캐논·섹션 ID",
+          "severity": "warn"
+        }
+      ]
+    },
+    {
+      "path": "data/narrative/sayeon_examples.json",
+      "status": "exists",
+      "owner": "10-narrative-world",
+      "load": "boot",
+      "validation": [
+        {
+          "rule": "entries[].id가 enemies.json의 어느 티어(enemies·elites·midbosses·bosses)에 존재",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/narrative/loc_glossary.json",
+      "status": "exists",
+      "owner": "10-narrative-world",
+      "load": "build_time",
+      "note": "번역 고정 용어표. 로컬라이즈 문자열 원본(CSV/Translation)은 아직 없다. 생기면 이 레지스트리에 먼저 등록한다",
+      "validation": [
+        {
+          "rule": "terms[] 키 중복 없음, banned_words가 다른 narrative 파일 본문에 없음",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/perf_budgets.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/data_tables_registry.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "tables[].path가 실제 파일(또는 패턴 매치 ≥ 1)과 일치, data/ 아래 미등록 JSON 0개",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/save_profile.schema.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "JSON Schema 2020-12",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/telemetry_events.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/milestones.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "data/tech/risk_register.json",
+      "status": "exists",
+      "owner": "14-tech-production",
+      "load": "tools_ci",
+      "validation": [
+        {
+          "rule": "JSON 유효",
+          "severity": "error"
+        }
+      ]
+    }
+  ],
+  "cross_table_checks": {
+    "_note": "같은 파라미터를 두 테이블이 적는 경우, 소유자 값이 원본이고 나머지는 같아야 한다. 소유 섹션이 정리하기 전까지 warn, 정리 후 error",
+    "ownership": {
+      "player_side": "02-core-loop-combat / data/combat_core.json (피격 무적, 피격 처리 순서, 명줄 부활, 플레이어 디버프)",
+      "enemy_resistance": "07-enemies-bosses / data/enemies.json (등급별 상태 배율, 재부여 면역, 둔화 하한)"
+    },
+    "checks": [
+      {
+        "id": "xc_iframe",
+        "owner": "data/combat_core.json player.iframe_hit / iframe_dodge / iframe_shield",
+        "mirrors": [
+          "05-stats-passives 6.x 표기"
+        ],
+        "severity": "warn",
+        "current": "combat_core 0.40/0.20 = 02. 05가 0.30·회피 무적 없음 → 05가 참조로"
+      },
+      {
+        "id": "xc_hit_order",
+        "owner": "02-core-loop-combat 12.1 (무적 → 접신 회피(접촉만) → 대신 맞기 → 경문 각인 → 신복)",
+        "mirrors": [
+          "07-enemies-bosses 2.4",
+          "14 §3.2.1 16단계(참조만)"
+        ],
+        "severity": "warn",
+        "current": "02·05 = 회피 → 대신 맞기, 07 2.4 = 반대. 14는 v0.2에서 참조로 바꿈"
+      },
+      {
+        "id": "xc_revive_wave_radius",
+        "owner": "data/combat_core.json revive.wave_radius_u (6.0)",
+        "mirrors": [
+          "data/passives.json psv_myeongjusil.lv5_completion.params.default_wave_radius_units"
+        ],
+        "severity": "warn",
+        "current": "passives.json default_wave_radius_units 5.0, 05 문서 5u → 05가 맞출 것"
+      },
+      {
+        "id": "xc_slow_floor",
+        "owner": "data/enemies.json status_profiles.st_dunhwa (이속 하한 30% = 감속 상한 70%)",
+        "mirrors": [
+          "data/combat_core.json status.st_dunhwa.floor",
+          "04 2.9",
+          "data/deities.json 감속 관련 상한"
+        ],
+        "severity": "warn",
+        "current": "combat_core floor 0.4, enemies 30%, 04 감속 상한 70%, deities C5 60% → 이속 하한 30%로 통일"
+      },
+      {
+        "id": "xc_elite_fear",
+        "owner": "data/enemies.json status_profiles (elite 배율, elite_plus_post_immunity_s)",
+        "mirrors": [
+          "data/combat_core.json status.st_gyeongak.elite_mult / dr_immune (정본 ID st_gyeongak, 별칭 st_gongpo: C-05)"
+        ],
+        "severity": "warn",
+        "current": "combat_core dr_immune 2.0 / enemies elite_plus_post_immunity_s 1.0 → 07 값이 원본"
+      },
+      {
+        "id": "xc_gawi",
+        "owner": "data/combat_core.json status.st_gawi (플레이어 디버프)",
+        "mirrors": [
+          "data/enemies.json statuses_on_player.st_gawi"
+        ],
+        "severity": "warn",
+        "current": "일치(v1.2 반영 완료): enemies statuses_on_player.st_gawi slow_pct 40·duration 1.5·post_immunity 3 = combat_core st_gawi move_slow 0.4·duration 1.5·dr_immune 3.0. st_gawi_nullim은 alias_old에만"
+      },
+      {
+        "id": "xc_myeongjul_thread_cap",
+        "owner": "data/combat_core.json pickups.pick_myeongjul_sil.max_per_run (1)",
+        "mirrors": [
+          "data/enemies.json drops.pick_myeongjul_sil.max_per_run (현재 2)",
+          "data/waves_<stage>.json objects run_cap (현재 1)"
+        ],
+        "severity": "warn"
+      },
+      {
+        "id": "xc_status_prefix",
+        "owner": "st_ (combat_core.json status)",
+        "mirrors": [
+          "모든 data/*.json",
+          "design/*.md"
+        ],
+        "rule": "sts_ 접두사 0건",
+        "severity": "error",
+        "current": "data/*.json 0건. design/04-weapons-evolution.md에 sts_ 5건(문서는 리뷰로 정리)"
+      },
+      {
+        "id": "xc_enemy_projectile_cap",
+        "owner": "data/enemies.json caps.enemy_projectiles (600, 07 §11.1 런타임 원본: D-45)",
+        "mirrors": [
+          "data/combat_core.json caps.enemy_projectiles"
+        ],
+        "severity": "error",
+        "current": "일치(600). combat_core.json caps.enemy_projectiles = 600 (02 v0.11, D-45)"
+      },
+      {
+        "id": "xc_orb_merge",
+        "owner": "data/combat_core.json xp.orb_merge_count (300) = data/enemies.json caps.wonhon_orbs (300)",
+        "mirrors": [
+          "data/tech/perf_budgets.json caps.orb_merge_runtime_ref"
+        ],
+        "severity": "error",
+        "note": "perf_budgets의 orb_tech_hard_cap(1,500)·씬 C 2,000은 기술 하드 캡이며 런타임 값이 아니다(D-45)"
+      },
+      {
+        "id": "xc_quantize",
+        "owner": "05 §3.2.2a phase_carry (D-21)",
+        "mirrors": [
+          "data/combat_core.json jangdan.quantize_rule",
+          "data/weapons.json globals.quantization.mode",
+          "data/stats.json",
+          "data/audio_jangdan.json"
+        ],
+        "rule": "quantize_rule = phase_carry. 그리드는 2분박 1/2박, 3분박 1/3박(D-18): weapons.json geori_grid = combat_core.json jangdan.geori[].grid_div",
+        "severity": "warn",
+        "current": "phase_carry, grid_div = geori_grid 일치(v1.2 반영 완료)"
+      },
+      {
+        "id": "xc_trial_schedule",
+        "owner": "data/deities.json constants.trial_times_s [180,390,750,930], trial_duration_s 30, descend_max_s 8 (D-01)",
+        "mirrors": [
+          "data/waves_<stage>.json trials",
+          "data/meta_economy.json uiroe.deity_guarantee_slot (\"06:30\")"
+        ],
+        "severity": "warn",
+        "current": "waves_stage1.json 5슬롯, meta_economy \"09:00\" → 08·09 정리 대기"
+      }
+    ]
+  },
+  "rng_streams": {
+    "_doc": "14 §3.13. 모든 문서·데이터의 RNG 스트림 이름은 이 목록의 id를 그대로 쓴다. alias는 마이그레이션용이며 새로 쓰지 않는다",
+    "algorithm": "PCG32 (자체 구현, 엔진 내장 RNG 금지, 첫 8출력 고정 단위 테스트)",
+    "seeding": "stream_seed = hash64(run_seed, id). 스트림을 추가·삭제해도 다른 스트림의 시퀀스가 바뀌지 않는다",
+    "kinds": {
+      "sequential": "PCG32 상태(state, inc)를 이어서 소비한다. 스냅샷에 상태를 저장한다",
+      "keyed": "호출마다 hash64(run_seed, id, key...)로 새로 파생한다. 상태가 없으므로 스냅샷에는 key 입력만 있으면 된다(그 입력은 이미 게임 상태에 있다)"
+    },
+    "save_format": "run_suspend/run_autosnap의 rng_streams = { <id>: \"<state_hex>:<inc_hex>\" } (sequential만)",
+    "streams": [
+      {
+        "id": "rng_chunk",
+        "kind": "keyed",
+        "key": "cx, cy",
+        "owner": "08-stages-waves 2.3.1",
+        "consumers": "청크 지형·오브젝트 배치",
+        "affects_sim": true,
+        "in_snapshot": "no (키 파생, 청크 좌표만 필요)",
+        "aliases": []
+      },
+      {
+        "id": "rng_spawn",
+        "kind": "sequential",
+        "owner": "08-stages-waves 2.3.1",
+        "consumers": "일반 스폰 위치·종 선택, 정예 승격, 원귀 회귀 구성",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "RNG_SPAWN"
+        ]
+      },
+      {
+        "id": "rng_event",
+        "kind": "sequential",
+        "owner": "08-stages-waves 2.3.1",
+        "consumers": "맵 이벤트 방향·변형, 안개·물살·바람 방향",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": []
+      },
+      {
+        "id": "rng_mboss",
+        "kind": "sequential",
+        "owner": "08-stages-waves 2.3.1",
+        "consumers": "10:00 중간보스 풀 선택",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "07 4.8의 중간보스용 rng_spawn"
+        ]
+      },
+      {
+        "id": "rng_ai",
+        "kind": "sequential",
+        "owner": "07-enemies-bosses 4.8",
+        "consumers": "적·정예·중간보스·보스·화신 행동 선택과 패턴 분기",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": []
+      },
+      {
+        "id": "rng_combat",
+        "kind": "sequential",
+        "owner": "02-core-loop-combat D7",
+        "consumers": "결단타, 접신 회피(PRD 누적값은 플레이어 상태로 저장), 권능·무구 발동 확률, 산탄 산포",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "combat",
+          "RNG_COMBAT"
+        ]
+      },
+      {
+        "id": "rng_drop",
+        "kind": "sequential",
+        "owner": "02-core-loop-combat D7",
+        "consumers": "처치 드롭, 파괴 오브젝트 드롭, 썰물 보물",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "drop",
+          "RNG_DROP",
+          "rng_loot(오브젝트 드롭 부분)"
+        ]
+      },
+      {
+        "id": "rng_jeomji",
+        "kind": "keyed",
+        "key": "level, reroll_index",
+        "owner": "05-stats-passives 10",
+        "consumers": "점지 후보·다시 묻기(재점)",
+        "affects_sim": true,
+        "in_snapshot": "no (키 파생, level·reroll_index는 플레이어 상태)",
+        "aliases": [
+          "jeomji",
+          "RNG_JEOMJI"
+        ]
+      },
+      {
+        "id": "rng_deity",
+        "kind": "sequential",
+        "owner": "06-deities-possession 4",
+        "consumers": "시련 후보 추첨·좌우 배치·재추첨, 시련 배치(문법 오브젝트 위치)",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "rng_trial",
+          "RNG_TRIAL",
+          "09 19.4의 '시련'"
+        ]
+      },
+      {
+        "id": "rng_box",
+        "kind": "sequential",
+        "owner": "02-core-loop-combat D7",
+        "consumers": "길흉 상자·넋함 결과",
+        "affects_sim": true,
+        "in_snapshot": "yes",
+        "aliases": [
+          "chest",
+          "RNG_BOX",
+          "rng_loot(상자 부분)"
+        ]
+      },
+      {
+        "id": "rng_fx",
+        "kind": "sequential",
+        "owner": "14-tech-production 3.13",
+        "consumers": "넋두리 선택, 연출 변형. 시뮬레이션 결과에 영향 금지",
+        "affects_sim": false,
+        "in_snapshot": "yes (복원 직후 같은 넋두리 반복 방지. 결정론 검사 대상 아님)",
+        "aliases": [
+          "fx",
+          "RNG_FX",
+          "09 19.4의 '넋두리'"
+        ]
+      }
+    ],
+    "rules": [
+      "affects_sim = true 이고 kind = sequential 인 스트림은 모두 스냅샷에 저장한다(누락 = 세이브 CI 실패)",
+      "스트림 소비는 고정 틱(60Hz) 안에서만 한다. 렌더 프레임에서 소비 금지(rng_fx 제외)",
+      "rng_fx 호출 수를 바꿔도 결정론 회귀 테스트(시뮬레이션 상태 해시)가 같아야 한다",
+      "새 스트림은 이 목록에 먼저 등록한다. 등록되지 않은 rng_ 이름이 data/*.json에 있으면 CI error"
+    ]
+  },
+  "validation_pipeline": [
+    "registry_coverage (data/ 아래 모든 JSON이 tables에 등록됨, 등록 경로가 실제로 존재)",
+    "json_schema (data/schema/*.schema.json)",
+    "reference_integrity (tools/extract_canon_ids.py 결과 + 섹션 접두사 + 테이블 간 ID 참조)",
+    "canon_bounds",
+    "cross_table_checks",
+    "rng_stream_names",
+    "localization_length (narrative 파일. 로컬라이즈 원본 파일이 생기면 키 누락 검사 추가)",
+    "alias_usage (data/canon_ids.json aliases·prefix_aliases의 구 ID가 data/*.json·design/*.md에 있으면 warn. 01 §8.1.1 별칭 표, data/canon_ids.json, alias_old 필드는 제외. x1 전 error: C-22)",
+    "doc_links (design/*.md의 문서 파일명 참조가 data/canon_ids.json doc_map.files에 있어야 함. doc_map.wrong_refs 표기는 error: C-34)"
+  ]
+}

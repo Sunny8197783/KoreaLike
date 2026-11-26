@@ -1,0 +1,220 @@
+{
+  "_meta": {
+    "owner_section": "14-tech-production",
+    "doc": "design/14-tech-production.md",
+    "version": "0.2",
+    "updated": "2026-11-21",
+    "score": "probability(1-3) x impact(1-3)",
+    "review": {
+      ">=6": "weekly",
+      "<=4": "per_gate"
+    },
+    "detail": "트리거·완화·대응 문장은 design/14-tech-production.md 14장",
+    "canon": "v1.2",
+    "changelog": [
+      "0.2 (캐논 v1.2): R-04 대응을 C++ GDExtension 이관으로(D-44).",
+      "캐논 v1.2 / 16 C·D 반영 (2026-11-22): R-22 제목 넋기록 교체·KIPRIS 검색(16 D-60·B-1)"
+    ]
+  },
+  "risks": [
+    {
+      "id": "R-01",
+      "title": "해원 동사가 쓸어버리는 맛을 깎는다",
+      "category": "design",
+      "probability": 2,
+      "impact": 3,
+      "score": 6,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-02",
+      "title": "수백 마리 속 풀릴 기색 가독성",
+      "category": "design_art",
+      "probability": 3,
+      "impact": 3,
+      "score": 9,
+      "owner": "아트 리드"
+    },
+    {
+      "id": "R-03",
+      "title": "손익분기 판매량 미달",
+      "category": "business",
+      "probability": 3,
+      "impact": 3,
+      "score": 9,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-04",
+      "title": "Godot(GDScript 1차) 적 2,500 성능 미달",
+      "category": "tech",
+      "probability": 2,
+      "impact": 3,
+      "score": 6,
+      "owner": "리드 프로그래머",
+      "response": "핫 루프를 C++ GDExtension soulsim으로 이관(D-44)"
+    },
+    {
+      "id": "R-05",
+      "title": "리드 프로그래머 이탈",
+      "category": "team",
+      "probability": 1,
+      "impact": 3,
+      "score": 3,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-06",
+      "title": "문화 왜곡·종교 불쾌감 논란",
+      "category": "culture",
+      "probability": 2,
+      "impact": 3,
+      "score": 6,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-07",
+      "title": "무당 표기의 무당파(Wudang) 오인",
+      "category": "marketing",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "마케팅"
+    },
+    {
+      "id": "R-08",
+      "title": "스네이크 아류 오인",
+      "category": "marketing",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "마케팅"
+    },
+    {
+      "id": "R-09",
+      "title": "아트 물량 초과",
+      "category": "production",
+      "probability": 3,
+      "impact": 2,
+      "score": 6,
+      "owner": "아트 리드"
+    },
+    {
+      "id": "R-10",
+      "title": "PixelLab 생성 에셋 일관성·권리",
+      "category": "legal_art",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "아트 리드"
+    },
+    {
+      "id": "R-11",
+      "title": "박자 양자화 지연 체감",
+      "category": "design_tech",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "리드 프로그래머"
+    },
+    {
+      "id": "R-12",
+      "title": "길닦음 고리 난이도",
+      "category": "design",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-13",
+      "title": "데모의 본편 잠식",
+      "category": "business",
+      "probability": 1,
+      "impact": 2,
+      "score": 2,
+      "owner": "마케팅"
+    },
+    {
+      "id": "R-14",
+      "title": "대형 경쟁작 출시 충돌",
+      "category": "market",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-15",
+      "title": "등급분류 지연",
+      "category": "legal",
+      "probability": 1,
+      "impact": 2,
+      "score": 2,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-16",
+      "title": "세이브 손상·클라우드 충돌",
+      "category": "tech",
+      "probability": 1,
+      "impact": 3,
+      "score": 3,
+      "owner": "리드 프로그래머"
+    },
+    {
+      "id": "R-17",
+      "title": "현지화 품질(넋두리 정서)",
+      "category": "quality",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-18",
+      "title": "국악 녹음 일정·비용 초과",
+      "category": "production",
+      "probability": 2,
+      "impact": 1,
+      "score": 2,
+      "owner": "사운드 외주"
+    },
+    {
+      "id": "R-19",
+      "title": "EA 최근 리뷰 하락",
+      "category": "operations",
+      "probability": 2,
+      "impact": 3,
+      "score": 6,
+      "owner": "디렉터"
+    },
+    {
+      "id": "R-20",
+      "title": "콘솔 포팅 비용·기간 초과",
+      "category": "business_tech",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "리드 프로그래머"
+    },
+    {
+      "id": "R-21",
+      "title": "결정론 깨짐",
+      "category": "tech",
+      "probability": 2,
+      "impact": 2,
+      "score": 4,
+      "owner": "리드 프로그래머"
+    },
+    {
+      "id": "R-22",
+      "title": "넋기록(구 '신기록', 16 D-60 교체) 명칭 상표·혼동. Steam 페이지 전 KIPRIS 9·41류 검색 1회",
+      "category": "legal",
+      "probability": 1,
+      "impact": 2,
+      "score": 2,
+      "owner": "디렉터"
+    }
+  ]
+}

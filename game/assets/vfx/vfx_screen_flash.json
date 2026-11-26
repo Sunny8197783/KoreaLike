@@ -1,0 +1,16 @@
+{
+ "frames": [],
+ "meta": {
+  "app": "KoreaLike G6 (Godot shader, no sprite sheet)",
+  "version": "1",
+  "image": null,
+  "pixelfx": {
+   "id": "vfx_screen_flash", "name": "길닦음 순백 화면 플래시", "kind": "shader",
+   "shader": "res://assets/vfx/vfx_screen_flash.gdshader", "runtime": "res://vfx/screen_post_fx.gd (ScreenPostFx.flash)",
+   "fps": 24, "loop": false, "frames": 2, "frame_intensity": [0.30, 0.15],
+   "frameWidth": 640, "frameHeight": 360, "columns": 0, "pivot": [320, 180],
+   "blend": "add", "layer": "L17", "timing": "fps:24", "beat_synced": false, "max_concurrent": 1,
+   "color": "#fffdf6", "limits": { "alpha_max": 0.30, "per_sec_max": 3, "respects": "opt_flash_reduce" }
+  }
+ }
+}

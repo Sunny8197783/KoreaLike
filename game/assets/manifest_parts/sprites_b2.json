@@ -1,0 +1,1549 @@
+{
+ "agent": "sprites_b2",
+ "generated_by": "pixellab batch 2/2",
+ "items": [
+  {
+   "id": "enm_sangmun",
+   "path": "game/assets/sprites/enm_sangmun/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "touch": {
+     "east": 4,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "pixellab_character_id": "0a1abecb-69a7-48c7-9461-1f001764472c",
+   "note": ""
+  },
+  {
+   "id": "enm_subi",
+   "path": "game/assets/sprites/enm_subi/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    32,
+    32
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 4,
+     "_frame_size": [
+      32,
+      32
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": "063e3271-16a4-4cde-a3d2-535b7752066a",
+   "note": ""
+  },
+  {
+   "id": "enm_subi__sogwi",
+   "path": "game/assets/sprites/enm_subi__sogwi/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of enm_subi)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    32,
+    32
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 4,
+     "_frame_size": [
+      32,
+      32
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": "063e3271-16a4-4cde-a3d2-535b7752066a",
+   "note": ""
+  },
+  {
+   "id": "enm_hwehwe_gwisin",
+   "path": "game/assets/sprites/enm_hwehwe_gwisin/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "press": {
+     "south": 6,
+     "_frame_size": [
+      64,
+      64
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      60,
+      60
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "aa26bce5-17d3-426c-bb43-1340132c00eb",
+   "note": ""
+  },
+  {
+   "id": "elite_geogu_gwi",
+   "path": "game/assets/sprites/elite_geogu_gwi/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "inhale_loop": {
+     "south": 4,
+     "_frame_size": [
+      132,
+      132
+     ]
+    },
+    "inhale_start": {
+     "south": 8,
+     "_frame_size": [
+      132,
+      132
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      96,
+      96
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "e55c73a5-1bd0-45f4-b332-4ebba4f37f34",
+   "note": ""
+  },
+  {
+   "id": "elite_bulgasari",
+   "path": "game/assets/sprites/elite_bulgasari/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "absorb": {
+     "south": 11,
+     "_frame_size": [
+      96,
+      96
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      96,
+      96
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "d932f9c1-7ca8-4419-b406-08a1e73d5e4b",
+   "note": ""
+  },
+  {
+   "id": "elite_dueoksini",
+   "path": "game/assets/sprites/elite_dueoksini/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "slam": {
+     "south": 8,
+     "_frame_size": [
+      132,
+      132
+     ]
+    },
+    "walk": {
+     "east": 8,
+     "_frame_size": [
+      96,
+      96
+     ],
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "pixellab_character_id": "60372006-96dd-4466-8528-eeb425cb6427",
+   "note": ""
+  },
+  {
+   "id": "elite_yeokgwi_ttae",
+   "path": "game/assets/sprites/elite_yeokgwi_ttae/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    64,
+    64
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      64,
+      64
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7724ad8c-49aa-4375-85ad-2cf97c58689d",
+   "note": ""
+  },
+  {
+   "id": "elite_byeolsang_sonnim",
+   "path": "game/assets/sprites/elite_byeolsang_sonnim/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    64,
+    64
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "cast": {
+     "south": 6,
+     "_frame_size": [
+      88,
+      88
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      64,
+      64
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "6955f69c-9354-40fe-9be4-73e0a17c7919",
+   "note": ""
+  },
+  {
+   "id": "elite_eodukssini",
+   "path": "game/assets/sprites/elite_eodukssini/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "edge_mask": {
+     "south": 4,
+     "_frame_size": [
+      96,
+      96
+     ]
+    },
+    "eyes_blink": {
+     "south": 4,
+     "_frame_size": [
+      96,
+      96
+     ]
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "mboss_daegwi",
+   "path": "game/assets/sprites/mboss_daegwi/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 8,
+     "_frame_size": [
+      172,
+      172
+     ]
+    },
+    "haewon_release": {
+     "south": 9,
+     "_frame_size": [
+      172,
+      172
+     ]
+    },
+    "idle": {
+     "east": 4,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "231b490e-c65d-4920-9509-7eed22ab17ce",
+   "note": ""
+  },
+  {
+   "id": "mboss_dokkaebi",
+   "path": "game/assets/sprites/mboss_dokkaebi/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 8,
+     "_frame_size": [
+      176,
+      176
+     ]
+    },
+    "haewon_release": {
+     "south": 11,
+     "_frame_size": [
+      176,
+      176
+     ]
+    },
+    "idle": {
+     "east": 4,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "b2817f83-3ac0-4df5-8742-ffcd695af93a",
+   "note": "뿔·호피 없음 확인. haewon_release 11f(첫 프레임 기준 포함)."
+  },
+  {
+   "id": "avatar_yongwang",
+   "path": "game/assets/sprites/avatar_yongwang/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 8,
+     "_frame_size": [
+      168,
+      168
+     ]
+    },
+    "idle": {
+     "south": 4,
+     "_frame_size": [
+      128,
+      128
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "d0985e67-f5e7-4c66-9cb8-b94d22a03ed1",
+   "note": ""
+  },
+  {
+   "id": "avatar_chilseong",
+   "path": "game/assets/sprites/avatar_chilseong/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9,
+     "_frame_size": [
+      128,
+      128
+     ]
+    },
+    "idle": {
+     "south": 4,
+     "_frame_size": [
+      96,
+      96
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "3c46feb7-b493-4d80-8a7d-f66de3f15094",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun",
+   "path": "game/assets/sprites/avatar_janggun/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun__cheong",
+   "path": "game/assets/sprites/avatar_janggun__cheong/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of avatar_janggun)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun__jeok",
+   "path": "game/assets/sprites/avatar_janggun__jeok/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of avatar_janggun)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun__hwang",
+   "path": "game/assets/sprites/avatar_janggun__hwang/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of avatar_janggun)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun__baek",
+   "path": "game/assets/sprites/avatar_janggun__baek/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of avatar_janggun)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_janggun__heuk",
+   "path": "game/assets/sprites/avatar_janggun__heuk/",
+   "kind": "sprite",
+   "source": "derived(palette_swap of avatar_janggun)",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "_frame_size": [
+      68,
+      68
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7b2e993e-8d3a-4b92-9cdf-f16ebbde6ee2",
+   "note": ""
+  },
+  {
+   "id": "avatar_barigongju",
+   "path": "game/assets/sprites/avatar_barigongju/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9,
+     "_frame_size": [
+      168,
+      168
+     ]
+    },
+    "idle": {
+     "south": 4,
+     "_frame_size": [
+      168,
+      168
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      180,
+      180
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "339aac78-6070-4824-8c98-fbaf313abb66",
+   "note": "무장승. walk/idle 템플릿이 지팡이를 잃어 v3 로 재생성. 측면 walk 는 분리된 지팡이 조각 제거(일부 프레임 지팡이 뒤로 끌림)."
+  },
+  {
+   "id": "avatar_jeseok_daegam",
+   "path": "game/assets/sprites/avatar_jeseok_daegam/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    96,
+    96
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9,
+     "_frame_size": [
+      132,
+      132
+     ]
+    },
+    "idle": {
+     "south": 4,
+     "_frame_size": [
+      96,
+      96
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      96,
+      96
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "4588962a-a836-4099-9a21-a2c4255f40f0",
+   "note": "attack 엽전이 금색 -> '검은 엽전'은 VFX/런타임 틴트로 처리 필요."
+  },
+  {
+   "id": "mboss_gumiho",
+   "path": "game/assets/sprites/mboss_gumiho/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 9,
+     "_frame_size": [
+      168,
+      168
+     ]
+    },
+    "idle": {
+     "south": 8,
+     "_frame_size": [
+      128,
+      128
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "7f2a1f34-663d-4143-b293-fe6d559831b3",
+   "note": "흰 털 -> 바랜 금빛 재채색(백 #f2ece0 예약 회피, art/sprites_v2/mboss_gumiho/recolor_gumiho.py). 꼬리 수가 프레임마다 흔들림 -> tails_layer 손작업 레이어로 덮을 것. 사람 얼굴(한복 여인) 상태 미제작. attack_a 는 물기보다 여우불 원형 방출로 나옴."
+  },
+  {
+   "id": "mboss_gangcheori",
+   "path": "game/assets/sprites/mboss_gangcheori/",
+   "kind": "sprite",
+   "source": "pixellab",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    128,
+    128
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 9,
+     "_frame_size": [
+      172,
+      172
+     ]
+    },
+    "walk": {
+     "east": 6,
+     "_frame_size": [
+      128,
+      128
+     ],
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": "f4684af6-8331-44a9-90da-c276781032e3",
+   "note": "다리 달린 이무기형 악룡(그을린 흑갈 비늘+붉은 열기). attack_a v3 화염 숨결. 템플릿 attack 은 가는 뱀으로 변형돼 폐기. idle 미제작(rotation+호흡 트윈 사용)."
+  },
+  {
+   "id": "overlay_head",
+   "path": "game/assets/sprites/overlay_head/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": null,
+   "dirs": [],
+   "anims": {
+    "barigongju_gaho_east": {
+     "files": 1
+    },
+    "barigongju_gaho_north": {
+     "files": 1
+    },
+    "barigongju_gaho_south": {
+     "files": 1
+    },
+    "barigongju_gaho_west": {
+     "files": 1
+    },
+    "barigongju_wieom_east": {
+     "files": 1
+    },
+    "barigongju_wieom_north": {
+     "files": 1
+    },
+    "barigongju_wieom_south": {
+     "files": 1
+    },
+    "barigongju_wieom_west": {
+     "files": 1
+    },
+    "chilseong_gaho_east": {
+     "files": 1
+    },
+    "chilseong_gaho_north": {
+     "files": 1
+    },
+    "chilseong_gaho_south": {
+     "files": 1
+    },
+    "chilseong_gaho_west": {
+     "files": 1
+    },
+    "chilseong_wieom_east": {
+     "files": 1
+    },
+    "chilseong_wieom_north": {
+     "files": 1
+    },
+    "chilseong_wieom_south": {
+     "files": 1
+    },
+    "chilseong_wieom_west": {
+     "files": 1
+    },
+    "daegam_gaho_east": {
+     "files": 1
+    },
+    "daegam_gaho_north": {
+     "files": 1
+    },
+    "daegam_gaho_south": {
+     "files": 1
+    },
+    "daegam_gaho_west": {
+     "files": 1
+    },
+    "daegam_wieom_east": {
+     "files": 1
+    },
+    "daegam_wieom_north": {
+     "files": 1
+    },
+    "daegam_wieom_south": {
+     "files": 1
+    },
+    "daegam_wieom_west": {
+     "files": 1
+    },
+    "janggun_gaho_east": {
+     "files": 1
+    },
+    "janggun_gaho_north": {
+     "files": 1
+    },
+    "janggun_gaho_south": {
+     "files": 1
+    },
+    "janggun_gaho_west": {
+     "files": 1
+    },
+    "janggun_wieom_east": {
+     "files": 1
+    },
+    "janggun_wieom_north": {
+     "files": 1
+    },
+    "janggun_wieom_south": {
+     "files": 1
+    },
+    "janggun_wieom_west": {
+     "files": 1
+    },
+    "sansin_gaho_east": {
+     "files": 1
+    },
+    "sansin_gaho_north": {
+     "files": 1
+    },
+    "sansin_gaho_south": {
+     "files": 1
+    },
+    "sansin_gaho_west": {
+     "files": 1
+    },
+    "sansin_wieom_east": {
+     "files": 1
+    },
+    "sansin_wieom_north": {
+     "files": 1
+    },
+    "sansin_wieom_south": {
+     "files": 1
+    },
+    "sansin_wieom_west": {
+     "files": 1
+    },
+    "yongwang_gaho_east": {
+     "files": 1
+    },
+    "yongwang_gaho_north": {
+     "files": 1
+    },
+    "yongwang_gaho_south": {
+     "files": 1
+    },
+    "yongwang_gaho_west": {
+     "files": 1
+    },
+    "yongwang_wieom_east": {
+     "files": 1
+    },
+    "yongwang_wieom_north": {
+     "files": 1
+    },
+    "yongwang_wieom_south": {
+     "files": 1
+    },
+    "yongwang_wieom_west": {
+     "files": 1
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "overlay_jimul",
+   "path": "game/assets/sprites/overlay_jimul/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": null,
+   "dirs": [],
+   "anims": {
+    "barigongju_east": {
+     "files": 1
+    },
+    "barigongju_north": {
+     "files": 1
+    },
+    "barigongju_south": {
+     "files": 1
+    },
+    "barigongju_west": {
+     "files": 1
+    },
+    "chilseong_east": {
+     "files": 1
+    },
+    "chilseong_north": {
+     "files": 1
+    },
+    "chilseong_south": {
+     "files": 1
+    },
+    "chilseong_west": {
+     "files": 1
+    },
+    "daegam_east": {
+     "files": 1
+    },
+    "daegam_north": {
+     "files": 1
+    },
+    "daegam_south": {
+     "files": 1
+    },
+    "daegam_west": {
+     "files": 1
+    },
+    "janggun_east": {
+     "files": 1
+    },
+    "janggun_north": {
+     "files": 1
+    },
+    "janggun_south": {
+     "files": 1
+    },
+    "janggun_west": {
+     "files": 1
+    },
+    "sansin_east": {
+     "files": 1
+    },
+    "sansin_north": {
+     "files": 1
+    },
+    "sansin_south": {
+     "files": 1
+    },
+    "sansin_west": {
+     "files": 1
+    },
+    "yongwang_east": {
+     "files": 1
+    },
+    "yongwang_north": {
+     "files": 1
+    },
+    "yongwang_south": {
+     "files": 1
+    },
+    "yongwang_west": {
+     "files": 1
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_agwi",
+   "path": "game/assets/sprites/comp_agwi/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "gulp": {
+     "south": 4,
+     "_frame_size": [
+      64,
+      64
+     ]
+    },
+    "move": {
+     "east": 4,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_cheonyeo",
+   "path": "game/assets/sprites/comp_cheonyeo/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "cast": {
+     "east": 4,
+     "_frame_size": [
+      64,
+      64
+     ],
+     "south": 4,
+     "west": 4
+    },
+    "glide": {
+     "east": 4,
+     "_frame_size": [
+      64,
+      64
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_dalgyal",
+   "path": "game/assets/sprites/comp_dalgyal/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_dokkaebi_bul",
+   "path": "game/assets/sprites/comp_dokkaebi_bul/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    32,
+    32
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "_frame_size": [
+      32,
+      32
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "_frame_size": [
+      32,
+      32
+     ],
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_gaekgwi",
+   "path": "game/assets/sprites/comp_gaekgwi/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    40,
+    40
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "cling": {
+     "east": 4,
+     "_frame_size": [
+      56,
+      56
+     ],
+     "south": 4,
+     "west": 4
+    },
+    "move": {
+     "east": 4,
+     "_frame_size": [
+      40,
+      40
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_mongdal",
+   "path": "game/assets/sprites/comp_mongdal/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    48,
+    48
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "dash": {
+     "east": 6,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 4,
+     "_frame_size": [
+      48,
+      48
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_mulgwi",
+   "path": "game/assets/sprites/comp_mulgwi/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    40,
+    40
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "emerge": {
+     "south": 6,
+     "_frame_size": [
+      56,
+      56
+     ]
+    },
+    "move": {
+     "east": 4,
+     "_frame_size": [
+      40,
+      40
+     ],
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  },
+  {
+   "id": "comp_yeongsan",
+   "path": "game/assets/sprites/comp_yeongsan/",
+   "kind": "sprite",
+   "source": "pixellab+pixelart",
+   "license": "PixelLab subscription output (commercial use per PixelLab ToS)",
+   "status": "ready",
+   "size": [
+    40,
+    40
+   ],
+   "dirs": [
+    "east",
+    "north",
+    "south",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 8,
+     "_frame_size": [
+      40,
+      40
+     ],
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "pixellab_character_id": null,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,239 @@
+{
+  "_meta": {
+    "owner_section": "14-tech-production",
+    "doc": "design/14-tech-production.md",
+    "version": "0.2",
+    "updated": "2026-11-21",
+    "week1_monday": "2026-12-07",
+    "canon": "v1.2",
+    "changelog": [
+      "0.2 (캐논 v1.2): D-44 G0 실패 대응을 Unity 스파이크 → C++ GDExtension soulsim 이관으로. W2~W3 스파이크를 GDScript 기준으로. D-03 보스 표기 역신 → 역려(boss_yeokryeo). D-04 '살 맺힘 단'.",
+      "캐논 v1.2 / 16 C·D 반영 (2026-11-22): G2·_note 스테이지 표시명 '선바위 굿당'(16 D)"
+    ]
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "name": "프로토타입·엔진 스파이크",
+      "weeks": [
+        1,
+        6
+      ],
+      "start": "2026-12-07",
+      "end": "2027-01-15",
+      "gates": [
+        "G0",
+        "G1"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "버티컬 슬라이스",
+      "weeks": [
+        7,
+        18
+      ],
+      "start": "2027-01-18",
+      "end": "2027-04-09",
+      "gates": [
+        "G2"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "데모·알파 + Next Fest",
+      "weeks": [
+        19,
+        28
+      ],
+      "start": "2027-04-12",
+      "end": "2027-06-21",
+      "gates": [
+        "G3"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "EA 콘텐츠 완성·출시",
+      "weeks": [
+        29,
+        43
+      ],
+      "start": "2027-06-21",
+      "end": "2027-09-30",
+      "gates": [
+        "G4"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "EA 운영 → 1.0",
+      "weeks": [
+        44,
+        72
+      ],
+      "start": "2027-10-04",
+      "end": "2028-04-21",
+      "gates": [
+        "G5"
+      ]
+    }
+  ],
+  "key_dates": {
+    "prototype_week": [
+      "2026-12-07",
+      "2026-12-11"
+    ],
+    "steam_page_live": "2027-03-15",
+    "next_fest_registration_deadline": "2027-04-25",
+    "next_fest_materials_deadline": "2027-05-31",
+    "next_fest": [
+      "2027-06-14",
+      "2027-06-21"
+    ],
+    "content_freeze_ea": "2027-08-16",
+    "ea_launch": "2027-09-30",
+    "update_u1": "2027-11-01",
+    "update_u2": "2027-12-27",
+    "content_freeze_1_0": "2028-02-14",
+    "launch_1_0": "2028-04-20"
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "week": 3,
+      "name": "엔진 성능",
+      "criteria": [
+        "steam_deck scene_c sim_ms <= 6",
+        "scene_c p95_ms <= 20",
+        "scene_e desktop 60fps",
+        "ring_close_frame_ms <= 1.0"
+      ],
+      "on_fail": "핫 루프(적 이동·분리, 투사체, 피해)를 C++ GDExtension soulsim으로 이관(D-44, 규칙 R2). 일정 +2주",
+      "note": "측정 대상은 Godot 4.7.2 + GDScript 1차 빌드, 렌더러 gl_compatibility(D-43)"
+    },
+    {
+      "id": "G1",
+      "week": 6,
+      "name": "재미·실현성",
+      "criteria": [
+        "canon 8.5 기준 7개 중 6개 이상",
+        "기준 2(막타 통제감)·5(비교 선호) 필수"
+      ],
+      "on_fail": "캐논 8.5 실패 분기 적용 후 2주 재검증"
+    },
+    {
+      "id": "G2",
+      "week": 18,
+      "name": "버티컬 슬라이스",
+      "criteria": [
+        "선바위 굿당(stage_guksadang) 20분+보스 2형+정산 완주",
+        "외부 n=20 한 판 더 >= 65%",
+        "steam_deck scene_a/b p95 <= 16.6",
+        "시그니처 모먼트 5개",
+        "wishlists >= 2000"
+      ],
+      "on_fail": "데모 범위 축소 또는 Next Fest 10월 연기 검토"
+    },
+    {
+      "id": "G3",
+      "week": 25,
+      "name": "데모 확정",
+      "criteria": [
+        "demo crash rate < 0.5%",
+        "median playtime >= 25min",
+        "wishlists >= 7000"
+      ],
+      "on_fail": "범위 축소, 안정성 우선"
+    },
+    {
+      "id": "G4",
+      "week": 41,
+      "name": "EA 출시 승인",
+      "criteria": [
+        "EA 범위 완료",
+        "crash rate < 0.3%",
+        "Steam Deck Verified 또는 Playable",
+        "4개 언어",
+        "등급분류 완료",
+        "wishlists >= 40000"
+      ],
+      "on_fail": "위시리스트 < 25000이면 출시 연기 검토"
+    },
+    {
+      "id": "G5",
+      "week": 68,
+      "name": "1.0 출시 승인",
+      "criteria": [
+        "캐논 5.1 v1.0 범위",
+        "EA 리뷰 >= 85%",
+        "crash rate < 0.2%",
+        "macOS 빌드"
+      ],
+      "on_fail": "캐논 5.1 컷 라인 적용"
+    }
+  ],
+  "scope_by_milestone": {
+    "vertical_slice": {
+      "chars": 1,
+      "deities": 3,
+      "weapons": 8,
+      "evos": 4,
+      "unions": 0,
+      "passives": 8,
+      "commons": 8,
+      "elites": 2,
+      "mbosses": 1,
+      "stages": 1,
+      "sayeon": 15
+    },
+    "demo": {
+      "chars": 2,
+      "deities": 4,
+      "weapons": 10,
+      "evos": 4,
+      "unions": 0,
+      "passives": 10,
+      "commons": 10,
+      "elites": 3,
+      "mbosses": 1,
+      "stages": 1,
+      "sayeon": 15
+    },
+    "ea": {
+      "chars": 4,
+      "deities": 6,
+      "weapons": 16,
+      "evos": 16,
+      "unions": 2,
+      "passives": 14,
+      "commons": 12,
+      "elites": 5,
+      "mbosses": 3,
+      "stages": 2,
+      "sayeon": 45
+    },
+    "v1_0": {
+      "chars": 5,
+      "deities": 6,
+      "weapons": 20,
+      "evos": 20,
+      "unions": 4,
+      "passives": 16,
+      "commons": 12,
+      "elites": 5,
+      "mbosses": 4,
+      "stages": 3,
+      "sayeon": 72
+    },
+    "_note": "보스 표기: 선바위 굿당(stage_guksadang) 보스 = boss_yeokryeo(역려, D-03). 모드의 '단' 표시명 = 살 맺힘 단(D-04)"
+  },
+  "wishlist_targets": {
+    "w18": 2000,
+    "w25": 7000,
+    "w28": 20000,
+    "w41": 40000,
+    "w43_ea": 50000,
+    "v1_0_additional": 30000
+  }
+}

@@ -1,0 +1,1 @@
+[manifest] sprites/manifest.json rescanned: 59 entities, 158 vfx sheets

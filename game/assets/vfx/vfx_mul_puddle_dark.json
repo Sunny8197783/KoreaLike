@@ -1,0 +1,187 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_mul_puddle_dark 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_mul_puddle_dark 1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_mul_puddle_dark 2",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_mul_puddle_dark 3",
+   "frame": {
+    "x": 64,
+    "y": 32,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_mul_puddle_dark 4",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_mul_puddle_dark 5",
+   "frame": {
+    "x": 64,
+    "y": 64,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_mul_puddle_dark.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 96
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_mul_puddle_dark",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_mul_puddle_dark",
+   "name": "Mul gwisin dark puddle",
+   "fps": 8.0,
+   "loop": true,
+   "frames": 6,
+   "frameSize": [
+    64,
+    32
+   ],
+   "pivot": [
+    32,
+    16
+   ],
+   "columns": 2,
+   "frameWidth": 48,
+   "frameHeight": 24,
+   "blend": "normal",
+   "layer": "L02",
+   "color_role": "B+M",
+   "max_concurrent": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     8,
+     6
+    ],
+    "semi_before": 358,
+    "blend": "normal",
+    "size": "48x24->64x32"
+   }
+  }
+ }
+}

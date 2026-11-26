@@ -1,0 +1,114 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_jijeon_bill 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_jijeon_bill 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_jijeon_bill.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_jijeon_bill",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_jijeon_bill",
+   "name": "Jijeon bill",
+   "fps": 12.0,
+   "loop": true,
+   "frames": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "spec": {
+    "id": "vfx_jijeon_bill",
+    "category": "weapon_white",
+    "trigger_or_owner": "wpn_jijeon",
+    "color_role": "P+H",
+    "canvas": "8x8",
+    "frames": 2,
+    "timing": "fps:12",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": true,
+    "max_concurrent": 60,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P+H",
+   "max_concurrent": 60,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  }
+ }
+}

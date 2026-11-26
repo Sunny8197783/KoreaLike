@@ -1,0 +1,105 @@
+{
+ "spec": "art_style_v1",
+ "id": "char_myeongdu",
+ "source": "art/rework/G2_pixellab_heroes/stage/char_myeongdu",
+ "tier": "player",
+ "size": [
+  64,
+  64
+ ],
+ "canvas": [
+  64,
+  64
+ ],
+ "pivot": [
+  32,
+  58
+ ],
+ "body_h": 44,
+ "anims": {
+  "idle": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "walk": {
+   "south": 8,
+   "east": 8,
+   "north": 8,
+   "west": 8
+  },
+  "hurt": {
+   "south": 2,
+   "east": 2,
+   "north": 2,
+   "west": 2
+  },
+  "death": {
+   "south": 8,
+   "east": 8,
+   "west": 8
+  }
+ },
+ "frame_size": {
+  "idle": [
+   64,
+   64
+  ],
+  "walk": [
+   64,
+   64
+  ],
+  "hurt": [
+   64,
+   64
+  ],
+  "death": [
+   64,
+   64
+  ]
+ },
+ "fps": {
+  "idle": 6,
+  "walk": 12,
+  "hurt": 16,
+  "death": 10
+ },
+ "loop": {
+  "idle": true,
+  "walk": true,
+  "hurt": false,
+  "death": false
+ },
+ "west": "flip_h(east)",
+ "play": {
+  "hurt": [
+   0,
+   1
+  ]
+ },
+ "atlas_cols": {
+  "hurt": [
+   0,
+   0,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "dropped_legacy_anims": [
+  "bingui",
+  "gut_dance",
+  "jakdu_dance"
+ ],
+ "post": {
+  "tool": "art/rework/G2_pixellab_heroes/_scripts/{fix_hero,finish,install_g2}.py",
+  "pixellab_character": "29adae31",
+  "raw": "art/raw/char_myeongdu__g2",
+  "idle": "walk_<dir>_0 기반 4f 합성(파일럿 r3 방식)",
+  "hurt": "파일0 = 뒤로 1px + 눈 감음, 파일1 = 제자리 + 눈 감음",
+  "death": "falling-back-death 7f + 홀드 1 (S,E; W=flip, N 없음 → S)",
+  "workbench_score_min": 94.6
+ }
+}

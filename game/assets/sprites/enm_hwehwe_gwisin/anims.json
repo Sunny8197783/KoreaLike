@@ -1,0 +1,32 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  48,
+  48
+ ],
+ "pivot": [
+  24,
+  44
+ ],
+ "anims": {
+  "float": {
+   "east": 4,
+   "north": 4,
+   "south": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "float": [
+   48,
+   48
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "common_l",
+  "rot": "south/east/north/west.png = float_<dir>_0 (독립 정지 rotation 반입 제외, L12)"
+ },
+ "west": "flip_h(east)",
+ "notes": "press 6f 반입 제외(폭 초과·런타임 미사용). float = float_0 기반 r3 손 재구성"
+}

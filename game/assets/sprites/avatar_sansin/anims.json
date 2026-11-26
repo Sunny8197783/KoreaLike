@@ -1,0 +1,55 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  128,
+  128
+ ],
+ "pivot": [
+  64,
+  118
+ ],
+ "anims": {
+  "charge": {
+   "south": 8
+  },
+  "idle": {
+   "east": 9,
+   "south": 9,
+   "west": 9
+  },
+  "roar": {
+   "south": 8
+  },
+  "run": {
+   "east": 6,
+   "south": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "charge": [
+   128,
+   128
+  ],
+  "idle": [
+   128,
+   128
+  ],
+  "roar": [
+   128,
+   128
+  ],
+  "run": [
+   128,
+   128
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "avatar",
+  "rot": "south/east/north/west.png = idle_<dir>_0 (독립 정지 rotation 반입 제외, L12)",
+  "stab": "G5 stabilize.py 2026-11-24: 루프 다수결+순서 재배열(프레임 수 유지)·idle 숨쉬기·rot=루프0·여백 (0 gen)"
+ },
+ "west": "flip_h(east)",
+ "notes": "G5 salvage 0 gen: art_post run(24색 스트립) + deboil + West flip. 런타임 미연결 → 반입 보류"
+}

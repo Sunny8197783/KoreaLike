@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "doc": "design/10-narrative-world.md §13",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): 신기록 → 넋기록(ko·en_ui·ja·zh_hans·note, D-60·B-1)"],
+  "terms": [
+    {
+      "ko": "넋길: 해원굿",
+      "en_ui": "SOULPATH: Untie the Han",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "ノッキル：解冤クッ（仮）",
+      "zh_hans": "魂路：解冤祭（暂定）",
+      "note": "캐논 영제"
+    },
+    {
+      "ko": "한 (恨, 적 HP)",
+      "en_ui": "Han",
+      "en_lore": "han — a knot of sorrow and grievance",
+      "strategy": "K",
+      "ja": "恨（ハン）※UI 라벨은「未練」 검토",
+      "zh_hans": "执念 (UI) / 恨(한) 도감",
+      "note": "중국어 恨은 '증오'에 가까워 오해를 부른다 → UI는 执念. 일본어 未練은 귀신의 미련 정서에 맞는다"
+    },
+    {
+      "ko": "풀릴 기색",
+      "en_ui": "Loosening",
+      "en_lore": "the knot loosening",
+      "strategy": "T",
+      "ja": "ほどけかけ",
+      "zh_hans": "将解",
+      "note": "매듭 은유를 유지한다"
+    },
+    {
+      "ko": "매듭 잠금",
+      "en_ui": "Knot Lock",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "結び目ロック",
+      "zh_hans": "结锁",
+      "note": ""
+    },
+    {
+      "ko": "퇴치",
+      "en_ui": "Banish",
+      "en_lore": "banishment (toechi)",
+      "strategy": "T",
+      "ja": "退治",
+      "zh_hans": "驱退",
+      "note": "kill 금지"
+    },
+    {
+      "ko": "해원",
+      "en_ui": "Release",
+      "en_lore": "release (haewon) — untying the han",
+      "strategy": "H",
+      "ja": "解冤（ヘウォン）",
+      "zh_hans": "解冤",
+      "note": "영제 Untie와 연결"
+    },
+    {
+      "ko": "한 파열",
+      "en_ui": "Han Burst",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "恨破裂",
+      "zh_hans": "恨裂",
+      "note": ""
+    },
+    {
+      "ko": "결단타",
+      "en_ui": "Decisive Cut",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "決断打",
+      "zh_hans": "决断击",
+      "note": ""
+    },
+    {
+      "ko": "영가",
+      "en_ui": "Spirit",
+      "en_lore": "spirits who follow you",
+      "strategy": "T",
+      "ja": "霊駕（れいが）",
+      "zh_hans": "灵驾",
+      "note": "넋(Soul)과 구분"
+    },
+    {
+      "ko": "행렬",
+      "en_ui": "Procession",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "行列",
+      "zh_hans": "行列",
+      "note": ""
+    },
+    {
+      "ko": "천도",
+      "en_ui": "Send-off",
+      "en_lore": "sent off / crossed over",
+      "strategy": "T",
+      "ja": "送り（おくり）",
+      "zh_hans": "超度",
+      "note": "중국어 超度는 적확한 대응어"
+    },
+    {
+      "ko": "넋 (재화)",
+      "en_ui": "Soul",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "魂（たま）",
+      "zh_hans": "魂",
+      "note": ""
+    },
+    {
+      "ko": "길베",
+      "en_ui": "Path Cloth",
+      "en_lore": "the gilbe, a white cotton path",
+      "strategy": "H",
+      "ja": "道布（みちぬの）",
+      "zh_hans": "引路布",
+      "note": ""
+    },
+    {
+      "ko": "길닦음",
+      "en_ui": "Path-Clearing",
+      "en_lore": "gildakkeum, clearing the path",
+      "strategy": "H",
+      "ja": "道清め",
+      "zh_hans": "清路",
+      "note": ""
+    },
+    {
+      "ko": "살 (煞) / 살기",
+      "en_ui": "Blight",
+      "en_lore": "sal — lingering malice",
+      "strategy": "H",
+      "ja": "煞（サル）/ 煞気",
+      "zh_hans": "煞 / 煞气",
+      "note": "중국어 煞는 자연스럽게 통한다"
+    },
+    {
+      "ko": "원귀 회귀",
+      "en_ui": "Vengeful Return",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "怨鬼回帰",
+      "zh_hans": "怨鬼回归",
+      "note": ""
+    },
+    {
+      "ko": "굿판의 기운",
+      "en_ui": "Rite's Balance",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "祭場の気",
+      "zh_hans": "祭场之气",
+      "note": "karma 금지"
+    },
+    {
+      "ko": "굿 / 굿판",
+      "en_ui": "Rite",
+      "en_lore": "*gut* (Korean shamanic rite)",
+      "strategy": "H",
+      "ja": "クッ / 祭場",
+      "zh_hans": "巫祭 / 祭场",
+      "note": "13.3"
+    },
+    {
+      "ko": "거리 (구간)",
+      "en_ui": "Movement (of the Rite)",
+      "en_lore": "geori",
+      "strategy": "T",
+      "ja": "段（だん）",
+      "zh_hans": "段",
+      "note": "음악의 '악장' 은유"
+    },
+    {
+      "ko": "장단 (BGM)",
+      "en_ui": "Rhythm",
+      "en_lore": "jangdan",
+      "strategy": "H",
+      "ja": "長短（チャンダン）",
+      "zh_hans": "长短",
+      "note": ""
+    },
+    {
+      "ko": "신명 / 신명 오름",
+      "en_ui": "Trance / Trance Rising",
+      "en_lore": "sinmyeong, divine elation",
+      "strategy": "H",
+      "ja": "神明（シンミョン）/ 神明昇り",
+      "zh_hans": "神明 / 神明升腾",
+      "note": "ecstasy(약물 연상)·rapture(기독교) 회피"
+    },
+    {
+      "ko": "공수",
+      "en_ui": "Oracle",
+      "en_lore": "gongsu, a deity speaking through you",
+      "strategy": "H",
+      "ja": "神託（コンス）",
+      "zh_hans": "神谕",
+      "note": ""
+    },
+    {
+      "ko": "넋두리",
+      "en_ui": "Lament",
+      "en_lore": "neokduri, the voice of the dead",
+      "strategy": "H",
+      "ja": "魂語り（ノットゥリ）",
+      "zh_hans": "魂语",
+      "note": "complaint로 오역 금지"
+    },
+    {
+      "ko": "신령",
+      "en_ui": "Deity",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "神霊",
+      "zh_hans": "神灵",
+      "note": "Spirit과 충돌 회피"
+    },
+    {
+      "ko": "시련",
+      "en_ui": "Trial",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "試練",
+      "zh_hans": "试炼",
+      "note": "boss 금지"
+    },
+    {
+      "ko": "위엄 / 가호",
+      "en_ui": "Majesty / Grace",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "威厳 / 加護",
+      "zh_hans": "威严 / 加护",
+      "note": ""
+    },
+    {
+      "ko": "빙의",
+      "en_ui": "Descent",
+      "en_lore": "the deity descends into you",
+      "strategy": "T",
+      "ja": "憑依",
+      "zh_hans": "降身",
+      "note": "영어 possession은 엑소시즘(악령 빙의) 함의 → Descent. 중국어 附身도 귀신 함의라 降身"
+    },
+    {
+      "ko": "신령 합일",
+      "en_ui": "Union",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "神霊合一",
+      "zh_hans": "神灵合一",
+      "note": "모신 신령 전원(표준 4신) 합일. 'of Six' 쓰지 않음(C-30)"
+    },
+    {
+      "ko": "대합일",
+      "en_ui": "Grand Union",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "大合一",
+      "zh_hans": "大合一",
+      "note": "무한굿 6신 전원 합일(sys_dae_hapil, C-30)"
+    },
+    {
+      "ko": "점지",
+      "en_ui": "Bestowal",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "授け",
+      "zh_hans": "赐福",
+      "note": ""
+    },
+    {
+      "ko": "무당",
+      "en_ui": "Shaman",
+      "en_lore": "mudang (shaman)",
+      "strategy": "H",
+      "ja": "巫堂（ムーダン）",
+      "zh_hans": "巫堂",
+      "note": "일본어 巫女(미코, 신토) 금지. 중국어 武当 혼동 주의"
+    },
+    {
+      "ko": "만신 / 박수무당 / 단골 / 명두 / 심방 / 법사",
+      "en_ui": "Mansin / Baksu / Dangol / Myeongdu / Simbang / Beopsa",
+      "en_lore": "+ 1줄 소개",
+      "strategy": "K",
+      "ja": "マンシン / パクス / タンゴル / ミョンドゥ / シンバン / ポプサ",
+      "zh_hans": "万神 / 博数 / 丹骨 / 明图 / 神房 / 法师",
+      "note": "클래스명은 고유명사로 유지"
+    },
+    {
+      "ko": "귀신 / 잡귀",
+      "en_ui": "Ghost / Stray Ghost",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "鬼神 / 雑鬼",
+      "zh_hans": "鬼 / 杂鬼",
+      "note": ""
+    },
+    {
+      "ko": "저승사자",
+      "en_ui": "Jeoseung Saja",
+      "en_lore": "the Envoy of the Underworld",
+      "strategy": "H",
+      "ja": "冥府の使者（チョスンサジャ）",
+      "zh_hans": "阴间使者",
+      "note": "Grim Reaper 금지(서구 이미지)"
+    },
+    {
+      "ko": "명부",
+      "en_ui": "Myeongbu",
+      "en_lore": "the Underworld Court",
+      "strategy": "H",
+      "ja": "冥府",
+      "zh_hans": "冥府",
+      "note": ""
+    },
+    {
+      "ko": "넋기록 / 벽사록 / 해원록",
+      "en_ui": "Soul Records / Book of Wards / Book of Release",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "魂記録 / 辟邪録 / 解冤録",
+      "zh_hans": "魂记录 / 辟邪录 / 解冤录",
+      "note": "구 표시명 '신기록'은 같은 장르 웹툰 제목과 혼동 위험이 있어 '넋기록'으로 교체(16 D-60·B-1). 내부 ID sys_singirok·hub_singirok_seogo 유지. Steam 페이지 전 KIPRIS 9·41류 검색 1회"
+    },
+    {
+      "ko": "공덕 / 봉헌",
+      "en_ui": "Merit / Offer",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "功徳 / 奉献",
+      "zh_hans": "功德 / 供奉",
+      "note": "shop 금지"
+    },
+    {
+      "ko": "복전",
+      "en_ui": "Blessing Coin",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "福銭",
+      "zh_hans": "福钱",
+      "note": ""
+    },
+    {
+      "ko": "엽전",
+      "en_ui": "Yeopjeon",
+      "en_lore": "old brass coins",
+      "strategy": "H",
+      "ja": "葉銭（ヨプチョン）",
+      "zh_hans": "叶钱",
+      "note": ""
+    },
+    {
+      "ko": "원혼 구슬",
+      "en_ui": "Grievance Bead",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "怨魂の珠",
+      "zh_hans": "怨魂珠",
+      "note": "XP"
+    },
+    {
+      "ko": "사연 조각",
+      "en_ui": "Story Fragment",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "物語の欠片",
+      "zh_hans": "故事碎片",
+      "note": ""
+    },
+    {
+      "ko": "명두 계승점",
+      "en_ui": "Mirror Shard",
+      "en_lore": "shards of Eunsil's mirror",
+      "strategy": "T",
+      "ja": "明図の欠片",
+      "zh_hans": "明图碎片",
+      "note": "서사(은실 명두 12조각)와 일치"
+    },
+    {
+      "ko": "동행령",
+      "en_ui": "Companion Spirit",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "同行霊",
+      "zh_hans": "同行灵",
+      "note": ""
+    },
+    {
+      "ko": "굿판이 흩어졌다",
+      "en_ui": "The Rite Is Broken",
+      "en_lore": null,
+      "strategy": "T",
+      "ja": "祭場が散った",
+      "zh_hans": "祭场散了",
+      "note": "Game Over 대체"
+    }
+  ],
+  "banned_words": {
+    "ko": [
+      "죽이다",
+      "처치",
+      "살해",
+      "사냥",
+      "몬스터",
+      "몹",
+      "펫",
+      "소환수",
+      "소멸",
+      "상점",
+      "구매",
+      "악령",
+      "악마",
+      "저주받은",
+      "미신",
+      "게임 오버",
+      "카르마",
+      "죄"
+    ],
+    "en": [
+      "kill",
+      "slay",
+      "hunt",
+      "murder",
+      "monster",
+      "mob",
+      "pet",
+      "summon",
+      "minion",
+      "die",
+      "despawn",
+      "shop",
+      "buy",
+      "purchase",
+      "demon",
+      "devil",
+      "evil spirit",
+      "cursed",
+      "superstition",
+      "witchcraft",
+      "voodoo",
+      "exotic",
+      "mystic Orient",
+      "Game Over",
+      "karma",
+      "sin",
+      "Grim Reaper",
+      "Wudang"
+    ],
+    "exceptions": [
+      "대악귀"
+    ]
+  }
+}

@@ -1,0 +1,524 @@
+{
+  "schema_version": 2,
+  "canon_version": "v1.2",
+  "doc": "design/12-audio.md#2",
+  "tiers": [
+    {
+      "id": "jd_jinyang",
+      "name_ko": "진양조",
+      "geori": "geori_jutang_bujeong",
+      "meter": "24박(6박×4각), 게임 표기 6/4×4",
+      "beat_unit": "q",
+      "bpm_base": 45,
+      "bpm_heung": [
+        45,
+        46.8,
+        48.6
+      ],
+      "beat_ms": 1333.3,
+      "beats_per_cycle": 24,
+      "subbeats_per_beat": 2,
+      "cycle_s": 32.0,
+      "gak_count": 4,
+      "gak_s": 8.0,
+      "weapon_grid_div": 4,
+      "weapon_grid_ms": 333.3,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 8,
+      "fx_snap_ms": 166.7,
+      "stem_loop_cycles": 2,
+      "stem_loop_s": 64.0,
+      "pattern_status": "proto_placeholder"
+    },
+    {
+      "id": "jd_jungmori",
+      "name_ko": "중모리",
+      "geori": "geori_gamang_sansin",
+      "meter": "12/4 (3박×4각)",
+      "beat_unit": "q",
+      "bpm_base": 80,
+      "bpm_heung": [
+        80,
+        83.2,
+        86.4
+      ],
+      "beat_ms": 750.0,
+      "beats_per_cycle": 12,
+      "subbeats_per_beat": 2,
+      "cycle_s": 9.0,
+      "gak_count": 4,
+      "gak_s": 2.25,
+      "weapon_grid_div": 2,
+      "weapon_grid_ms": 375.0,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 4,
+      "fx_snap_ms": 187.5,
+      "stem_loop_cycles": 8,
+      "stem_loop_s": 72.0,
+      "pattern_status": "proto_placeholder"
+    },
+    {
+      "id": "jd_jungjungmori",
+      "name_ko": "중중모리",
+      "geori": "geori_byeolsang_daegam_jeseok",
+      "meter": "12/8 (4대박×3소박)",
+      "beat_unit": "dq",
+      "bpm_base": 95,
+      "bpm_heung": [
+        95,
+        98.8,
+        102.6
+      ],
+      "beat_ms": 631.6,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 3,
+      "cycle_s": 2.526,
+      "gak_count": 4,
+      "gak_s": 0.632,
+      "weapon_grid_div": 3,
+      "weapon_grid_ms": 210.5,
+      "canon_compliant_fallback_grid_ms": 315.8,
+      "fx_snap_div": 3,
+      "fx_snap_ms": 210.5,
+      "stem_loop_cycles": 24,
+      "stem_loop_s": 60.63,
+      "pattern_status": "proto_placeholder",
+      "grid_status": "CR1 캐논 v1.2 승인(D-18). combat_core.json jangdan.geori[].grid_div·weapons.json geori_grid를 같은 값(3분박 1/3박)으로 일치(각 소유 섹션). canon_compliant_fallback_grid_ms는 참고값"
+    },
+    {
+      "id": "jd_jajinmori",
+      "name_ko": "자진모리",
+      "geori": "geori_janggun_gunung_changbu",
+      "meter": "12/8 (4대박×3소박)",
+      "beat_unit": "dq",
+      "bpm_base": 120,
+      "bpm_heung": [
+        120,
+        124.8,
+        129.6
+      ],
+      "beat_ms": 500.0,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 3,
+      "cycle_s": 2.0,
+      "gak_count": 4,
+      "gak_s": 0.5,
+      "weapon_grid_div": 3,
+      "weapon_grid_ms": 166.7,
+      "canon_compliant_fallback_grid_ms": 250.0,
+      "fx_snap_div": 3,
+      "fx_snap_ms": 166.7,
+      "stem_loop_cycles": 32,
+      "stem_loop_s": 64.0,
+      "pattern_status": "proto_placeholder",
+      "grid_status": "CR1 캐논 v1.2 승인(D-18). combat_core.json jangdan.geori[].grid_div·weapons.json geori_grid를 같은 값(3분박 1/3박)으로 일치(각 소유 섹션). canon_compliant_fallback_grid_ms는 참고값"
+    },
+    {
+      "id": "jd_danmori",
+      "name_ko": "단모리",
+      "geori": "geori_jakdu",
+      "meter": "4/4 (2분박)",
+      "beat_unit": "q",
+      "bpm_base": 160,
+      "bpm_heung": [
+        160,
+        166.4,
+        172.8
+      ],
+      "beat_ms": 375.0,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 2,
+      "cycle_s": 1.5,
+      "gak_count": 4,
+      "gak_s": 0.375,
+      "weapon_grid_div": 2,
+      "weapon_grid_ms": 187.5,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 2,
+      "fx_snap_ms": 187.5,
+      "stem_loop_cycles": 40,
+      "stem_loop_s": 60.0,
+      "pattern_status": "proto_placeholder"
+    },
+    {
+      "id": "jd_jinobangjin",
+      "name_ko": "당악",
+      "name_ko_by_stage": {
+        "stage_guksadang": "당악",
+        "stage_jindo_ssitgim": "자진모리",
+        "stage_east_sea_byeolsin": "자진모리"
+      },
+      "name_note": "C-23·16 A-3: UI 최고조 표기 서울·황해 '당악', 남도·동해안 '자진모리'. '진오방진'은 실재 명칭 아님. 내부 ID 유지(노출 안 됨)",
+      "geori": "geori_dwitjeon",
+      "meter": "4/4 (2분박)",
+      "beat_unit": "q",
+      "bpm_base": 180,
+      "bpm_heung": [
+        180,
+        187.2,
+        194.4
+      ],
+      "beat_ms": 333.3,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 2,
+      "cycle_s": 1.333,
+      "gak_count": 4,
+      "gak_s": 0.333,
+      "weapon_grid_div": 2,
+      "weapon_grid_ms": 166.7,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 2,
+      "fx_snap_ms": 166.7,
+      "stem_loop_cycles": 48,
+      "stem_loop_s": 64.0,
+      "pattern_status": "proto_placeholder"
+    },
+    {
+      "id": "jd_salpuri",
+      "name_ko": "살풀이",
+      "geori": "boss_form_han",
+      "meter": "12/8 (4대박×3소박)",
+      "beat_unit": "dq",
+      "bpm_base": 70,
+      "bpm_heung": [
+        70
+      ],
+      "beat_ms": 857.1,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 3,
+      "cycle_s": 3.429,
+      "gak_count": 4,
+      "gak_s": 0.857,
+      "weapon_grid_div": 3,
+      "weapon_grid_ms": 285.7,
+      "canon_compliant_fallback_grid_ms": 428.6,
+      "fx_snap_div": 6,
+      "fx_snap_ms": 142.9,
+      "stem_loop_cycles": 16,
+      "stem_loop_s": 54.86,
+      "pattern_status": "proto_placeholder",
+      "bpm_ladder": {
+        "rule": "고 매듭 0-2:70, 3-5:77, 6-7:84 (3티어 스템)",
+        "values": [
+          70,
+          77,
+          84
+        ]
+      }
+    },
+    {
+      "id": "jd_eotmori",
+      "name_ko": "엇모리",
+      "geori": "boss_form_sal",
+      "meter": "10/8 (3+2+3+2 혼소박)",
+      "beat_unit": "sub",
+      "bpm_base": 400,
+      "bpm_heung": [
+        400
+      ],
+      "beat_ms": 150.0,
+      "beats_per_cycle": 10,
+      "subbeats_per_beat": 1,
+      "cycle_s": 1.5,
+      "gak_count": 4,
+      "gak_s": 0.375,
+      "weapon_grid_div": 1,
+      "weapon_grid_ms": 150.0,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 1,
+      "fx_snap_ms": 150.0,
+      "stem_loop_cycles": 40,
+      "stem_loop_s": 60.0,
+      "pattern_status": "proto_placeholder",
+      "bpm_ladder": {
+        "rule": "보스 한 100-67%:400, 66-34%:420, 33-0%:440 소박/분",
+        "values": [
+          400,
+          420,
+          440
+        ]
+      }
+    },
+    {
+      "id": "jd_hwimori",
+      "name_ko": "휘모리",
+      "geori": "geori_myeongbu_sal_geodum",
+      "meter": "4/4 (2분박)",
+      "beat_unit": "q",
+      "bpm_base": 200,
+      "bpm_heung": [
+        200
+      ],
+      "beat_ms": 300.0,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 2,
+      "cycle_s": 1.2,
+      "gak_count": 4,
+      "gak_s": 0.3,
+      "weapon_grid_div": 2,
+      "weapon_grid_ms": 150.0,
+      "canon_compliant_fallback_grid_ms": null,
+      "fx_snap_div": 2,
+      "fx_snap_ms": 150.0,
+      "stem_loop_cycles": 50,
+      "stem_loop_s": 60.0,
+      "pattern_status": "proto_placeholder"
+    },
+    {
+      "id": "jd_gutgeori",
+      "name_ko": "굿거리",
+      "geori": "hub_lobby",
+      "meter": "12/8 (4대박×3소박)",
+      "beat_unit": "dq",
+      "bpm_base": 60,
+      "bpm_heung": [
+        60
+      ],
+      "beat_ms": 1000.0,
+      "beats_per_cycle": 4,
+      "subbeats_per_beat": 3,
+      "cycle_s": 4.0,
+      "gak_count": 4,
+      "gak_s": 1.0,
+      "weapon_grid_div": 3,
+      "weapon_grid_ms": 333.3,
+      "canon_compliant_fallback_grid_ms": 500.0,
+      "fx_snap_div": 3,
+      "fx_snap_ms": 333.3,
+      "stem_loop_cycles": 32,
+      "stem_loop_s": 128.0,
+      "pattern_status": "proto_placeholder"
+    }
+  ],
+  "proto_patterns": {
+    "legend": "D=덩(양편) K=쿵(북편) T=덕(채편) g=기덕(장식) R=더러러(굴림) .=쉼. 1문자=1소박(2분박 장단은 1문자=1/2박)",
+    "warning": "아래는 프로토타입용 '게임 펄스' 패턴이며 실제 장단 구음이 아니다. 국악 자문·연희자 녹음 후 전사본으로 교체한다(verified=false).",
+    "jd_jinyang": "D...........K.....T.T.K.....T...K...........T.T.",
+    "jd_jungmori": "D.T.K.T.K.T.K.T.K.T.T.K.",
+    "jd_jungjungmori": "D.TK.TK.TK..",
+    "jd_jajinmori": "D.TK.TK.TK.T",
+    "jd_danmori": "D.TKT.TK",
+    "jd_jinobangjin": "DTKTDTKT",
+    "jd_gutgeori_reference": "D.gK.RK.gK.R",
+    "jd_gutgeori_note": "굿거리 '덩 기덕 쿵 더러러러 쿵 기덕 쿵 더러러러'는 널리 알려진 교육용 구음이며 이 행만 실제 장단의 단순화 표기다(verified=partial)."
+  },
+  "modes": {
+    "mode_pyojun": {
+      "geori_bounds_s": [
+        0,
+        180,
+        360,
+        720,
+        1080,
+        1155,
+        1200
+      ],
+      "bpm_scale": 1.0
+    },
+    "mode_jajinmori": {
+      "geori_bounds_s": [
+        0,
+        135,
+        270,
+        540,
+        810,
+        866.25,
+        900
+      ],
+      "bpm_scale": 1.0,
+      "note": "시간 경계 x0.75, BPM 불변(캐논 v1.2 D-31·C-12 확정). 흥 기본 티어 1(+4%)"
+    },
+    "mode_muhan": {
+      "source": "08-stages-waves §14.3 (원본). 12-audio 2.6.1",
+      "pre_boss": "mode_pyojun과 동일(0~20:00)",
+      "cycle_anchor": "E0 = 보스 해결 시각. 순환 k = 1, 2, … 각 5분, 경계는 E0 기준 고정",
+      "cycle_s": 300,
+      "segments": [
+        {
+          "id": "A",
+          "t0_s": 0,
+          "t1_s": 120,
+          "tier": "jd_jajinmori",
+          "section": "mus_{stage}_jajinmori",
+          "bpm_08": "120 + 5k, 상한 140",
+          "bpm_ladder_by_k": [
+            124.8,
+            129.6,
+            134.8,
+            140.0
+          ],
+          "bpm_ladder_note": "k>=4는 140.0. k=1·2는 흥1·흥2 렌더 재사용, k=3·4는 무한굿 전용 렌더(h0만). 08 대비 차이 <=0.4 BPM",
+          "heung_tempo": false,
+          "heung_expression": "흥1: L10 -12dB, 흥2: L10 -6dB (템포 고정)",
+          "entry_cues": [
+            "stg_geori_land",
+            "stg_wongwi_return"
+          ]
+        },
+        {
+          "id": "B",
+          "t0_s": 120,
+          "t1_s": 240,
+          "tier": "jd_danmori",
+          "section": "mus_{stage}_hapil_sinawi",
+          "bpm": 160,
+          "heung_tempo": true,
+          "entry_cues": [
+            "stg_geori_land"
+          ]
+        },
+        {
+          "id": "C",
+          "t0_s": 240,
+          "t1_s": 280,
+          "tier": "jd_jinobangjin",
+          "section": "mus_{stage}_dwitjeon",
+          "bpm": 180,
+          "heung_tempo": true,
+          "event": "소형 상차림: 공물상 3(간격 3.5, 대해원 1회)",
+          "entry_cues": [
+            "stg_geori_land",
+            "sfx_evt_gongmulsang"
+          ],
+          "on_daehaewon": "stg_daehaewon"
+        },
+        {
+          "id": "D",
+          "t0_s": 280,
+          "t1_s": 300,
+          "tier": "jd_free",
+          "section": "mus_muhan_sum",
+          "weapon_grid": "최고조(jd_jinobangjin) g 가상 박 유지",
+          "music": "+4:40 각 경계에서 2.0s 페이드(-30dB), L11 -18 -> -6dB 상승, +4:48부터 다음 A의 굴림 브리지 크레셴도",
+          "silence_budget": "A5 런당 정적 예산에 포함하지 않음"
+        }
+      ],
+      "cycle_boundary": {
+        "at": "E0 + 300k s",
+        "cues": [
+          "stg_geori_land (다음 A 착지 덩)",
+          "stg_wongwi_return"
+        ],
+        "same_frame": [
+          "원귀 회귀 스폰(08 §14.3)",
+          "명부의 문 위치 변경(07 9.5)"
+        ],
+        "gate_move_sfx": "sfx_chaser_saja_step(넋 우세 변주 3보) + amb_myeongbu 원샷 방울 1음"
+      },
+      "first_entry": "E0에 보스 해결 스팅어 재생 → 종료 후 첫 각 경계에 A 0.3s 크로스페이드(최대 E0+4.5s). 경계 시각은 E0 기준 고정",
+      "gate_enter": "명부의 문 진입 → 다음 각 경계에서 끊고 mus_myeongbu_buk_solo → 07 N 판정 → stg_outcome_eup / mus_myeongbu_sal_geodum",
+      "l11_floor_db_per_cycle": 3.0,
+      "l11_floor_cap_db": -6.0,
+      "saja_reinforce_45min": "[보류, D-02 충돌, 08 14.3] 저승사자 증원은 07·enemies.json에서 폐지, 08에서 보류. 오디오 큐 없음(12 2.6.1)",
+      "bpm_scale": 1.0
+    },
+    "mode_oneul": {
+      "same_as": "mode_pyojun"
+    }
+  },
+  "heung": {
+    "source": "gauge_sinmyeong",
+    "tiers": [
+      {
+        "tier": 0,
+        "mult": 1.0,
+        "up_at": null,
+        "down_below": null
+      },
+      {
+        "tier": 1,
+        "mult": 1.04,
+        "up_at": 0.35,
+        "down_below": 0.25
+      },
+      {
+        "tier": 2,
+        "mult": 1.08,
+        "up_at": 0.7,
+        "down_below": 0.58
+      }
+    ],
+    "switch_on": "다음 각(마디) 경계. 진양조만 반각(3박=4.0s) 경계 (14-tech-production: 단계 전환은 마디 경계에서만)",
+    "transition": "AudioStreamInteractive SAME_POSITION(박 위치 보존) + 120ms 크로스페이드",
+    "oreum_force_tier": 2
+  },
+  "quantize": {
+    "rule": "무구 발동 시각은 항상 현재 무구 그리드 틱 위. 유일한 규칙 = 위상 이월(05-stats-passives 3.2.2a): 이상 발동 시각 ideal_t에 cd를 더해 평균 주기 = cd",
+    "mode": "phase_carry",
+    "canon_term": "잔여 이월(위상 이월) — 캐논 v1.2 D-21 정본 알고리즘 phase_carry(05 §3.2.2a). combat_core.json quantize_rule = \"phase_carry\"",
+    "modes_supported": [
+      "phase_carry"
+    ],
+    "phase_carry": {
+      "state": [
+        "ideal_t (s, beat_tick 시계)",
+        "last_fire_t (s)"
+      ],
+      "cd": "max(min_period, cd_base * max(F, stat_jangdan))",
+      "fire_when": "t + eps >= ideal_t and t >= last_fire_t + g",
+      "after_fire": "last_fire_t = t; ideal_t += cd; if t - ideal_t > g: ideal_t = t + cd",
+      "eps_ms": 1.0,
+      "min_interval": "1 grid (g)",
+      "on_bpm_change": "ideal_t 유지(초 단위), 다음 틱부터 새 g",
+      "result": "개별 간격 = g의 정수배, 장기 평균 간격 = cd"
+    },
+    "rejected": {
+      "ceil_to_next_grid": "폐기: P = ceil(C/g)*g. DPS 최대 약 -25%, 작은 쿨 감소가 실효 0(죽은 픽). (02·combat_core.json v1.2 D-21 정정 완료)",
+      "acc_carry": "폐기: 04 2.4.2의 acc 이월(carry_over, acc 상한 P+g). 05 위상 이월로 대체(캐논 v1.2 D-21)"
+    },
+    "floor_F": {
+      "normal": 0.4,
+      "sinmyeong_oreum": 0.25
+    },
+    "downbeat_weapons": {
+      "ids": [
+        "wpn_janggu",
+        "evo_hapjangdan"
+      ],
+      "grid": "1 beat (3분박 장단은 대박)",
+      "mix": {
+        "gain_db_vs_L00": -3.0,
+        "high_shelf_db": -2.0,
+        "high_shelf_hz": 5000
+      },
+      "rule": "같은 phase_carry 규칙, g 대신 1박"
+    },
+    "flam_ms": 15,
+    "flam_max_ms": 75,
+    "heung_effect": "g만 줄임, cd 불변 → 평균 DPS 불변, 가락 밀도만 상승",
+    "grid_sync": {
+      "decision": "CR1 캐논 v1.2 승인(D-18, 3분박 장단 1/3박). 위상 이월에서 평균 DPS 영향 0, 최소 간격 1그리드 상한만 완화",
+      "targets": [
+        {
+          "geori": "geori_byeolsang_daegam_jeseok",
+          "combat_core_grid_div": 3,
+          "weapons_grid_beat_fraction": 0.3333,
+          "weapons_grid_sec": 0.2105,
+          "audio_weapon_grid_ms": 210.5
+        },
+        {
+          "geori": "geori_janggun_gunung_changbu",
+          "combat_core_grid_div": 3,
+          "weapons_grid_beat_fraction": 0.3333,
+          "weapons_grid_sec": 0.1667,
+          "audio_weapon_grid_ms": 166.7
+        }
+      ],
+      "unchanged": "진양조 div 4, 중모리·단모리·최고조(jd_jinobangjin) div 2",
+      "if_cr1_rejected": "(v1.2 승인으로 해당 없음) 세 파일 모두 div 2, audio weapon_grid_ms = canon_compliant_fallback_grid_ms"
+    },
+    "note": "g = tiers[].weapon_grid_ms/1000. 12-audio 2.4"
+  },
+  "gullim_bridge": {
+    "id": "mus_bridge_gullim",
+    "start": "geori 경계 T-12s 이후 첫 각 경계(단 T-3s를 넘기면 T-3s 강제, 0.3s 크로스페이드)",
+    "body": "비정형 장구 굴림+바람+현대 라이저 4.0s 코어 루프(무한 연장)",
+    "landing": "T 정각에 stg_geori_land 착지 → 새 장단 박0"
+  },
+  "changelog": [
+    "v2 (12-audio v0.9.2): quantize.mode carry -> phase_carry(05 3.2.2a 단일 규칙), CR1 결정값·동기화 표 추가, mode_muhan 4분 루프 -> 08 §14.3 5분 4구간 순환",
+    "v1.2 canon sync (2026-11-21, 12-audio v0.9.3): C-31 뒷전 경계 1140->1155(자진모리 855->866.25), C-23 jd_jinobangjin.name_ko '단모리(최고조)', D-02 jd_hwimori.geori -> geori_myeongbu_sal_geodum·gate_enter 큐 mus_myeongbu_sal_geodum, D-18 grid_status 승인, D-21 quantize.canon_term, D-31 jajinmori note, C-34 14-tech-production",
+    "v1.2 canon sync 2 (2026-11-21): D-21 quantize.ceil_to_next_grid 미결 문구 '정정 요청' -> '(02·combat_core.json v1.2 D-21 정정 완료)'",
+    "캐논 v1.2 / 16 C·D 반영 (2026-11-22): C-23 jd_jinobangjin.name_ko '단모리(최고조)' → '당악' + name_ko_by_stage(남도·동해안 '자진모리'), 최고조 표기 문구 2곳(16 A-3)"
+  ]
+}

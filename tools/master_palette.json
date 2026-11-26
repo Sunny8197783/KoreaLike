@@ -1,0 +1,308 @@
+{
+ "schema_version": 1,
+ "doc": "tools/art_common.py build_master_palette() 생성. 수정은 data/art_palette.json(+사용자 승인) 후 재생성. 직접 편집 금지",
+ "sources": {
+  "ART_STYLE.md": "§3.1, §3.2, §6.3",
+  "data/art_palette.json": "ramps, per_sprite_color_budget, luminance_caps"
+ },
+ "cross_check": {
+  "status": "MATCH",
+  "diffs": [],
+  "art_style_count": 65,
+  "art_palette_json_count": 65
+ },
+ "outline": "#1a1a1a",
+ "reserved_white": "#f2ece0",
+ "reserved_white_delta_e": 6,
+ "player_max_hex": "#e9dcc0",
+ "enemy_body_max_relative_luminance": 0.45,
+ "player_blue_ramp": "ch",
+ "player_blue_max_ratio": 0.02,
+ "env_only_ramps": [
+  "eg",
+  "et",
+  "dc"
+ ],
+ "ramps": {
+  "mk": {
+   "name": "먹 (밤·배경)",
+   "colors": [
+    "#0e0b16",
+    "#17131f",
+    "#221c2e",
+    "#2f2840",
+    "#3f3654",
+    "#544a6b"
+   ]
+  },
+  "hk": {
+   "name": "오방 흑 (외곽선)",
+   "colors": [
+    "#1a1a1a"
+   ]
+  },
+  "hj": {
+   "name": "한지",
+   "colors": [
+    "#5a4a37",
+    "#857154",
+    "#b29d76",
+    "#d2c19c",
+    "#e9dcc0"
+   ]
+  },
+  "bk": {
+   "name": "오방 백 (예약)",
+   "colors": [
+    "#d6cfc1",
+    "#f2ece0"
+   ]
+  },
+  "jk": {
+   "name": "오방 적",
+   "colors": [
+    "#561318",
+    "#8c1f22",
+    "#c8322d",
+    "#e4604f",
+    "#f4a183"
+   ]
+  },
+  "hw": {
+   "name": "오방 황",
+   "colors": [
+    "#6a4a12",
+    "#a97c1b",
+    "#e8b931",
+    "#f5d66b",
+    "#fff1b8"
+   ]
+  },
+  "ch": {
+   "name": "오방 청",
+   "colors": [
+    "#0f2142",
+    "#1b3a70",
+    "#2a5caa",
+    "#5f93de",
+    "#a9caf5"
+   ]
+  },
+  "cr": {
+   "name": "청록 (청의 물·혼불 변이)",
+   "colors": [
+    "#10302f",
+    "#1d5a58",
+    "#2f8c86",
+    "#55b8aa",
+    "#9fe0d4"
+   ]
+  },
+  "gh": {
+   "name": "귀회 (잡귀 몸체)",
+   "colors": [
+    "#26292e",
+    "#3a3f46",
+    "#535a62",
+    "#6f7780",
+    "#8f979e",
+    "#aab1b5"
+   ]
+  },
+  "gr": {
+   "name": "귀록 (썩음·물기)",
+   "colors": [
+    "#262b20",
+    "#3a4230",
+    "#556046",
+    "#727f5f",
+    "#919c7c"
+   ]
+  },
+  "sk": {
+   "name": "피부",
+   "colors": [
+    "#3b2219",
+    "#6e4330",
+    "#a5704f",
+    "#d29d7a",
+    "#efcdb0"
+   ]
+  },
+  "eg": {
+   "name": "환경 녹 (저채도)",
+   "colors": [
+    "#111a14",
+    "#1a2a1e",
+    "#26402b",
+    "#3a5a3c",
+    "#557652"
+   ]
+  },
+  "et": {
+   "name": "흙·돌",
+   "colors": [
+    "#1b1511",
+    "#2c221a",
+    "#433426",
+    "#5e4b36",
+    "#7c674b"
+   ]
+  },
+  "dc": {
+   "name": "단청 환경 변이 (저채도)",
+   "colors": [
+    "#6b3a2a",
+    "#7a3a2c",
+    "#3b4f6e",
+    "#3e6a5a",
+    "#8a7440"
+   ]
+  }
+ },
+ "world_colors": [
+  "#0e0b16",
+  "#17131f",
+  "#221c2e",
+  "#2f2840",
+  "#3f3654",
+  "#544a6b",
+  "#1a1a1a",
+  "#5a4a37",
+  "#857154",
+  "#b29d76",
+  "#d2c19c",
+  "#e9dcc0",
+  "#d6cfc1",
+  "#f2ece0",
+  "#561318",
+  "#8c1f22",
+  "#c8322d",
+  "#e4604f",
+  "#f4a183",
+  "#6a4a12",
+  "#a97c1b",
+  "#e8b931",
+  "#f5d66b",
+  "#fff1b8",
+  "#0f2142",
+  "#1b3a70",
+  "#2a5caa",
+  "#5f93de",
+  "#a9caf5",
+  "#10302f",
+  "#1d5a58",
+  "#2f8c86",
+  "#55b8aa",
+  "#9fe0d4",
+  "#26292e",
+  "#3a3f46",
+  "#535a62",
+  "#6f7780",
+  "#8f979e",
+  "#aab1b5",
+  "#262b20",
+  "#3a4230",
+  "#556046",
+  "#727f5f",
+  "#919c7c",
+  "#3b2219",
+  "#6e4330",
+  "#a5704f",
+  "#d29d7a",
+  "#efcdb0",
+  "#111a14",
+  "#1a2a1e",
+  "#26402b",
+  "#3a5a3c",
+  "#557652",
+  "#1b1511",
+  "#2c221a",
+  "#433426",
+  "#5e4b36",
+  "#7c674b",
+  "#6b3a2a",
+  "#7a3a2c",
+  "#3b4f6e",
+  "#3e6a5a",
+  "#8a7440"
+ ],
+ "world_color_count": 65,
+ "special_colors": {
+  "#f6eedc": {
+   "ramp": "hj",
+   "use": "ui_only"
+  },
+  "#fffdf6": {
+   "ramp": "bk",
+   "use": "flash_core_only"
+  }
+ },
+ "per_sprite_color_budget": {
+  "player": 24,
+  "companion_yeongga": 10,
+  "common_enemy": 12,
+  "elite": 16,
+  "midboss": 24,
+  "boss": 32,
+  "avatar": 24,
+  "icon": 16,
+  "tile_set": 20,
+  "prop": 16,
+  "vfx": 6
+ },
+ "entity_palettes": {
+  "char_mansin__pilot": [
+   "#1a1a1a",
+   "#0e0b16",
+   "#2f2840",
+   "#3b2219",
+   "#6e4330",
+   "#a5704f",
+   "#d29d7a",
+   "#efcdb0",
+   "#561318",
+   "#8c1f22",
+   "#c8322d",
+   "#e4604f",
+   "#221c2e",
+   "#3b4f6e",
+   "#5a4a37",
+   "#857154",
+   "#b29d76",
+   "#d2c19c",
+   "#e9dcc0",
+   "#6a4a12",
+   "#a97c1b",
+   "#e8b931",
+   "#f5d66b"
+  ],
+  "enm_dalgyal_gwisin__pilot": [
+   "#1a1a1a",
+   "#0e0b16",
+   "#221c2e",
+   "#26292e",
+   "#3a3f46",
+   "#535a62",
+   "#6f7780",
+   "#8f979e",
+   "#aab1b5"
+  ],
+  "vfx_sinkal_proj__pilot": [
+   "#561318",
+   "#c8322d",
+   "#e4604f",
+   "#857154",
+   "#d2c19c",
+   "#e9dcc0"
+  ],
+  "vfx_hit_spark_red__pilot": [
+   "#8c1f22",
+   "#c8322d",
+   "#e4604f",
+   "#f4a183",
+   "#e9dcc0"
+  ]
+ },
+ "entity_palette_note": "ART_STYLE 6.3 파일럿 팔레트 초안. 정식 스트립은 art/palettes/<id>.png (art_lint --emit-palette)"
+}

@@ -1,0 +1,190 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_trial_block_wall 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_trial_block_wall 1",
+   "frame": {
+    "x": 404,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_trial_block_wall 2",
+   "frame": {
+    "x": 808,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_trial_block_wall 3",
+   "frame": {
+    "x": 0,
+    "y": 436,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_trial_block_wall 4",
+   "frame": {
+    "x": 404,
+    "y": 436,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_trial_block_wall 5",
+   "frame": {
+    "x": 808,
+    "y": 436,
+    "w": 404,
+    "h": 436
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 436
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 436
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_trial_block_wall.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1212,
+   "h": 872
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_trial_block_wall",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_trial_block_wall",
+   "name": "Trial block wall (시련 차단 벽)",
+   "fps": 12.0,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    404,
+    436
+   ],
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "frameWidth": 404,
+   "frameHeight": 436,
+   "blend": "add",
+   "layer": "L03",
+   "holdLoop": [
+    4,
+    5
+   ],
+   "variant": "default(sansin)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     14,
+     6
+    ],
+    "semi_before": 72905,
+    "blend": "add",
+    "size": "keep 404x436"
+   }
+  }
+ }
+}

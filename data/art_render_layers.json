@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "doc": "design/13-art-direction.md §2.10",
+  "canon_basis": "v1.2 (2026-11-21)",
+  "engine": { "engine": "Godot 4.7.2", "language": "GDScript", "renderer": "gl_compatibility", "canon": "v1.2 D-43·D-44" },
+  "base_resolution": { "w": 640, "h": 360, "unit_px": 32, "scale_policy": "integer_only", "steam_deck": { "w": 1280, "h": 800, "scale": 2, "extra_world_rows_px": 40 } },
+  "layers": [
+    { "z": 0,  "id": "L00_ground_tiles",      "sort": "none",   "lit": true,  "blend": "normal",   "desc": "지형 타일(Wang 32px)" },
+    { "z": 1,  "id": "L01_ground_decals",     "sort": "none",   "lit": true,  "blend": "normal",   "desc": "솔잎·낙엽·물웅덩이·갯벌 얼룩" },
+    { "z": 2,  "id": "L02_hazard_zones",      "sort": "spawn",  "lit": false, "blend": "normal",   "desc": "적 장판(청·흑, 해칭+점선). 자체 발광" },
+    { "z": 3,  "id": "L03_player_zones",      "sort": "spawn",  "lit": true,  "blend": "add",      "alpha": 0.45, "desc": "도량 만다라, 오방기 장판, 쑥물, 소금 결계 바닥부" },
+    { "z": 4,  "id": "L04_gilbe_trail",       "sort": "none",   "lit": false, "blend": "normal",   "desc": "길베 리본 메시. 백 단색 맥동" },
+    { "z": 5,  "id": "L05_sal_algaengi",      "sort": "none",   "lit": true,  "blend": "normal",   "desc": "살 알갱이(최대 200)" },
+    { "z": 6,  "id": "L06_shadows",           "sort": "none",   "lit": false, "blend": "multiply", "alpha": 0.45, "desc": "개체 블롭 그림자" },
+    { "z": 7,  "id": "L07_pickups",           "sort": "none",   "lit": false, "blend": "normal",   "desc": "원혼 구슬·넋·엽전·공물·상자. 자체 발광" },
+    { "z": 8,  "id": "L08_actors_ysort",      "sort": "y",      "lit": true,  "blend": "normal",   "desc": "적·영가·동행령·화신·프롭(높이 있는 것). y정렬" },
+    { "z": 9,  "id": "L09_player",            "sort": "none",   "lit": true,  "blend": "normal",   "desc": "무당 본체 + 빙의 오버레이 4층. 항상 적 위" },
+    { "z": 10, "id": "L10_player_vfx",        "sort": "spawn",  "lit": false, "blend": "add_or_normal", "alpha_default": 0.70, "alpha_user_range": [0.30, 1.00], "white_weapon_pass": { "color_role": "P", "blend": "normal", "max_relative_luminance": 0.72 }, "desc": "무구 VFX. 백 무구(P)는 한지 50%·일반 블렌드·명도 클램프" },
+    { "z": 11, "id": "L11_pullil_outline",    "sort": "none",   "lit": false, "blend": "normal",   "desc": "풀릴 기색 테 재출력 패스: 흑1·백1·먹 녹아웃1(60%) 3겹 + 매듭 표식. 방울 오라·장구 충격파 등 L10 전체 위" },
+    { "z": 12, "id": "L12_enemy_projectiles", "sort": "spawn",  "lit": false, "blend": "normal",   "alpha": 1.0, "desc": "적 탄. 항상 불투명, 플레이어 VFX 위" },
+    { "z": 13, "id": "L13_player_marker",     "sort": "none",   "lit": false, "blend": "normal",   "desc": "발밑 링(재출력), 가림 실루엣, 미니 정기 바" },
+    { "z": 14, "id": "L14_canopy_fog",        "sort": "none",   "lit": true,  "blend": "multiply_alpha", "alpha": 0.12, "desc": "나무 그림자·안개 2층" },
+    { "z": 15, "id": "L15_lighting",          "sort": "none",   "lit": false, "blend": "light_composite", "desc": "앰비언트+2D 라이트 합성. L02,L04,L07,L10~L13은 합성 후 재그림(자체 발광)" },
+    { "z": 16, "id": "L16_world_text",        "sort": "none",   "lit": false, "blend": "normal",   "desc": "얼씨구 슬램, 공덕 숫자 팝" },
+    { "z": 17, "id": "L17_screen_fx",         "sort": "none",   "lit": false, "blend": "normal",   "desc": "플래시·비네트·정적 채도 감소" },
+    { "z": 18, "id": "L18_ui",                "sort": "none",   "lit": false, "blend": "normal",   "desc": "HUD·자막" }
+  ],
+  "unshaded_after_lighting": ["L02_hazard_zones", "L04_gilbe_trail", "L07_pickups", "L10_player_vfx", "L11_pullil_outline", "L12_enemy_projectiles", "L13_player_marker"],
+  "density_dimming": {
+    "applies_to": "enm_* 일반·미니언 (풀릴 기색·원귀 아닌 개체, 외곽선 픽셀 제외)",
+    "exempt": ["sys_pullil_giseak 상태 개체", "elite_*", "mboss_*", "boss_*", "chaser_*", "avatar_*", "적 탄"],
+    "n_start": 24,
+    "n_full": 120,
+    "formula": "d = clamp((N - n_start) / (n_full - n_start), 0, 1) * crowd_dim_scale; value_mul = 0.88 * (1 - 0.30*d); sat_mul = 1 - 0.45*d (design/18 §1.2, 원본 값은 art_palette crowd_dim)",
+    "update_hz": 4,
+    "lerp_seconds": 0.5
+  },
+  "player_vfx_alpha_budget": {
+    "coverage_buffer": "1/8 해상도(80x45) 커버리지 카운트",
+    "formula": "C = covered_cells / 3600; alpha = clamp(user_alpha * (1 - 0.5 * clamp((C - 0.25) / 0.25, 0, 1)), 0.35, user_alpha)",
+    "fallback_heuristic": "활성 플레이어 VFX 인스턴스 > 120 이면 alpha × 0.75"
+  },
+  "lighting": {
+    "ambient_base": 0.30,
+    "ambient_per_lamp": 0.05,
+    "ambient_max": 0.70,
+    "geori_ambient_tint": {
+      "geori_jutang_bujeong": "#2a2440",
+      "geori_gamang_sansin": "#2f2a46",
+      "geori_byeolsang_daegam_jeseok": "#3a2c40",
+      "geori_janggun_gunung_changbu": "#43293a",
+      "geori_jakdu": "#4d2430",
+      "geori_dwitjeon": "#4a3a2e",
+      "boss_confront": "#262a33",
+      "geori_myeongbu": "#2b2b33"
+    },
+    "lights": {
+      "player":            { "radius_u": 6.0, "color": "#ffc477", "intensity": 0.90, "flicker_pct": 4, "flicker_hz": 7 },
+      "obj_gutpan_deungbul": { "radius_u": 5.0, "color": "#ffcf7a", "intensity": 0.80, "flicker_pct": 3, "flicker_hz": 5 },
+      "yeongga":           { "radius_u": 0.8, "color": "#e8eef2", "intensity": 0.35, "max_individual": 24, "overflow": "행렬 스플라인 라이트 1개로 병합" },
+      "enm_dokkaebi_bul":  { "radius_u": 1.5, "color": "#6fd4c8", "intensity": 0.60 },
+      "prop_candle":       { "radius_u": 2.0, "color": "#ffb35a", "intensity": 0.70 }
+    },
+    "max_dynamic_lights": 48,
+    "shadows": "dynamic shadow 없음. 블롭 그림자만"
+  },
+  "screen_fx_limits": {
+    "fullscreen_flash_max_alpha": 0.30,
+    "fullscreen_flash_max_per_second": 3,
+    "shake_max_px_game": 3,
+    "hitstop_ms": { "gildakkeum": 80, "gyeoldanta": 33, "elite_toechi": 50, "boss_phase": 120 }
+  }
+}

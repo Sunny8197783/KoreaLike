@@ -1,0 +1,3837 @@
+{
+ "sfx_sys_hanpa": {
+  "class": "L1",
+  "note": "붉은 파열: 비음정 '탁' + 종이 찢김 + 저역 펀치. __agg2~4 = 집계 티어",
+  "files": {
+   "sfx_sys_hanpa": {
+    "path": "assets/sfx/sfx_sys_hanpa.ogg",
+    "dur_s": 0.352,
+    "lufs_s": -16.6,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_hanpa__v2": {
+    "path": "assets/sfx/sfx_sys_hanpa__v2.ogg",
+    "dur_s": 0.352,
+    "lufs_s": -17.4,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_hanpa__v3": {
+    "path": "assets/sfx/sfx_sys_hanpa__v3.ogg",
+    "dur_s": 0.352,
+    "lufs_s": -17.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_hanpa__agg2": {
+    "path": "assets/sfx/sfx_sys_hanpa__agg2.ogg",
+    "dur_s": 0.235,
+    "lufs_s": -16.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_hanpa__agg3": {
+    "path": "assets/sfx/sfx_sys_hanpa__agg3.ogg",
+    "dur_s": 0.259,
+    "lufs_s": -16.0,
+    "peak_db": -3.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_hanpa__agg4": {
+    "path": "assets/sfx/sfx_sys_hanpa__agg4.ogg",
+    "dur_s": 0.45,
+    "lufs_s": -16.0,
+    "peak_db": -1.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "paper_flap",
+   "paper_tear_a",
+   "sleigh_bells",
+   "smack_body"
+  ]
+ },
+ "sfx_sys_gyeoldanta": {
+  "class": "L1",
+  "note": "결단타: 칼날 '싹' + 금속 여운 0.25s (한 파열보다 고역 +4dB)",
+  "files": {
+   "sfx_sys_gyeoldanta": {
+    "path": "assets/sfx/sfx_sys_gyeoldanta.ogg",
+    "dur_s": 0.504,
+    "lufs_s": -18.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_gyeoldanta__v2": {
+    "path": "assets/sfx/sfx_sys_gyeoldanta__v2.ogg",
+    "dur_s": 0.504,
+    "lufs_s": -18.3,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_gyeoldanta__v3": {
+    "path": "assets/sfx/sfx_sys_gyeoldanta__v3.ogg",
+    "dur_s": 0.504,
+    "lufs_s": -18.3,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "paper_flap",
+   "paper_tear_a",
+   "sleigh_bells",
+   "smack_body",
+   "whoosh_sword"
+  ]
+ },
+ "sfx_plr_hit": {
+  "class": "L1",
+  "note": "피격: 둔탁한 천 타격 + 짧은 숨",
+  "files": {
+   "sfx_plr_hit": {
+    "path": "assets/sfx/sfx_plr_hit.ogg",
+    "dur_s": 0.305,
+    "lufs_s": -16.0,
+    "peak_db": -1.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_hit__v2": {
+    "path": "assets/sfx/sfx_plr_hit__v2.ogg",
+    "dur_s": 0.306,
+    "lufs_s": -16.0,
+    "peak_db": -1.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_deep",
+   "cloth_flap",
+   "smacks"
+  ]
+ },
+ "sfx_plr_hit_blocked": {
+  "class": "L1",
+  "note": "호신부 방어: 종이-금속 '챙' + 소멸 꼬리 0.4s",
+  "files": {
+   "sfx_plr_hit_blocked": {
+    "path": "assets/sfx/sfx_plr_hit_blocked.ogg",
+    "dur_s": 0.7,
+    "lufs_s": -16.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap"
+  ]
+ },
+ "sfx_plr_dodge": {
+  "class": "L2",
+  "note": "접신 회피: 공기 휘익 + 옅은 방울 1음",
+  "files": {
+   "sfx_plr_dodge": {
+    "path": "assets/sfx/sfx_plr_dodge.ogg",
+    "dur_s": 0.674,
+    "lufs_s": -20.0,
+    "peak_db": -3.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_plr_death": {
+  "class": "L1",
+  "note": "쓰러짐: 무복 천 + 방울 떨어져 3회 튐",
+  "files": {
+   "sfx_plr_death": {
+    "path": "assets/sfx/sfx_plr_death.ogg",
+    "dur_s": 2.285,
+    "lufs_s": -16.0,
+    "peak_db": -5.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_plr_levelup_ready": {
+  "class": "RIT",
+  "note": "점지 직전(레벨업): 바람 들이쉬는 0.3s 스웰 + 끝 방울",
+  "files": {
+   "sfx_plr_levelup_ready": {
+    "path": "assets/sfx/sfx_plr_levelup_ready.ogg",
+    "dur_s": 2.141,
+    "lufs_s": -19.0,
+    "peak_db": -8.1,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_woman",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_sys_pullil_enter": {
+  "class": "RIT",
+  "note": "풀릴 기색: 낮은 숨 내쉼 + 방울 장식음 1개(치음 A)",
+  "files": {
+   "sfx_sys_pullil_enter": {
+    "path": "assets/sfx/sfx_sys_pullil_enter.ogg",
+    "dur_s": 0.86,
+    "lufs_s": -19.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_pullil_enter__v2": {
+    "path": "assets/sfx/sfx_sys_pullil_enter__v2.ogg",
+    "dur_s": 0.86,
+    "lufs_s": -19.0,
+    "peak_db": -6.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_deep",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_sys_haewon": {
+  "class": "L1",
+  "note": "해원 '딸랑': 놋쇠 방울 단타 D5(옥타브0) / __oct1 D6. 런타임 토리 사다리 pitch_scale",
+  "files": {
+   "sfx_sys_haewon": {
+    "path": "assets/sfx/sfx_sys_haewon.ogg",
+    "dur_s": 1.706,
+    "lufs_s": -16.0,
+    "peak_db": -4.1,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_haewon__v2": {
+    "path": "assets/sfx/sfx_sys_haewon__v2.ogg",
+    "dur_s": 1.7,
+    "lufs_s": -16.0,
+    "peak_db": -3.9,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_haewon__v3": {
+    "path": "assets/sfx/sfx_sys_haewon__v3.ogg",
+    "dur_s": 1.7,
+    "lufs_s": -16.0,
+    "peak_db": -3.9,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_haewon__oct1": {
+    "path": "assets/sfx/sfx_sys_haewon__oct1.ogg",
+    "dur_s": 1.433,
+    "lufs_s": -16.0,
+    "peak_db": -4.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_sys_haewon_elite": {
+  "class": "L1",
+  "note": "정예 해원: 방울 군 하강 아르페지오 + 숨 한 호흡 + 해금 하모닉 1.2s",
+  "files": {
+   "sfx_sys_haewon_elite": {
+    "path": "assets/sfx/sfx_sys_haewon_elite.ogg",
+    "dur_s": 2.881,
+    "lufs_s": -16.0,
+    "peak_db": -5.3,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_woman",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_sys_yeongga_join": {
+  "class": "RIT",
+  "note": "영가 합류: 작은 종종걸음 3보 + 종이 사락",
+  "files": {
+   "sfx_sys_yeongga_join": {
+    "path": "assets/sfx/sfx_sys_yeongga_join.ogg",
+    "dur_s": 0.432,
+    "lufs_s": -22.4,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_yeongga_join__v2": {
+    "path": "assets/sfx/sfx_sys_yeongga_join__v2.ogg",
+    "dur_s": 0.493,
+    "lufs_s": -22.3,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_fold",
+   "paper_rustle"
+  ]
+ },
+ "sfx_sys_yeongga_substitute": {
+  "class": "RIT",
+  "note": "대신 맞기: 넋전 종이 흩날림 + 놋그릇 '웅'(징 아님)",
+  "files": {
+   "sfx_sys_yeongga_substitute": {
+    "path": "assets/sfx/sfx_sys_yeongga_substitute.ogg",
+    "dur_s": 1.787,
+    "lufs_s": -19.0,
+    "peak_db": -3.0,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "paper_flap"
+  ]
+ },
+ "sfx_sys_cheondo": {
+  "class": "RIT",
+  "note": "천도: 상승하는 바람 + 고음 방울 트레몰로 0.6s",
+  "files": {
+   "sfx_sys_cheondo": {
+    "path": "assets/sfx/sfx_sys_cheondo.ogg",
+    "dur_s": 2.202,
+    "lufs_s": -19.0,
+    "peak_db": -7.5,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "paper_flap",
+   "paper_tear_a",
+   "sleigh_bells",
+   "smack_body"
+  ]
+ },
+ "sfx_sys_gildakkeum": {
+  "class": "L1",
+  "note": "길닦음 '덩'(고리 닫힘): 장구 덩 + 서브 D + 넋전 꽃잎 상승. __m/__l = 고리 면적 중·대",
+  "files": {
+   "sfx_sys_gildakkeum": {
+    "path": "assets/sfx/sfx_sys_gildakkeum.ogg",
+    "dur_s": 1.871,
+    "lufs_s": -16.0,
+    "peak_db": -2.0,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_gildakkeum__m": {
+    "path": "assets/sfx/sfx_sys_gildakkeum__m.ogg",
+    "dur_s": 2.126,
+    "lufs_s": -17.2,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_gildakkeum__l": {
+    "path": "assets/sfx/sfx_sys_gildakkeum__l.ogg",
+    "dur_s": 2.748,
+    "lufs_s": -16.5,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "paper_flap",
+   "paper_tear_a",
+   "sleigh_bells",
+   "smack_body"
+  ]
+ },
+ "sfx_sys_gilbe_close_ready": {
+  "class": "RIT",
+  "note": "닫힘 가능 큐: 0.18s 상승 쉬머 → 한국 손종 '팅'(D6 위 A, 짧은 감쇠)",
+  "files": {
+   "sfx_sys_gilbe_close_ready": {
+    "path": "assets/sfx/sfx_sys_gilbe_close_ready.ogg",
+    "dur_s": 1.008,
+    "lufs_s": -19.0,
+    "peak_db": -9.3,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "korean_bell",
+   "wood_blocks"
+  ]
+ },
+ "sfx_sys_wongwi_rise": {
+  "class": "RIT",
+  "note": "원귀 회귀: 역재생 모래 상승 → 결집 충격. 기본=25%, __50/__75 저역 강화",
+  "files": {
+   "sfx_sys_wongwi_rise": {
+    "path": "assets/sfx/sfx_sys_wongwi_rise.ogg",
+    "dur_s": 3.886,
+    "lufs_s": -19.0,
+    "peak_db": -3.1,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_wongwi_rise__50": {
+    "path": "assets/sfx/sfx_sys_wongwi_rise__50.ogg",
+    "dur_s": 4.128,
+    "lufs_s": -19.0,
+    "peak_db": -2.4,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_wongwi_rise__75": {
+    "path": "assets/sfx/sfx_sys_wongwi_rise__75.ogg",
+    "dur_s": 4.226,
+    "lufs_s": -19.0,
+    "peak_db": -2.5,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca",
+   "korean_bell"
+  ]
+ },
+ "sfx_sys_sinmyeong_full": {
+  "class": "RIT",
+  "note": "신명 만충: 장구 굴림 1박 → 덩 (추임새 '얼쑤' VO 미포함 — 보이스 녹음 필요)",
+  "files": {
+   "sfx_sys_sinmyeong_full": {
+    "path": "assets/sfx/sfx_sys_sinmyeong_full.ogg",
+    "dur_s": 1.925,
+    "lufs_s": -19.0,
+    "peak_db": -4.0,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_sys_oreum_start": {
+  "class": "RIT",
+  "note": "신명 오름 시작: 장구 겹채 몰이 0.5s → 다음 박 강타",
+  "files": {
+   "sfx_sys_oreum_start": {
+    "path": "assets/sfx/sfx_sys_oreum_start.ogg",
+    "dur_s": 1.933,
+    "lufs_s": -19.0,
+    "peak_db": -5.0,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_sys_oreum_end": {
+  "class": "RIT",
+  "note": "신명 오름 종료: 하행 바람 + 장구 마지막 덩(약)",
+  "files": {
+   "sfx_sys_oreum_end": {
+    "path": "assets/sfx/sfx_sys_oreum_end.ogg",
+    "dur_s": 1.991,
+    "lufs_s": -19.0,
+    "peak_db": -4.0,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_sys_eoduk_heart": {
+  "class": "RIT",
+  "note": "어둑시니 정적 심장: 64BPM 루프(4박), 모노",
+  "files": {
+   "sfx_sys_eoduk_heart": {
+    "path": "assets/sfx/sfx_sys_eoduk_heart.ogg",
+    "dur_s": 3.75,
+    "lufs_s": -26.7,
+    "peak_db": -6.7,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": [
+   "heartbeat60"
+  ]
+ },
+ "sfx_sys_deungbul": {
+  "class": "RIT",
+  "note": "굿판 등불 점화: 촛불 '훅' + 풍경 1음",
+  "files": {
+   "sfx_sys_deungbul": {
+    "path": "assets/sfx/sfx_sys_deungbul.ogg",
+    "dur_s": 2.409,
+    "lufs_s": -23.4,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bell_1ring",
+   "candle_light",
+   "chime_single_02",
+   "chime_single_04"
+  ]
+ },
+ "sfx_trl_omen": {
+  "class": "RIT",
+  "note": "시련 예고: 먼 바람 + 신장대 방울이 멀리서",
+  "files": {
+   "sfx_trl_omen": {
+    "path": "assets/sfx/sfx_trl_omen.ogg",
+    "dur_s": 5.159,
+    "lufs_s": -19.0,
+    "peak_db": -7.7,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells",
+   "wind_night_a"
+  ]
+ },
+ "sfx_trl_sinjangdae": {
+  "class": "RIT",
+  "note": "신장대 강림(시련 시작): 대나무 '탁' 꽂힘 + 오색 천 펄럭 + 방울",
+  "files": {
+   "sfx_trl_sinjangdae": {
+    "path": "assets/sfx/sfx_trl_sinjangdae.ogg",
+    "dur_s": 1.511,
+    "lufs_s": -19.0,
+    "peak_db": -3.6,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_hit",
+   "cloth_flap",
+   "drum_hits_dry",
+   "sleigh_bells",
+   "wood_blocks"
+  ]
+ },
+ "sfx_trl_circle_enter": {
+  "class": "RIT",
+  "note": "화신 원 진입: 경계 통과 '쉬잉'",
+  "files": {
+   "sfx_trl_circle_enter": {
+    "path": "assets/sfx/sfx_trl_circle_enter.ogg",
+    "dur_s": 0.52,
+    "lufs_s": -19.0,
+    "peak_db": -5.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_trl_confirm_ring": {
+  "class": "RIT",
+  "note": "확인 링 1s: 토리 5음 상행",
+  "files": {
+   "sfx_trl_confirm_ring": {
+    "path": "assets/sfx/sfx_trl_confirm_ring.ogg",
+    "dur_s": 2.187,
+    "lufs_s": -19.0,
+    "peak_db": -7.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_trl_wieom_step": {
+  "class": "RIT",
+  "note": "위엄 게이지 10%: 소리북 틱(대북 아님). 런타임 토리 사다리 피치",
+  "files": {
+   "sfx_trl_wieom_step": {
+    "path": "assets/sfx/sfx_trl_wieom_step.ogg",
+    "dur_s": 0.6,
+    "lufs_s": -19.0,
+    "peak_db": -4.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "wood_blocks"
+  ]
+ },
+ "sfx_trl_gaho_step": {
+  "class": "RIT",
+  "note": "가호 게이지 10%: 높은 방울 틱",
+  "files": {
+   "sfx_trl_gaho_step": {
+    "path": "assets/sfx/sfx_trl_gaho_step.ogg",
+    "dur_s": 0.6,
+    "lufs_s": -19.0,
+    "peak_db": -8.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_trl_timeout_warn": {
+  "class": "RIT",
+  "note": "시련 10초 남음: 장구 '기덕' 2회(1s 주기로 런타임 반복)",
+  "files": {
+   "sfx_trl_timeout_warn": {
+    "path": "assets/sfx/sfx_trl_timeout_warn.ogg",
+    "dur_s": 0.64,
+    "lufs_s": -19.0,
+    "peak_db": -1.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_trl_bingui": {
+  "class": "STG",
+  "note": "직접 빙의 1.2s(공용판): 0.6s 역재생 스웰 → 강타 → 0.3s 꼬리. 신령별 시그니처는 __<deity>",
+  "files": {
+   "sfx_trl_bingui": {
+    "path": "assets/sfx/sfx_trl_bingui.ogg",
+    "dur_s": 2.314,
+    "lufs_s": -17.1,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__sansin": {
+    "path": "assets/sfx/sfx_trl_bingui__sansin.ogg",
+    "dur_s": 2.981,
+    "lufs_s": -17.0,
+    "peak_db": -5.0,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__yongwang": {
+    "path": "assets/sfx/sfx_trl_bingui__yongwang.ogg",
+    "dur_s": 3.757,
+    "lufs_s": -17.0,
+    "peak_db": -6.0,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__chilseong": {
+    "path": "assets/sfx/sfx_trl_bingui__chilseong.ogg",
+    "dur_s": 2.363,
+    "lufs_s": -17.0,
+    "peak_db": -2.0,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__janggun": {
+    "path": "assets/sfx/sfx_trl_bingui__janggun.ogg",
+    "dur_s": 2.531,
+    "lufs_s": -17.0,
+    "peak_db": -4.5,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__barigongju": {
+    "path": "assets/sfx/sfx_trl_bingui__barigongju.ogg",
+    "dur_s": 2.598,
+    "lufs_s": -17.0,
+    "peak_db": -4.7,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_bingui__jeseok_daegam": {
+    "path": "assets/sfx/sfx_trl_bingui__jeseok_daegam.ogg",
+    "dur_s": 2.32,
+    "lufs_s": -17.0,
+    "peak_db": -5.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "crash_mute",
+   "crash_thin16",
+   "crash_thrashed20",
+   "drum_hits_low",
+   "drum_sticks",
+   "gong_korean_cdrk",
+   "gong_qubodup",
+   "korean_bell",
+   "sleigh_bells",
+   "splash_6"
+  ]
+ },
+ "sfx_trl_hapil": {
+  "class": "STG",
+  "note": "신령 합일 HAPIL_CALL(4신 공용판): 단모리 160BPM 4박, 박마다 1신 강타 → 4박째 전원 + 스웰",
+  "files": {
+   "sfx_trl_hapil": {
+    "path": "assets/sfx/sfx_trl_hapil.ogg",
+    "dur_s": 4.635,
+    "lufs_s": -17.0,
+    "peak_db": -4.1,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "crash_mute",
+   "crash_thin16",
+   "crash_thrashed20",
+   "drum_hits_low",
+   "drum_sticks",
+   "gong_korean_cdrk",
+   "gong_qubodup",
+   "splash_6"
+  ]
+ },
+ "sfx_trl_avatar_smile": {
+  "class": "RIT",
+  "note": "화신의 미소(시련 성공·종료): 따뜻한 저음 숨 + 바람 잦아듦 + 먼 풍경",
+  "files": {
+   "sfx_trl_avatar_smile": {
+    "path": "assets/sfx/sfx_trl_avatar_smile.ogg",
+    "dur_s": 3.759,
+    "lufs_s": -19.0,
+    "peak_db": -6.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bell_1ring",
+   "breath_deep",
+   "chime_single_02",
+   "chime_single_04",
+   "wind_night_b"
+  ]
+ },
+ "sfx_trl_grm_ring_capture": {
+  "class": "RIT",
+  "note": "고리 포획 성공: 길닦음 덩 재사용 + 굿상 놋그릇 울림",
+  "files": {
+   "sfx_trl_grm_ring_capture": {
+    "path": "assets/sfx/sfx_trl_grm_ring_capture.ogg",
+    "dur_s": 1.871,
+    "lufs_s": -19.0,
+    "peak_db": -5.1,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "gong_qubodup",
+   "paper_flap",
+   "paper_tear_a",
+   "sleigh_bells",
+   "smack_body"
+  ]
+ },
+ "sfx_enm_proj_generic": {
+  "class": "L3",
+  "note": "적 탄(공용): 저역 쉬익 250Hz-1.5kHz",
+  "files": {
+   "sfx_enm_proj_generic": {
+    "path": "assets/sfx/sfx_enm_proj_generic.ogg",
+    "dur_s": 0.2,
+    "lufs_s": -24.0,
+    "peak_db": -10.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_proj_generic__v2": {
+    "path": "assets/sfx/sfx_enm_proj_generic__v2.ogg",
+    "dur_s": 0.22,
+    "lufs_s": -24.0,
+    "peak_db": -11.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_enm_dalgyal_gwisin": {
+  "class": "L3",
+  "note": "달걀귀신 등장: 매끈한 '뽁'",
+  "files": {
+   "sfx_enm_dalgyal_gwisin": {
+    "path": "assets/sfx/sfx_enm_dalgyal_gwisin.ogg",
+    "dur_s": 0.12,
+    "lufs_s": -24.0,
+    "peak_db": -12.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_elite_wongwi": {
+  "class": "L3",
+  "note": "원귀(정예) 등장: 종 소리 -5반음 + 붉은 눈 점등 '칙' + 저역",
+  "files": {
+   "sfx_elite_wongwi": {
+    "path": "assets/sfx/sfx_elite_wongwi.ogg",
+    "dur_s": 3.744,
+    "lufs_s": -24.0,
+    "peak_db": -10.0,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "match_light"
+  ]
+ },
+ "sfx_boss_knot_untie": {
+  "class": "L1",
+  "note": "고 매듭 풀림 '툭': 무명 매듭 풀림 + 저역 (무가 VO 미포함)",
+  "files": {
+   "sfx_boss_knot_untie": {
+    "path": "assets/sfx/sfx_boss_knot_untie.ogg",
+    "dur_s": 1.585,
+    "lufs_s": -16.9,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "paper_fold"
+  ]
+ },
+ "stg_mboss_enter": {
+  "class": "STG",
+  "note": "보스/중간보스 등장 1장단(자진모리 120BPM, 2.0s): 역재생 놋쇠 → 장구 덩 + 대북 + 저역",
+  "files": {
+   "stg_mboss_enter": {
+    "path": "assets/sfx/stg_mboss_enter.ogg",
+    "dur_s": 4.538,
+    "lufs_s": -17.0,
+    "peak_db": -3.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "korean_bell"
+  ]
+ },
+ "stg_boss_silence": {
+  "class": "STG",
+  "note": "20:00 보스 정적: 심장 2박 → 2.0s 소리북 1타(긴 잔향)",
+  "files": {
+   "stg_boss_silence": {
+    "path": "assets/sfx/stg_boss_silence.ogg",
+    "dur_s": 5.101,
+    "lufs_s": -17.1,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "heartbeat60",
+   "wood_blocks"
+  ]
+ },
+ "stg_geori_land": {
+  "class": "STG",
+  "note": "거리 전환 착지: 장구 덩 + 서브 드롭(신령 악기는 런타임 합류)",
+  "files": {
+   "stg_geori_land": {
+    "path": "assets/sfx/stg_geori_land.ogg",
+    "dur_s": 2.186,
+    "lufs_s": -17.0,
+    "peak_db": -1.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "stg_death": {
+  "class": "STG",
+  "note": "사망: 소리북 1타 + 하행 숨(음악 LPF 는 런타임)",
+  "files": {
+   "stg_death": {
+    "path": "assets/sfx/stg_death.ogg",
+    "dur_s": 2.723,
+    "lufs_s": -17.6,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_woman",
+   "drum_hits_dry",
+   "drum_hits_low",
+   "drum_sticks",
+   "paper_flap",
+   "paper_tear_a",
+   "paper_tear_b",
+   "sleigh_bells",
+   "smack_body",
+   "wood_blocks"
+  ]
+ },
+ "sfx_wpn_sinkal": {
+  "class": "L2",
+  "note": "신칼 던짐: 백지술 펄럭 휘익 / __return 귀환 역방향 / __hit 종이칼 '싹' + __agg2~4",
+  "files": {
+   "sfx_wpn_sinkal": {
+    "path": "assets/sfx/sfx_wpn_sinkal.ogg",
+    "dur_s": 0.284,
+    "lufs_s": -20.0,
+    "peak_db": -7.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sinkal__return": {
+    "path": "assets/sfx/sfx_wpn_sinkal__return.ogg",
+    "dur_s": 0.3,
+    "lufs_s": -20.0,
+    "peak_db": -7.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sinkal__hit": {
+    "path": "assets/sfx/sfx_wpn_sinkal__hit.ogg",
+    "dur_s": 0.352,
+    "lufs_s": -22.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap",
+   "paper_tear_a",
+   "paper_tear_b",
+   "smack_body"
+  ]
+ },
+ "sfx_wpn_sinkal_hit": {
+  "class": "L2",
+  "note": "신칼 적중 '싹' 집계 4티어",
+  "files": {
+   "sfx_wpn_sinkal_hit": {
+    "path": "assets/sfx/sfx_wpn_sinkal_hit.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -20.0,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sinkal_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_sinkal_hit__agg2.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -20.0,
+    "peak_db": -2.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sinkal_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_sinkal_hit__agg3.ogg",
+    "dur_s": 0.156,
+    "lufs_s": -20.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sinkal_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_sinkal_hit__agg4.ogg",
+    "dur_s": 0.161,
+    "lufs_s": -20.0,
+    "peak_db": -6.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_tear_a",
+   "paper_tear_b",
+   "smack_body"
+  ]
+ },
+ "sfx_wpn_woldo": {
+  "class": "L2",
+  "note": "월도 회전: 반달날 '슈우웅' / __hit 묵직한 '척'",
+  "files": {
+   "sfx_wpn_woldo": {
+    "path": "assets/sfx/sfx_wpn_woldo.ogg",
+    "dur_s": 0.6,
+    "lufs_s": -20.0,
+    "peak_db": -6.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_woldo__hit": {
+    "path": "assets/sfx/sfx_wpn_woldo__hit.ogg",
+    "dur_s": 0.475,
+    "lufs_s": -20.0,
+    "peak_db": -1.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "smack_body",
+   "whoosh_heavy"
+  ]
+ },
+ "sfx_wpn_woldo_hit": {
+  "class": "L2",
+  "note": "월도 적중 '척' 집계 4티어",
+  "files": {
+   "sfx_wpn_woldo_hit": {
+    "path": "assets/sfx/sfx_wpn_woldo_hit.ogg",
+    "dur_s": 0.198,
+    "lufs_s": -20.0,
+    "peak_db": -4.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_woldo_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_woldo_hit__agg2.ogg",
+    "dur_s": 0.233,
+    "lufs_s": -20.0,
+    "peak_db": -5.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_woldo_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_woldo_hit__agg3.ogg",
+    "dur_s": 0.226,
+    "lufs_s": -20.0,
+    "peak_db": -6.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_woldo_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_woldo_hit__agg4.ogg",
+    "dur_s": 0.233,
+    "lufs_s": -20.0,
+    "peak_db": -6.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "smack_body"
+  ]
+ },
+ "sfx_wpn_gakgung": {
+  "class": "L2",
+  "note": "각궁 발사: 시위 '팅' + 화살 바람 / __hit '퍽'",
+  "files": {
+   "sfx_wpn_gakgung": {
+    "path": "assets/sfx/sfx_wpn_gakgung.ogg",
+    "dur_s": 0.35,
+    "lufs_s": -20.5,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gakgung__hit": {
+    "path": "assets/sfx/sfx_wpn_gakgung__hit.ogg",
+    "dur_s": 0.598,
+    "lufs_s": -20.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells",
+   "smacks"
+  ]
+ },
+ "sfx_wpn_bangul": {
+  "class": "L2",
+  "note": "방울 박 펄스: 방울 1타(토리 음, 런타임 피치) / __aura 오라 트레몰로 루프",
+  "files": {
+   "sfx_wpn_bangul": {
+    "path": "assets/sfx/sfx_wpn_bangul.ogg",
+    "dur_s": 1.161,
+    "lufs_s": -20.0,
+    "peak_db": -11.3,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_wpn_bangul__aura": {
+    "path": "assets/sfx/sfx_wpn_bangul__aura.ogg",
+    "dur_s": 4.0,
+    "lufs_s": -25.5,
+    "peak_db": -8.8,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_wpn_bangul_hit": {
+  "class": "L2",
+  "note": "방울 음파 '찡' 집계 4티어",
+  "files": {
+   "sfx_wpn_bangul_hit": {
+    "path": "assets/sfx/sfx_wpn_bangul_hit.ogg",
+    "dur_s": 0.078,
+    "lufs_s": -20.0,
+    "peak_db": -6.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_bangul_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_bangul_hit__agg2.ogg",
+    "dur_s": 0.11,
+    "lufs_s": -20.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_bangul_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_bangul_hit__agg3.ogg",
+    "dur_s": 0.112,
+    "lufs_s": -20.0,
+    "peak_db": -7.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_bangul_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_bangul_hit__agg4.ogg",
+    "dur_s": 0.112,
+    "lufs_s": -20.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_wpn_buchae": {
+  "class": "L2",
+  "note": "부채 부치기: 한지 부채 '촤악' + 바람 / __hit 부드러운 '훅'",
+  "files": {
+   "sfx_wpn_buchae": {
+    "path": "assets/sfx/sfx_wpn_buchae.ogg",
+    "dur_s": 0.47,
+    "lufs_s": -20.0,
+    "peak_db": -2.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_buchae__hit": {
+    "path": "assets/sfx/sfx_wpn_buchae__hit.ogg",
+    "dur_s": 0.176,
+    "lufs_s": -20.0,
+    "peak_db": -4.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap",
+   "paper_fold"
+  ]
+ },
+ "sfx_wpn_buchae_hit": {
+  "class": "L2",
+  "note": "부채 바람 '훅' 집계 4티어",
+  "files": {
+   "sfx_wpn_buchae_hit": {
+    "path": "assets/sfx/sfx_wpn_buchae_hit.ogg",
+    "dur_s": 0.132,
+    "lufs_s": -20.0,
+    "peak_db": -2.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_buchae_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_buchae_hit__agg2.ogg",
+    "dur_s": 0.167,
+    "lufs_s": -20.0,
+    "peak_db": -4.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_buchae_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_buchae_hit__agg3.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -20.0,
+    "peak_db": -3.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_buchae_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_buchae_hit__agg4.ogg",
+    "dur_s": 0.168,
+    "lufs_s": -20.0,
+    "peak_db": -4.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap"
+  ]
+ },
+ "sfx_wpn_jijeon": {
+  "class": "L2",
+  "note": "지전 투척: 종이돈 흩날림 '촤르르' / __hit 종이 '팔락'",
+  "files": {
+   "sfx_wpn_jijeon": {
+    "path": "assets/sfx/sfx_wpn_jijeon.ogg",
+    "dur_s": 0.375,
+    "lufs_s": -22.9,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jijeon__hit": {
+    "path": "assets/sfx/sfx_wpn_jijeon__hit.ogg",
+    "dur_s": 0.14,
+    "lufs_s": -24.7,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap",
+   "paper_rustle"
+  ]
+ },
+ "sfx_wpn_myeongdu": {
+  "class": "L2",
+  "note": "명두 공전: 놋거울 '우웅' 루프 / __ray 빛줄기 쉬머 + 반사 '띵'",
+  "files": {
+   "sfx_wpn_myeongdu__hum": {
+    "path": "assets/sfx/sfx_wpn_myeongdu__hum.ogg",
+    "dur_s": 3.0,
+    "lufs_s": -25.8,
+    "peak_db": -14.6,
+    "stereo": false,
+    "loop": true
+   },
+   "sfx_wpn_myeongdu": {
+    "path": "assets/sfx/sfx_wpn_myeongdu.ogg",
+    "dur_s": 0.85,
+    "lufs_s": -20.0,
+    "peak_db": -9.5,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "sleigh_bells"
+  ]
+ },
+ "sfx_wpn_janggu": {
+  "class": "L2",
+  "note": "장구 충격파: 실제 장구 '덩'(무구 그리드 착지, 음악의 일부)",
+  "files": {
+   "sfx_wpn_janggu": {
+    "path": "assets/sfx/sfx_wpn_janggu.ogg",
+    "dur_s": 0.7,
+    "lufs_s": -20.0,
+    "peak_db": -1.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_pick_wonhon": {
+  "class": "L4",
+  "note": "원혼 구슬 흡수: 소/__m 중/__l 대. 런타임 토리 사다리(해원보다 -8dB, 한 옥타브 아래)",
+  "files": {
+   "sfx_pick_wonhon": {
+    "path": "assets/sfx/sfx_pick_wonhon.ogg",
+    "dur_s": 0.4,
+    "lufs_s": -30.0,
+    "peak_db": -13.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_pick_wonhon__m": {
+    "path": "assets/sfx/sfx_pick_wonhon__m.ogg",
+    "dur_s": 0.6,
+    "lufs_s": -30.0,
+    "peak_db": -13.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_pick_wonhon__l": {
+    "path": "assets/sfx/sfx_pick_wonhon__l.ogg",
+    "dur_s": 0.8,
+    "lufs_s": -30.0,
+    "peak_db": -13.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_pick_yeopjeon": {
+  "class": "L2",
+  "note": "엽전 획득: 놋엽전 '짤랑' (도깨비 가짜 엽전은 런타임 -1반음)",
+  "files": {
+   "sfx_pick_yeopjeon": {
+    "path": "assets/sfx/sfx_pick_yeopjeon.ogg",
+    "dur_s": 0.149,
+    "lufs_s": -20.0,
+    "peak_db": -3.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_pick_yeopjeon__v2": {
+    "path": "assets/sfx/sfx_pick_yeopjeon__v2.ogg",
+    "dur_s": 0.135,
+    "lufs_s": -20.0,
+    "peak_db": -5.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_pick_yeopjeon__v3": {
+    "path": "assets/sfx/sfx_pick_yeopjeon__v3.ogg",
+    "dur_s": 0.231,
+    "lufs_s": -20.5,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "coins"
+  ]
+ },
+ "sfx_pick_neok": {
+  "class": "L2",
+  "note": "넋 획득: 부드러운 한지 '사락' + 맑은 바람",
+  "files": {
+   "sfx_pick_neok": {
+    "path": "assets/sfx/sfx_pick_neok.ogg",
+    "dur_s": 0.4,
+    "lufs_s": -20.0,
+    "peak_db": -7.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_rustle"
+  ]
+ },
+ "sfx_pick_hosinbu": {
+  "class": "L2",
+  "note": "호신부 획득: 붉은 부적 종이 '사락' + 작은 방울",
+  "files": {
+   "sfx_pick_hosinbu": {
+    "path": "assets/sfx/sfx_pick_hosinbu.ogg",
+    "dur_s": 0.55,
+    "lufs_s": -20.0,
+    "peak_db": -5.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_fold",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_ui_nav": {
+  "class": "UI",
+  "note": "포커스 이동: 한지 넘기는 아주 짧은 '삭'",
+  "files": {
+   "sfx_ui_nav": {
+    "path": "assets/sfx/sfx_ui_nav.ogg",
+    "dur_s": 0.07,
+    "lufs_s": -22.8,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_rustle"
+  ]
+ },
+ "sfx_ui_confirm": {
+  "class": "UI",
+  "note": "확인: 장구 '덕'(채편) 단타",
+  "files": {
+   "sfx_ui_confirm": {
+    "path": "assets/sfx/sfx_ui_confirm.ogg",
+    "dur_s": 0.32,
+    "lufs_s": -22.0,
+    "peak_db": -3.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_ui_back": {
+  "class": "UI",
+  "note": "뒤로: 장구 '쿵'(북편) 약",
+  "files": {
+   "sfx_ui_back": {
+    "path": "assets/sfx/sfx_ui_back.ogg",
+    "dur_s": 0.7,
+    "lufs_s": -22.0,
+    "peak_db": -8.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_ui_error": {
+  "class": "UI",
+  "note": "불가: 나무 '톡' 2회(낮게)",
+  "files": {
+   "sfx_ui_error": {
+    "path": "assets/sfx/sfx_ui_error.ogg",
+    "dur_s": 0.289,
+    "lufs_s": -22.0,
+    "peak_db": -4.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "wood_block_b"
+  ]
+ },
+ "sfx_ui_jeomji_open": {
+  "class": "UI",
+  "note": "점지 화면 열림: 한지 두루마리 펼침 + 방울 1음",
+  "files": {
+   "sfx_ui_jeomji_open": {
+    "path": "assets/sfx/sfx_ui_jeomji_open.ogg",
+    "dur_s": 1.904,
+    "lufs_s": -22.0,
+    "peak_db": -9.5,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_fold",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_ui_card_hover": {
+  "class": "UI",
+  "note": "점지 카드 포커스: 기본(빙의 전)=장구 / __red 나무 '탁' / __white 방울",
+  "files": {
+   "sfx_ui_card_hover": {
+    "path": "assets/sfx/sfx_ui_card_hover.ogg",
+    "dur_s": 0.208,
+    "lufs_s": -22.0,
+    "peak_db": -7.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_ui_card_hover__red": {
+    "path": "assets/sfx/sfx_ui_card_hover__red.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -22.0,
+    "peak_db": -3.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_ui_card_hover__white": {
+    "path": "assets/sfx/sfx_ui_card_hover__white.ogg",
+    "dur_s": 0.5,
+    "lufs_s": -22.0,
+    "peak_db": -13.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "drum_hits_low",
+   "drum_sticks",
+   "sleigh_bells",
+   "wood_blocks"
+  ]
+ },
+ "sfx_ui_card_select": {
+  "class": "UI",
+  "note": "점지 선택: 붓 한 획 '쓱' + 인장 찍힘 '톡'",
+  "files": {
+   "sfx_ui_card_select": {
+    "path": "assets/sfx/sfx_ui_card_select.ogg",
+    "dur_s": 0.37,
+    "lufs_s": -22.0,
+    "peak_db": -8.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "wood_blocks"
+  ]
+ },
+ "sfx_ui_reroll": {
+  "class": "UI",
+  "note": "다시 묻기(재점): 산가지 흔들기",
+  "files": {
+   "sfx_ui_reroll": {
+    "path": "assets/sfx/sfx_ui_reroll.ogg",
+    "dur_s": 0.47,
+    "lufs_s": -22.0,
+    "peak_db": -5.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca"
+  ]
+ },
+ "sfx_ui_skip": {
+  "class": "UI",
+  "note": "물림: 종이 미끄러지는 '스윽'",
+  "files": {
+   "sfx_ui_skip": {
+    "path": "assets/sfx/sfx_ui_skip.ogg",
+    "dur_s": 0.3,
+    "lufs_s": -22.0,
+    "peak_db": -10.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_fold"
+  ]
+ },
+ "sfx_ui_banish": {
+  "class": "UI",
+  "note": "금기: 붉은 인장 '쿵' + 종이 접힘",
+  "files": {
+   "sfx_ui_banish": {
+    "path": "assets/sfx/sfx_ui_banish.ogg",
+    "dur_s": 0.6,
+    "lufs_s": -22.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "paper_fold",
+   "wood_blocks"
+  ]
+ },
+ "sfx_ui_pause_in": {
+  "class": "UI",
+  "note": "일시정지: 바람 잦아듦",
+  "files": {
+   "sfx_ui_pause_in": {
+    "path": "assets/sfx/sfx_ui_pause_in.ogg",
+    "dur_s": 0.662,
+    "lufs_s": -22.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_ui_pause_out": {
+  "class": "UI",
+  "note": "재개: 바람 다시 일어남 + 장구 '덕'",
+  "files": {
+   "sfx_ui_pause_out": {
+    "path": "assets/sfx/sfx_ui_pause_out.ogg",
+    "dur_s": 0.82,
+    "lufs_s": -22.0,
+    "peak_db": -3.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "sfx_ui_unlock": {
+  "class": "UI",
+  "note": "해금: 방울 상행 3음 + 종이 '팔락'",
+  "files": {
+   "sfx_ui_unlock": {
+    "path": "assets/sfx/sfx_ui_unlock.ogg",
+    "dur_s": 1.772,
+    "lufs_s": -22.0,
+    "peak_db": -11.5,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_ui_settle_tick": {
+  "class": "UI",
+  "note": "정산 카운트: 놋엽전 틱",
+  "files": {
+   "sfx_ui_settle_tick": {
+    "path": "assets/sfx/sfx_ui_settle_tick.ogg",
+    "dur_s": 0.08,
+    "lufs_s": -22.0,
+    "peak_db": -9.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "coins"
+  ]
+ },
+ "sfx_ui_settle_total": {
+  "class": "UI",
+  "note": "정산 합계: 장구 덩 + 방울",
+  "files": {
+   "sfx_ui_settle_total": {
+    "path": "assets/sfx/sfx_ui_settle_total.ogg",
+    "dur_s": 1.601,
+    "lufs_s": -22.0,
+    "peak_db": -7.4,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low",
+   "drum_sticks",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_ui_title_start": {
+  "class": "UI",
+  "note": "타이틀 시작: 장구 '덩' 한 번 + 촛불 켜짐",
+  "files": {
+   "sfx_ui_title_start": {
+    "path": "assets/sfx/sfx_ui_title_start.ogg",
+    "dur_s": 1.862,
+    "lufs_s": -22.0,
+    "peak_db": -5.6,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "candle_light",
+   "drum_hits_low",
+   "drum_sticks"
+  ]
+ },
+ "amb_guksadang": {
+  "class": "AMB",
+  "note": "국사당 밤 산자락 베드 60s 루프: 소나무 바람 + 풀벌레(원샷은 런타임 풀)",
+  "files": {
+   "amb_guksadang": {
+    "path": "assets/sfx/amb_guksadang.ogg",
+    "dur_s": 60.0,
+    "lufs_s": -31.1,
+    "peak_db": -18.4,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "crickets_pine",
+   "wind_foliage"
+  ]
+ },
+ "amb_lobby_sindang": {
+  "class": "AMB",
+  "note": "신당(로비) 밤 베드 40s 루프: 실내 촛불 + 문밖 풀벌레(풍경 원샷은 런타임)",
+  "files": {
+   "amb_lobby_sindang": {
+    "path": "assets/sfx/amb_lobby_sindang.ogg",
+    "dur_s": 28.0,
+    "lufs_s": -32.7,
+    "peak_db": -14.2,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "crickets_forest",
+   "fire_crackle"
+  ]
+ },
+ "amb_trial_field": {
+  "class": "AMB",
+  "note": "시련 장 오버레이 20s 루프: 저음 허밍 + 공간감",
+  "files": {
+   "amb_trial_field": {
+    "path": "assets/sfx/amb_trial_field.ogg",
+    "dur_s": 20.0,
+    "lufs_s": -30.5,
+    "peak_db": -23.7,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "wind_night_b"
+  ]
+ },
+ "sfx_enm_agwi": {
+  "class": "L3",
+  "note": "아귀: 공물 근처 '쩝' 씹는 소리(젖은 스맥 저역화) x6 / __steal 공물 그릇 엎어짐(놋그릇+나무)",
+  "files": {
+   "sfx_enm_agwi": {
+    "path": "assets/sfx/sfx_enm_agwi.ogg",
+    "dur_s": 0.309,
+    "lufs_s": -24.0,
+    "peak_db": -4.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__v2": {
+    "path": "assets/sfx/sfx_enm_agwi__v2.ogg",
+    "dur_s": 0.36,
+    "lufs_s": -24.0,
+    "peak_db": -3.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__v3": {
+    "path": "assets/sfx/sfx_enm_agwi__v3.ogg",
+    "dur_s": 0.365,
+    "lufs_s": -24.0,
+    "peak_db": -3.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__v4": {
+    "path": "assets/sfx/sfx_enm_agwi__v4.ogg",
+    "dur_s": 0.314,
+    "lufs_s": -24.0,
+    "peak_db": -4.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__v5": {
+    "path": "assets/sfx/sfx_enm_agwi__v5.ogg",
+    "dur_s": 0.35,
+    "lufs_s": -24.0,
+    "peak_db": -4.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__v6": {
+    "path": "assets/sfx/sfx_enm_agwi__v6.ogg",
+    "dur_s": 0.337,
+    "lufs_s": -24.0,
+    "peak_db": -6.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_agwi__steal": {
+    "path": "assets/sfx/sfx_enm_agwi__steal.ogg",
+    "dur_s": 1.399,
+    "lufs_s": -24.0,
+    "peak_db": -9.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "smacks",
+   "wood_blocks"
+  ]
+ },
+ "sfx_elite_eodukssini": {
+  "class": "STG",
+  "note": "어둑시니 등장 2박(휘모리권 0.9s): 저음 드론 피치 하강 + 막힌 공기(고역 감쇄는 런타임 버스 LPF)",
+  "files": {
+   "sfx_elite_eodukssini": {
+    "path": "assets/sfx/sfx_elite_eodukssini.ogg",
+    "dur_s": 3.123,
+    "lufs_s": -17.0,
+    "peak_db": -5.3,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_elite_eodukssini__v2": {
+    "path": "assets/sfx/sfx_elite_eodukssini__v2.ogg",
+    "dur_s": 3.105,
+    "lufs_s": -17.0,
+    "peak_db": -4.6,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_elite_eodukssini__v3": {
+    "path": "assets/sfx/sfx_elite_eodukssini__v3.ogg",
+    "dur_s": 3.074,
+    "lufs_s": -17.0,
+    "peak_db": -5.4,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_elite_eodukssini__v4": {
+    "path": "assets/sfx/sfx_elite_eodukssini__v4.ogg",
+    "dur_s": 3.314,
+    "lufs_s": -17.0,
+    "peak_db": -6.3,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "wood_blocks"
+  ]
+ },
+ "sfx_chaser_saja_step": {
+  "class": "L3",
+  "note": "저승사자 걸음 4변주(살 거둠, 휘모리 박 정렬은 런타임 Q) / __threestep 명부 문 이동 3보",
+  "files": {
+   "sfx_chaser_saja_step": {
+    "path": "assets/sfx/sfx_chaser_saja_step.ogg",
+    "dur_s": 1.667,
+    "lufs_s": -24.0,
+    "peak_db": -3.8,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_chaser_saja_step__v2": {
+    "path": "assets/sfx/sfx_chaser_saja_step__v2.ogg",
+    "dur_s": 1.736,
+    "lufs_s": -24.0,
+    "peak_db": -6.8,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_chaser_saja_step__v3": {
+    "path": "assets/sfx/sfx_chaser_saja_step__v3.ogg",
+    "dur_s": 1.874,
+    "lufs_s": -24.0,
+    "peak_db": -7.4,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_chaser_saja_step__v4": {
+    "path": "assets/sfx/sfx_chaser_saja_step__v4.ogg",
+    "dur_s": 1.88,
+    "lufs_s": -24.0,
+    "peak_db": -6.6,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_chaser_saja_step__threestep": {
+    "path": "assets/sfx/sfx_chaser_saja_step__threestep.ogg",
+    "dur_s": 2.937,
+    "lufs_s": -24.0,
+    "peak_db": -5.6,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "drum_hits_low",
+   "paper_rustle"
+  ]
+ },
+ "sfx_chaser_saja_eup": {
+  "class": "RIT",
+  "note": "사자의 읍: 도포 숙이는 천(옅게) + 깊은 숨 + 소리북 1타(엄숙 — 방울 없음, 2026-11-24)",
+  "files": {
+   "sfx_chaser_saja_eup": {
+    "path": "assets/sfx/sfx_chaser_saja_eup.ogg",
+    "dur_s": 3.322,
+    "lufs_s": -19.4,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_deep",
+   "cloth_flap",
+   "drum_hits_dry",
+   "wood_blocks"
+  ]
+ },
+ "sfx_wpn_samjichang_hit": {
+  "class": "L2",
+  "note": "삼지창 적중 '폭' 3연 관통 집계 4티어",
+  "files": {
+   "sfx_wpn_samjichang_hit": {
+    "path": "assets/sfx/sfx_wpn_samjichang_hit.ogg",
+    "dur_s": 0.104,
+    "lufs_s": -20.0,
+    "peak_db": -5.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_samjichang_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_samjichang_hit__agg2.ogg",
+    "dur_s": 0.186,
+    "lufs_s": -20.0,
+    "peak_db": -5.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_samjichang_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_samjichang_hit__agg3.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -20.0,
+    "peak_db": -7.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_samjichang_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_samjichang_hit__agg4.ogg",
+    "dur_s": 0.14,
+    "lufs_s": -20.0,
+    "peak_db": -8.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "smacks"
+  ]
+ },
+ "sfx_wpn_jakdu_hit": {
+  "class": "L2",
+  "note": "작두 충격 '쾅' 집계 4티어",
+  "files": {
+   "sfx_wpn_jakdu_hit": {
+    "path": "assets/sfx/sfx_wpn_jakdu_hit.ogg",
+    "dur_s": 0.22,
+    "lufs_s": -20.0,
+    "peak_db": -5.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jakdu_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_jakdu_hit__agg2.ogg",
+    "dur_s": 0.257,
+    "lufs_s": -20.0,
+    "peak_db": -5.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jakdu_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_jakdu_hit__agg3.ogg",
+    "dur_s": 0.247,
+    "lufs_s": -20.0,
+    "peak_db": -7.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jakdu_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_jakdu_hit__agg4.ogg",
+    "dur_s": 0.253,
+    "lufs_s": -20.0,
+    "peak_db": -5.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_sainsageom_hit": {
+  "class": "L2",
+  "note": "사인참사검 검기 '챙' 집계 4티어",
+  "files": {
+   "sfx_wpn_sainsageom_hit": {
+    "path": "assets/sfx/sfx_wpn_sainsageom_hit.ogg",
+    "dur_s": 0.138,
+    "lufs_s": -20.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sainsageom_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_sainsageom_hit__agg2.ogg",
+    "dur_s": 0.174,
+    "lufs_s": -20.0,
+    "peak_db": -4.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sainsageom_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_sainsageom_hit__agg3.ogg",
+    "dur_s": 0.164,
+    "lufs_s": -20.0,
+    "peak_db": -4.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sainsageom_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_sainsageom_hit__agg4.ogg",
+    "dur_s": 0.175,
+    "lufs_s": -20.0,
+    "peak_db": -5.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "whoosh_sword"
+  ]
+ },
+ "sfx_wpn_gakgung_hit": {
+  "class": "L2",
+  "note": "각궁 화살 '퍽' 집계 4티어",
+  "files": {
+   "sfx_wpn_gakgung_hit": {
+    "path": "assets/sfx/sfx_wpn_gakgung_hit.ogg",
+    "dur_s": 0.116,
+    "lufs_s": -20.0,
+    "peak_db": -2.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gakgung_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_gakgung_hit__agg2.ogg",
+    "dur_s": 0.153,
+    "lufs_s": -20.0,
+    "peak_db": -4.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gakgung_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_gakgung_hit__agg3.ogg",
+    "dur_s": 0.161,
+    "lufs_s": -20.0,
+    "peak_db": -5.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gakgung_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_gakgung_hit__agg4.ogg",
+    "dur_s": 0.165,
+    "lufs_s": -20.0,
+    "peak_db": -6.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "smacks",
+   "wood_blocks"
+  ]
+ },
+ "sfx_wpn_jangchang_hit": {
+  "class": "L2",
+  "note": "장창 연타 '탁' 집계 4티어",
+  "files": {
+   "sfx_wpn_jangchang_hit": {
+    "path": "assets/sfx/sfx_wpn_jangchang_hit.ogg",
+    "dur_s": 0.09,
+    "lufs_s": -20.0,
+    "peak_db": -7.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jangchang_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_jangchang_hit__agg2.ogg",
+    "dur_s": 0.099,
+    "lufs_s": -20.0,
+    "peak_db": -6.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jangchang_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_jangchang_hit__agg3.ogg",
+    "dur_s": 0.099,
+    "lufs_s": -20.0,
+    "peak_db": -7.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jangchang_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_jangchang_hit__agg4.ogg",
+    "dur_s": 0.102,
+    "lufs_s": -20.0,
+    "peak_db": -4.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "wood_block_b"
+  ]
+ },
+ "sfx_wpn_pyeongon_hit": {
+  "class": "L2",
+  "note": "편곤 '콱' + 사슬 집계 4티어",
+  "files": {
+   "sfx_wpn_pyeongon_hit": {
+    "path": "assets/sfx/sfx_wpn_pyeongon_hit.ogg",
+    "dur_s": 0.2,
+    "lufs_s": -20.0,
+    "peak_db": -4.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_pyeongon_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_pyeongon_hit__agg2.ogg",
+    "dur_s": 0.234,
+    "lufs_s": -20.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_pyeongon_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_pyeongon_hit__agg3.ogg",
+    "dur_s": 0.228,
+    "lufs_s": -20.0,
+    "peak_db": -7.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_pyeongon_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_pyeongon_hit__agg4.ogg",
+    "dur_s": 0.233,
+    "lufs_s": -20.0,
+    "peak_db": -5.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "coins",
+   "smack_body"
+  ]
+ },
+ "sfx_wpn_cheoljillyeo_hit": {
+  "class": "L2",
+  "note": "철질려 마름쇠 '팅' 집계 4티어",
+  "files": {
+   "sfx_wpn_cheoljillyeo_hit": {
+    "path": "assets/sfx/sfx_wpn_cheoljillyeo_hit.ogg",
+    "dur_s": 0.08,
+    "lufs_s": -20.0,
+    "peak_db": -6.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_cheoljillyeo_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_cheoljillyeo_hit__agg2.ogg",
+    "dur_s": 0.112,
+    "lufs_s": -20.0,
+    "peak_db": -7.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_cheoljillyeo_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_cheoljillyeo_hit__agg3.ogg",
+    "dur_s": 0.109,
+    "lufs_s": -20.0,
+    "peak_db": -7.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_cheoljillyeo_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_cheoljillyeo_hit__agg4.ogg",
+    "dur_s": 0.112,
+    "lufs_s": -20.0,
+    "peak_db": -9.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_hojakdo_hit": {
+  "class": "L2",
+  "note": "호작도 경악 파동 '훙' 집계 4티어",
+  "files": {
+   "sfx_wpn_hojakdo_hit": {
+    "path": "assets/sfx/sfx_wpn_hojakdo_hit.ogg",
+    "dur_s": 0.2,
+    "lufs_s": -20.0,
+    "peak_db": -7.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_hojakdo_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_hojakdo_hit__agg2.ogg",
+    "dur_s": 0.237,
+    "lufs_s": -20.0,
+    "peak_db": -7.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_hojakdo_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_hojakdo_hit__agg3.ogg",
+    "dur_s": 0.228,
+    "lufs_s": -20.0,
+    "peak_db": -8.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_hojakdo_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_hojakdo_hit__agg4.ogg",
+    "dur_s": 0.233,
+    "lufs_s": -20.0,
+    "peak_db": -9.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap"
+  ]
+ },
+ "sfx_wpn_neokjeon_hit": {
+  "class": "L2",
+  "note": "넋전 한지 '삭' 집계 4티어",
+  "files": {
+   "sfx_wpn_neokjeon_hit": {
+    "path": "assets/sfx/sfx_wpn_neokjeon_hit.ogg",
+    "dur_s": 0.064,
+    "lufs_s": -20.0,
+    "peak_db": -1.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_neokjeon_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_neokjeon_hit__agg2.ogg",
+    "dur_s": 0.114,
+    "lufs_s": -21.3,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_neokjeon_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_neokjeon_hit__agg3.ogg",
+    "dur_s": 0.119,
+    "lufs_s": -24.0,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_neokjeon_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_neokjeon_hit__agg4.ogg",
+    "dur_s": 0.125,
+    "lufs_s": -20.0,
+    "peak_db": -2.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_rustle"
+  ]
+ },
+ "sfx_wpn_jijeon_hit": {
+  "class": "L2",
+  "note": "지전 종이돈 '팔락' 집계 4티어",
+  "files": {
+   "sfx_wpn_jijeon_hit": {
+    "path": "assets/sfx/sfx_wpn_jijeon_hit.ogg",
+    "dur_s": 0.105,
+    "lufs_s": -22.9,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jijeon_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_jijeon_hit__agg2.ogg",
+    "dur_s": 0.131,
+    "lufs_s": -20.5,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jijeon_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_jijeon_hit__agg3.ogg",
+    "dur_s": 0.126,
+    "lufs_s": -20.0,
+    "peak_db": -1.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_jijeon_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_jijeon_hit__agg4.ogg",
+    "dur_s": 0.135,
+    "lufs_s": -20.0,
+    "peak_db": -4.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "coins",
+   "paper_flap"
+  ]
+ },
+ "sfx_wpn_gilbe_hit": {
+  "class": "L2",
+  "note": "길베 무명 '휙' 집계 4티어",
+  "files": {
+   "sfx_wpn_gilbe_hit": {
+    "path": "assets/sfx/sfx_wpn_gilbe_hit.ogg",
+    "dur_s": 0.102,
+    "lufs_s": -20.0,
+    "peak_db": -1.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gilbe_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_gilbe_hit__agg2.ogg",
+    "dur_s": 0.138,
+    "lufs_s": -21.7,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gilbe_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_gilbe_hit__agg3.ogg",
+    "dur_s": 0.138,
+    "lufs_s": -21.1,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_gilbe_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_gilbe_hit__agg4.ogg",
+    "dur_s": 0.146,
+    "lufs_s": -20.5,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap"
+  ]
+ },
+ "sfx_wpn_ssukmul_hit": {
+  "class": "L2",
+  "note": "쑥물 물방울 '톡' 집계 4티어",
+  "files": {
+   "sfx_wpn_ssukmul_hit": {
+    "path": "assets/sfx/sfx_wpn_ssukmul_hit.ogg",
+    "dur_s": 0.102,
+    "lufs_s": -20.0,
+    "peak_db": -3.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_ssukmul_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_ssukmul_hit__agg2.ogg",
+    "dur_s": 0.136,
+    "lufs_s": -20.0,
+    "peak_db": -4.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_ssukmul_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_ssukmul_hit__agg3.ogg",
+    "dur_s": 0.128,
+    "lufs_s": -20.0,
+    "peak_db": -6.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_ssukmul_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_ssukmul_hit__agg4.ogg",
+    "dur_s": 0.14,
+    "lufs_s": -20.0,
+    "peak_db": -7.3,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "water_drop"
+  ]
+ },
+ "sfx_wpn_sogeum_hit": {
+  "class": "L2",
+  "note": "소금 알갱이 '사각' 집계 4티어",
+  "files": {
+   "sfx_wpn_sogeum_hit": {
+    "path": "assets/sfx/sfx_wpn_sogeum_hit.ogg",
+    "dur_s": 0.075,
+    "lufs_s": -20.0,
+    "peak_db": -3.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sogeum_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_sogeum_hit__agg2.ogg",
+    "dur_s": 0.109,
+    "lufs_s": -20.0,
+    "peak_db": -4.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sogeum_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_sogeum_hit__agg3.ogg",
+    "dur_s": 0.107,
+    "lufs_s": -20.0,
+    "peak_db": -5.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_sogeum_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_sogeum_hit__agg4.ogg",
+    "dur_s": 0.112,
+    "lufs_s": -20.0,
+    "peak_db": -7.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca"
+  ]
+ },
+ "sfx_wpn_myeongdu_hit": {
+  "class": "L2",
+  "note": "명두 놋거울 '띵' 집계 4티어",
+  "files": {
+   "sfx_wpn_myeongdu_hit": {
+    "path": "assets/sfx/sfx_wpn_myeongdu_hit.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -20.0,
+    "peak_db": -5.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_myeongdu_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_myeongdu_hit__agg2.ogg",
+    "dur_s": 0.196,
+    "lufs_s": -20.0,
+    "peak_db": -7.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_myeongdu_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_myeongdu_hit__agg3.ogg",
+    "dur_s": 0.188,
+    "lufs_s": -20.0,
+    "peak_db": -8.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_myeongdu_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_myeongdu_hit__agg4.ogg",
+    "dur_s": 0.19,
+    "lufs_s": -20.0,
+    "peak_db": -6.5,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_janggu_hit": {
+  "class": "L2",
+  "note": "장구 충격파 '덕' 집계 4티어",
+  "files": {
+   "sfx_wpn_janggu_hit": {
+    "path": "assets/sfx/sfx_wpn_janggu_hit.ogg",
+    "dur_s": 0.118,
+    "lufs_s": -20.0,
+    "peak_db": -1.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_janggu_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_janggu_hit__agg2.ogg",
+    "dur_s": 0.152,
+    "lufs_s": -20.0,
+    "peak_db": -5.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_janggu_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_janggu_hit__agg3.ogg",
+    "dur_s": 0.147,
+    "lufs_s": -20.0,
+    "peak_db": -6.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_janggu_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_janggu_hit__agg4.ogg",
+    "dur_s": 0.154,
+    "lufs_s": -20.0,
+    "peak_db": -6.0,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_obanggi_hit": {
+  "class": "L2",
+  "note": "오방기 천 '팍' 집계 4티어",
+  "files": {
+   "sfx_wpn_obanggi_hit": {
+    "path": "assets/sfx/sfx_wpn_obanggi_hit.ogg",
+    "dur_s": 0.1,
+    "lufs_s": -20.0,
+    "peak_db": -2.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_obanggi_hit__agg2": {
+    "path": "assets/sfx/sfx_wpn_obanggi_hit__agg2.ogg",
+    "dur_s": 0.134,
+    "lufs_s": -20.0,
+    "peak_db": -2.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_obanggi_hit__agg3": {
+    "path": "assets/sfx/sfx_wpn_obanggi_hit__agg3.ogg",
+    "dur_s": 0.137,
+    "lufs_s": -20.0,
+    "peak_db": -5.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_wpn_obanggi_hit__agg4": {
+    "path": "assets/sfx/sfx_wpn_obanggi_hit__agg4.ogg",
+    "dur_s": 0.14,
+    "lufs_s": -20.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "smacks"
+  ]
+ },
+ "sfx_wpn_samjichang": {
+  "class": "L2",
+  "note": "삼지창 찌르기: 짧은 '쓱' 돌진 + 세 갈래 쇠 끝 반짝",
+  "files": {
+   "sfx_wpn_samjichang": {
+    "path": "assets/sfx/sfx_wpn_samjichang.ogg",
+    "dur_s": 0.322,
+    "lufs_s": -20.0,
+    "peak_db": -3.5,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_jakdu": {
+  "class": "L2",
+  "note": "작두 설치: 날이 땅에 박히는 '척' + 쇠 떨림",
+  "files": {
+   "sfx_wpn_jakdu": {
+    "path": "assets/sfx/sfx_wpn_jakdu.ogg",
+    "dur_s": 0.354,
+    "lufs_s": -20.0,
+    "peak_db": -2.9,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_low"
+  ]
+ },
+ "sfx_wpn_sainsageom": {
+  "class": "L2",
+  "note": "사인참사검 검기: 칼 뽑는 '스링' + 밝은 휘익",
+  "files": {
+   "sfx_wpn_sainsageom": {
+    "path": "assets/sfx/sfx_wpn_sainsageom.ogg",
+    "dur_s": 0.296,
+    "lufs_s": -20.0,
+    "peak_db": -9.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "whoosh_sword"
+  ]
+ },
+ "sfx_wpn_jangchang": {
+  "class": "L2",
+  "note": "장창 직선 연타: 짧은 '슉'",
+  "files": {
+   "sfx_wpn_jangchang": {
+    "path": "assets/sfx/sfx_wpn_jangchang.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -20.0,
+    "peak_db": -7.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_pyeongon": {
+  "class": "L2",
+  "note": "편곤 휘두름: 사슬 '찰랑' + 무거운 '부웅'",
+  "files": {
+   "sfx_wpn_pyeongon": {
+    "path": "assets/sfx/sfx_wpn_pyeongon.ogg",
+    "dur_s": 0.38,
+    "lufs_s": -20.0,
+    "peak_db": -2.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "coins",
+   "whoosh_heavy"
+  ]
+ },
+ "sfx_wpn_cheoljillyeo": {
+  "class": "L2",
+  "note": "철질려 살포: 마름쇠 흩뿌림 '차르륵'",
+  "files": {
+   "sfx_wpn_cheoljillyeo": {
+    "path": "assets/sfx/sfx_wpn_cheoljillyeo.ogg",
+    "dur_s": 0.231,
+    "lufs_s": -20.0,
+    "peak_db": -8.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_wpn_hojakdo": {
+  "class": "L2",
+  "note": "호작도 세화 펼침: 한지 두루마리 '촤락' + 낮은 숨(호랑이 그림의 기세)",
+  "files": {
+   "sfx_wpn_hojakdo": {
+    "path": "assets/sfx/sfx_wpn_hojakdo.ogg",
+    "dur_s": 0.368,
+    "lufs_s": -20.5,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_flap"
+  ]
+ },
+ "sfx_wpn_neokjeon": {
+  "class": "L2",
+  "note": "넋전 공전: 종이 인형 '사르륵'",
+  "files": {
+   "sfx_wpn_neokjeon": {
+    "path": "assets/sfx/sfx_wpn_neokjeon.ogg",
+    "dur_s": 0.282,
+    "lufs_s": -27.3,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_rustle"
+  ]
+ },
+ "sfx_wpn_gilbe": {
+  "class": "L2",
+  "note": "길베 펼침: 흰 무명 '촤아' 길게 깔림",
+  "files": {
+   "sfx_wpn_gilbe": {
+    "path": "assets/sfx/sfx_wpn_gilbe.ogg",
+    "dur_s": 0.34,
+    "lufs_s": -20.0,
+    "peak_db": -4.0,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap"
+  ]
+ },
+ "sfx_wpn_ssukmul": {
+  "class": "L2",
+  "note": "쑥물 바가지 뿌림: 물 '촤' + 방울 둘",
+  "files": {
+   "sfx_wpn_ssukmul": {
+    "path": "assets/sfx/sfx_wpn_ssukmul.ogg",
+    "dur_s": 0.35,
+    "lufs_s": -20.0,
+    "peak_db": -3.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "water_drop"
+  ]
+ },
+ "sfx_wpn_sogeum": {
+  "class": "L2",
+  "note": "소금 결계: 소금 뿌림 '사르르' 원",
+  "files": {
+   "sfx_wpn_sogeum": {
+    "path": "assets/sfx/sfx_wpn_sogeum.ogg",
+    "dur_s": 0.32,
+    "lufs_s": -20.0,
+    "peak_db": -5.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca"
+  ]
+ },
+ "sfx_wpn_obanggi": {
+  "class": "L2",
+  "note": "오방기 꽂음: 깃발 '펄럭' + 대나무 '탁'",
+  "files": {
+   "sfx_wpn_obanggi": {
+    "path": "assets/sfx/sfx_wpn_obanggi.ogg",
+    "dur_s": 0.316,
+    "lufs_s": -20.0,
+    "peak_db": -1.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_hit",
+   "cloth_flap"
+  ]
+ },
+ "sfx_sys_pungyeong": {
+  "class": "RIT",
+  "note": "해원 풍경 한 겹: 처마 바람종 D6 단음(런타임 토리 사다리 피치) — 방울 '딸랑' 위에 맑은 여운",
+  "files": {
+   "sfx_sys_pungyeong": {
+    "path": "assets/sfx/sfx_sys_pungyeong.ogg",
+    "dur_s": 2.089,
+    "lufs_s": -20.1,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_pungyeong__v2": {
+    "path": "assets/sfx/sfx_sys_pungyeong__v2.ogg",
+    "dur_s": 3.088,
+    "lufs_s": -19.0,
+    "peak_db": -5.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_pungyeong__v3": {
+    "path": "assets/sfx/sfx_sys_pungyeong__v3.ogg",
+    "dur_s": 2.871,
+    "lufs_s": -19.0,
+    "peak_db": -3.8,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_pungyeong__v4": {
+    "path": "assets/sfx/sfx_sys_pungyeong__v4.ogg",
+    "dur_s": 2.089,
+    "lufs_s": -20.1,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bell_1ring",
+   "chime_single"
+  ]
+ },
+ "sfx_amb_pungyeong": {
+  "class": "L4",
+  "note": "먼 풍경 원샷(앰비언스): 바람에 두세 번 부딪는 처마 바람종, 멀리서",
+  "files": {
+   "sfx_amb_pungyeong": {
+    "path": "assets/sfx/sfx_amb_pungyeong.ogg",
+    "dur_s": 4.324,
+    "lufs_s": -30.0,
+    "peak_db": -15.1,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_amb_pungyeong__v2": {
+    "path": "assets/sfx/sfx_amb_pungyeong__v2.ogg",
+    "dur_s": 4.209,
+    "lufs_s": -30.0,
+    "peak_db": -15.9,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_amb_pungyeong__v3": {
+    "path": "assets/sfx/sfx_amb_pungyeong__v3.ogg",
+    "dur_s": 3.496,
+    "lufs_s": -30.0,
+    "peak_db": -16.4,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_amb_pungyeong__v4": {
+    "path": "assets/sfx/sfx_amb_pungyeong__v4.ogg",
+    "dur_s": 4.725,
+    "lufs_s": -30.0,
+    "peak_db": -20.0,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bell_1ring",
+   "chime_single"
+  ]
+ },
+ "stg_bridge_gullim": {
+  "class": "STG",
+  "note": "굴림 브리지 3.0s: 장구 채편 굴림 크레셴도(가속) + 바람 라이저 → 끝 = 거리 경계 T 정각(착지는 stg_geori_land)",
+  "files": {
+   "stg_bridge_gullim": {
+    "path": "assets/sfx/stg_bridge_gullim.ogg",
+    "dur_s": 3.0,
+    "lufs_s": -17.4,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_sys_maedeup_lock": {
+  "class": "L2",
+  "note": "매듭 잠금 '툭': 무명 매듭이 조여 적 무구를 막는다(나무 둔탁 + 천)",
+  "files": {
+   "sfx_sys_maedeup_lock": {
+    "path": "assets/sfx/sfx_sys_maedeup_lock.ogg",
+    "dur_s": 0.105,
+    "lufs_s": -21.1,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_maedeup_lock__v2": {
+    "path": "assets/sfx/sfx_sys_maedeup_lock__v2.ogg",
+    "dur_s": 0.105,
+    "lufs_s": -21.2,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "wood_block_b"
+  ]
+ },
+ "sfx_evo_reveal": {
+  "class": "STG",
+  "note": "무구 진화·결합 공개 1.7s: 역재생 놋그릇 스웰 0.5s → 장구 덩 + 방울 토리 상행 화음(D-E-G-A-B) + 한지 펄럭",
+  "files": {
+   "sfx_evo_reveal": {
+    "path": "assets/sfx/sfx_evo_reveal.ogg",
+    "dur_s": 2.963,
+    "lufs_s": -17.0,
+    "peak_db": -5.9,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "korean_bell",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_plr_revive": {
+  "class": "STG",
+  "note": "되살아남(명줄): 깊은 들숨 → 방울 상행 3음 + 장구 덩(따뜻하게)",
+  "files": {
+   "sfx_plr_revive": {
+    "path": "assets/sfx/sfx_plr_revive.ogg",
+    "dur_s": 2.961,
+    "lufs_s": -17.0,
+    "peak_db": -2.8,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_deep"
+  ]
+ },
+ "sfx_trl_avatar_telegraph": {
+  "class": "L2",
+  "note": "화신 공격 예고 0.4s: 낮은 가죽 떨림이 올라오고 끝에 나무 '딱'(피하라는 신호 — 비음정)",
+  "files": {
+   "sfx_trl_avatar_telegraph": {
+    "path": "assets/sfx/sfx_trl_avatar_telegraph.ogg",
+    "dur_s": 0.433,
+    "lufs_s": -20.0,
+    "peak_db": -7.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_trl_avatar_telegraph__v2": {
+    "path": "assets/sfx/sfx_trl_avatar_telegraph__v2.ogg",
+    "dur_s": 0.431,
+    "lufs_s": -20.0,
+    "peak_db": -7.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "wood_block_b"
+  ]
+ },
+ "sfx_sys_maetim": {
+  "class": "RIT",
+  "note": "맺힘 복귀: 풀리던 매듭이 다시 조인다 — 무명 '끼익' 하행 + 둔탁한 '툭'(방울 없음 = 음이 꺼진다)",
+  "files": {
+   "sfx_sys_maetim": {
+    "path": "assets/sfx/sfx_sys_maetim.ogg",
+    "dur_s": 0.42,
+    "lufs_s": -19.0,
+    "peak_db": -3.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "wood_block_b"
+  ]
+ },
+ "sfx_sys_sal_drop": {
+  "class": "L3",
+  "note": "살 덩어리 떨어짐: 축축하고 낮은 '둑'(비음정, 짧게)",
+  "files": {
+   "sfx_sys_sal_drop": {
+    "path": "assets/sfx/sfx_sys_sal_drop.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -24.0,
+    "peak_db": -12.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_sal_drop__v2": {
+    "path": "assets/sfx/sfx_sys_sal_drop__v2.ogg",
+    "dur_s": 0.16,
+    "lufs_s": -24.0,
+    "peak_db": -12.6,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_plr_step": {
+  "class": "L3",
+  "note": "무당 발걸음(버선): 낮은 흙 '툭' + 무복 자락 스침 + 잔 흙알. 6테이크, 런타임 이동속도 비례 간격·−10dB 배경 질감",
+  "files": {
+   "sfx_plr_step": {
+    "path": "assets/sfx/sfx_plr_step.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -7.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_step__v2": {
+    "path": "assets/sfx/sfx_plr_step__v2.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -6.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_step__v3": {
+    "path": "assets/sfx/sfx_plr_step__v3.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -8.0,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_step__v4": {
+    "path": "assets/sfx/sfx_plr_step__v4.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -5.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_step__v5": {
+    "path": "assets/sfx/sfx_plr_step__v5.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -7.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_plr_step__v6": {
+    "path": "assets/sfx/sfx_plr_step__v6.ogg",
+    "dur_s": 0.18,
+    "lufs_s": -24.0,
+    "peak_db": -6.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca",
+   "cloth_flap"
+  ]
+ },
+ "sfx_sys_gilbe_loop": {
+  "class": "RIT",
+  "note": "길베 루프 4s: 흰 무명이 바닥을 스치는 '사아—' (대역 노이즈 + 느린 결 LFO + 옅은 천 펄럭). 런타임 볼륨 = 이동속도",
+  "files": {
+   "sfx_sys_gilbe_loop": {
+    "path": "assets/sfx/sfx_sys_gilbe_loop.ogg",
+    "dur_s": 4.0,
+    "lufs_s": -24.9,
+    "peak_db": -10.9,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": [
+   "cloth_flap"
+  ]
+ },
+ "sfx_sys_doryang": {
+  "class": "RIT",
+  "note": "오방 만다라 도량: 방울 오방 차임(토리 5음 상행, 청·적·황·백·흑) + 2.4s 낮은 허밍(D 저음, 서서히 잦아듦)",
+  "files": {
+   "sfx_sys_doryang": {
+    "path": "assets/sfx/sfx_sys_doryang.ogg",
+    "dur_s": 2.935,
+    "lufs_s": -19.0,
+    "peak_db": -5.8,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "sleigh_bells"
+  ]
+ },
+ "sfx_sys_sinmyeong_tick": {
+  "class": "RIT",
+  "note": "신명 25/50/75%: 장구 '기덕' 장식(꽹과리 아님). 기본=25 / __50 기덕+방울 / __75 기기덕+방울 두 음",
+  "files": {
+   "sfx_sys_sinmyeong_tick": {
+    "path": "assets/sfx/sfx_sys_sinmyeong_tick.ogg",
+    "dur_s": 0.278,
+    "lufs_s": -19.0,
+    "peak_db": -1.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_sinmyeong_tick__50": {
+    "path": "assets/sfx/sfx_sys_sinmyeong_tick__50.ogg",
+    "dur_s": 0.76,
+    "lufs_s": -21.0,
+    "peak_db": -1.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_sys_sinmyeong_tick__75": {
+    "path": "assets/sfx/sfx_sys_sinmyeong_tick__75.ogg",
+    "dur_s": 1.128,
+    "lufs_s": -20.1,
+    "peak_db": -1.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "drum_hits_dry",
+   "drum_sticks",
+   "korean_bell"
+  ]
+ },
+ "sfx_sys_giun_cross": {
+  "class": "L3",
+  "note": "굿판의 기운 50% 경계: 넋쪽 = 맑은 방울 한 점(기본) / __sal 살쪽 = 낮은 바람 한 숨. 판정 톤 아님 — 아주 작게",
+  "files": {
+   "sfx_sys_giun_cross": {
+    "path": "assets/sfx/sfx_sys_giun_cross.ogg",
+    "dur_s": 2.057,
+    "lufs_s": -24.0,
+    "peak_db": -16.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_sys_giun_cross__sal": {
+    "path": "assets/sfx/sfx_sys_giun_cross__sal.ogg",
+    "dur_s": 0.799,
+    "lufs_s": -24.0,
+    "peak_db": -10.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell"
+  ]
+ },
+ "sfx_sys_eoduk_grow": {
+  "class": "L3",
+  "note": "어둑시니 성장 루프 3s: 낮게 들이쉬는 숨(−7반음) + 55Hz 맥동 + 먹먹한 저역 바람(관심을 먹는 소리)",
+  "files": {
+   "sfx_sys_eoduk_grow": {
+    "path": "assets/sfx/sfx_sys_eoduk_grow.ogg",
+    "dur_s": 3.0,
+    "lufs_s": -30.1,
+    "peak_db": -18.9,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": [
+   "breath_deep"
+  ]
+ },
+ "sfx_sys_eoduk_shrink": {
+  "class": "L3",
+  "note": "어둑시니 축소 루프 2s: 공기 빠지는 고역 '쉬이—'(떨림). 런타임 축소 속도 비례 피치 상승",
+  "files": {
+   "sfx_sys_eoduk_shrink": {
+    "path": "assets/sfx/sfx_sys_eoduk_shrink.ogg",
+    "dur_s": 2.0,
+    "lufs_s": -30.0,
+    "peak_db": -18.1,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": []
+ },
+ "sfx_trl_grm_connect_star": {
+  "class": "RIT",
+  "note": "별 잇기(칠성 가호): 꽹과리 '갠' 1음(칠성 예약 악기 — 칠성 시련 전용). 런타임 별 번호마다 토리 상행 피치",
+  "files": {
+   "sfx_trl_grm_connect_star": {
+    "path": "assets/sfx/sfx_trl_grm_connect_star.ogg",
+    "dur_s": 1.087,
+    "lufs_s": -19.0,
+    "peak_db": -1.9,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "gong_korean_cdrk"
+  ]
+ },
+ "sfx_trl_grm_install": {
+  "class": "RIT",
+  "note": "오방기 세움(장군 가호): 깃대 꽂힘 '쿵'(소리북 + 대나무) + 오색 천 펄럭. 런타임 다섯 자리 = 토리 5음 피치",
+  "files": {
+   "sfx_trl_grm_install": {
+    "path": "assets/sfx/sfx_trl_grm_install.ogg",
+    "dur_s": 1.238,
+    "lufs_s": -19.0,
+    "peak_db": -5.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_grm_install__v2": {
+    "path": "assets/sfx/sfx_trl_grm_install__v2.ogg",
+    "dur_s": 1.182,
+    "lufs_s": -19.0,
+    "peak_db": -4.2,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_hit",
+   "cloth_flap",
+   "drum_hits_dry"
+  ]
+ },
+ "sfx_trl_grm_hold_loop": {
+  "class": "RIT",
+  "note": "거점 유지 진척 루프 4s: 산신 쉼터의 낮은 허밍(D 저음 화음, 숨 쉬듯 맥동). 런타임 진척 비례 피치 0→+7반음",
+  "files": {
+   "sfx_trl_grm_hold_loop": {
+    "path": "assets/sfx/sfx_trl_grm_hold_loop.ogg",
+    "dur_s": 4.0,
+    "lufs_s": -24.7,
+    "peak_db": -13.8,
+    "stereo": false,
+    "loop": true
+   }
+  },
+  "samples": []
+ },
+ "sfx_trl_grm_escort_arrive": {
+  "class": "RIT",
+  "note": "호송 도착: 넋이 닿을 때 맑은 물방울 + 방울 한 쌍(상행 4도)",
+  "files": {
+   "sfx_trl_grm_escort_arrive": {
+    "path": "assets/sfx/sfx_trl_grm_escort_arrive.ogg",
+    "dur_s": 1.934,
+    "lufs_s": -19.0,
+    "peak_db": -7.1,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_trl_grm_escort_arrive__v2": {
+    "path": "assets/sfx/sfx_trl_grm_escort_arrive__v2.ogg",
+    "dur_s": 2.004,
+    "lufs_s": -19.0,
+    "peak_db": -6.6,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "sleigh_bells",
+   "water_drop"
+  ]
+ },
+ "sfx_evt_gongmulsang": {
+  "class": "RIT",
+  "note": "뒷전 공물상 차림 2s: 놋그릇·나무 제기 놓이는 소리 군집 + 잡귀 발 '사락사락' 몰려듦",
+  "files": {
+   "sfx_evt_gongmulsang": {
+    "path": "assets/sfx/sfx_evt_gongmulsang.ogg",
+    "dur_s": 2.685,
+    "lufs_s": -19.0,
+    "peak_db": -8.2,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_evt_gongmulsang__v2": {
+    "path": "assets/sfx/sfx_evt_gongmulsang__v2.ogg",
+    "dur_s": 2.708,
+    "lufs_s": -19.0,
+    "peak_db": -6.9,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "paper_rustle",
+   "wood_blocks"
+  ]
+ },
+ "sfx_enm_gaekgwi": {
+  "class": "L3",
+  "note": "객귀: 무의미 음절 속삭임 + 붙는 '스윽' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_gaekgwi": {
+    "path": "assets/sfx/sfx_enm_gaekgwi.ogg",
+    "dur_s": 0.699,
+    "lufs_s": -24.1,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_gaekgwi__v2": {
+    "path": "assets/sfx/sfx_enm_gaekgwi__v2.ogg",
+    "dur_s": 0.698,
+    "lufs_s": -24.0,
+    "peak_db": -3.3,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_gaekgwi__v3": {
+    "path": "assets/sfx/sfx_enm_gaekgwi__v3.ogg",
+    "dur_s": 0.694,
+    "lufs_s": -24.7,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_gaekgwi__v4": {
+    "path": "assets/sfx/sfx_enm_gaekgwi__v4.ogg",
+    "dur_s": 0.668,
+    "lufs_s": -24.0,
+    "peak_db": -3.7,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_woman",
+   "cloth_flap"
+  ]
+ },
+ "sfx_enm_cheonyeo_gwisin": {
+  "class": "L3",
+  "note": "처녀귀신: 머리 휘날림 '사아' + 낮은 '휘잉'(저역 쉬익) — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_cheonyeo_gwisin": {
+    "path": "assets/sfx/sfx_enm_cheonyeo_gwisin.ogg",
+    "dur_s": 0.625,
+    "lufs_s": -24.0,
+    "peak_db": -10.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_cheonyeo_gwisin__v2": {
+    "path": "assets/sfx/sfx_enm_cheonyeo_gwisin__v2.ogg",
+    "dur_s": 0.624,
+    "lufs_s": -24.0,
+    "peak_db": -9.9,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_cheonyeo_gwisin__v3": {
+    "path": "assets/sfx/sfx_enm_cheonyeo_gwisin__v3.ogg",
+    "dur_s": 0.623,
+    "lufs_s": -24.0,
+    "peak_db": -10.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_cheonyeo_gwisin__v4": {
+    "path": "assets/sfx/sfx_enm_cheonyeo_gwisin__v4.ogg",
+    "dur_s": 0.624,
+    "lufs_s": -24.0,
+    "peak_db": -10.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_enm_mongdal_gwisin": {
+  "class": "L3",
+  "note": "몽달귀신: 발 끌기 → 돌진 '휙' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_mongdal_gwisin": {
+    "path": "assets/sfx/sfx_enm_mongdal_gwisin.ogg",
+    "dur_s": 0.535,
+    "lufs_s": -26.5,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mongdal_gwisin__v2": {
+    "path": "assets/sfx/sfx_enm_mongdal_gwisin__v2.ogg",
+    "dur_s": 0.641,
+    "lufs_s": -27.2,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mongdal_gwisin__v3": {
+    "path": "assets/sfx/sfx_enm_mongdal_gwisin__v3.ogg",
+    "dur_s": 0.637,
+    "lufs_s": -24.0,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mongdal_gwisin__v4": {
+    "path": "assets/sfx/sfx_enm_mongdal_gwisin__v4.ogg",
+    "dur_s": 0.641,
+    "lufs_s": -24.0,
+    "peak_db": -4.5,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "paper_rustle",
+   "whoosh_swing"
+  ]
+ },
+ "sfx_enm_mul_gwisin": {
+  "class": "L3",
+  "note": "물귀신: 물 고이는 탁한 '꾸르륵' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_mul_gwisin": {
+    "path": "assets/sfx/sfx_enm_mul_gwisin.ogg",
+    "dur_s": 0.632,
+    "lufs_s": -24.0,
+    "peak_db": -10.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mul_gwisin__v2": {
+    "path": "assets/sfx/sfx_enm_mul_gwisin__v2.ogg",
+    "dur_s": 0.546,
+    "lufs_s": -24.0,
+    "peak_db": -9.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mul_gwisin__v3": {
+    "path": "assets/sfx/sfx_enm_mul_gwisin__v3.ogg",
+    "dur_s": 0.619,
+    "lufs_s": -24.0,
+    "peak_db": -8.5,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_mul_gwisin__v4": {
+    "path": "assets/sfx/sfx_enm_mul_gwisin__v4.ogg",
+    "dur_s": 0.59,
+    "lufs_s": -24.0,
+    "peak_db": -6.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "water_drop"
+  ]
+ },
+ "sfx_enm_hosik_wonhon": {
+  "class": "L3",
+  "note": "호식 원혼: 낮은 짐승 숨 + 먼 메아리 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_hosik_wonhon": {
+    "path": "assets/sfx/sfx_enm_hosik_wonhon.ogg",
+    "dur_s": 1.363,
+    "lufs_s": -24.0,
+    "peak_db": -7.5,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_enm_hosik_wonhon__v2": {
+    "path": "assets/sfx/sfx_enm_hosik_wonhon__v2.ogg",
+    "dur_s": 1.373,
+    "lufs_s": -24.0,
+    "peak_db": -11.3,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_enm_hosik_wonhon__v3": {
+    "path": "assets/sfx/sfx_enm_hosik_wonhon__v3.ogg",
+    "dur_s": 1.351,
+    "lufs_s": -24.0,
+    "peak_db": -8.4,
+    "stereo": true,
+    "loop": false
+   },
+   "sfx_enm_hosik_wonhon__v4": {
+    "path": "assets/sfx/sfx_enm_hosik_wonhon__v4.ogg",
+    "dur_s": 1.38,
+    "lufs_s": -24.0,
+    "peak_db": -12.1,
+    "stereo": true,
+    "loop": false
+   }
+  },
+  "samples": [
+   "breath_deep"
+  ]
+ },
+ "sfx_enm_dokkaebi_bul": {
+  "class": "L3",
+  "note": "도깨비불: 불꽃 일렁 + 불씨 '팍' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_dokkaebi_bul": {
+    "path": "assets/sfx/sfx_enm_dokkaebi_bul.ogg",
+    "dur_s": 0.585,
+    "lufs_s": -24.0,
+    "peak_db": -4.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_dokkaebi_bul__v2": {
+    "path": "assets/sfx/sfx_enm_dokkaebi_bul__v2.ogg",
+    "dur_s": 0.585,
+    "lufs_s": -24.2,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_dokkaebi_bul__v3": {
+    "path": "assets/sfx/sfx_enm_dokkaebi_bul__v3.ogg",
+    "dur_s": 0.586,
+    "lufs_s": -24.0,
+    "peak_db": -4.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_dokkaebi_bul__v4": {
+    "path": "assets/sfx/sfx_enm_dokkaebi_bul__v4.ogg",
+    "dur_s": 0.582,
+    "lufs_s": -24.1,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "candle_wind",
+   "fire_crackle"
+  ]
+ },
+ "sfx_enm_yeongsan": {
+  "class": "L3",
+  "note": "영산: 흉살 장판 낮은 '지직' — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_yeongsan": {
+    "path": "assets/sfx/sfx_enm_yeongsan.ogg",
+    "dur_s": 0.376,
+    "lufs_s": -24.0,
+    "peak_db": -12.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_yeongsan__v2": {
+    "path": "assets/sfx/sfx_enm_yeongsan__v2.ogg",
+    "dur_s": 0.38,
+    "lufs_s": -24.0,
+    "peak_db": -12.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_yeongsan__v3": {
+    "path": "assets/sfx/sfx_enm_yeongsan__v3.ogg",
+    "dur_s": 0.38,
+    "lufs_s": -24.0,
+    "peak_db": -13.1,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_yeongsan__v4": {
+    "path": "assets/sfx/sfx_enm_yeongsan__v4.ogg",
+    "dur_s": 0.38,
+    "lufs_s": -24.0,
+    "peak_db": -13.1,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "sfx_enm_sangmun": {
+  "class": "L3",
+  "note": "상문: 마른 종이 바스락 + 낮은 단2도 놋그릇 경고 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_sangmun": {
+    "path": "assets/sfx/sfx_enm_sangmun.ogg",
+    "dur_s": 1.021,
+    "lufs_s": -25.2,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_sangmun__v2": {
+    "path": "assets/sfx/sfx_enm_sangmun__v2.ogg",
+    "dur_s": 1.013,
+    "lufs_s": -24.8,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_sangmun__v3": {
+    "path": "assets/sfx/sfx_enm_sangmun__v3.ogg",
+    "dur_s": 1.03,
+    "lufs_s": -25.1,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_sangmun__v4": {
+    "path": "assets/sfx/sfx_enm_sangmun__v4.ogg",
+    "dur_s": 1.009,
+    "lufs_s": -24.7,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "korean_bell",
+   "paper_fold"
+  ]
+ },
+ "sfx_enm_subi": {
+  "class": "L3",
+  "note": "수비: 작은 발 사락 군집 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_subi": {
+    "path": "assets/sfx/sfx_enm_subi.ogg",
+    "dur_s": 0.684,
+    "lufs_s": -24.1,
+    "peak_db": -3.2,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_subi__v2": {
+    "path": "assets/sfx/sfx_enm_subi__v2.ogg",
+    "dur_s": 0.701,
+    "lufs_s": -24.0,
+    "peak_db": -4.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_subi__v3": {
+    "path": "assets/sfx/sfx_enm_subi__v3.ogg",
+    "dur_s": 0.71,
+    "lufs_s": -24.0,
+    "peak_db": -3.4,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_subi__v4": {
+    "path": "assets/sfx/sfx_enm_subi__v4.ogg",
+    "dur_s": 0.697,
+    "lufs_s": -24.0,
+    "peak_db": -6.8,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": [
+   "bamboo_maraca"
+  ]
+ },
+ "sfx_enm_hwehwe_gwisin": {
+  "class": "L3",
+  "note": "훼훼귀신: 가위눌림 압박 드론(맥놀이) + 먹먹한 공기 — 4테이크. 런타임: 종 첫 등장 1회 + 종당 6s 간격 기척(−12dB)",
+  "files": {
+   "sfx_enm_hwehwe_gwisin": {
+    "path": "assets/sfx/sfx_enm_hwehwe_gwisin.ogg",
+    "dur_s": 0.987,
+    "lufs_s": -24.0,
+    "peak_db": -13.7,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_hwehwe_gwisin__v2": {
+    "path": "assets/sfx/sfx_enm_hwehwe_gwisin__v2.ogg",
+    "dur_s": 0.988,
+    "lufs_s": -24.0,
+    "peak_db": -13.8,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_hwehwe_gwisin__v3": {
+    "path": "assets/sfx/sfx_enm_hwehwe_gwisin__v3.ogg",
+    "dur_s": 0.989,
+    "lufs_s": -24.0,
+    "peak_db": -13.6,
+    "stereo": false,
+    "loop": false
+   },
+   "sfx_enm_hwehwe_gwisin__v4": {
+    "path": "assets/sfx/sfx_enm_hwehwe_gwisin__v4.ogg",
+    "dur_s": 0.989,
+    "lufs_s": -24.0,
+    "peak_db": -13.4,
+    "stereo": false,
+    "loop": false
+   }
+  },
+  "samples": []
+ },
+ "amb_jindo_ssitgim": {
+  "class": "AMB",
+  "note": "남도 갯마을 갯벌 24s: 먼 갯바람 + 갯벌 거품 '뽀글' + 갈대 사락 + 드문 바람 방울(파도 없음)",
+  "files": {
+   "amb_jindo_ssitgim": {
+    "path": "assets/sfx/amb_jindo_ssitgim.ogg",
+    "dur_s": 24.0,
+    "lufs_s": -30.9,
+    "peak_db": -19.3,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "bamboo_forest",
+   "wind_night_a"
+  ]
+ },
+ "amb_east_sea_byeolsin": {
+  "class": "AMB",
+  "note": "동해안 별신굿 바닷가 24s: 주기적 파도(8s) + 굿청 천막 펄럭 + 밧줄 삐걱",
+  "files": {
+   "amb_east_sea_byeolsin": {
+    "path": "assets/sfx/amb_east_sea_byeolsin.ogg",
+    "dur_s": 24.0,
+    "lufs_s": -31.1,
+    "peak_db": -18.9,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "cloth_flap"
+  ]
+ },
+ "amb_jeju_chilmeori": {
+  "class": "AMB",
+  "note": "제주 칠머리당 해안 24s: 센 바람(돌풍) + 현무암 파도 + 깃 펄럭",
+  "files": {
+   "amb_jeju_chilmeori": {
+    "path": "assets/sfx/amb_jeju_chilmeori.ogg",
+    "dur_s": 24.0,
+    "lufs_s": -32.0,
+    "peak_db": -18.7,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "wind_night_b"
+  ]
+ },
+ "amb_myeongbu": {
+  "class": "AMB",
+  "note": "명부 저승길 24s: 느린 삼도 물 흐름 + 끝없는 저역 + 먼 방울 + 흰 베 펄럭",
+  "files": {
+   "amb_myeongbu": {
+    "path": "assets/sfx/amb_myeongbu.ogg",
+    "dur_s": 24.0,
+    "lufs_s": -32.1,
+    "peak_db": -22.0,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "cloth_flap",
+   "korean_bell",
+   "sleigh_bells"
+  ]
+ },
+ "amb_island_bungyo": {
+  "class": "AMB",
+  "note": "남해 외딴 섬 폐분교 24s: 형광등 험(120Hz 질감) + 바다 바람 + 문 삐걱·물방울 원샷",
+  "files": {
+   "amb_island_bungyo": {
+    "path": "assets/sfx/amb_island_bungyo.ogg",
+    "dur_s": 24.0,
+    "lufs_s": -32.7,
+    "peak_db": -19.3,
+    "stereo": true,
+    "loop": true
+   }
+  },
+  "samples": [
+   "water_drop",
+   "wind_night_a"
+  ]
+ }
+}

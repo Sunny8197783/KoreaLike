@@ -1,0 +1,126 @@
+{
+ "agent": "vfx_G6_pickup_ui_env_screen",
+ "items": [
+  {
+   "id": "vfx_orb_small",
+   "path": "game/assets/vfx/vfx_orb_small.png",
+   "json": "game/assets/vfx/vfx_orb_small.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_orb_small.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_orb_mid",
+   "path": "game/assets/vfx/vfx_orb_mid.png",
+   "json": "game/assets/vfx/vfx_orb_mid.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_orb_mid.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_orb_large",
+   "path": "game/assets/vfx/vfx_orb_large.png",
+   "json": "game/assets/vfx/vfx_orb_large.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_orb_large.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_neok_pickup",
+   "path": "game/assets/vfx/vfx_neok_pickup.png",
+   "json": "game/assets/vfx/vfx_neok_pickup.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_neok_pickup.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_yeopjeon_spin",
+   "path": "game/assets/vfx/vfx_yeopjeon_spin.png",
+   "json": "game/assets/vfx/vfx_yeopjeon_spin.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_yeopjeon_spin.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "qa": "pixellab pixelart_workbench lint: 0 errors"
+  },
+  {
+   "id": "vfx_pickup_magnet_streak",
+   "path": "game/assets/vfx/vfx_pickup_magnet_streak.png",
+   "json": "game/assets/vfx/vfx_pickup_magnet_streak.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_pickup_magnet_streak.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_box_gilhyung_open",
+   "path": "game/assets/vfx/vfx_box_gilhyung_open.png",
+   "json": "game/assets/vfx/vfx_box_gilhyung_open.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_box_gilhyung_open.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_box_neokham_open",
+   "path": "game/assets/vfx/vfx_box_neokham_open.png",
+   "json": "game/assets/vfx/vfx_box_neokham_open.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_box_neokham_open.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_lamp_ignite",
+   "path": "game/assets/vfx/vfx_lamp_ignite.png",
+   "json": "game/assets/vfx/vfx_lamp_ignite.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_lamp_ignite.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_gongmulsang_feast",
+   "path": "game/assets/vfx/vfx_gongmulsang_feast.png",
+   "json": "game/assets/vfx/vfx_gongmulsang_feast.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gongmulsang_feast.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done"
+  },
+  {
+   "id": "vfx_screen_flash",
+   "path": "game/assets/vfx/vfx_screen_flash.gdshader",
+   "json": "game/assets/vfx/vfx_screen_flash.json",
+   "runtime": "game/vfx/screen_post_fx.gd",
+   "kind": "shader",
+   "source": "handwritten",
+   "license": "original",
+   "status": "done"
+  },
+  {
+   "id": "vfx_silence_desat",
+   "path": "game/assets/vfx/vfx_silence_desat.gdshader",
+   "json": "game/assets/vfx/vfx_silence_desat.json",
+   "runtime": "game/vfx/screen_post_fx.gd",
+   "kind": "shader",
+   "source": "handwritten",
+   "license": "original",
+   "status": "done"
+  }
+ ]
+}

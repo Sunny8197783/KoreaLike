@@ -1,0 +1,519 @@
+{
+ "agent": "vfx_G2_white_mugu_haewon",
+ "group": "G2_white_mugu_haewon",
+ "items": [
+  {
+   "id": "vfx_bangul_aura",
+   "path": "game/assets/vfx/vfx_bangul_aura.png",
+   "json": "game/assets/vfx/vfx_bangul_aura.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_bangul_aura.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 8,
+   "frame_size": [
+    160,
+    160
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    80,
+    80
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_cheoneum_pulse",
+   "path": "game/assets/vfx/vfx_cheoneum_pulse.png",
+   "json": "game/assets/vfx/vfx_cheoneum_pulse.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_cheoneum_pulse.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    192,
+    192
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    96,
+    96
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_buchae_gust",
+   "path": "game/assets/vfx/vfx_buchae_gust.png",
+   "json": "game/assets/vfx/vfx_buchae_gust.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_buchae_gust.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 5,
+   "frame_size": [
+    64,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    5,
+    24
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_irwolseonpung_whirl",
+   "path": "game/assets/vfx/vfx_irwolseonpung_whirl.png",
+   "json": "game/assets/vfx/vfx_irwolseonpung_whirl.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_irwolseonpung_whirl.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    32,
+    32
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.542,
+   "note": "sun drawn brass (Y) not red: colour role P+Y forbids red in white-mugu VFX"
+  },
+  {
+   "id": "vfx_neokjeon_doll",
+   "path": "game/assets/vfx/vfx_neokjeon_doll.png",
+   "json": "game/assets/vfx/vfx_neokjeon_doll.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_neokjeon_doll.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    12,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    6,
+    8
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_neokkkotbi_petal",
+   "path": "game/assets/vfx/vfx_neokkkotbi_petal.png",
+   "json": "game/assets/vfx/vfx_neokkkotbi_petal.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_neokkkotbi_petal.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_neokkkotbi_column",
+   "path": "game/assets/vfx/vfx_neokkkotbi_column.png",
+   "json": "game/assets/vfx/vfx_neokkkotbi_column.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_neokkkotbi_column.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    32,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    16,
+    58
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_jijeon_bill",
+   "path": "game/assets/vfx/vfx_jijeon_bill.png",
+   "json": "game/assets/vfx/vfx_jijeon_bill.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_jijeon_bill.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 2,
+   "frame_size": [
+    8,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_nojatdon_chain",
+   "path": "game/assets/vfx/vfx_nojatdon_chain.png",
+   "json": "game/assets/vfx/vfx_nojatdon_chain.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_nojatdon_chain.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    16,
+    6
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    0,
+    3
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.686,
+   "note": "horizontal tile 16x6 (2px cord + coins), scroll period 8px"
+  },
+  {
+   "id": "vfx_gilbe_cloth_unfold",
+   "path": "game/assets/vfx/vfx_gilbe_cloth_unfold.png",
+   "json": "game/assets/vfx/vfx_gilbe_cloth_unfold.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_gilbe_cloth_unfold.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    96,
+    16
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    0,
+    8
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_begareugi_shimmer",
+   "path": "game/assets/vfx/vfx_begareugi_shimmer.png",
+   "json": "game/assets/vfx/vfx_begareugi_shimmer.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_begareugi_shimmer.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    32,
+    8
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    4
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715,
+   "note": "horizontal ribbon tile 32x8"
+  },
+  {
+   "id": "vfx_ssukmul_pool",
+   "path": "game/assets/vfx/vfx_ssukmul_pool.png",
+   "json": "game/assets/vfx/vfx_ssukmul_pool.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_ssukmul_pool.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    64,
+    32
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    32,
+    16
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.654
+  },
+  {
+   "id": "vfx_sammul_triple",
+   "path": "game/assets/vfx/vfx_sammul_triple.png",
+   "json": "game/assets/vfx/vfx_sammul_triple.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sammul_triple.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    64,
+    32
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    32,
+    16
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_sogeum_ring",
+   "path": "game/assets/vfx/vfx_sogeum_ring.png",
+   "json": "game/assets/vfx/vfx_sogeum_ring.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sogeum_ring.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_sogeum_purify_pop",
+   "path": "game/assets/vfx/vfx_sogeum_purify_pop.png",
+   "json": "game/assets/vfx/vfx_sogeum_purify_pop.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_sogeum_purify_pop.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    16,
+    16
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_bujeong_gasim_blast",
+   "path": "game/assets/vfx/vfx_bujeong_gasim_blast.png",
+   "json": "game/assets/vfx/vfx_bujeong_gasim_blast.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_bujeong_gasim_blast.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 5,
+   "frame_size": [
+    48,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    24,
+    24
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715,
+   "note": "ink (mk) blot only on frames 0-1 as the unclean being burned off, per brief"
+  },
+  {
+   "id": "vfx_myeongdu_mirror",
+   "path": "game/assets/vfx/vfx_myeongdu_mirror.png",
+   "json": "game/assets/vfx/vfx_myeongdu_mirror.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_myeongdu_mirror.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 4,
+   "frame_size": [
+    16,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    8,
+    8
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_myeongdu_beam",
+   "path": "game/assets/vfx/vfx_myeongdu_beam.png",
+   "json": "game/assets/vfx/vfx_myeongdu_beam.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_myeongdu_beam.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 3,
+   "frame_size": [
+    12,
+    4
+   ],
+   "fps": 20,
+   "loop": true,
+   "pivot": [
+    0,
+    2
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715,
+   "note": "horizontal tile 12x4 (2px core), period 12px"
+  },
+  {
+   "id": "vfx_janggu_deong",
+   "path": "game/assets/vfx/vfx_janggu_deong.png",
+   "json": "game/assets/vfx/vfx_janggu_deong.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_janggu_deong.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 5,
+   "frame_size": [
+    128,
+    128
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_obanggi_flag",
+   "path": "game/assets/vfx/vfx_obanggi_flag.png",
+   "json": "game/assets/vfx/vfx_obanggi_flag.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_obanggi_flag.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 20,
+   "frame_size": [
+    12,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715,
+   "note": "5 colour variants as rows; frameTags cheong/jeok/hwang/baek/heuk"
+  },
+  {
+   "id": "vfx_obanggi_zone",
+   "path": "game/assets/vfx/vfx_obanggi_zone.png",
+   "json": "game/assets/vfx/vfx_obanggi_zone.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_obanggi_zone.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 6,
+   "frame_size": [
+    96,
+    96
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    48,
+    48
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715
+  },
+  {
+   "id": "vfx_obangjin_pillar",
+   "path": "game/assets/vfx/vfx_obangjin_pillar.png",
+   "json": "game/assets/vfx/vfx_obangjin_pillar.json",
+   "kind": "vfx",
+   "source": "pixelfx",
+   "source_file": "tools/vendor/pixelfx/src/fx/korean/vfx_obangjin_pillar.js",
+   "license": "original (project-made; pixelfx tool MIT)",
+   "status": "done",
+   "frames": 30,
+   "frame_size": [
+    16,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "blend": "normal",
+   "max_rel_luminance": 0.715,
+   "note": "5 colour variants as rows; frameTags cheong/jeok/hwang/baek/heuk"
+  }
+ ]
+}

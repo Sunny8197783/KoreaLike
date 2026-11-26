@@ -1,0 +1,208 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_neokkkotbi_column 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_neokkkotbi_column 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_neokkkotbi_column 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_neokkkotbi_column 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_neokkkotbi_column 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_neokkkotbi_column 5",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_neokkkotbi_column.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_neokkkotbi_column",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_neokkkotbi_column",
+   "name": "Neokkkotbi column",
+   "fps": 14.0,
+   "loop": false,
+   "frames": 6,
+   "frameWidth": 32,
+   "frameHeight": 64,
+   "frameSize": [
+    32,
+    64
+   ],
+   "pivot": [
+    16,
+    58
+   ],
+   "columns": 6,
+   "spec": {
+    "id": "vfx_neokkkotbi_column",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_neokkkotbi",
+    "color_role": "P",
+    "canvas": "32x64",
+    "frames": 6,
+    "timing": "fps:14",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": true,
+    "max_concurrent": 8,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L10",
+   "color_role": "P",
+   "max_concurrent": 8,
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 820,
+    "blend": "normal",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "impact_frame": 0,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

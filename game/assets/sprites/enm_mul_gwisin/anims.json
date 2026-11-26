@@ -1,0 +1,34 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  40,
+  40
+ ],
+ "pivot": [
+  20,
+  36
+ ],
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   40,
+   40
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "finalize",
+  "tier": "common_m",
+  "source": "art\\rework\\G3_pixellab_enemies\\work\\enm_mul_gwisin\\s5b"
+ },
+ "workbench_score": 99.4,
+ "pixellab_id": "ee58d42f-0805-460f-a051-1455689e5a9f",
+ "rework": "G3_pixellab_enemies 2026-11-22"
+}

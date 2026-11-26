@@ -1,0 +1,33 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  128,
+  128
+ ],
+ "pivot": [
+  64,
+  118
+ ],
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   128,
+   128
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "finalize",
+  "tier": "midboss",
+  "source": "art\\rework\\G3_pixellab_enemies\\work\\mboss_daegwi\\s5d"
+ },
+ "workbench_score": 96.4,
+ "pixellab_id": "2457ac3e-c34a-40aa-88e1-88e514bd112f",
+ "rework": "G3_pixellab_enemies 2026-11-22"
+}

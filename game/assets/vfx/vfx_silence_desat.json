@@ -1,0 +1,16 @@
+{
+ "frames": [],
+ "meta": {
+  "app": "KoreaLike G6 (Godot shader, no sprite sheet)",
+  "version": "1",
+  "image": null,
+  "pixelfx": {
+   "id": "vfx_silence_desat", "name": "정적 (채도 하강 + 먹 비네트)", "kind": "shader",
+   "shader": "res://assets/vfx/vfx_silence_desat.gdshader", "runtime": "res://vfx/screen_post_fx.gd (ScreenPostFx.silence)",
+   "fps": 0, "loop": false, "frames": 0, "duration_sec": 0.8,
+   "frameWidth": 640, "frameHeight": 360, "columns": 0, "pivot": [320, 180],
+   "blend": "normal", "layer": "L17", "timing": "0.8s", "beat_synced": false, "max_concurrent": 1,
+   "params": { "desat_max": 0.6, "ink": "#0e0b16", "vignette_max": 0.7, "bands": 5 }
+  }
+ }
+}

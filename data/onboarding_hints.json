@@ -1,0 +1,647 @@
+{
+  "_meta": {
+    "source_doc": "design/11-ux-ui-hud.md",
+    "version": "0.10",
+    "units": "lpx = 640x360 logical pixels",
+    "status": "draft",
+    "review_log": "design/11-ux-ui-hud.md 19장 (#2 #3 #4 #10)",
+    "canon_version": "v1.2",
+    "canon_basis": "design/01-concept-and-canon.md v1.2 + design/99-open-questions-and-next-steps.md (D-xx/C-xx)",
+    "canon_v1_2_log": [
+      "C-13: mode_chogut.timeline을 08 §14.6 정본에 맞춤(07:30 어둑시니, 08:00 중간보스 한x0.6·75초, 09:30 마지막 행렬 60초, 10:30 미니 뒷전 30초, 11:00 보스 한x0.4), assist(스폰 x0.8 비중첩, 명줄+1, 원귀 회귀 없음) 추가",
+      "D-02: 초굿 정산 살 우세 = 살 거둠",
+      "D-03: 초굿 보스 표시명 역려(boss_yeokryeo)",
+      "C-36: _meta.canon_version v1.2"
+    ]
+  },
+  "rules": {
+    "min_interval_s": 20,
+    "concurrent": 1,
+    "queue": 1,
+    "queue_drop_after_s": 20,
+    "priority_order": [
+      "survival",
+      "trial",
+      "rule",
+      "meta"
+    ],
+    "save_key": "profile.hints_seen",
+    "first_gutpan_assist": {
+      "runs": 2,
+      "window": "00:00-03:00",
+      "spawn_budget_mult": 0.8,
+      "opening_pool_override": {
+        "window": "00:00-00:20",
+        "pool": [
+          {
+            "id": "enm_gaekgwi",
+            "weight": 60,
+            "behavior_override": "arc_chase"
+          },
+          {
+            "id": "enm_agwi",
+            "weight": 40
+          }
+        ],
+        "note": "객귀 한 10 = 신칼 1타 파열, 아귀 한 16 = 2타 파열"
+      },
+      "event_at_20s": "evt_pullil_demo (달걀귀신 8, 무당 이동 방향 5u 정면)",
+      "eodukssini_first_run": "disabled (거구귀로 대체)",
+      "canon_request": "sys_first_gutpan_assist",
+      "owner": "08-stages-waves (data/waves_stage1.json 수정은 08 소유)"
+    },
+    "channels": {
+      "A_sentence": {
+        "surface": "hud_hint_line",
+        "min_interval_s": 20,
+        "concurrent": 1,
+        "queue": 1,
+        "queue_drop_after_s": 20
+      },
+      "B_name_tag": {
+        "surface": "world_lettering_on_target",
+        "min_interval_s": 8,
+        "duration_s": [
+          0.8,
+          1.2
+        ],
+        "may_overlap_A": true
+      },
+      "C_paused_annotation": {
+        "surface": "paused_screen_top_line",
+        "max_per_run": 2,
+        "exempt_from_interval": true
+      }
+    },
+    "min_interval_s_note": "min_interval_s(20)은 A 채널 기준. 13.1-4",
+    "mode_chogut": {
+      "id": "mode_chogut",
+      "duration_min": 12,
+      "profile_runs": [
+        1,
+        2
+      ],
+      "timeline": {
+        "trials": [
+          "03:00",
+          "06:00"
+        ],
+        "elite": "run1=거구귀(★ ③ 제안, 08 합의 대기), 어둑시니 첫 조우 07:30(08 §14.6)",
+        "eodukssini_first": "07:30",
+        "mboss": "08:00 (한 x0.6, 제한 75초)",
+        "last_procession": "09:30 (60초, 천도한 영가 귀환)",
+        "dwitjeon_short": "10:30-11:00 (미니 뒷전 30초, 대해원 판정 스냅 2.5)",
+        "boss": "11:00 (역려, 한 x0.4, 캐논 기운 분기 유지: 한형 매듭 3 / 살형 1단계)",
+        "jeongsan": "넋 우세 = 사자의 읍 / 살 우세 = 살 거둠(사자 비적대, 덩어리 3 x 30초, D-02)",
+        "forced_saja": "14:00 (보스 + 3:00, 07 9.4)"
+      },
+      "leaderboard": false,
+      "counts_as_standard_clear": false,
+      "canon_request": "mode_chogut",
+      "owner": "08-stages-waves 14장",
+      "timeline_source": "08-stages-waves §14.6 (정본, C-13)",
+      "assist": {
+        "spawn_density_mult": 0.8,
+        "stack_with_first_gutpan_assist": false,
+        "myeongjul_bonus": 1,
+        "wongwi_return": false,
+        "source": "08 §14.6"
+      }
+    },
+    "unlock_table": {
+      "1": {
+        "mode": "mode_chogut",
+        "named_concepts": [
+          "jeomji",
+          "haewon",
+          "yeongga",
+          "gildakkeum",
+          "siryeon",
+          "bingui"
+        ],
+        "hud_hidden": [
+          "hud_gutpan_giun(10:30 페이드인 또는 salgi>=20)",
+          "hud_sintong_seal"
+        ],
+        "trial_gauge": "single_mosigi",
+        "eodukssini": false
+      },
+      "2": {
+        "mode": "mode_chogut",
+        "named_concepts": [
+          "sal",
+          "wongwi",
+          "gutpan_giun",
+          "wieom_gaho",
+          "cheondo",
+          "eodukssini"
+        ],
+        "hud_added": [
+          "hud_gutpan_giun",
+          "hud_trial_gauge(dual)"
+        ]
+      },
+      "3": {
+        "mode": "mode_pyojun",
+        "named_concepts": [
+          "sinmyeong",
+          "sintong",
+          "geori"
+        ],
+        "hud_added": [
+          "hud_sintong_seal"
+        ]
+      },
+      "4+": {
+        "hud_mode": "full (opt_hud_mode_user_set=false일 때)"
+      }
+    },
+    "standard_chosen_run_calc": "max(run,3)",
+    "kpi": {
+      "first_kill_by_20s_min": 15,
+      "first_levelup_max_s": 15,
+      "run1_named_concepts_first_225s_max": 7,
+      "first_session_60min_dwitjeon_boss_seen_min": 0.6
+    }
+  },
+  "hints": [
+    {
+      "id": "hint_move",
+      "trigger": "run_start_first_run && t>=1s",
+      "text": {
+        "ko": "{in_move} 걷기",
+        "en": "{in_move} Walk"
+      },
+      "display": "glyph_above_player",
+      "dismiss": "moved>=2u",
+      "priority": "survival",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "B",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_jeomji_first",
+      "trigger": "first jeomji_open",
+      "text": {
+        "ko": "하나를 고르세요. ◆ 붉은 것은 깎고, ● 흰 것은 풉니다",
+        "en": "Pick one. ◆ Red cuts down, ● White sets free"
+      },
+      "display": "paused_annotation",
+      "dismiss": "pick",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": true,
+      "channel": "C",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_white_weapon",
+      "trigger": "t>=30s && momju_white_given",
+      "text": {
+        "ko": "흰 테두리 귀신은 붉은 칼로는 거의 끝나지 않는다 — {white_weapon} 소리 안으로 데려가 풀어라",
+        "en": "Red blades rarely finish white-edged ghosts — lead them into the {white_weapon}'s ring to set them free"
+      },
+      "display": "aura_outline+arrow+hint_line",
+      "dismiss": "first_haewon",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null,
+      "merged_from": [
+        "hint_pullil_seen"
+      ]
+    },
+    {
+      "id": "hint_haewon_named",
+      "trigger": "first_haewon",
+      "text": {
+        "ko": "解冤 해원",
+        "en": "Haewon (Released)"
+      },
+      "display": "name_tag_on_target",
+      "dismiss": "1.0s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "B",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_yeongga",
+      "trigger": "first yeongga_join",
+      "text": {
+        "ko": "해원한 넋은 영가가 되어 30초 함께 걷다 떠난다",
+        "en": "Released souls become Yeongga — they walk with you for 30s, then move on"
+      },
+      "display": "label+hint_line",
+      "dismiss": "procession>=3 || 4s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": 50,
+      "merged_from": [
+        "hint_haewon_named(문장 부분)"
+      ]
+    },
+    {
+      "id": "hint_daesin",
+      "trigger": "first daesin_cheondo",
+      "text": {
+        "ko": "영가가 대신 맞고 먼저 떠났다 — 천도",
+        "en": "A spirit took the blow and moved on — Cheondo"
+      },
+      "display": "hint_line",
+      "dismiss": "2.5s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 2,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_ring_guide",
+      "trigger": "t>=90s",
+      "text": {
+        "ko": "걸어온 흰 길을 다시 밟아 고리를 닫아 보라",
+        "en": "Cross your own white trail to close a ring"
+      },
+      "display": "dashed_circle_r3.5u+hint_line",
+      "dismiss": "ring_closed || 40s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_ring_assist",
+      "trigger": "hint_ring_guide timeout",
+      "text": {
+        "ko": "점을 차례로 밟아 원을 그려 보라",
+        "en": "Step on the lights in order to draw the circle"
+      },
+      "display": "4_checkpoints+temp_snap_2.5u",
+      "dismiss": "ring_closed",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_ring_named",
+      "trigger": "first ring_closed",
+      "text": {
+        "ko": "길닦음",
+        "en": "Gildakkeum"
+      },
+      "display": "name_tag_on_ring",
+      "dismiss": "1.0s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "B",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_sal",
+      "trigger": "toechi_count>=10",
+      "text": {
+        "ko": "부순 자리에 살이 남는다. 쌓이면 돌아온다",
+        "en": "Destruction leaves Sal behind. Enough of it returns"
+      },
+      "display": "arrow+hint_line+maedeup_highlight",
+      "dismiss": "4s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 2,
+      "early_unlock": "salgi>=20",
+      "min_time_s": null
+    },
+    {
+      "id": "hint_giun",
+      "trigger": "run1: t==10:52(초굿, 기운 바 개방 22초 뒤) / run2+: t>=120s",
+      "text": {
+        "ko": "풀어 보낸 만큼 한지빛, 부순 만큼 먹빛 — 굿판의 기운이 마지막 손님을 정한다",
+        "en": "Release brightens the rite, destruction darkens it — the rite's mood decides the final guest"
+      },
+      "display": "giun_pulse+hint_line",
+      "dismiss": "6s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": "salgi>=20",
+      "min_time_s": null
+    },
+    {
+      "id": "hint_trial_choose",
+      "trigger": "trial_open first",
+      "text": {
+        "ko": "들어가는 원이 곧 선택이다",
+        "en": "The circle you walk into is your choice"
+      },
+      "display": "arrows+hint_line",
+      "dismiss": "circle_entered",
+      "priority": "trial",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_trial_faces",
+      "trigger": "trial_start first",
+      "text": {
+        "ko": "꺾으면 위엄, 모시면 가호 — 먼저 찬 쪽으로 실린다",
+        "en": "Overpower for Majesty, honor for Grace — whichever fills first"
+      },
+      "display": "gauge_highlight+hint_line",
+      "dismiss": "trial_end",
+      "priority": "trial",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 2,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_box_first",
+      "trigger": "first box_open",
+      "text": {
+        "ko": "부순 귀신은 길흉 상자, 풀어 준 귀신은 넋함을 남긴다",
+        "en": "Destroyed ghosts leave omen chests; released ones leave soul caskets"
+      },
+      "display": "paused_annotation",
+      "dismiss": "take",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": true,
+      "channel": "C",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_need_white",
+      "trigger": "run==1 && t>=240s && haewon_count==0",
+      "text": {
+        "ko": "흰 무구가 있어야 풀어 보낼 수 있다",
+        "en": "You need a white implement to set them free"
+      },
+      "display": "hint_line+guarantee_white_card",
+      "dismiss": "white_weapon_owned",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null,
+      "note": "런 1 온보딩 구제 전용. 런 2부터 퇴치 위주 플레이를 실수로 다루지 않는다(1.2-7)"
+    },
+    {
+      "id": "hint_eoduk_1",
+      "trigger": "first elite_eodukssini spawn",
+      "text": {
+        "ko": "「쳐다볼수록 커진다…」",
+        "en": "\"It grows the more you watch it…\""
+      },
+      "display": "gongsu_lane+offscreen",
+      "dismiss": "auto",
+      "priority": "survival",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "gongsu_lane",
+      "unlock_run": 2,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_eoduk_2",
+      "trigger": "eoduk_size>=1.6 || eoduk_onscreen>=8s",
+      "text": {
+        "ko": "등을 돌려 걸어 보라",
+        "en": "Turn your back and walk away"
+      },
+      "display": "cone_highlight+hint_line",
+      "dismiss": "eoduk_shrinking",
+      "priority": "survival",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 2,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_midboss",
+      "trigger": "first mboss spawn",
+      "text": {
+        "ko": "부수면 상자와 엽전, 풀면 거느린 넋까지 함께",
+        "en": "Destroy it for a chest and coins — release it and its followers come too"
+      },
+      "display": "hint_line",
+      "dismiss": "4s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_box_speed",
+      "trigger": "box_open_count==15",
+      "text": {
+        "ko": "설정에서 상자 연출을 빠르게 할 수 있다",
+        "en": "You can speed up chest animations in Settings"
+      },
+      "display": "hint_line",
+      "dismiss": "4s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 3,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_wongwi_first",
+      "trigger": "first wongwi_return",
+      "text": {
+        "ko": "부순 귀신이 살을 모아 돌아왔다 — 원귀",
+        "en": "What you destroyed has gathered its Sal and returned — Wongwi"
+      },
+      "display": "hint_line+maedeup_highlight",
+      "dismiss": "4s",
+      "priority": "survival",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 2,
+      "early_unlock": "salgi>=20",
+      "min_time_s": null
+    },
+    {
+      "id": "hint_evo_ready_first",
+      "trigger": "first evo_ready",
+      "text": {
+        "ko": "정예가 남긴 상자를 열면 무구가 진화한다",
+        "en": "Open a chest from an elite to evolve this implement"
+      },
+      "display": "slot_pulse+hint_line",
+      "dismiss": "4s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 3,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_gyeoldan_first",
+      "trigger": "first toechi where gyeoldan && target_was_pullil",
+      "text": {
+        "ko": "결단타 — 단칼에 끊었다",
+        "en": "Decisive Strike — cut clean through"
+      },
+      "display": "name_tag_on_target",
+      "dismiss": "1.2s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "B",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_dwitjeon",
+      "trigger": "first geori_dwitjeon start",
+      "text": {
+        "ko": "공물상을 고리로 묶으면 남은 넋이 한꺼번에 풀린다",
+        "en": "Ring the offering tables together to release every soul at once"
+      },
+      "display": "arrow_to_gongmulsang+hint_line",
+      "dismiss": "great_haewon || 25s",
+      "priority": "rule",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 1,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_sinmyeong",
+      "trigger": "first sinmyeong_oreum",
+      "text": {
+        "ko": "넋을 풀고 보낼수록, 고리를 닫을수록 징이 차오른다 — 신명 오름",
+        "en": "Release, send off, close rings — the gong fills. Sinmyeong rises"
+      },
+      "display": "sinmyeong_arc_highlight+hint_line",
+      "dismiss": "4s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 3,
+      "early_unlock": null,
+      "min_time_s": null
+    },
+    {
+      "id": "hint_sintong_first",
+      "trigger": "first sintong_state_changed(state=ACTIVE) per char_id",
+      "text": {
+        "ko": "{char_name}의 신통 — {sintong_trigger_line}",
+        "en": "{char_name}'s Sintong — {sintong_trigger_line}"
+      },
+      "display": "seal_highlight+hint_line",
+      "dismiss": "4s",
+      "priority": "meta",
+      "max_shows": 1,
+      "max_shows_scope": "per_char",
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 3,
+      "early_unlock": null,
+      "min_time_s": null,
+      "text_source": "data/characters.json char_*.sintong"
+    },
+    {
+      "id": "hint_hud_full_offer",
+      "trigger": "run==4 && run_start && !opt_hud_mode_user_set",
+      "text": {
+        "ko": "기록판을 모두 펼쳤다 — 설정에서 간소로 되돌릴 수 있다",
+        "en": "Full HUD unlocked — switch back to Simple in Settings"
+      },
+      "display": "hint_line",
+      "dismiss": "5s",
+      "priority": "meta",
+      "max_shows": 1,
+      "on_paused_screen": false,
+      "channel": "A",
+      "unlock_run": 4,
+      "early_unlock": null,
+      "min_time_s": null
+    }
+  ],
+  "death_cards_first3": [
+    {
+      "cond": "haewon_ratio<0.15",
+      "ko": "흰 무구로 풀어 보내면 영가가 대신 맞아 준다"
+    },
+    {
+      "cond": "haewon_ratio>0.85 && death_level<median_level_at_time",
+      "ko": "붉은 무구로 한을 깨면 원혼 구슬이 온전히 모인다 — 빨리 강해진다"
+    },
+    {
+      "cond": "ring_count==0",
+      "ko": "걸어온 흰 길을 다시 밟아 고리를 닫아 보라"
+    },
+    {
+      "cond": "death_cause==elite_eodukssini",
+      "ko": "어둑시니는 쳐다볼수록 자란다"
+    },
+    {
+      "cond": "death_cause==elite_wongwi",
+      "ko": "살 매듭이 차기 전에 소금이나 고리로 살을 걷어 내거나, 돌아온 원귀를 붉은 무구로 맞받아라"
+    },
+    {
+      "cond": "weapon_slots<=3",
+      "ko": "점지에서 새 무구를 받아 칸을 채우라"
+    }
+  ],
+  "death_cards_rule": "한쪽으로 쏠린 플레이 조언은 양쪽 모두 둔다(1.2-7)"
+}

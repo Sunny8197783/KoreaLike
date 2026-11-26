@@ -1,0 +1,42 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  96,
+  96
+ ],
+ "pivot": [
+  48,
+  88
+ ],
+ "anims": {
+  "float": {
+   "east": 4,
+   "north": 4,
+   "south": 4,
+   "west": 4
+  },
+  "idle": {
+   "east": 4,
+   "north": 4,
+   "south": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "float": [
+   96,
+   96
+  ],
+  "idle": [
+   96,
+   96
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "elite",
+  "rot": "south/east/north/west.png = idle_<dir>_0 (독립 정지 rotation 반입 제외, L12)"
+ },
+ "west": "flip_h(east)",
+ "notes": "셰이더 몸체 정예. float 4f = edge_mask 윤곽 출렁임(몸), idle 4f = eyes_blink 합성. 원본 edge_mask/eyes_blink 는 런타임 미참조라 art/rework/G4_salvage_enemies_boss/elite_eodukssini/shader_masks/ 로 이동. __small 은 같은 텍스처 정수배(엔티티 폴더 없음)"
+}

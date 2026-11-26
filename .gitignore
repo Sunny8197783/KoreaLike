@@ -1,0 +1,22 @@
+# 빌드 결과물 (Release·Pages 로 배포)
+/build/
+# 원본 아트·중간 산출물 (용량 큼)
+/art/
+# 캡처·로그
+/game/captures/
+/game/_capture/
+*.log
+# 도구 캐시·외부 저장소
+/tools/vendor/
+__pycache__/
+*.pyc
+node_modules/
+# 로컬 설정
+/.claude/
+skills-lock.json
+# Godot
+.godot/
+*.bak
+# OS
+Thumbs.db
+.DS_Store

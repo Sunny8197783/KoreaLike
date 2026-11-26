@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "doc": "design/13-art-direction.md §2.6",
+  "canon_basis": "v1.2 (2026-11-21)",
+  "description": "넋길 마스터 팔레트. canon=true 색은 01-concept-and-canon.md 6.1 예약색이며 HEX 변경 금지. world_reserved 규칙은 월드 공간(게임 화면 내 스프라이트·VFX)에만 적용되고 UI는 §8 규칙을 따른다.",
+  "max_master_colors": 72,
+  "ramps": {
+    "mk": { "name": "먹 (밤·배경)", "colors": ["#0e0b16", "#17131f", "#221c2e", "#2f2840", "#3f3654", "#544a6b"], "canon_index": 0, "roles": ["배경 베이스", "살 알갱이 본체", "어둠 레이어 틴트", "적 장판 바탕"] },
+    "hk": { "name": "오방 흑 (외곽선)", "colors": ["#1a1a1a"], "canon_index": 0, "roles": ["모든 스프라이트 1px 외곽선", "적 탄 코어"] },
+    "hj": { "name": "한지", "colors": ["#e9dcc0", "#d2c19c", "#b29d76", "#857154", "#5a4a37"], "canon_index": 0, "ui_only_highlight": "#f6eedc", "roles": ["UI 바탕", "도량 바닥", "넋 쪽 게이지", "플레이어·적 스프라이트의 최고 명도 상한", "백지 술·종이 무구", "백 무구 VFX 주색(색 역할 P: 알파 50%, 일반 블렌드, 재질 패턴)", "UI 가호 게이지(○ 모양, 캐논 v1.2 D-53)"] },
+    "bk": { "name": "오방 백 (예약)", "colors": ["#f2ece0", "#d6cfc1"], "flash_core_only": "#fffdf6", "canon_index": 0, "roles": ["풀릴 기색 외곽선", "길베", "영가", "해원 빛(순간 연출, 색 역할 W)", "고 매듭(obj_go_maedeup)"], "excluded": ["백 무구 VFX(→ hj, 색 역할 P)"] },
+    "jk": { "name": "오방 적", "colors": ["#f4a183", "#e4604f", "#c8322d", "#8c1f22", "#561318"], "canon_index": 2, "roles": ["적 무구 VFX", "퇴치 파열", "원귀 눈", "위엄 게이지"] },
+    "hw": { "name": "오방 황", "colors": ["#fff1b8", "#f5d66b", "#e8b931", "#a97c1b", "#6a4a12"], "canon_index": 2, "roles": ["엽전", "상자", "공덕 숫자", "등불", "부적 괴황지", "원혼 구슬 중"] },
+    "ch": { "name": "오방 청", "colors": ["#a9caf5", "#5f93de", "#2a5caa", "#1b3a70", "#0f2142"], "canon_index": 2, "roles": ["적 탄 링", "적 장판 테두리·해칭", "물 계열 보조"] },
+    "cr": { "name": "청록 (청의 물·혼불 변이)", "colors": ["#9fe0d4", "#55b8aa", "#2f8c86", "#1d5a58", "#10302f"], "canon_index": null, "roles": ["원혼 구슬 소", "맑은 물", "용왕 문양·오라", "도깨비불 광원"] },
+    "gh": { "name": "귀회 (잡귀 몸체)", "colors": ["#26292e", "#3a3f46", "#535a62", "#6f7780", "#8f979e", "#aab1b5"], "canon_index": null, "roles": ["잡귀 소복·피부", "맺힌 무명천"] },
+    "gr": { "name": "귀록 (썩음·물기)", "colors": ["#262b20", "#3a4230", "#556046", "#727f5f", "#919c7c"], "canon_index": null, "roles": ["아귀", "물귀신", "거구귀"] },
+    "sk": { "name": "피부", "colors": ["#3b2219", "#6e4330", "#a5704f", "#d29d7a", "#efcdb0"], "canon_index": null, "roles": ["무당·화신 피부", "풀릴 기색 사람 얼굴"] },
+    "eg": { "name": "환경 녹 (저채도)", "colors": ["#111a14", "#1a2a1e", "#26402b", "#3a5a3c", "#557652"], "canon_index": null, "roles": ["소나무", "풀", "이끼"] },
+    "et": { "name": "흙·돌", "colors": ["#1b1511", "#2c221a", "#433426", "#5e4b36", "#7c674b"], "canon_index": null, "roles": ["굿당 마당", "갯벌", "돌판"] },
+    "dc": { "name": "단청 환경 변이 (저채도)", "colors": ["#7a3a2c", "#3e6a5a", "#6b3a2a", "#3b4f6e", "#8a7440"], "canon_index": null, "roles": ["당집 주칠", "뇌록", "석간주", "군청 변이", "황 변이"], "note": "환경은 오방 원색 대신 이 램프만 쓴다" }
+  },
+  "world_reserved_rules": [
+    { "color": "#f2ece0", "family_delta_e_max": 6, "allowed": ["풀릴 기색 외곽선", "길베", "영가", "해원 빛(순간 연출, 색 역할 W)", "obj_go_maedeup", "풀린 무명천"], "forbidden": ["적 탄", "적 공격 VFX", "적 몸체", "플레이어 몸체 스프라이트", "환경", "백 무구 VFX(색 역할 P)", "백 무구 타격 플래시"] },
+    { "color_role": "P", "applies_to": "백 무구·백 진화·결합 무구 백 부위·신령 권능(풀기) VFX", "primary": "#e9dcc0", "shade": "#d2c19c", "alpha": 0.50, "blend": "normal", "additive_forbidden": true, "max_relative_luminance": 0.72, "fill_interior": "오라·충격파 0%, 장판 ≤ 20%", "texture_patterns": { "wpn_bangul": "음파 링 선 1px×3", "evo_cheoneum_bangul": "공명 링 선 2줄", "wpn_janggu": "링 선 2줄 + 2px 점열", "wpn_ssukmul": "물결 선", "wpn_buchae": "바람결 곡선 3줄", "wpn_neokjeon": "종이결(접힌 자국 1px)", "wpn_jijeon": "종이결(엽전 구멍)", "wpn_gilbe": "무명 결(가로 2px 간격)", "wpn_sogeum": "결정 점열", "wpn_myeongdu": "한지 코어 + 황 가장자리", "wpn_obanggi": "도상 변이 5색(백 기 = hj)" }, "hit_flash": "hj 40% 2프레임", "review": "R1" },
+    { "color": "#c8322d", "allowed": ["적 무구 VFX", "퇴치 파열", "원귀 눈", "결단타", "플레이어 무복(채도 그대로 허용, 면적 40% 이하)"], "forbidden": ["영가", "해원 연출", "적 탄", "환경 원색"] },
+    { "color": "#e8b931", "allowed": ["엽전", "상자", "공덕 숫자", "등불", "부적", "원혼 구슬 중", "플레이어 VFX 보조"], "forbidden": ["적 탄", "적 장판"] },
+    { "color": "#2a5caa", "allowed": ["적 탄", "적 장판", "물 계열(청록 변이 우선)"], "forbidden": ["플레이어 투사체 주색", "해원 연출"] }
+  ],
+  "luminance_caps": {
+    "enemy_body_max_relative_luminance": 0.45,
+    "player_body_max_hex": "#e9dcc0",
+    "reserved_white_relative_luminance": 0.84,
+    "white_weapon_vfx_max_relative_luminance": 0.72,
+    "reserved_white_min_gap_from_P": 0.08,
+    "background_max_relative_luminance": 0.06,
+    "environment_prop_max_relative_luminance": 0.18
+  },
+  "per_sprite_color_budget": {
+    "player": 24, "companion_yeongga": 10, "common_enemy": 12, "elite": 16, "midboss": 24, "boss": 32, "avatar": 24, "icon": 16, "tile_set": 20, "prop": 16, "vfx": 6
+  },
+  "deity_accents": {
+    "deity_sansin": { "ramp": ["hw", "hk"], "aura_shape": "불꽃형(위엄) / 산안개형(가호)", "pattern_tile": "호랑이 줄무늬" },
+    "deity_yongwang": { "ramp": ["cr"], "aura_shape": "물결 고리", "pattern_tile": "운문·물결" },
+    "deity_chilseong": { "ramp": ["hw", "ch_dk"], "aura_shape": "공전하는 7점", "pattern_tile": "북두 7점" },
+    "deity_janggun": { "ramp": ["jk", "hk"], "aura_shape": "창끝형 불꽃", "pattern_tile": "두정갑 정(釘) 점열" },
+    "deity_barigongju": { "ramp": ["dc", "hj"], "aura_shape": "색동 띠 나선", "pattern_tile": "색동 줄" },
+    "deity_jeseok_daegam": { "ramp": ["hj", "hw"], "aura_shape": "연꽃잎(가호·제석) / 엽전 반짝임(위엄·대감)", "pattern_tile": "연꽃 / 엽전 문" }
+  },
+  "crowd_dim": { "n0": 24, "span": 96, "base": 0.88, "doc": "design/18 §1.2 무리 층: d = clamp((N - n0) / span, 0, 1) × 설정 배율. 명도 ×base×(1-0.30d), 채도 ×(1-0.45d). 풀릴 기색·원귀·외곽선·정예+ 제외" },
+  "accessibility_overrides": {
+    "pullil_outline_alt": ["#f2ece0", "#ffd84a", "#4ff0ff"],
+    "pullil_outline": { "layers_inner_to_outer": [ { "color": "#1a1a1a", "px": 1 }, { "color": "#f2ece0", "px": 1, "canon": "3.2.2" }, { "color": "#0e0b16", "px": 1, "alpha": 0.60, "role": "먹 녹아웃" } ], "render_layer": "L11_pullil_outline (L10 위)", "marker_option": "opt_pullil_marker (기본 켬)", "ab_test_candidate_B": [ { "color": "#1a1a1a", "px": 1 }, { "color": "#f2ece0", "px": 2 } ], "ab_test_scene": "test_readability_1000_white", "review": "R1" },
+    "enemy_bullet_alt_rim": ["#a9caf5", "#ff4fd8"],
+    "high_contrast_mode": { "background_value_mul": 0.7, "enemy_outline_px": 2, "pullil_white_px": 2 }
+  }
+}

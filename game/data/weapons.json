@@ -1,0 +1,4147 @@
+{
+  "schema_version": 1,
+  "source_doc": "design/04-weapons-evolution.md",
+  "canon_doc": "design/01-concept-and-canon.md",
+  "canon_version": "v1.2",
+  "canon_v1_2_log": [
+    "캐논 v1.2 / 16 C·D 반영 (2026-11-22): geori_grid[geori_dwitjeon].jangdan '당악' + jangdan_note(C-23)"
+  ],
+  "units": {
+    "distance": "unit (1u = 32px)",
+    "time": "seconds (game time)",
+    "pierce_infinite": -1,
+    "percent_fields_are_fractions": true
+  },
+  "globals": {
+    "damage_formula": "final = round((level_dmg + flat_add) * (1 + sum(sinppal_pct)) * state_mult * crit_mult * special_mults), min 1",
+    "state_mult": {
+      "white_vs_pullil": 3.0,
+      "white_vs_pullil_stat": "stat_puri (cap 6.0)",
+      "red_vs_pullil_common": "maedeup_lock: hp floor 1 (elite+ exempt)"
+    },
+    "crit": {
+      "stat": "stat_gyeoldan",
+      "base": 0.05,
+      "cap": 0.5,
+      "mult_vs_normal": 2.0,
+      "vs_pullil_common": "instant toechi (ignores maedeup lock)",
+      "applies_to": "red only (union: red-mode hits only)"
+    },
+    "variance": 0,
+    "quantization": {
+      "owner": "design/05-stats-passives.md 3.2.2a",
+      "mode": "phase_carry",
+      "algorithm": "on grid tick t: fire if t >= ideal_t and t >= last_fire_t + grid; ideal_t += P_eff; if t - ideal_t > grid: ideal_t = t + P_eff",
+      "grid": "see geori_grid[].grid_beat_fraction: 2-bun-bak 1/2 beat, 3-bun-bak (jungjungmori, jajinmori) 1/3 beat (canon v1.2 D-18 CR1), jinyangjo geori_jutang_bujeong 1/4 beat; must equal combat_core.jangdan.geori[].grid_div (C-06)",
+      "downbeat_weapons": [
+        "wpn_janggu",
+        "evo_hapjangdan"
+      ],
+      "downbeat_grid": "1 beat",
+      "canon_label": "잔여 이월(위상 이월) — canon v1.2 D-21"
+    },
+    "cooldown": {
+      "formula": "P_eff = max(min_period, base_cd * max(floor, stat_jangdan), grid)",
+      "floor": 0.4,
+      "floor_sinmyeong_oreum": 0.25
+    },
+    "projectile_pool": {
+      "global_soft_cap": 600,
+      "global_hard_cap": 768,
+      "merge_rule": "spawn m<n -> dmg*n/m (cap x3); m=0 -> recycle oldest of same weapon",
+      "zone_cap_global": 64,
+      "hit_pair_budget_per_frame": 4000
+    },
+    "amount_cap_global": 10,
+    "hit_lockout": "per weapon instance per target; zones of same weapon do not stack on one target (one tick / tick interval)",
+    "knockback_vs_pullil": {
+      "white": 0.0,
+      "red": 1.0,
+      "note": "white weapons never push pullil targets; buchae pulls 0.5u instead"
+    },
+    "red_vs_pullil_common": {
+      "auto_aim": "excluded",
+      "projectile_pass_through": true,
+      "pierce_consumed": false,
+      "area_hit": "maedeup_lock (dmg floor han 1, \"tuk\" feedback); crit still instant toechi",
+      "note": "review R11: red projectiles fly through giseak common/minion without spending pierce; elite+ unaffected"
+    },
+    "wieom": {
+      "owner": "design/06-deities-possession.md 3.5.1 / data/deities.json constants.wieom_color_coeff",
+      "color_coeff_ref": {
+        "red": 1.0,
+        "white": 0.4,
+        "union": 0.7
+      },
+      "white_auto_aim_avatar": false,
+      "presence_factor": "owned by 06 (02 proposes 0.35 outside 6u; pending)"
+    },
+    "status_effects": {
+      "owner_apply": "design/04 (duration/strength per weapon level)",
+      "owner_player_side": "design/02 11.3 / combat_core.json",
+      "owner_enemy_resist": "design/07 2.6 / enemies.json",
+      "ids": [
+        "st_gyeongak",
+        "st_bongbak",
+        "st_gyeongjik",
+        "st_pyosik",
+        "st_hwasang",
+        "st_dunhwa"
+      ],
+      "aliases": {
+        "st_gongpo": "st_gyeongak"
+      },
+      "aliases_note": "canon v1.2 C-05: st_gyeongak is canonical, st_gongpo alias only",
+      "slow_floor_speed": 0.3
+    },
+    "eodukssini": {
+      "auto_aim_excluded": [
+        "red"
+      ],
+      "red_hit_growth": 0.03,
+      "white_hit_shrink": 0.02,
+      "myeongdu_hit_shrink": "per weapon field dark"
+    },
+    "bulgasari_absorb_tag": "metal",
+    "ritual_ref": {
+      "1": 10,
+      "2": 12,
+      "3": 14,
+      "4": 16,
+      "5": 18,
+      "6": 21,
+      "7": 24,
+      "8": 28,
+      "evo": 36,
+      "union": 40
+    },
+    "ritual_ref_use": [
+      "yeongga aura tick dmg = 0.15 * max ritual_ref among owned white weapons (union counts as white, 40) * sinppal * grid_g  (tick every grid g; per-second = 0.15 * ritual_ref * sinppal)",
+      "gildakkeum effect2 = 2 * sum(ritual_ref of owned white weapons) * sinppal (single hit at ring close)",
+      "no white weapon owned: ritual_ref fallback = 10 (= Lv1)"
+    ],
+    "reference_curves": {
+      "enemy_han": {
+        "owner": "design/07-enemies-bosses.md 3.2 / data/enemies.json scaling.T_han",
+        "formula": "han_base * T(m), T(m) = 1 + 0.18m + 0.012m^2",
+        "han_base_ref": 12,
+        "values": {
+          "0": 12.0,
+          "3": 19.8,
+          "5": 26.4,
+          "6": 30.1,
+          "9": 43.1,
+          "10": 48.0,
+          "12": 58.7,
+          "15": 76.8,
+          "18": 97.5,
+          "20": 112.8
+        }
+      },
+      "sinppal_ref": {
+        "0": 1.0,
+        "5": 1.1,
+        "10": 1.3,
+        "15": 1.6,
+        "20": 1.9
+      },
+      "density_rho": 0.3,
+      "aoe_expected_cap": 40,
+      "dps_ref": {
+        "source": "tools/wpn04/buildsim.py profile red_all20 (median of 1000 runs) [assumption until 09 bot sim]",
+        "minutes": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          20
+        ],
+        "single_target_sum": [
+          56,
+          84,
+          170,
+          351,
+          526,
+          952
+        ],
+        "wieom_effective": [
+          51,
+          76,
+          154,
+          324,
+          470,
+          877
+        ],
+        "hp_wieom_suggest_x18s": [
+          900,
+          1400,
+          2800,
+          5800,
+          8500
+        ],
+        "hp_wieom_rule": "canon v1.2 D-36/C-20: HP_wieom = DPS_ref x 18s (30s trial). Final per-trial values owned by 06 (deities.json)"
+      },
+      "headroom_mix_all20": {
+        "3": 2.65,
+        "6": 2.54,
+        "9": 3.79,
+        "12": 7.73,
+        "15": 8.11,
+        "20": 8.52
+      }
+    },
+    "evolution_rule": {
+      "requires": [
+        "weapon level 8",
+        "pair passive level>=1",
+        "open box_gilhyung or box_neokham"
+      ],
+      "box_contents": "grade 1/3/5 items (05 12.1); per item: union -> evolution (union+evolution max 1 per box) -> +1 level to highest-level owned weapon (Lv<8) -> +1 to highest-level passive (Lv<5) -> yeopjeon",
+      "box_never_adds_new_item": true,
+      "priority": [
+        "union",
+        "evolution (earliest Lv8 first)",
+        "upgrade highest-level weapon"
+      ],
+      "slot": "kept",
+      "jeomji_owner": "design/05-stats-passives.md 10 (single source); 04 requests unowned-weapon dilution x min(1, 6/unlocked_weapon_count)"
+    },
+    "union_rule": {
+      "requires": [
+        "both evolutions owned",
+        "open box"
+      ],
+      "slot": "returns 1 slot",
+      "mode_switch": "per hit: target pullil -> white(x stat_puri), else red(crit allowed)"
+    },
+    "feel_note": "GAME_FEEL 3.1: windup_f/impact_hold_f/recovery_f = VFX frames @20fps (50ms). windup+hold <= 80% grid (code shrinks windup). recoil_px render-only.",
+    "start_kill_tuning": "2026-11-22 combat: sinkal L1 16 (>= han 12 dalgyal/10 gaekgwi/16 agwi at 0:00 -> 1-hit toechi; 0:20+ agwi -> giseak), kb 0.5u (user decision). gakgung/woldo start dmg raised likewise. White weapons release giseak (x puri)."
+  },
+  "geori_grid": [
+    {
+      "id": "geori_jutang_bujeong",
+      "jangdan": "진양조",
+      "bpm": 45,
+      "span": "00:00~03:00",
+      "grid_beat_fraction": 0.25,
+      "grid_sec": 0.3333
+    },
+    {
+      "id": "geori_gamang_sansin",
+      "jangdan": "중모리",
+      "bpm": 80,
+      "span": "03:00~06:00",
+      "grid_beat_fraction": 0.5,
+      "grid_sec": 0.375
+    },
+    {
+      "id": "geori_byeolsang_daegam_jeseok",
+      "jangdan": "중중모리",
+      "bpm": 95,
+      "span": "06:00~12:00",
+      "grid_beat_fraction": 0.3333,
+      "grid_sec": 0.2105,
+      "meter": "3-bun-bak (canon v1.2 D-18: 1/3 beat grid)"
+    },
+    {
+      "id": "geori_janggun_gunung_changbu",
+      "jangdan": "자진모리",
+      "bpm": 120,
+      "span": "12:00~18:00",
+      "grid_beat_fraction": 0.3333,
+      "grid_sec": 0.1667,
+      "meter": "3-bun-bak (canon v1.2 D-18: 1/3 beat grid)"
+    },
+    {
+      "id": "geori_jakdu",
+      "jangdan": "단모리",
+      "bpm": 160,
+      "span": "18:00~19:15",
+      "grid_beat_fraction": 0.5,
+      "grid_sec": 0.1875
+    },
+    {
+      "id": "geori_dwitjeon",
+      "jangdan": "당악",
+      "jangdan_note": "C-23: 남도·동해안 스테이지 표기 '자진모리'(audio_jangdan.json jd_jinobangjin.name_ko_by_stage)",
+      "bpm": 180,
+      "span": "19:15~20:00",
+      "grid_beat_fraction": 0.5,
+      "grid_sec": 0.1667
+    }
+  ],
+  "weapons": [
+    {
+      "id": "wpn_sinkal",
+      "loc_key": "wpn_sinkal.name",
+      "name_ko": "신칼",
+      "hanja": "神-",
+      "color": "red",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "투척-회수(부메랑)",
+      "tags": [
+        "projectile",
+        "metal",
+        "return",
+        "auto_aim"
+      ],
+      "targeting": "가장 가까운 적(어둑시니 제외) 방향, 없으면 마지막 이동 방향",
+      "pair_passive": "psv_baekjisul",
+      "evolution": "evo_sinjangkal",
+      "max_level": 8,
+      "knockback_u": 0.5,
+      "knockback": {
+        "u": 0.5,
+        "apply_time": 0.12,
+        "grade_ref": "combat_core.knockback.grades_u (light 0.3 < 0.5 < medium 0.8)",
+        "decision": "사용자 결정 2026-11-22: 신칼 넉백 0.5u(타격감 우선, 파일럿 승인). 런타임은 레벨 행 kb 를 읽는다(weapon_base.s(\"kb\"))"
+      },
+      "limits": {
+        "max_active": 12,
+        "min_period": 0.5,
+        "amt_cap": 8
+      },
+      "amount_rule": "신장 수 1당 칼 +1 (상한 8자루)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 14,
+          "cd": 1.5,
+          "amt": 1,
+          "area": 5,
+          "pierce": 2,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 19.6,
+          "est_dps_crowd": 39.2
+        },
+        {
+          "dmg": 14,
+          "cd": 1.5,
+          "amt": 2,
+          "area": 5,
+          "pierce": 2,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 2,
+          "change": "칼 +1 (±12° 산개)",
+          "est_dps_boss": 39.2,
+          "est_dps_crowd": 78.4
+        },
+        {
+          "dmg": 18,
+          "cd": 1.5,
+          "amt": 2,
+          "area": 5,
+          "pierce": 2,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 50.4,
+          "est_dps_crowd": 100.8
+        },
+        {
+          "dmg": 18,
+          "cd": 1.5,
+          "amt": 2,
+          "area": 5,
+          "pierce": 4,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 4,
+          "change": "관통 +2",
+          "est_dps_boss": 50.4,
+          "est_dps_crowd": 105.9
+        },
+        {
+          "dmg": 18,
+          "cd": 1.35,
+          "amt": 2,
+          "area": 6,
+          "pierce": 4,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 5,
+          "change": "사거리 +1.0, 쿨 −0.15",
+          "est_dps_boss": 56.0,
+          "est_dps_crowd": 141.1
+        },
+        {
+          "dmg": 18,
+          "cd": 1.35,
+          "amt": 3,
+          "area": 6,
+          "pierce": 4,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 6,
+          "change": "칼 +1",
+          "est_dps_boss": 83.9,
+          "est_dps_crowd": 211.7
+        },
+        {
+          "dmg": 23,
+          "cd": 1.35,
+          "amt": 3,
+          "area": 6,
+          "pierce": 4,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 7,
+          "change": "피해 +4",
+          "est_dps_boss": 107.3,
+          "est_dps_crowd": 270.5
+        },
+        {
+          "dmg": 23,
+          "cd": 1.2,
+          "amt": 3,
+          "area": 6,
+          "pierce": 6,
+          "spd": 10,
+          "hitbox": 0.4,
+          "hit_iv": 0,
+          "kb": 0.5,
+          "lv": 8,
+          "change": "관통 +2, 쿨 −0.15",
+          "est_dps_boss": 120.8,
+          "est_dps_crowd": 304.2
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 2,
+        "fx_hit": "vfx_hit_spark_red"
+      }
+    },
+    {
+      "id": "wpn_woldo",
+      "loc_key": "wpn_woldo.name",
+      "name_ko": "월도",
+      "hanja": "月刀",
+      "color": "red",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "근접 360° 회전 베기",
+      "tags": [
+        "melee",
+        "aoe_self",
+        "knockback"
+      ],
+      "targeting": "무당 중심(조준 없음)",
+      "pair_passive": "psv_obangkkeun",
+      "evolution": "evo_manwoldo",
+      "max_level": 8,
+      "limits": {
+        "max_active": 1,
+        "min_period": 0.8,
+        "amt_cap": 4
+      },
+      "amount_rule": "신장 수 1당 회전 1회 추가(60% 피해, 상한 +4회)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 14,
+          "cd": 2,
+          "spins": 1,
+          "area": 1.8,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 8.4,
+          "est_dps_crowd": 22.8
+        },
+        {
+          "dmg": 18,
+          "cd": 2,
+          "spins": 1,
+          "area": 1.8,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 2,
+          "change": "피해 +4",
+          "est_dps_boss": 9.5,
+          "est_dps_crowd": 25.7
+        },
+        {
+          "dmg": 18,
+          "cd": 2,
+          "spins": 1,
+          "area": 2.1,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 3,
+          "change": "반경 +0.3",
+          "est_dps_boss": 9.5,
+          "est_dps_crowd": 36.1
+        },
+        {
+          "dmg": 18,
+          "cd": 1.75,
+          "spins": 1,
+          "area": 2.1,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 4,
+          "change": "쿨 −0.25",
+          "est_dps_boss": 10.8,
+          "est_dps_crowd": 41.2
+        },
+        {
+          "dmg": 18,
+          "cd": 1.75,
+          "spins": 2,
+          "area": 2.1,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 5,
+          "change": "2회전(역방향, 0.15초 간격)",
+          "est_dps_boss": 21.6,
+          "est_dps_crowd": 82.5
+        },
+        {
+          "dmg": 22,
+          "cd": 1.75,
+          "spins": 2,
+          "area": 2.1,
+          "kb": 0.6,
+          "spin_time": 0.4,
+          "lv": 6,
+          "change": "피해 +5",
+          "est_dps_boss": 26.4,
+          "est_dps_crowd": 100.8
+        },
+        {
+          "dmg": 22,
+          "cd": 1.75,
+          "spins": 2,
+          "area": 2.4,
+          "kb": 0.9,
+          "spin_time": 0.4,
+          "lv": 7,
+          "change": "반경 +0.3, 넉백 +0.3",
+          "est_dps_boss": 26.4,
+          "est_dps_crowd": 134.4
+        },
+        {
+          "dmg": 27,
+          "cd": 1.5,
+          "spins": 2,
+          "area": 2.4,
+          "kb": 0.9,
+          "spin_time": 0.4,
+          "lv": 8,
+          "change": "피해 +6, 쿨 −0.25",
+          "est_dps_boss": 37.8,
+          "est_dps_crowd": 192.4
+        }
+      ],
+      "feel": {
+        "windup_f": 3,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "fx_cast": "vfx_woldo_spin"
+      }
+    },
+    {
+      "id": "wpn_samjichang",
+      "loc_key": "wpn_samjichang.name",
+      "name_ko": "삼지창",
+      "hanja": "三枝槍",
+      "color": "red",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "3갈래 관통 찌르기 + 정예 표식",
+      "tags": [
+        "melee",
+        "line",
+        "mark"
+      ],
+      "targeting": "반경 4u 내 8방위 중 적이 가장 많은 방위",
+      "pair_passive": "psv_sinjangdae",
+      "evolution": "evo_saseulchang",
+      "max_level": 8,
+      "limits": {
+        "max_active": 2,
+        "min_period": 0.6,
+        "amt_cap": 4
+      },
+      "amount_rule": "신장 수 1당 다음으로 적이 많은 방위에 찌르기 1세트 추가(상한 +4)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 10,
+          "cd": 1.6,
+          "prongs": 3,
+          "thrusts": 1,
+          "area": 3.5,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 15.1,
+          "est_dps_crowd": 22.7
+        },
+        {
+          "dmg": 10,
+          "cd": 1.6,
+          "prongs": 3,
+          "thrusts": 1,
+          "area": 4,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 2,
+          "change": "길이 +0.5",
+          "est_dps_boss": 15.1,
+          "est_dps_crowd": 26.0
+        },
+        {
+          "dmg": 14,
+          "cd": 1.6,
+          "prongs": 3,
+          "thrusts": 1,
+          "area": 4,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 3,
+          "change": "피해 +4",
+          "est_dps_boss": 21.1,
+          "est_dps_crowd": 36.4
+        },
+        {
+          "dmg": 14,
+          "cd": 1.4,
+          "prongs": 3,
+          "thrusts": 1,
+          "area": 4,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 4,
+          "change": "쿨 −0.2",
+          "est_dps_boss": 24.1,
+          "est_dps_crowd": 41.6
+        },
+        {
+          "dmg": 14,
+          "cd": 1.4,
+          "prongs": 3,
+          "thrusts": 2,
+          "area": 4,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 5,
+          "change": "2연속 찌르기(0.2초 간격)",
+          "est_dps_boss": 48.3,
+          "est_dps_crowd": 83.2
+        },
+        {
+          "dmg": 19,
+          "cd": 1.4,
+          "prongs": 3,
+          "thrusts": 2,
+          "area": 4,
+          "width": 0.5,
+          "mark": 0.15,
+          "amt": 1,
+          "lv": 6,
+          "change": "피해 +5",
+          "est_dps_boss": 65.5,
+          "est_dps_crowd": 112.9
+        },
+        {
+          "dmg": 19,
+          "cd": 1.4,
+          "prongs": 3,
+          "thrusts": 2,
+          "area": 4.5,
+          "width": 0.5,
+          "mark": 0.25,
+          "amt": 1,
+          "lv": 7,
+          "change": "길이 +0.5, 표식 증폭 +10%p",
+          "est_dps_boss": 71.2,
+          "est_dps_crowd": 127.0
+        },
+        {
+          "dmg": 25,
+          "cd": 1.2,
+          "prongs": 3,
+          "thrusts": 2,
+          "area": 4.5,
+          "width": 0.5,
+          "mark": 0.25,
+          "amt": 1,
+          "lv": 8,
+          "change": "피해 +6, 쿨 −0.2",
+          "est_dps_boss": 109.4,
+          "est_dps_crowd": 194.9
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "lunge_px": 1,
+        "fx_cast": "vfx_samjichang_thrust",
+        "fx_mark": "vfx_samjichang_mark"
+      }
+    },
+    {
+      "id": "wpn_jakdu",
+      "loc_key": "wpn_jakdu.name",
+      "name_ko": "작두",
+      "hanja": "斫刀",
+      "color": "red",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "발밑 설치 + 무적 + 지면 충격파(저정기 역보정)",
+      "tags": [
+        "aoe_self",
+        "invuln",
+        "knockback",
+        "low_hp"
+      ],
+      "targeting": "무당 발밑",
+      "pair_passive": "psv_mubok",
+      "evolution": "evo_daejakdu",
+      "max_level": 8,
+      "limits": {
+        "max_active": 1,
+        "min_period": 2,
+        "amt_cap": 2
+      },
+      "amount_rule": "신장 수 1당 0.4초 뒤 후속 충격파 1회(반경 ×1.2, 피해 50%, 상한 +2). 무적 시간은 늘지 않음",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 30,
+          "cd": 4,
+          "area": 2.5,
+          "invuln": 0.5,
+          "lowhp_k": 1.5,
+          "waves": 1,
+          "kb": 1,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 7.9,
+          "est_dps_crowd": 46.4
+        },
+        {
+          "dmg": 38,
+          "cd": 4,
+          "area": 2.5,
+          "invuln": 0.5,
+          "lowhp_k": 1.5,
+          "waves": 1,
+          "kb": 1,
+          "lv": 2,
+          "change": "피해 +8",
+          "est_dps_boss": 10.0,
+          "est_dps_crowd": 58.8
+        },
+        {
+          "dmg": 38,
+          "cd": 4,
+          "area": 2.9,
+          "invuln": 0.5,
+          "lowhp_k": 1.5,
+          "waves": 1,
+          "kb": 1,
+          "lv": 3,
+          "change": "반경 +0.4",
+          "est_dps_boss": 10.0,
+          "est_dps_crowd": 79.1
+        },
+        {
+          "dmg": 38,
+          "cd": 3.5,
+          "area": 2.9,
+          "invuln": 0.5,
+          "lowhp_k": 1.5,
+          "waves": 1,
+          "kb": 1,
+          "lv": 4,
+          "change": "쿨 −0.5",
+          "est_dps_boss": 11.4,
+          "est_dps_crowd": 90.4
+        },
+        {
+          "dmg": 38,
+          "cd": 3.5,
+          "area": 2.9,
+          "invuln": 0.5,
+          "lowhp_k": 2,
+          "waves": 1,
+          "kb": 1,
+          "lv": 5,
+          "change": "저정기 계수 1.5→2.0",
+          "est_dps_boss": 11.4,
+          "est_dps_crowd": 90.4
+        },
+        {
+          "dmg": 48,
+          "cd": 3.5,
+          "area": 2.9,
+          "invuln": 0.5,
+          "lowhp_k": 2,
+          "waves": 1,
+          "kb": 1,
+          "lv": 6,
+          "change": "피해 +10",
+          "est_dps_boss": 14.4,
+          "est_dps_crowd": 114.1
+        },
+        {
+          "dmg": 48,
+          "cd": 3.5,
+          "area": 3.3,
+          "invuln": 0.5,
+          "lowhp_k": 2,
+          "waves": 1,
+          "kb": 1,
+          "lv": 7,
+          "change": "반경 +0.4",
+          "est_dps_boss": 14.4,
+          "est_dps_crowd": 147.8
+        },
+        {
+          "dmg": 60,
+          "cd": 3,
+          "area": 3.3,
+          "invuln": 0.5,
+          "lowhp_k": 2,
+          "waves": 1,
+          "kb": 1,
+          "lv": 8,
+          "change": "피해 +12, 쿨 −0.5",
+          "est_dps_boss": 21.0,
+          "est_dps_crowd": 215.5
+        }
+      ],
+      "feel": {
+        "windup_f": 4,
+        "impact_hold_f": 3,
+        "recovery_f": 5,
+        "recoil_px": 0,
+        "fx_cast": "vfx_jakdu_shockwave",
+        "fx_prop": "vfx_jakdu_blades",
+        "hitstop_min_hits": 3
+      }
+    },
+    {
+      "id": "wpn_sainsageom",
+      "loc_key": "wpn_sainsageom.name",
+      "name_ko": "사인참사검",
+      "hanja": "四寅斬邪劍",
+      "color": "red",
+      "origin": "武",
+      "scope": "v1",
+      "archetype": "직선 관통 검기(정예·보스 추가 피해)",
+      "tags": [
+        "projectile",
+        "line",
+        "pierce_inf",
+        "anti_elite",
+        "auto_aim"
+      ],
+      "targeting": "10u 내 정예 이상 우선, 없으면 이동 방향",
+      "pair_passive": "psv_santong",
+      "evolution": "evo_isippalsugeom",
+      "max_level": 8,
+      "limits": {
+        "max_active": 9,
+        "min_period": 0.8,
+        "amt_cap": 6
+      },
+      "amount_rule": "신장 수 1당 검기 +1(부채꼴 20° 간격, 상한 6)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 18,
+          "cd": 2.2,
+          "amt": 1,
+          "area": 8,
+          "width": 0.8,
+          "spd": 14,
+          "elite": 1.5,
+          "pierce": -1,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 12.9,
+          "est_dps_crowd": 28.9
+        },
+        {
+          "dmg": 24,
+          "cd": 2.2,
+          "amt": 1,
+          "area": 8,
+          "width": 0.8,
+          "spd": 14,
+          "elite": 1.5,
+          "pierce": -1,
+          "lv": 2,
+          "change": "피해 +6",
+          "est_dps_boss": 17.2,
+          "est_dps_crowd": 38.5
+        },
+        {
+          "dmg": 24,
+          "cd": 2.2,
+          "amt": 1,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.5,
+          "pierce": -1,
+          "lv": 3,
+          "change": "폭 +0.2",
+          "est_dps_boss": 17.2,
+          "est_dps_crowd": 44.0
+        },
+        {
+          "dmg": 24,
+          "cd": 2.2,
+          "amt": 2,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.5,
+          "pierce": -1,
+          "lv": 4,
+          "change": "검기 +1(20° 부채꼴)",
+          "est_dps_boss": 34.4,
+          "est_dps_crowd": 88.0
+        },
+        {
+          "dmg": 24,
+          "cd": 1.9,
+          "amt": 2,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.5,
+          "pierce": -1,
+          "lv": 5,
+          "change": "쿨 −0.3",
+          "est_dps_boss": 39.8,
+          "est_dps_crowd": 101.9
+        },
+        {
+          "dmg": 24,
+          "cd": 1.9,
+          "amt": 2,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.8,
+          "pierce": -1,
+          "lv": 6,
+          "change": "정예+ 배율 ×1.5→×1.8",
+          "est_dps_boss": 47.7,
+          "est_dps_crowd": 101.9
+        },
+        {
+          "dmg": 32,
+          "cd": 1.9,
+          "amt": 2,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.8,
+          "pierce": -1,
+          "lv": 7,
+          "change": "피해 +8",
+          "est_dps_boss": 63.7,
+          "est_dps_crowd": 135.8
+        },
+        {
+          "dmg": 32,
+          "cd": 1.6,
+          "amt": 3,
+          "area": 8,
+          "width": 1,
+          "spd": 14,
+          "elite": 1.8,
+          "pierce": -1,
+          "lv": 8,
+          "change": "검기 +1, 쿨 −0.3",
+          "est_dps_boss": 113.4,
+          "est_dps_crowd": 241.9
+        }
+      ],
+      "feel": {
+        "windup_f": 3,
+        "impact_hold_f": 2,
+        "recovery_f": 5,
+        "recoil_px": 2,
+        "fx_cast": "vfx_sainsageom_wave"
+      }
+    },
+    {
+      "id": "wpn_gakgung",
+      "loc_key": "wpn_gakgung.name",
+      "name_ko": "각궁",
+      "hanja": "角弓",
+      "color": "red",
+      "origin": "武",
+      "scope": "v1",
+      "archetype": "최근접 자동 정밀 사격",
+      "tags": [
+        "projectile",
+        "metal",
+        "auto_aim",
+        "fast"
+      ],
+      "targeting": "가장 가까운 적 n체(서로 다른 대상, 어둑시니 제외)",
+      "pair_passive": "psv_jusa",
+      "evolution": "evo_jusahwajeon",
+      "max_level": 8,
+      "limits": {
+        "max_active": 40,
+        "min_period": 0.3,
+        "amt_cap": 10
+      },
+      "amount_rule": "신장 수 1당 화살 +1(상한 10)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 13,
+          "cd": 0.9,
+          "amt": 1,
+          "pierce": 1,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 15.2,
+          "est_dps_crowd": 15.2
+        },
+        {
+          "dmg": 13,
+          "cd": 0.9,
+          "amt": 2,
+          "pierce": 1,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 2,
+          "change": "화살 +1",
+          "est_dps_boss": 30.3,
+          "est_dps_crowd": 30.3
+        },
+        {
+          "dmg": 15,
+          "cd": 0.9,
+          "amt": 2,
+          "pierce": 1,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 3,
+          "change": "피해 +3",
+          "est_dps_boss": 35.0,
+          "est_dps_crowd": 35.0
+        },
+        {
+          "dmg": 15,
+          "cd": 0.9,
+          "amt": 2,
+          "pierce": 2,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 4,
+          "change": "관통 +1",
+          "est_dps_boss": 35.0,
+          "est_dps_crowd": 70.0
+        },
+        {
+          "dmg": 15,
+          "cd": 0.75,
+          "amt": 2,
+          "pierce": 2,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 5,
+          "change": "쿨 −0.15",
+          "est_dps_boss": 42.0,
+          "est_dps_crowd": 84.0
+        },
+        {
+          "dmg": 15,
+          "cd": 0.75,
+          "amt": 3,
+          "pierce": 2,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 6,
+          "change": "화살 +1",
+          "est_dps_boss": 63.0,
+          "est_dps_crowd": 126.0
+        },
+        {
+          "dmg": 18,
+          "cd": 0.75,
+          "amt": 3,
+          "pierce": 2,
+          "area": 12,
+          "spd": 18,
+          "crit": 0,
+          "lv": 7,
+          "change": "피해 +4",
+          "est_dps_boss": 75.6,
+          "est_dps_crowd": 151.2
+        },
+        {
+          "dmg": 18,
+          "cd": 0.75,
+          "amt": 3,
+          "pierce": 3,
+          "area": 12,
+          "spd": 18,
+          "crit": 0.05,
+          "lv": 8,
+          "change": "관통 +1, 결단 +5%p",
+          "est_dps_boss": 79.2,
+          "est_dps_crowd": 237.6
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 2,
+        "fx": "vfx_gakgung_arrow",
+        "orient": "dir4",
+        "fx_hit": "vfx_gakgung_hit"
+      }
+    },
+    {
+      "id": "wpn_jangchang",
+      "loc_key": "wpn_jangchang.name",
+      "name_ko": "장창",
+      "hanja": "長槍",
+      "color": "red",
+      "origin": "武",
+      "scope": "v1",
+      "archetype": "이동 방향 고속 직선 연타",
+      "tags": [
+        "melee",
+        "line",
+        "fast",
+        "move_dir"
+      ],
+      "targeting": "현재(정지 시 마지막) 이동 방향",
+      "pair_passive": "psv_mituri",
+      "evolution": "evo_pajinchang",
+      "max_level": 8,
+      "limits": {
+        "max_active": 3,
+        "min_period": 0.4,
+        "amt_cap": 4
+      },
+      "amount_rule": "신장 수 1당 ±20° 방향 창 1자루 추가(상한 +4)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 6,
+          "cd": 1,
+          "thrusts": 3,
+          "area": 4,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 18.9,
+          "est_dps_crowd": 22.7
+        },
+        {
+          "dmg": 6,
+          "cd": 1,
+          "thrusts": 4,
+          "area": 4,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 2,
+          "change": "연타 +1",
+          "est_dps_boss": 25.2,
+          "est_dps_crowd": 30.2
+        },
+        {
+          "dmg": 8,
+          "cd": 1,
+          "thrusts": 4,
+          "area": 4,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 33.6,
+          "est_dps_crowd": 40.3
+        },
+        {
+          "dmg": 8,
+          "cd": 1,
+          "thrusts": 4,
+          "area": 5,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 4,
+          "change": "길이 +1.0",
+          "est_dps_boss": 33.6,
+          "est_dps_crowd": 50.4
+        },
+        {
+          "dmg": 8,
+          "cd": 0.85,
+          "thrusts": 4,
+          "area": 5,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 5,
+          "change": "쿨 −0.15",
+          "est_dps_boss": 39.5,
+          "est_dps_crowd": 59.3
+        },
+        {
+          "dmg": 8,
+          "cd": 0.85,
+          "thrusts": 5,
+          "area": 5,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 6,
+          "change": "연타 +1",
+          "est_dps_boss": 49.4,
+          "est_dps_crowd": 74.1
+        },
+        {
+          "dmg": 11,
+          "cd": 0.85,
+          "thrusts": 5,
+          "area": 5,
+          "width": 0.4,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 7,
+          "change": "피해 +3",
+          "est_dps_boss": 67.9,
+          "est_dps_crowd": 101.9
+        },
+        {
+          "dmg": 11,
+          "cd": 0.7,
+          "thrusts": 5,
+          "area": 5,
+          "width": 0.6,
+          "amt": 1,
+          "thrust_iv": 0.1,
+          "lv": 8,
+          "change": "폭 +0.2, 쿨 −0.15",
+          "est_dps_boss": 82.5,
+          "est_dps_crowd": 148.5
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "lunge_px": 1,
+        "fx_cast": "vfx_jangchang_thrust"
+      }
+    },
+    {
+      "id": "wpn_pyeongon",
+      "loc_key": "wpn_pyeongon.name",
+      "name_ko": "편곤",
+      "hanja": "鞭棍",
+      "color": "red",
+      "origin": "武",
+      "scope": "v1",
+      "archetype": "넓은 부채꼴 강타 + 넉백",
+      "tags": [
+        "melee",
+        "cone",
+        "knockback",
+        "move_dir"
+      ],
+      "targeting": "이동 방향 부채꼴",
+      "pair_passive": "psv_myeongjusil",
+      "evolution": "evo_byeongnyeok_pyeongon",
+      "max_level": 8,
+      "limits": {
+        "max_active": 2,
+        "min_period": 0.7,
+        "amt_cap": 3
+      },
+      "amount_rule": "신장 수 1당 0.2초 뒤 같은 방향 재타격 1회(50% 피해, 상한 +3)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 18,
+          "cd": 1.6,
+          "angle": 120,
+          "area": 2.6,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 11.8,
+          "est_dps_crowd": 25.1
+        },
+        {
+          "dmg": 24,
+          "cd": 1.6,
+          "angle": 120,
+          "area": 2.6,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 2,
+          "change": "피해 +6",
+          "est_dps_boss": 15.8,
+          "est_dps_crowd": 33.4
+        },
+        {
+          "dmg": 24,
+          "cd": 1.6,
+          "angle": 150,
+          "area": 2.6,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 3,
+          "change": "각도 +30°",
+          "est_dps_boss": 15.8,
+          "est_dps_crowd": 41.8
+        },
+        {
+          "dmg": 24,
+          "cd": 1.4,
+          "angle": 150,
+          "area": 2.6,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 4,
+          "change": "쿨 −0.2",
+          "est_dps_boss": 18.0,
+          "est_dps_crowd": 47.8
+        },
+        {
+          "dmg": 24,
+          "cd": 1.4,
+          "angle": 150,
+          "area": 3,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 5,
+          "change": "반경 +0.4",
+          "est_dps_boss": 18.0,
+          "est_dps_crowd": 63.6
+        },
+        {
+          "dmg": 31,
+          "cd": 1.4,
+          "angle": 150,
+          "area": 3,
+          "kb": 1.2,
+          "back": 0,
+          "windup": 0.15,
+          "lv": 6,
+          "change": "피해 +7",
+          "est_dps_boss": 23.3,
+          "est_dps_crowd": 82.2
+        },
+        {
+          "dmg": 31,
+          "cd": 1.4,
+          "angle": 150,
+          "area": 3,
+          "kb": 1.2,
+          "back": 1,
+          "windup": 0.15,
+          "lv": 7,
+          "change": "역타(반대 방향 70% 피해)",
+          "est_dps_boss": 23.3,
+          "est_dps_crowd": 139.7
+        },
+        {
+          "dmg": 39,
+          "cd": 1.4,
+          "angle": 150,
+          "area": 3,
+          "kb": 1.6,
+          "back": 1,
+          "windup": 0.15,
+          "lv": 8,
+          "change": "피해 +8, 넉백 +0.4",
+          "est_dps_boss": 29.3,
+          "est_dps_crowd": 175.7
+        }
+      ],
+      "feel": {
+        "windup_f": 3,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 0,
+        "fx_cast": "vfx_pyeongon_swing"
+      }
+    },
+    {
+      "id": "wpn_cheoljillyeo",
+      "loc_key": "wpn_cheoljillyeo.name",
+      "name_ko": "철질려",
+      "hanja": "鐵蒺藜",
+      "color": "red",
+      "origin": "武",
+      "scope": "v1",
+      "archetype": "이동 경로 마름쇠 살포(봉박)",
+      "tags": [
+        "trap",
+        "metal",
+        "root",
+        "trail"
+      ],
+      "targeting": "무당 뒤쪽 1.2u 반경 산포",
+      "pair_passive": "psv_jeung",
+      "evolution": "evo_cheoljillyeojin",
+      "max_level": 8,
+      "limits": {
+        "max_active": 60,
+        "min_period": 0.5,
+        "amt_cap": 12
+      },
+      "amount_rule": "신장 수 1당 마름쇠 +1(상한 +12). 동시 상한은 늘지 않음",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 6,
+          "cd": 1.2,
+          "amt": 4,
+          "dur": 6,
+          "charges": 3,
+          "root": 0.6,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 10.5,
+          "est_dps_crowd": 28.4
+        },
+        {
+          "dmg": 6,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 6,
+          "charges": 3,
+          "root": 0.6,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 2,
+          "change": "마름쇠 +2",
+          "est_dps_boss": 10.5,
+          "est_dps_crowd": 42.5
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 6,
+          "charges": 3,
+          "root": 0.6,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 14.0,
+          "est_dps_crowd": 56.7
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 8,
+          "charges": 3,
+          "root": 0.6,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 4,
+          "change": "지속 +2초",
+          "est_dps_boss": 14.0,
+          "est_dps_crowd": 56.7
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 8,
+          "charges": 5,
+          "root": 0.6,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 5,
+          "change": "내구 +2",
+          "est_dps_boss": 14.0,
+          "est_dps_crowd": 94.5
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 8,
+          "charges": 5,
+          "root": 0.9,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 6,
+          "change": "봉박 +0.3초",
+          "est_dps_boss": 14.0,
+          "est_dps_crowd": 94.5
+        },
+        {
+          "dmg": 11,
+          "cd": 1.2,
+          "amt": 6,
+          "dur": 8,
+          "charges": 5,
+          "root": 0.9,
+          "max_act": 40,
+          "hitbox": 0.35,
+          "lv": 7,
+          "change": "피해 +3",
+          "est_dps_boss": 19.3,
+          "est_dps_crowd": 129.9
+        },
+        {
+          "dmg": 11,
+          "cd": 1.2,
+          "amt": 8,
+          "dur": 8,
+          "charges": 5,
+          "root": 0.9,
+          "max_act": 60,
+          "hitbox": 0.35,
+          "lv": 8,
+          "change": "마름쇠 +2, 동시 상한 60",
+          "est_dps_boss": 19.3,
+          "est_dps_crowd": 173.2
+        }
+      ],
+      "feel": {
+        "windup_f": 0,
+        "impact_hold_f": 2,
+        "recovery_f": 2,
+        "recoil_px": 0,
+        "fx_prop": "vfx_cheoljillyeo_caltrop"
+      }
+    },
+    {
+      "id": "wpn_hojakdo",
+      "loc_key": "wpn_hojakdo.name",
+      "name_ko": "호작도 세화",
+      "hanja": "虎鵲圖 歲畵",
+      "color": "red",
+      "origin": "畵",
+      "scope": "v1",
+      "archetype": "등 뒤 세화(까치호랑이 그림) 경악 파동(공포·경직)",
+      "tags": [
+        "aoe_self",
+        "fear",
+        "support",
+        "back"
+      ],
+      "targeting": "무당 중심 원형(등 뒤 반원 강화)",
+      "pair_passive": "psv_chotdae",
+      "evolution": "evo_sangun_pohyodo",
+      "max_level": 8,
+      "limits": {
+        "max_active": 1,
+        "min_period": 1.5,
+        "amt_cap": 3
+      },
+      "amount_rule": "신장 수 1당 반경 +8%(상한 +24%)",
+      "ritual_ref_by_level": null,
+      "levels": [
+        {
+          "dmg": 4,
+          "cd": 3,
+          "area": 3,
+          "fear": 1.5,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 1.4,
+          "est_dps_crowd": 17.8
+        },
+        {
+          "dmg": 4,
+          "cd": 3,
+          "area": 3.5,
+          "fear": 1.5,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 2,
+          "change": "반경 +0.5",
+          "est_dps_boss": 1.4,
+          "est_dps_crowd": 24.2
+        },
+        {
+          "dmg": 7,
+          "cd": 3,
+          "area": 3.5,
+          "fear": 1.5,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 3,
+          "change": "피해 +3",
+          "est_dps_boss": 2.5,
+          "est_dps_crowd": 42.4
+        },
+        {
+          "dmg": 7,
+          "cd": 3,
+          "area": 3.5,
+          "fear": 2,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 4,
+          "change": "공포 +0.5초",
+          "est_dps_boss": 2.5,
+          "est_dps_crowd": 42.4
+        },
+        {
+          "dmg": 7,
+          "cd": 2.6,
+          "area": 3.5,
+          "fear": 2,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 5,
+          "change": "쿨 −0.4",
+          "est_dps_boss": 2.8,
+          "est_dps_crowd": 49.0
+        },
+        {
+          "dmg": 7,
+          "cd": 2.6,
+          "area": 4,
+          "fear": 2,
+          "fear_amp": 0,
+          "stagger": 0.3,
+          "lv": 6,
+          "change": "반경 +0.5",
+          "est_dps_boss": 2.8,
+          "est_dps_crowd": 63.9
+        },
+        {
+          "dmg": 7,
+          "cd": 2.6,
+          "area": 4,
+          "fear": 2,
+          "fear_amp": 0.1,
+          "stagger": 0.3,
+          "lv": 7,
+          "change": "공포 대상 받는 피해 +10%",
+          "est_dps_boss": 2.8,
+          "est_dps_crowd": 63.9
+        },
+        {
+          "dmg": 11,
+          "cd": 2.2,
+          "area": 4,
+          "fear": 2,
+          "fear_amp": 0.1,
+          "stagger": 0.3,
+          "lv": 8,
+          "change": "피해 +4, 쿨 −0.4",
+          "est_dps_boss": 5.2,
+          "est_dps_crowd": 118.8
+        }
+      ],
+      "feel": {
+        "windup_f": 3,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 0,
+        "fx_cast": "vfx_hojakdo_fear_ring",
+        "fx_prop": "vfx_hojakdo_sehwa"
+      }
+    },
+    {
+      "id": "wpn_bangul",
+      "loc_key": "wpn_bangul.name",
+      "name_ko": "방울",
+      "hanja": "-",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "주변 지속 음파 오라(맥동)",
+      "tags": [
+        "aura",
+        "sound",
+        "finisher"
+      ],
+      "targeting": "무당 중심 원형",
+      "pair_passive": "psv_chohon_jeoksam",
+      "evolution": "evo_cheoneum_bangul",
+      "max_level": 8,
+      "limits": {
+        "max_active": 1,
+        "min_period": 0.25,
+        "amt_cap": 3
+      },
+      "amount_rule": "신장 수 1당 반경 +6%(상한 +18%)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 3,
+          "cd": 0.6,
+          "area": 2.5,
+          "pull_slow": 0,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 5.0,
+          "est_dps_crowd": 29.5
+        },
+        {
+          "dmg": 3,
+          "cd": 0.6,
+          "area": 2.8,
+          "pull_slow": 0,
+          "lv": 2,
+          "change": "반경 +0.3",
+          "est_dps_boss": 5.0,
+          "est_dps_crowd": 36.9
+        },
+        {
+          "dmg": 4,
+          "cd": 0.6,
+          "area": 2.8,
+          "pull_slow": 0,
+          "lv": 3,
+          "change": "피해 +1",
+          "est_dps_boss": 6.7,
+          "est_dps_crowd": 49.3
+        },
+        {
+          "dmg": 4,
+          "cd": 0.52,
+          "area": 2.8,
+          "pull_slow": 0,
+          "lv": 4,
+          "change": "간격 −0.08",
+          "est_dps_boss": 7.7,
+          "est_dps_crowd": 56.8
+        },
+        {
+          "dmg": 4,
+          "cd": 0.52,
+          "area": 3.1,
+          "pull_slow": 0,
+          "lv": 5,
+          "change": "반경 +0.3",
+          "est_dps_boss": 7.7,
+          "est_dps_crowd": 69.7
+        },
+        {
+          "dmg": 5,
+          "cd": 0.52,
+          "area": 3.1,
+          "pull_slow": 0,
+          "lv": 6,
+          "change": "피해 +1",
+          "est_dps_boss": 9.6,
+          "est_dps_crowd": 87.1
+        },
+        {
+          "dmg": 5,
+          "cd": 0.52,
+          "area": 3.1,
+          "pull_slow": 0.2,
+          "lv": 7,
+          "change": "범위 내 풀릴 기색 이속 추가 −20%",
+          "est_dps_boss": 9.6,
+          "est_dps_crowd": 87.1
+        },
+        {
+          "dmg": 7,
+          "cd": 0.52,
+          "area": 3.4,
+          "pull_slow": 0.2,
+          "lv": 8,
+          "change": "피해 +2, 반경 +0.3",
+          "est_dps_boss": 13.5,
+          "est_dps_crowd": 146.7
+        }
+      ],
+      "feel": {
+        "windup_f": 0,
+        "impact_hold_f": 1,
+        "recovery_f": 2,
+        "recoil_px": 0,
+        "fx_cast": "vfx_bangul_aura"
+      }
+    },
+    {
+      "id": "wpn_buchae",
+      "loc_key": "wpn_buchae.name",
+      "name_ko": "부채",
+      "hanja": "巫扇",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "전방 부채꼴 돌풍(넉백, 풀릴 기색은 끌어옴)",
+      "tags": [
+        "cone",
+        "knockback",
+        "pull",
+        "move_dir"
+      ],
+      "targeting": "이동 방향 부채꼴",
+      "pair_passive": "psv_obangkkeun",
+      "evolution": "evo_irwolseonpung",
+      "max_level": 8,
+      "limits": {
+        "max_active": 2,
+        "min_period": 0.5,
+        "amt_cap": 3
+      },
+      "amount_rule": "신장 수 1당 각도 +15°(상한 +45°)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 6,
+          "cd": 1.4,
+          "angle": 90,
+          "area": 3.5,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 4.3,
+          "est_dps_crowd": 12.4
+        },
+        {
+          "dmg": 8,
+          "cd": 1.4,
+          "angle": 90,
+          "area": 3.5,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 2,
+          "change": "피해 +2",
+          "est_dps_boss": 5.7,
+          "est_dps_crowd": 16.5
+        },
+        {
+          "dmg": 8,
+          "cd": 1.4,
+          "angle": 110,
+          "area": 3.5,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 3,
+          "change": "각도 +20°",
+          "est_dps_boss": 5.7,
+          "est_dps_crowd": 20.2
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "angle": 110,
+          "area": 3.5,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 4,
+          "change": "쿨 −0.2",
+          "est_dps_boss": 6.7,
+          "est_dps_crowd": 23.5
+        },
+        {
+          "dmg": 8,
+          "cd": 1.2,
+          "angle": 110,
+          "area": 4,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 5,
+          "change": "반경 +0.5",
+          "est_dps_boss": 6.7,
+          "est_dps_crowd": 30.7
+        },
+        {
+          "dmg": 10,
+          "cd": 1.2,
+          "angle": 110,
+          "area": 4,
+          "gusts": 1,
+          "kb": 1.5,
+          "lv": 6,
+          "change": "피해 +2",
+          "est_dps_boss": 8.3,
+          "est_dps_crowd": 38.4
+        },
+        {
+          "dmg": 10,
+          "cd": 1.2,
+          "angle": 110,
+          "area": 4,
+          "gusts": 2,
+          "kb": 1.5,
+          "lv": 7,
+          "change": "2연 돌풍(0.25초 간격)",
+          "est_dps_boss": 16.7,
+          "est_dps_crowd": 76.8
+        },
+        {
+          "dmg": 13,
+          "cd": 1.2,
+          "angle": 130,
+          "area": 4,
+          "gusts": 2,
+          "kb": 1.5,
+          "lv": 8,
+          "change": "피해 +3, 각도 +20°",
+          "est_dps_boss": 21.7,
+          "est_dps_crowd": 118.0
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 0,
+        "fx_cast": "vfx_buchae_gust"
+      }
+    },
+    {
+      "id": "wpn_neokjeon",
+      "loc_key": "wpn_neokjeon.name",
+      "name_ko": "넋전",
+      "hanja": "-錢",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "종이 넋 인형 공전",
+      "tags": [
+        "orbit",
+        "paper",
+        "duration"
+      ],
+      "targeting": "무당 주위 공전",
+      "pair_passive": "psv_wipae",
+      "evolution": "evo_neokkkotbi",
+      "max_level": 8,
+      "limits": {
+        "max_active": 16,
+        "min_period": 1,
+        "amt_cap": 10
+      },
+      "amount_rule": "신장 수 1당 넋전 +1(상한 10)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 5,
+          "cd": 4,
+          "amt": 2,
+          "dur": 3,
+          "area": 2,
+          "omega": 180,
+          "hit_iv": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 3.8,
+          "est_dps_crowd": 15.6
+        },
+        {
+          "dmg": 5,
+          "cd": 4,
+          "amt": 3,
+          "dur": 3,
+          "area": 2,
+          "omega": 180,
+          "hit_iv": 0.5,
+          "lv": 2,
+          "change": "넋전 +1",
+          "est_dps_boss": 5.6,
+          "est_dps_crowd": 23.3
+        },
+        {
+          "dmg": 7,
+          "cd": 4,
+          "amt": 3,
+          "dur": 3,
+          "area": 2,
+          "omega": 180,
+          "hit_iv": 0.5,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 7.9,
+          "est_dps_crowd": 32.7
+        },
+        {
+          "dmg": 7,
+          "cd": 4,
+          "amt": 3,
+          "dur": 4,
+          "area": 2,
+          "omega": 180,
+          "hit_iv": 0.5,
+          "lv": 4,
+          "change": "지속 +1.0",
+          "est_dps_boss": 10.5,
+          "est_dps_crowd": 43.5
+        },
+        {
+          "dmg": 7,
+          "cd": 4,
+          "amt": 3,
+          "dur": 4,
+          "area": 2.4,
+          "omega": 216,
+          "hit_iv": 0.5,
+          "lv": 5,
+          "change": "공전 반경 +0.4, 각속도 +20%",
+          "est_dps_boss": 12.6,
+          "est_dps_crowd": 62.7
+        },
+        {
+          "dmg": 7,
+          "cd": 4,
+          "amt": 4,
+          "dur": 4,
+          "area": 2.4,
+          "omega": 216,
+          "hit_iv": 0.5,
+          "lv": 6,
+          "change": "넋전 +1",
+          "est_dps_boss": 16.8,
+          "est_dps_crowd": 83.6
+        },
+        {
+          "dmg": 9,
+          "cd": 4,
+          "amt": 4,
+          "dur": 4,
+          "area": 2.4,
+          "omega": 216,
+          "hit_iv": 0.5,
+          "lv": 7,
+          "change": "피해 +2",
+          "est_dps_boss": 21.6,
+          "est_dps_crowd": 107.5
+        },
+        {
+          "dmg": 9,
+          "cd": 4,
+          "amt": 5,
+          "dur": 5,
+          "area": 2.4,
+          "omega": 216,
+          "hit_iv": 0.5,
+          "lv": 8,
+          "change": "지속 +1.0, 넋전 +1",
+          "est_dps_boss": 27.0,
+          "est_dps_crowd": 134.4
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 2,
+        "recoil_px": 0,
+        "fx_prop": "vfx_neokjeon_doll"
+      }
+    },
+    {
+      "id": "wpn_jijeon",
+      "loc_key": "wpn_jijeon.name",
+      "name_ko": "지전",
+      "hanja": "紙錢",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "종이돈 산탄 투척",
+      "tags": [
+        "projectile",
+        "paper",
+        "spread",
+        "auto_aim"
+      ],
+      "targeting": "가장 가까운 적 방향 부채꼴(풀릴 기색 우선)",
+      "pair_passive": "psv_yeopjeon",
+      "evolution": "evo_nojatdon",
+      "max_level": 8,
+      "limits": {
+        "max_active": 60,
+        "min_period": 0.4,
+        "amt_cap": 15
+      },
+      "amount_rule": "신장 수 1당 지전 +2(상한 15장)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 5,
+          "cd": 1.3,
+          "amt": 5,
+          "angle": 40,
+          "area": 5,
+          "pierce": 1,
+          "spd": 9,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 19.2,
+          "est_dps_crowd": 19.2
+        },
+        {
+          "dmg": 5,
+          "cd": 1.3,
+          "amt": 7,
+          "angle": 40,
+          "area": 5,
+          "pierce": 1,
+          "spd": 9,
+          "lv": 2,
+          "change": "지전 +2",
+          "est_dps_boss": 26.9,
+          "est_dps_crowd": 26.9
+        },
+        {
+          "dmg": 7,
+          "cd": 1.3,
+          "amt": 7,
+          "angle": 40,
+          "area": 5,
+          "pierce": 1,
+          "spd": 9,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 37.7,
+          "est_dps_crowd": 37.7
+        },
+        {
+          "dmg": 7,
+          "cd": 1.3,
+          "amt": 7,
+          "angle": 40,
+          "area": 5,
+          "pierce": 2,
+          "spd": 9,
+          "lv": 4,
+          "change": "관통 +1",
+          "est_dps_boss": 37.7,
+          "est_dps_crowd": 42.3
+        },
+        {
+          "dmg": 7,
+          "cd": 1.1,
+          "amt": 7,
+          "angle": 40,
+          "area": 5,
+          "pierce": 2,
+          "spd": 9,
+          "lv": 5,
+          "change": "쿨 −0.2",
+          "est_dps_boss": 44.5,
+          "est_dps_crowd": 50.0
+        },
+        {
+          "dmg": 7,
+          "cd": 1.1,
+          "amt": 9,
+          "angle": 50,
+          "area": 5,
+          "pierce": 2,
+          "spd": 9,
+          "lv": 6,
+          "change": "지전 +2, 산개 +10°",
+          "est_dps_boss": 57.3,
+          "est_dps_crowd": 62.5
+        },
+        {
+          "dmg": 9,
+          "cd": 1.1,
+          "amt": 9,
+          "angle": 50,
+          "area": 5,
+          "pierce": 2,
+          "spd": 9,
+          "lv": 7,
+          "change": "피해 +2",
+          "est_dps_boss": 73.6,
+          "est_dps_crowd": 80.3
+        },
+        {
+          "dmg": 9,
+          "cd": 1.1,
+          "amt": 9,
+          "angle": 50,
+          "area": 6.5,
+          "pierce": 3,
+          "spd": 9,
+          "lv": 8,
+          "change": "사거리 +1.5, 관통 +1",
+          "est_dps_boss": 73.6,
+          "est_dps_crowd": 122.1
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 1,
+        "fx": "vfx_jijeon_bill",
+        "orient": "spin",
+        "fps": 12
+      }
+    },
+    {
+      "id": "wpn_gilbe",
+      "loc_key": "wpn_gilbe.name",
+      "name_ko": "길베",
+      "hanja": "-",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "이동 방향 흰 천 직선 장판",
+      "tags": [
+        "zone",
+        "line",
+        "cloth",
+        "move_dir"
+      ],
+      "targeting": "이동 방향(Lv5부터 반대 방향 추가)",
+      "pair_passive": "psv_mituri",
+      "evolution": "evo_begareugi",
+      "max_level": 8,
+      "limits": {
+        "max_active": 8,
+        "min_period": 0.8,
+        "amt_cap": 4
+      },
+      "amount_rule": "신장 수 1당 ±30° 방향 천 +1(상한 +4)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 4,
+          "cd": 2,
+          "amt": 1,
+          "area": 5,
+          "width": 1,
+          "dur": 2,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 4.0,
+          "est_dps_crowd": 9.6
+        },
+        {
+          "dmg": 4,
+          "cd": 2,
+          "amt": 1,
+          "area": 6.5,
+          "width": 1,
+          "dur": 2,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 2,
+          "change": "길이 +1.5",
+          "est_dps_boss": 4.0,
+          "est_dps_crowd": 12.5
+        },
+        {
+          "dmg": 6,
+          "cd": 2,
+          "amt": 1,
+          "area": 6.5,
+          "width": 1,
+          "dur": 2,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 6.0,
+          "est_dps_crowd": 18.7
+        },
+        {
+          "dmg": 6,
+          "cd": 2,
+          "amt": 1,
+          "area": 6.5,
+          "width": 1,
+          "dur": 3,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 4,
+          "change": "지속 +1.0",
+          "est_dps_boss": 9.0,
+          "est_dps_crowd": 28.1
+        },
+        {
+          "dmg": 6,
+          "cd": 2,
+          "amt": 2,
+          "area": 6.5,
+          "width": 1,
+          "dur": 3,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 5,
+          "change": "반대 방향 천 +1",
+          "est_dps_boss": 9.0,
+          "est_dps_crowd": 56.2
+        },
+        {
+          "dmg": 6,
+          "cd": 2,
+          "amt": 2,
+          "area": 6.5,
+          "width": 1.4,
+          "dur": 3,
+          "slow": 0,
+          "tick": 0.5,
+          "lv": 6,
+          "change": "폭 +0.4",
+          "est_dps_boss": 9.0,
+          "est_dps_crowd": 70.2
+        },
+        {
+          "dmg": 6,
+          "cd": 2,
+          "amt": 2,
+          "area": 6.5,
+          "width": 1.4,
+          "dur": 3,
+          "slow": 0.25,
+          "tick": 0.5,
+          "lv": 7,
+          "change": "천 위 적 이속 −25%",
+          "est_dps_boss": 9.0,
+          "est_dps_crowd": 70.2
+        },
+        {
+          "dmg": 9,
+          "cd": 1.6,
+          "amt": 2,
+          "area": 6.5,
+          "width": 1.4,
+          "dur": 3,
+          "slow": 0.25,
+          "tick": 0.5,
+          "lv": 8,
+          "change": "피해 +3, 쿨 −0.4",
+          "est_dps_boss": 16.9,
+          "est_dps_crowd": 131.6
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "fx_cast": "vfx_gilbe_cloth_unfold"
+      }
+    },
+    {
+      "id": "wpn_ssukmul",
+      "loc_key": "wpn_ssukmul.name",
+      "name_ko": "쑥물 바가지",
+      "hanja": "-",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "정화수 투척 장판(지속 백 피해)",
+      "tags": [
+        "zone",
+        "water",
+        "throw"
+      ],
+      "targeting": "반경 6u 내 표본 8점 중 적 밀도 최대 지점(풀릴 기색 가중 ×2)",
+      "pair_passive": "psv_jeonghwasu",
+      "evolution": "evo_sammul_ssitgim",
+      "max_level": 8,
+      "limits": {
+        "max_active": 12,
+        "min_period": 1.5,
+        "amt_cap": 6
+      },
+      "amount_rule": "신장 수 1당 바가지 +1(상한 6)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 4,
+          "cd": 3.5,
+          "amt": 1,
+          "area": 1.6,
+          "dur": 3,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 6.9,
+          "est_dps_crowd": 16.5
+        },
+        {
+          "dmg": 4,
+          "cd": 3.5,
+          "amt": 2,
+          "area": 1.6,
+          "dur": 3,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 2,
+          "change": "바가지 +1",
+          "est_dps_boss": 6.9,
+          "est_dps_crowd": 23.2
+        },
+        {
+          "dmg": 5,
+          "cd": 3.5,
+          "amt": 2,
+          "area": 1.6,
+          "dur": 3,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 3,
+          "change": "피해 +1",
+          "est_dps_boss": 8.6,
+          "est_dps_crowd": 29.0
+        },
+        {
+          "dmg": 5,
+          "cd": 3.5,
+          "amt": 2,
+          "area": 1.9,
+          "dur": 3,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 4,
+          "change": "반경 +0.3",
+          "est_dps_boss": 8.6,
+          "est_dps_crowd": 40.8
+        },
+        {
+          "dmg": 5,
+          "cd": 3.5,
+          "amt": 2,
+          "area": 1.9,
+          "dur": 4,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 5,
+          "change": "지속 +1.0",
+          "est_dps_boss": 10.0,
+          "est_dps_crowd": 54.4
+        },
+        {
+          "dmg": 6,
+          "cd": 3.5,
+          "amt": 2,
+          "area": 1.9,
+          "dur": 4,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 6,
+          "change": "피해 +1",
+          "est_dps_boss": 12.0,
+          "est_dps_crowd": 65.3
+        },
+        {
+          "dmg": 6,
+          "cd": 3.5,
+          "amt": 3,
+          "area": 1.9,
+          "dur": 4,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 7,
+          "change": "바가지 +1",
+          "est_dps_boss": 12.0,
+          "est_dps_crowd": 98.0
+        },
+        {
+          "dmg": 6,
+          "cd": 3,
+          "amt": 3,
+          "area": 2.1,
+          "dur": 4,
+          "slow": 0.15,
+          "tick": 0.5,
+          "lv": 8,
+          "change": "쿨 −0.5, 반경 +0.2",
+          "est_dps_boss": 12.0,
+          "est_dps_crowd": 139.7
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "fx_zone": "vfx_ssukmul_pool"
+      }
+    },
+    {
+      "id": "wpn_sogeum",
+      "loc_key": "wpn_sogeum.name",
+      "name_ko": "소금",
+      "hanja": "-",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "원형 소금 결계(밀어내기) + 살 알갱이 정화",
+      "tags": [
+        "barrier",
+        "purify",
+        "knockback"
+      ],
+      "targeting": "무당 위치에 고정 설치",
+      "pair_passive": "psv_mubok",
+      "evolution": "evo_bujeong_gasim",
+      "max_level": 8,
+      "limits": {
+        "max_active": 3,
+        "min_period": 2.5,
+        "amt_cap": 2
+      },
+      "amount_rule": "신장 수 1당 결계 안쪽에 반경 60% 동심 결계 1겹 추가(상한 +2)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 5,
+          "cd": 5,
+          "area": 2.2,
+          "dur": 3,
+          "push": 0.8,
+          "purge": 1,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 3.0,
+          "est_dps_crowd": 13.9
+        },
+        {
+          "dmg": 5,
+          "cd": 5,
+          "area": 2.5,
+          "dur": 3,
+          "push": 0.8,
+          "purge": 1,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 2,
+          "change": "반경 +0.3",
+          "est_dps_boss": 3.0,
+          "est_dps_crowd": 15.8
+        },
+        {
+          "dmg": 7,
+          "cd": 5,
+          "area": 2.5,
+          "dur": 3,
+          "push": 0.8,
+          "purge": 1,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 3,
+          "change": "피해 +2",
+          "est_dps_boss": 4.2,
+          "est_dps_crowd": 22.2
+        },
+        {
+          "dmg": 7,
+          "cd": 5,
+          "area": 2.5,
+          "dur": 4,
+          "push": 0.8,
+          "purge": 1,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 4,
+          "change": "지속 +1.0",
+          "est_dps_boss": 5.6,
+          "est_dps_crowd": 29.6
+        },
+        {
+          "dmg": 7,
+          "cd": 4.2,
+          "area": 2.5,
+          "dur": 4,
+          "push": 0.8,
+          "purge": 1,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 5,
+          "change": "쿨 −0.8",
+          "est_dps_boss": 6.7,
+          "est_dps_crowd": 35.2
+        },
+        {
+          "dmg": 7,
+          "cd": 4.2,
+          "area": 2.5,
+          "dur": 4,
+          "push": 0.8,
+          "purge": 1.5,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 6,
+          "change": "살 알갱이 정화 반경 ×1.5",
+          "est_dps_boss": 6.7,
+          "est_dps_crowd": 35.2
+        },
+        {
+          "dmg": 10,
+          "cd": 4.2,
+          "area": 2.5,
+          "dur": 4,
+          "push": 0.8,
+          "purge": 1.5,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 7,
+          "change": "피해 +3",
+          "est_dps_boss": 9.5,
+          "est_dps_crowd": 50.3
+        },
+        {
+          "dmg": 10,
+          "cd": 3.5,
+          "area": 2.9,
+          "dur": 4,
+          "push": 0.8,
+          "purge": 1.5,
+          "purge_cap": 20,
+          "tick": 0.5,
+          "lv": 8,
+          "change": "반경 +0.4, 쿨 −0.7",
+          "est_dps_boss": 10.0,
+          "est_dps_crowd": 70.0
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "fx_cast": "vfx_sogeum_ring"
+      }
+    },
+    {
+      "id": "wpn_myeongdu",
+      "loc_key": "wpn_myeongdu.name",
+      "name_ko": "명두",
+      "hanja": "明斗",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "공전 거울 + 광명 빛줄기(어둑시니 특효)",
+      "tags": [
+        "orbit",
+        "beam",
+        "light",
+        "anti_eodukssini",
+        "auto_aim"
+      ],
+      "targeting": "거울마다 7u 내 가장 가까운 적(어둑시니 최우선)",
+      "pair_passive": "psv_baritdae",
+      "evolution": "evo_irwol_myeongdu",
+      "max_level": 8,
+      "limits": {
+        "max_active": 12,
+        "min_period": 0.5,
+        "amt_cap": 4
+      },
+      "amount_rule": "신장 수 1당 거울 +1(상한 6개)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 8,
+          "cd": 1.6,
+          "mirrors": 2,
+          "area": 7,
+          "width": 0.5,
+          "reflect": 0,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 10.0,
+          "est_dps_crowd": 23.1
+        },
+        {
+          "dmg": 11,
+          "cd": 1.6,
+          "mirrors": 2,
+          "area": 7,
+          "width": 0.5,
+          "reflect": 0,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 2,
+          "change": "피해 +3",
+          "est_dps_boss": 13.8,
+          "est_dps_crowd": 31.8
+        },
+        {
+          "dmg": 11,
+          "cd": 1.6,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.5,
+          "reflect": 0,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 3,
+          "change": "빛줄기 길이 +1.5",
+          "est_dps_boss": 13.8,
+          "est_dps_crowd": 38.6
+        },
+        {
+          "dmg": 11,
+          "cd": 1.4,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.5,
+          "reflect": 0,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 4,
+          "change": "쿨 −0.2",
+          "est_dps_boss": 15.7,
+          "est_dps_crowd": 44.1
+        },
+        {
+          "dmg": 11,
+          "cd": 1.4,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.5,
+          "reflect": 1,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 5,
+          "change": "반사 1회(4u 내 다음 적)",
+          "est_dps_boss": 15.7,
+          "est_dps_crowd": 58.2
+        },
+        {
+          "dmg": 11,
+          "cd": 1.4,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.7,
+          "reflect": 1,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 6,
+          "change": "폭 +0.2",
+          "est_dps_boss": 15.7,
+          "est_dps_crowd": 66.2
+        },
+        {
+          "dmg": 15,
+          "cd": 1.4,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.7,
+          "reflect": 1,
+          "dark": 0.04,
+          "orbit_r": 2.5,
+          "lv": 7,
+          "change": "피해 +4",
+          "est_dps_boss": 21.4,
+          "est_dps_crowd": 90.3
+        },
+        {
+          "dmg": 15,
+          "cd": 1.2,
+          "mirrors": 2,
+          "area": 8.5,
+          "width": 0.7,
+          "reflect": 1,
+          "dark": 0.06,
+          "orbit_r": 2.5,
+          "lv": 8,
+          "change": "쿨 −0.2, 어둑시니 축소 −4%→−6%",
+          "est_dps_boss": 25.0,
+          "est_dps_crowd": 105.4
+        }
+      ],
+      "feel": {
+        "windup_f": 3,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 0,
+        "fx_beam": "vfx_myeongdu_beam",
+        "fx_prop": "vfx_myeongdu_mirror"
+      }
+    },
+    {
+      "id": "wpn_janggu",
+      "loc_key": "wpn_janggu.name",
+      "name_ko": "장구",
+      "hanja": "杖鼓",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "주기적 전방위 음파 충격파 \"덩\"(박 머리 고정)",
+      "tags": [
+        "aoe_self",
+        "sound",
+        "downbeat",
+        "knockback"
+      ],
+      "targeting": "무당 중심 확산 고리",
+      "pair_passive": "psv_gungchae",
+      "evolution": "evo_hapjangdan",
+      "max_level": 8,
+      "limits": {
+        "max_active": 2,
+        "min_period": 0.75,
+        "amt_cap": 3
+      },
+      "amount_rule": "신장 수 1당 후속 고리 +1(직전 고리의 70% 피해, 상한 +3)",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 8,
+          "cd": 2.8,
+          "area": 3.2,
+          "ring2": 0,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 2.9,
+          "est_dps_crowd": 27.6
+        },
+        {
+          "dmg": 10,
+          "cd": 2.8,
+          "area": 3.2,
+          "ring2": 0,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 2,
+          "change": "피해 +2",
+          "est_dps_boss": 3.6,
+          "est_dps_crowd": 34.5
+        },
+        {
+          "dmg": 10,
+          "cd": 2.8,
+          "area": 3.6,
+          "ring2": 0,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 3,
+          "change": "반경 +0.4",
+          "est_dps_boss": 3.6,
+          "est_dps_crowd": 43.6
+        },
+        {
+          "dmg": 10,
+          "cd": 2.5,
+          "area": 3.6,
+          "ring2": 0,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 4,
+          "change": "쿨 −0.3",
+          "est_dps_boss": 4.0,
+          "est_dps_crowd": 48.9
+        },
+        {
+          "dmg": 10,
+          "cd": 2.5,
+          "area": 3.6,
+          "ring2": 1,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 5,
+          "change": "후속 \"쿵\"(반박 뒤, 50% 피해)",
+          "est_dps_boss": 6.0,
+          "est_dps_crowd": 73.3
+        },
+        {
+          "dmg": 13,
+          "cd": 2.5,
+          "area": 3.6,
+          "ring2": 1,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 6,
+          "change": "피해 +3",
+          "est_dps_boss": 7.8,
+          "est_dps_crowd": 95.3
+        },
+        {
+          "dmg": 13,
+          "cd": 2.5,
+          "area": 4,
+          "ring2": 1,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 7,
+          "change": "반경 +0.4",
+          "est_dps_boss": 7.8,
+          "est_dps_crowd": 117.6
+        },
+        {
+          "dmg": 17,
+          "cd": 2.2,
+          "area": 4,
+          "ring2": 1,
+          "kb": 0.6,
+          "expand": 0.35,
+          "lv": 8,
+          "change": "피해 +4, 쿨 −0.3",
+          "est_dps_boss": 11.6,
+          "est_dps_crowd": 174.8
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 4,
+        "recoil_px": 0,
+        "fx_cast": "vfx_janggu_deong"
+      }
+    },
+    {
+      "id": "wpn_obanggi",
+      "loc_key": "wpn_obanggi.name",
+      "name_ko": "오방기",
+      "hanja": "五方旗",
+      "color": "white",
+      "origin": "巫",
+      "scope": "v1",
+      "archetype": "오색 버프 장판(아군 버프 + 약한 백 피해)",
+      "tags": [
+        "zone",
+        "buff",
+        "flag"
+      ],
+      "targeting": "무당 중심 3u 내 무작위 지점(무당 위치 가중 50%)",
+      "pair_passive": "psv_sinjangdae",
+      "evolution": "evo_obangjin",
+      "max_level": 8,
+      "limits": {
+        "max_active": 6,
+        "min_period": 3,
+        "amt_cap": 5
+      },
+      "amount_rule": "신장 수 1당 깃발 +1(상한 5). 같은 색 중첩 없음",
+      "ritual_ref_by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "levels": [
+        {
+          "dmg": 2,
+          "cd": 6,
+          "amt": 1,
+          "area": 2,
+          "dur": 5,
+          "buff": 1,
+          "tick": 0.5,
+          "lv": 1,
+          "change": "기본",
+          "est_dps_boss": 1.7,
+          "est_dps_crowd": 12.6
+        },
+        {
+          "dmg": 2,
+          "cd": 6,
+          "amt": 1,
+          "area": 2.4,
+          "dur": 5,
+          "buff": 1,
+          "tick": 0.5,
+          "lv": 2,
+          "change": "반경 +0.4",
+          "est_dps_boss": 1.7,
+          "est_dps_crowd": 18.1
+        },
+        {
+          "dmg": 2,
+          "cd": 6,
+          "amt": 1,
+          "area": 2.4,
+          "dur": 6.5,
+          "buff": 1,
+          "tick": 0.5,
+          "lv": 3,
+          "change": "지속 +1.5",
+          "est_dps_boss": 2.0,
+          "est_dps_crowd": 23.5
+        },
+        {
+          "dmg": 2,
+          "cd": 6,
+          "amt": 2,
+          "area": 2.4,
+          "dur": 6.5,
+          "buff": 1,
+          "tick": 0.5,
+          "lv": 4,
+          "change": "깃발 +1",
+          "est_dps_boss": 2.0,
+          "est_dps_crowd": 32.9
+        },
+        {
+          "dmg": 2,
+          "cd": 6,
+          "amt": 2,
+          "area": 2.4,
+          "dur": 6.5,
+          "buff": 1.25,
+          "tick": 0.5,
+          "lv": 5,
+          "change": "버프 효과 ×1.25",
+          "est_dps_boss": 2.0,
+          "est_dps_crowd": 32.9
+        },
+        {
+          "dmg": 3,
+          "cd": 6,
+          "amt": 2,
+          "area": 2.4,
+          "dur": 6.5,
+          "buff": 1.25,
+          "tick": 0.5,
+          "lv": 6,
+          "change": "피해 +1",
+          "est_dps_boss": 3.0,
+          "est_dps_crowd": 49.4
+        },
+        {
+          "dmg": 3,
+          "cd": 5,
+          "amt": 2,
+          "area": 2.4,
+          "dur": 6.5,
+          "buff": 1.25,
+          "tick": 0.5,
+          "lv": 7,
+          "change": "쿨 −1.0",
+          "est_dps_boss": 3.0,
+          "est_dps_crowd": 59.3
+        },
+        {
+          "dmg": 3,
+          "cd": 5,
+          "amt": 3,
+          "area": 2.8,
+          "dur": 6.5,
+          "buff": 1.25,
+          "tick": 0.5,
+          "lv": 8,
+          "change": "깃발 +1, 반경 +0.4",
+          "est_dps_boss": 3.0,
+          "est_dps_crowd": 121.0
+        }
+      ],
+      "feel": {
+        "windup_f": 2,
+        "impact_hold_f": 2,
+        "recovery_f": 3,
+        "recoil_px": 0,
+        "fx_prop": "vfx_obanggi_flag",
+        "fx_zone": "vfx_obanggi_zone"
+      }
+    }
+  ],
+  "evolutions": [
+    {
+      "id": "evo_sinjangkal",
+      "loc_key": "evo_sinjangkal.name",
+      "name_ko": "신장칼",
+      "hanja": "神將-",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_sinkal",
+        "weapon_level": 8,
+        "passive": "psv_baekjisul",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 28,
+        "cd": 1.2,
+        "amt": 3,
+        "area": 7,
+        "pierce": -1,
+        "spd": 12,
+        "hitbox": 0.7,
+        "catch_r": 1.5,
+        "kb": 0.5
+      },
+      "summary": "이북식 1m 대신칼. 왕복 관통 무한, 손에 돌아오는 순간 반경 1.5u 원형 참격(100%).",
+      "ritual_ref": null,
+      "est_dps_boss": 134.8,
+      "est_dps_crowd": 525.9,
+      "feel": {
+        "fx": "vfx_sinjangkal_proj",
+        "orient": "spin",
+        "fps": 16,
+        "fx_cast": "vfx_sinjangkal_return_arc"
+      }
+    },
+    {
+      "id": "evo_manwoldo",
+      "loc_key": "evo_manwoldo.name",
+      "name_ko": "만월도",
+      "hanja": "滿月刀",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_woldo",
+        "weapon_level": 8,
+        "passive": "psv_obangkkeun",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 40,
+        "cd": 1.5,
+        "spins": 2,
+        "area": 2.8,
+        "kb": 1,
+        "wave_dmg": 18,
+        "waves": 8,
+        "wave_range": 6,
+        "wave_pierce": 2,
+        "wave_width": 1,
+        "wave_spd": 9
+      },
+      "summary": "2회전 베기. 마지막 회전이 끝나면 반달 검기 8개를 사방으로 발사(사거리 6u, 관통 2).",
+      "ritual_ref": null,
+      "est_dps_boss": 68.6,
+      "est_dps_crowd": 596.4,
+      "feel": {
+        "fx_wave": "vfx_manwoldo_crescent"
+      }
+    },
+    {
+      "id": "evo_saseulchang",
+      "loc_key": "evo_saseulchang.name",
+      "name_ko": "사슬창",
+      "hanja": "-槍",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_samjichang",
+        "weapon_level": 8,
+        "passive": "psv_sinjangdae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 30,
+        "cd": 1.2,
+        "prongs": 5,
+        "thrusts": 2,
+        "area": 5.5,
+        "width": 0.6,
+        "mark": 0.3,
+        "amt": 1,
+        "verdict_chance": 0.5,
+        "verdict_cd": 45
+      },
+      "summary": "5갈래(±30°) 2연속 찌르기. 표식 증폭 30%. 표식 정예 퇴치 시 사슬세우기 판결: 50% 길흉 상자(판결 쿨 45초).",
+      "ritual_ref": null,
+      "est_dps_boss": 204.8,
+      "est_dps_crowd": 519.8,
+      "feel": {
+        "fx_verdict": "vfx_saseulchang_verdict"
+      }
+    },
+    {
+      "id": "evo_daejakdu",
+      "loc_key": "evo_daejakdu.name",
+      "name_ko": "대작두",
+      "hanja": "大斫刀",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_jakdu",
+        "weapon_level": 8,
+        "passive": "psv_mubok",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 70,
+        "cd": 3.5,
+        "area": 3.8,
+        "invuln": 1,
+        "lowhp_k": 2,
+        "wave2_mult": 0.6,
+        "wave2_area": 1.3,
+        "min_period": 3
+      },
+      "summary": "쌍날 대작두. 무적 1.0초, 충격파 2연(2파: 0.4초 뒤 반경 ×1.3, 피해 60%). 최소 주기 3.0초.",
+      "ritual_ref": null,
+      "est_dps_boss": 33.6,
+      "est_dps_crowd": 575.6,
+      "feel": {
+        "fx_prop": "vfx_daejakdu_blades"
+      }
+    },
+    {
+      "id": "evo_isippalsugeom",
+      "loc_key": "evo_isippalsugeom.name",
+      "name_ko": "이십팔수검",
+      "hanja": "二十八宿劍",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_sainsageom",
+        "weapon_level": 8,
+        "passive": "psv_santong",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 40,
+        "cd": 1.6,
+        "amt": 3,
+        "area": 9,
+        "width": 1.2,
+        "elite": 2,
+        "bolt_dmg": 24,
+        "bolt_r": 1.2,
+        "bolts_per_wave": 3,
+        "grand_every": 28,
+        "grand_bolts": 28,
+        "grand_dmg": 60
+      },
+      "summary": "검기 경로 3u마다 별 표식 3개 → 0.5초 뒤 28수 낙뢰(반경 1.2u). 28번째 검기마다 화면 내 적 28체에 일제 낙뢰.",
+      "ritual_ref": null,
+      "est_dps_boss": 177.5,
+      "est_dps_crowd": 614.5,
+      "feel": {
+        "fx_bolt": "vfx_isippalsu_bolt",
+        "fx_grand": "vfx_isippalsu_constellation"
+      }
+    },
+    {
+      "id": "evo_jusahwajeon",
+      "loc_key": "evo_jusahwajeon.name",
+      "name_ko": "주사화전",
+      "hanja": "朱砂火箭",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_gakgung",
+        "weapon_level": 8,
+        "passive": "psv_jusa",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 22,
+        "cd": 0.75,
+        "amt": 4,
+        "pierce": 3,
+        "area": 12,
+        "spd": 20,
+        "crit": 0.05,
+        "blast_dmg": 14,
+        "blast_r": 1.5,
+        "burn_dps": 6,
+        "burn_dur": 3
+      },
+      "summary": "경면주사 불화살. 마지막 관통 지점(또는 최대 사거리)에서 폭발(반경 1.5u) + 화공 화상 3초(초당 6, 갱신형).",
+      "ritual_ref": null,
+      "est_dps_boss": 193.7,
+      "est_dps_crowd": 592.8,
+      "feel": {
+        "fx": "vfx_jusahwajeon_arrow",
+        "orient": "dir4",
+        "fx_blast": "vfx_jusahwajeon_blast"
+      }
+    },
+    {
+      "id": "evo_pajinchang",
+      "loc_key": "evo_pajinchang.name",
+      "name_ko": "파진창",
+      "hanja": "破陣槍",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_jangchang",
+        "weapon_level": 8,
+        "passive": "psv_mituri",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 14,
+        "cd": 0.7,
+        "thrusts": 5,
+        "area": 6,
+        "width": 0.8,
+        "amt": 1,
+        "lunge_dmg": 10,
+        "lunge_range": 8,
+        "lunge_spd": 16,
+        "run_threshold": 3.5,
+        "domu_scale": 1,
+        "domu_cap": 0.6
+      },
+      "summary": "돌진 연타 5회, 관통 무한. 이동 중(3.5u/s 이상)에는 찌를 때마다 창기 잔상(8u, 관통 무한) 발사. 도무 100% 초과분 1%당 피해 +1%(상한 +60%).",
+      "ritual_ref": null,
+      "est_dps_boss": 105.0,
+      "est_dps_crowd": 415.8,
+      "feel": {
+        "fx_cast": "vfx_pajinchang_dash"
+      }
+    },
+    {
+      "id": "evo_byeongnyeok_pyeongon",
+      "loc_key": "evo_byeongnyeok_pyeongon.name",
+      "name_ko": "벽력편곤",
+      "hanja": "霹靂鞭棍",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_pyeongon",
+        "weapon_level": 8,
+        "passive": "psv_myeongjusil",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 44,
+        "hp_scale": 0.08,
+        "cd": 1.3,
+        "angle": 180,
+        "area": 3.4,
+        "kb": 1.6,
+        "back": 1,
+        "ring_mult": 0.5,
+        "ring_r": 2,
+        "ring_offset": 2,
+        "ring_stun": 0.6
+      },
+      "summary": "피해 = 44 + 최대 정기의 8%. 180° 내려치기 + 역타, 착지점(2u 앞)에 충격 고리(반경 2u, 50%, 경직 0.6초).",
+      "ritual_ref": null,
+      "est_dps_boss": 63.0,
+      "est_dps_crowd": 468.1,
+      "feel": {
+        "fx_ring": "vfx_byeongnyeok_ring"
+      }
+    },
+    {
+      "id": "evo_cheoljillyeojin",
+      "loc_key": "evo_cheoljillyeojin.name",
+      "name_ko": "철질려진",
+      "hanja": "鐵蒺藜陣",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_cheoljillyeo",
+        "weapon_level": 8,
+        "passive": "psv_jeung",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 14,
+        "cd": 1.2,
+        "amt": 8,
+        "dur": 10,
+        "charges": 6,
+        "root": 1,
+        "max_act": 90,
+        "formation": 12,
+        "formation_r": 3,
+        "salgi_ref": 30,
+        "salgi_cap": 100
+      },
+      "summary": "피해 ×(1+살기/100, 상한 ×2). 3회 발동마다 무당 둘레 반경 3u에 마름쇠 12개 진형 자동 배치.",
+      "ritual_ref": null,
+      "est_dps_boss": 31.9,
+      "est_dps_crowd": 464.4,
+      "feel": {
+        "fx_ring": "vfx_cheoljillyeojin_pulse"
+      }
+    },
+    {
+      "id": "evo_sangun_pohyodo",
+      "loc_key": "evo_sangun_pohyodo.name",
+      "name_ko": "산군포효도",
+      "hanja": "山君咆哮圖",
+      "color": "red",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_hojakdo",
+        "weapon_level": 8,
+        "passive": "psv_chotdae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 12,
+        "cd": 2.2,
+        "area": 6.4,
+        "fear": 2.5,
+        "fear_amp": 0.2,
+        "stagger": 0.5
+      },
+      "summary": "포효 반경 ×1.6(6.4u), 공포 2.5초, 공포 대상 받는 모든 피해 +20%. 정예도 경직 0.5초.",
+      "ritual_ref": null,
+      "est_dps_boss": 5.7,
+      "est_dps_crowd": 331.6,
+      "feel": {
+        "fx_cast": "vfx_sangun_roar"
+      }
+    },
+    {
+      "id": "evo_cheoneum_bangul",
+      "loc_key": "evo_cheoneum_bangul.name",
+      "name_ko": "천음방울",
+      "hanja": "天音-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_bangul",
+        "weapon_level": 8,
+        "passive": "psv_chohon_jeoksam",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 9,
+        "cd": 0.5,
+        "area": 3.6,
+        "res_dmg": 5,
+        "res_r": 6,
+        "res_beats": 2,
+        "res_period_ref": 1.5,
+        "pull_spd": 0.8,
+        "orb_pull_r": 6
+      },
+      "summary": "맥동 + 2박마다 공명 파동(반경 6u, 피해 5): 원혼 구슬 흡인, 6u 내 풀릴 기색 적을 초당 0.8u 끌어옴.",
+      "ritual_ref": 36,
+      "est_dps_boss": 21.3,
+      "est_dps_crowd": 333.0,
+      "feel": {
+        "fx_ring": "vfx_cheoneum_pulse"
+      }
+    },
+    {
+      "id": "evo_irwolseonpung",
+      "loc_key": "evo_irwolseonpung.name",
+      "name_ko": "일월선풍",
+      "hanja": "日月扇風",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_buchae",
+        "weapon_level": 8,
+        "passive": "psv_obangkkeun",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 16,
+        "cd": 1.2,
+        "angle": 130,
+        "area": 4,
+        "gusts": 2,
+        "whirl": 2,
+        "whirl_dmg": 8,
+        "whirl_tick": 0.25,
+        "whirl_r": 1.2,
+        "orbit_r": 3,
+        "dash_every": 4,
+        "pull_r": 3
+      },
+      "summary": "돌풍 유지 + 일(日)·월(月) 회오리 2개 공전(반경 3u). 4초마다 가장 큰 풀릴 기색 무리로 돌진해 3u 내 대상을 무당 쪽으로 끌고 귀환.",
+      "ritual_ref": 36,
+      "est_dps_boss": 45.9,
+      "est_dps_crowd": 232.1,
+      "feel": {
+        "fx_whirl": "vfx_irwolseonpung_whirl"
+      }
+    },
+    {
+      "id": "evo_neokkkotbi",
+      "loc_key": "evo_neokkkotbi.name",
+      "name_ko": "넋꽃비",
+      "hanja": "-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_neokjeon",
+        "weapon_level": 8,
+        "passive": "psv_wipae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 12,
+        "amt": 6,
+        "area": 2.6,
+        "omega": 216,
+        "permanent": 1,
+        "petal_dmg": 10,
+        "petal_r": 1,
+        "petal_every_beats": 2,
+        "petal_period_ref": 1.5,
+        "cd": 4,
+        "hit_iv": 0.5
+      },
+      "summary": "상시 공전 6장. 2박마다 넋전마다 꽃잎 1장이 6u 내 적에게 낙하(반경 1u).",
+      "ritual_ref": 36,
+      "est_dps_boss": 49.9,
+      "est_dps_crowd": 270.6,
+      "feel": {
+        "fx_petal": "vfx_neokkkotbi_column",
+        "fx_column": "vfx_neokkkotbi_column"
+      }
+    },
+    {
+      "id": "evo_nojatdon",
+      "loc_key": "evo_nojatdon.name",
+      "name_ko": "노잣돈",
+      "hanja": "-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_jijeon",
+        "weapon_level": 8,
+        "passive": "psv_yeopjeon",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 12,
+        "cd": 1.1,
+        "amt": 13,
+        "angle": 60,
+        "area": 6.5,
+        "pierce": 3,
+        "chain": 1,
+        "chain_r": 3
+      },
+      "summary": "노잣돈으로 해원하면 3u 내 다른 풀릴 기색 1체 즉시 연쇄 해원(연쇄의 연쇄 없음). 해원 시 엽전 드롭 확률 +2%p.",
+      "ritual_ref": 36,
+      "est_dps_boss": 141.8,
+      "est_dps_crowd": 217.2,
+      "feel": {
+        "fx_chain": "vfx_nojatdon_chain"
+      }
+    },
+    {
+      "id": "evo_begareugi",
+      "loc_key": "evo_begareugi.name",
+      "name_ko": "베가르기",
+      "hanja": "-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_gilbe",
+        "weapon_level": 8,
+        "passive": "psv_mituri",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 14,
+        "cd": 1.6,
+        "amt": 2,
+        "area": 6.5,
+        "width": 1.4,
+        "dur": 3,
+        "slow": 0.25,
+        "tick": 0.5,
+        "trail_dmg": 10,
+        "trail_width": 0.8,
+        "trail_len_ref": 16
+      },
+      "summary": "천 펼치기 유지 + 길베 트레일(4초 궤적, 폭 0.8u) 자체가 0.5초마다 백 피해 10.",
+      "ritual_ref": 36,
+      "est_dps_boss": 32.2,
+      "est_dps_crowd": 339.1,
+      "feel": {
+        "fx_trail": "vfx_begareugi_shimmer"
+      }
+    },
+    {
+      "id": "evo_sammul_ssitgim",
+      "loc_key": "evo_sammul_ssitgim.name",
+      "name_ko": "삼물씻김",
+      "hanja": "三-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_ssukmul",
+        "weapon_level": 8,
+        "passive": "psv_jeonghwasu",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 8,
+        "cd": 3,
+        "amt": 2,
+        "puddles": 3,
+        "area": 2.2,
+        "dur": 4,
+        "tick": 0.5,
+        "hyang_puri": 1,
+        "ssuk_slow": 0.3,
+        "malgeun_heal": 0.005
+      },
+      "summary": "바가지마다 맑은물→쑥물→향물 장판 3개를 무당 쪽에서 대상 쪽으로 1.5u 간격 직선 배치(0.3초 차, 씻김 순서 고증). 맑은물: 무당 정기 초당 +0.5%·영가 수명 정지, 쑥물: 감속 30%, 향물: 풀이 +1.0.",
+      "ritual_ref": 36,
+      "est_dps_boss": 16.0,
+      "est_dps_crowd": 350.3,
+      "feel": {
+        "fx_zone": "vfx_sammul_triple"
+      }
+    },
+    {
+      "id": "evo_bujeong_gasim",
+      "loc_key": "evo_bujeong_gasim.name",
+      "name_ko": "부정가심",
+      "hanja": "不淨-",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_sogeum",
+        "weapon_level": 8,
+        "passive": "psv_mubok",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 14,
+        "area": 3.2,
+        "push": 1,
+        "permanent": 1,
+        "purge_r": 5,
+        "purge_rate": 4,
+        "burst_dmg": 20,
+        "burst_r": 1.2,
+        "tick": 0.5,
+        "cd": 5
+      },
+      "summary": "무당을 따라다니는 상시 결계(반경 3.2u). 5u 내 살 알갱이를 0.25초에 1개씩 정화, 정화마다 흰 폭발(반경 1.2u, 피해 20).",
+      "ritual_ref": 36,
+      "est_dps_boss": 20.0,
+      "est_dps_crowd": 121.7,
+      "feel": {
+        "fx_blast": "vfx_bujeong_gasim_blast"
+      }
+    },
+    {
+      "id": "evo_irwol_myeongdu",
+      "loc_key": "evo_irwol_myeongdu.name",
+      "name_ko": "일월명두",
+      "hanja": "日月明斗",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_myeongdu",
+        "weapon_level": 8,
+        "passive": "psv_baritdae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 16,
+        "cd": 1.2,
+        "mirrors": 4,
+        "area": 8.5,
+        "width": 0.7,
+        "reflect": 3,
+        "reflect_decay": 0.1,
+        "dark": 0.08,
+        "light_r": 2
+      },
+      "summary": "거울 4개, 빛줄기 최대 3회 연쇄 반사(5u, 회당 −10%). 거울마다 반경 2u 광명 구역(어둑시니 성장 −50%).",
+      "ritual_ref": 36,
+      "est_dps_boss": 53.3,
+      "est_dps_crowd": 306.9,
+      "feel": {}
+    },
+    {
+      "id": "evo_hapjangdan",
+      "loc_key": "evo_hapjangdan.name",
+      "name_ko": "합장단",
+      "hanja": "合長短",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_janggu",
+        "weapon_level": 8,
+        "passive": "psv_gungchae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 24,
+        "cd": 2.1,
+        "area": 4.8,
+        "gideok_dmg": 12,
+        "gideok_r": 3.6,
+        "counter_dmg": 30,
+        "counter_r": 3,
+        "counter_icd": 1
+      },
+      "summary": "\"덩\"(반경 4.8u, 24) + 반박 뒤 \"기덕\" 2연 고리(반경 3.6u, 각 12). 무당 피격·대신 맞기 때마다 반격 파동(반경 3u, 30, 내부 쿨 1초).",
+      "ritual_ref": 36,
+      "est_dps_boss": 22.9,
+      "est_dps_crowd": 387.8,
+      "feel": {}
+    },
+    {
+      "id": "evo_obangjin",
+      "loc_key": "evo_obangjin.name",
+      "name_ko": "오방진",
+      "hanja": "五方陣",
+      "color": "white",
+      "scope": "v1",
+      "recipe": {
+        "weapon": "wpn_obanggi",
+        "weapon_level": 8,
+        "passive": "psv_sinjangdae",
+        "passive_min_level": 1,
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 6,
+        "cd": 5,
+        "area": 3.5,
+        "dur": 7,
+        "tick": 0.5,
+        "stun_beats": 1,
+        "buff": 1.25
+      },
+      "summary": "무당 위치에 중앙황 기둥, 반경 3.5u의 동·서·남·북에 청·백·적·흑 기둥(오방 배치). 진(반경 3.5u 원) 안: 5색 버프 동시(×1.25), 적 0.5초마다 피해 6, 진 완성 순간 진 안 적 1박 경직.",
+      "ritual_ref": 36,
+      "est_dps_boss": 12.0,
+      "est_dps_crowd": 194.0,
+      "feel": {
+        "fx_pillar": "vfx_obangjin_pillar"
+      }
+    }
+  ],
+  "unions": [
+    {
+      "id": "union_neoksinkal",
+      "loc_key": "union_neoksinkal.name",
+      "name_ko": "넋신칼",
+      "scope": "v1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_sinjangkal",
+          "evo_neokkkotbi"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 34,
+        "white_dmg": 14,
+        "cd": 1.1,
+        "amt": 4,
+        "area": 7,
+        "pierce": -1,
+        "hitbox": 0.7,
+        "petal_dmg": 10,
+        "petal_r": 1,
+        "orbit": 3,
+        "orbit_dmg": 12
+      },
+      "summary": "칼 4자루 왕복(관통 무한). 일반 대상엔 적 피해 34, 풀릴 기색 대상엔 백 피해 14×풀이. 칼 경로에 백지 술 꽃잎(반경 1u, 10). 넋전 3장 상시 공전 유지.",
+      "ritual_ref": 40,
+      "est_dps_boss": 281.2,
+      "est_dps_crowd": 903.9,
+      "feel": {
+        "fx": "vfx_union_neoksinkal",
+        "orient": "spin",
+        "fps": 16,
+        "fx_petal": "vfx_neokkkotbi_column"
+      }
+    },
+    {
+      "id": "union_sogeumsal",
+      "loc_key": "union_sogeumsal.name",
+      "name_ko": "소금살",
+      "scope": "v1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_jusahwajeon",
+          "evo_bujeong_gasim"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 20,
+        "white_dmg": 9,
+        "cd": 0.7,
+        "amt": 5,
+        "pierce": 3,
+        "area": 12,
+        "blast_dmg": 16,
+        "blast_r": 1.8,
+        "purge_in_blast": 1,
+        "aura_r": 2.6,
+        "aura_dmg": 8
+      },
+      "summary": "정화 화살 5발. 폭발(반경 1.8u) 안 살 알갱이 전부 정화(1발당 최대 6개). 일반 대상 적 피해, 풀릴 기색 대상 백 피해. 약화 결계(반경 2.6u, 밀어내기만) 유지.",
+      "ritual_ref": 40,
+      "est_dps_boss": 270.0,
+      "est_dps_crowd": 860.3,
+      "feel": {
+        "fx": "vfx_union_sogeumsal",
+        "orient": "dir4",
+        "fx_blast": "vfx_bujeong_gasim_blast"
+      }
+    },
+    {
+      "id": "union_jakdu_dari",
+      "loc_key": "union_jakdu_dari.name",
+      "name_ko": "작두다리",
+      "scope": "v1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_daejakdu",
+          "evo_begareugi"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 80,
+        "cd": 3.5,
+        "area": 4.5,
+        "invuln": 1,
+        "lowhp_k": 2,
+        "ring_judge": 1,
+        "trail_dmg": 8,
+        "trail_width": 0.8
+      },
+      "summary": "대작두 충격파 원이 길닦음 고리 판정(효과 1·2)으로 작동: 원 안 풀릴 기색 즉시 해원, 그 밖은 적 피해 80. 영가 천도·만다라·신명 보너스(효과 3·4)는 없음. 길베 트레일 피해 8 유지.",
+      "ritual_ref": 40,
+      "est_dps_boss": 43.2,
+      "est_dps_crowd": 840.4,
+      "feel": {
+        "fx_cast": "vfx_union_jakdu_dari_ring",
+        "fx_prop": "vfx_daejakdu_blades"
+      }
+    },
+    {
+      "id": "union_chilseong_myeonggyeonggeom",
+      "loc_key": "union_chilseong_myeonggyeonggeom.name",
+      "name_ko": "칠성명경검",
+      "scope": "v1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_isippalsugeom",
+          "evo_irwol_myeongdu"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 38,
+        "white_dmg": 16,
+        "cd": 1.5,
+        "amt": 3,
+        "area": 9,
+        "width": 1.2,
+        "mirrors": 4,
+        "reflect_mult": 0.7,
+        "bolt_dmg": 28,
+        "bolt_r": 1.3,
+        "dark_shrink": 0.15,
+        "elite": 2
+      },
+      "summary": "검기 3 + 공전 거울 4. 검기가 거울을 지나면 반사 검기(70%)로 꺾이고 반사 지점에 칠성 낙뢰(반경 1.3u, 28). 어둑시니 명중 시 크기 −15%(성장 유발 없음).",
+      "ritual_ref": 40,
+      "est_dps_boss": 198.8,
+      "est_dps_crowd": 784.2,
+      "feel": {
+        "fx_bolt": "vfx_isippalsu_bolt",
+        "fx_prop": "vfx_myeongdu_mirror"
+      }
+    },
+    {
+      "id": "union_obang_cheoljin",
+      "loc_key": "union_obang_cheoljin.name",
+      "name_ko": "오방철진",
+      "scope": "x1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_cheoljillyeojin",
+          "evo_obangjin"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 16,
+        "cd": 4,
+        "area": 4,
+        "dur": 8,
+        "caltrops": 20,
+        "charges": 6,
+        "convert_haewon": 1,
+        "tick": 0.5,
+        "field_dmg": 10
+      },
+      "summary": "1마디(4박)마다 오방 결계(반경 4u) + 둘레 마름쇠 20개. 결계 안에서 일어나는 퇴치는 해원으로 전환(살 알갱이 미발생, 영가 합류).",
+      "ritual_ref": 40,
+      "est_dps_boss": 28.0,
+      "est_dps_crowd": 601.9
+    },
+    {
+      "id": "union_sanullim",
+      "loc_key": "union_sanullim.name",
+      "name_ko": "산울림",
+      "scope": "x1",
+      "color": "dual",
+      "recipe": {
+        "evolutions": [
+          "evo_sangun_pohyodo",
+          "evo_cheoneum_bangul"
+        ],
+        "box": [
+          "box_gilhyung",
+          "box_neokham"
+        ]
+      },
+      "stats": {
+        "dmg": 30,
+        "cd": 3,
+        "area": 7,
+        "fear": 2.5,
+        "mass_haewon_cap": 30,
+        "pulse_dmg": 9,
+        "pulse_cd": 0.5,
+        "pulse_r": 3.6
+      },
+      "summary": "포효+방울 공명(반경 7u): 공포 2.5초, 범위 안 풀릴 기색 일괄 해원(1회 최대 30체). 맥동 방울 오라 유지.",
+      "ritual_ref": 40,
+      "est_dps_boss": 28.0,
+      "est_dps_crowd": 619.9
+    }
+  ]
+}

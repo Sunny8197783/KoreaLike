@@ -1,0 +1,57 @@
+{
+ "image": "vfx_bingui_pattern_tiles.png",
+ "tile": [
+  16,
+  16
+ ],
+ "count": 12,
+ "encoding": "R=primary(deity ramp step), G=secondary, B=saekdong index*40+20, A=paint",
+ "order": [
+  "sansin_wieom",
+  "sansin_gaho",
+  "yongwang_wieom",
+  "yongwang_gaho",
+  "chilseong_wieom",
+  "chilseong_gaho",
+  "janggun_wieom",
+  "janggun_gaho",
+  "barigongju_wieom",
+  "barigongju_gaho",
+  "daegam_wieom",
+  "jeseok_gaho"
+ ],
+ "saekdong": [
+  "#c8322d",
+  "#f5d66b",
+  "#55b8aa",
+  "#5f93de",
+  "#f4a183",
+  "#e9dcc0"
+ ],
+ "deity_colors": [
+  [
+   "#e8b931",
+   "#1a1a1a"
+  ],
+  [
+   "#55b8aa",
+   "#1d5a58"
+  ],
+  [
+   "#e8b931",
+   "#1b3a70"
+  ],
+  [
+   "#e8b931",
+   "#8c1f22"
+  ],
+  [
+   "#f5d66b",
+   "#5a4a37"
+  ],
+  [
+   "#e8b931",
+   "#8c1f22"
+  ]
+ ]
+}

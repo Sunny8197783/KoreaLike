@@ -1,0 +1,163 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_hit_spark_red__pilot 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_red__pilot 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_red__pilot 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_hit_spark_red__pilot 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "hand-drawn grid recipe (art/pilot/_scripts/fix_r3_vfx.py)",
+  "version": "1",
+  "image": "vfx_hit_spark_red__pilot.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_hit_spark_red__pilot",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_hit_spark_red__pilot",
+   "name": "Hit spark red (pilot r3)",
+   "fps": 20,
+   "loop": false,
+   "frames": 4,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "frameWidth": 16,
+   "frameHeight": 16
+  },
+  "korealike": {
+   "category": "hit_spark",
+   "owner": "wpn_sinkal",
+   "spec_canvas": "16x16",
+   "spec_frames": 4,
+   "timing": "fps:20",
+   "blend": "normal",
+   "pilot": true,
+   "palette": [
+    "#8c1f22",
+    "#c8322d",
+    "#e4604f",
+    "#e9dcc0",
+    "#f4a183"
+   ],
+   "colors": 5,
+   "source": "art/pilot/_scripts/fix_r3_vfx.py (r3 hand redraw, 0 gen)",
+   "impact_frame": 0,
+   "impact_frames": [
+    0,
+    1
+   ],
+   "phases": {
+    "impact": [
+     0,
+     1
+    ],
+    "fade": [
+     2,
+     3
+    ]
+   },
+   "note": "r3: f0 코어 #f4a183 (피격 플래시 #e9dcc0 와 분리)"
+  }
+ }
+}

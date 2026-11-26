@@ -1,0 +1,24 @@
+== art_lint: char_mansin  (tier=player, canvas=80x80, pivot=[40, 74], palette=master-all(65), frames=106)
+  L1   캔버스            FAIL  {"80x80": 106}                                               사양 [64]
+  L2   알파             PASS  {"semi_px": 0, "semi_frames_pct": 0.0}                       0<a<255 픽셀 0개 (0.00% of canvas px)
+  L3   팔레트 소속         PASS  {"off_colors": 0, "off_px_pct": 0.0, "compliance_pct": 10... 기준 master-all(65), 마스터 최근접 평균 ΔE2000 0.00
+  L4   색 수            FAIL  {"entity_colors": 47, "budget": 24, "frame_max": 36}         엔티티 전 프레임·방향 합집합
+  L5   예약 백           PASS  {"px": 0, "colors": []}                                      #f2ece0 ±ΔE2000 6
+  L6   예약 청           FAIL  {"exact_pct": 9.88, "nearest_snap_pct": 9.88}                ch 램프 ≤2% (정확 일치 / 마스터 최근접 스냅 기준 중 큰 값)
+  L7   외곽선            PASS  {"outline_1a1a1a_pct": 100.0, "dark_outer_pct": 100.0}       실루엣 외곽(4이웃 투명) 픽셀 21950개 중 #1a1a1a ≥95%
+  L8   여백             PASS  {"left": 8, "right": 15, "top": 14, "bottom": 5}             최소 사방 2 / 위 3. 위반: -
+  L9   피벗             PASS  {"foot_min": 74, "foot_max": 74, "pivot_y": 74, "bad_fram... 모든 프레임 발끝 = 피벗 y ±1
+  L10  방향 중심          PASS  {"worst_range_px": 1.0, "worst_anim": "rot", "pivot_x": 40}  애니별 0프레임 방향간 bbox 중심 x 범위: {"hurt": 0.5, "idle": 0.5, "rot": 1.0, "walk": 1.0}
+  L11  몸 높이           FAIL  {"height": 60, "target": [44, 48], "over_pct": 25.0}         south.png 기준, +15% 초과 → 7.2 재생성 조건 1
+  L12  정지↔이동          PASS  {"south": {"idle": "idle_south_0.png", "move": "walk_sout... 위반 방향: -
+  L13  루프 일관성         FAIL  {"area_var_pct": 9.4, "area_worst": "gut_dance_south", "c... 루프 애니 ['gut_dance', 'idle', 'jakdu_dance', 'walk']. 위반 1묶음: gut_dance_south
+  L14  고립 픽셀          PASS  {"isolated_pct": 0.04, "worst_frame_pct": 0.3, "worst_fra... 내부(외곽 제외) 8이웃 같은 RGB 없음 >8% FAIL, 평균 클러스터 <2.5 WARN
+  L15  미러 정책          PASS  {"west_files": 19, "flip_of_east": 19, "independent": 0}     독립 생성 west는 FAIL(flip_h(E)와 픽셀 동일한 파생본은 허용, --strict-west면 전부 FAIL)
+  L16  방향 의상 일관성      PASS  {"S-E": 0.75, "S-N": 0.875}                                  정지 프레임 내부 상위 8색(마스터 스냅) 겹침 <75% WARN → G0 육안 확인
+  L17  광원             WARN  -0.032                                                       south.png 좌반−우반 평균 상대휘도(추정 지표)
+  L18  명도 띠           PASS  {"max_lum": 0.723, "cap": 0.723, "px_over": 0}               플레이어 최고 명도 ≤ #e9dcc0
+  L19  VFX            N/A   null                                                         VFX 시트 입력에서만
+  L20  import 회귀      N/A   {"import_files": 0}                                          전역 검사는 --imports game/
+  L21  앵커             FAIL  {"file": "data\\anchors\\char_mansin.json"}                  앵커 파일 없음(오버레이·지물·발사 대상)
+  L22  workbench 점수   WARN  null                                                         미측정: pixelart_workbench score 결과를 --workbench-score/--workbench 로 전달
+  -> PASS 12 / FAIL 6 / WARN 2 / N/A 2

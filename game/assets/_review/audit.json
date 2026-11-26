@@ -1,0 +1,7852 @@
+{
+ "vfx": {
+  "vfx_bangul_aura": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1280,
+    160
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    80,
+    80
+   ],
+   "columns": 8,
+   "fw": 160,
+   "fh": 160,
+   "px_counts": [
+    1507,
+    1938,
+    1881,
+    1504,
+    1585,
+    1581,
+    1488,
+    1173
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.78,
+   "spec": [
+    "160x160",
+    8,
+    "beat:1",
+    "P",
+    1,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_begareugi_shimmer": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    128,
+    8
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    4
+   ],
+   "columns": 4,
+   "fw": 32,
+   "fh": 8,
+   "px_counts": [
+    209,
+    210,
+    209,
+    210
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ribbon",
+    4,
+    "beat:1",
+    "P",
+    1,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_bingui_pattern_sweep": {
+   "issues": [
+    "png missing"
+   ],
+   "kind": "sheet"
+  },
+  "vfx_bingui_pattern_tiles": {
+   "issues": [],
+   "kind": "meta-only"
+  },
+  "vfx_bingui_pillar": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1513,
+    1119,
+    846,
+    582,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_barigongju": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1618,
+    1198,
+    873,
+    582,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_chilseong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1618,
+    1195,
+    871,
+    582,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_janggun": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1618,
+    1204,
+    876,
+    582,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_jeseok_daegam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1618,
+    1224,
+    900,
+    598,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_sansin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1574,
+    1513,
+    1119,
+    846,
+    582,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_bingui_pillar_yongwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    160,
+    192
+   ],
+   "fps": 24,
+   "loop": false,
+   "pivot": [
+    16,
+    92
+   ],
+   "columns": 5,
+   "fw": 32,
+   "fh": 96,
+   "px_counts": [
+    1559,
+    1618,
+    1196,
+    870,
+    578,
+    209
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "spec": [
+    "32x96",
+    6,
+    "fps:24",
+    "D",
+    1,
+    "possession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_boss_plague_portal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 9,
+   "size": [
+    144,
+    144
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    24,
+    28
+   ],
+   "columns": 3,
+   "fw": 48,
+   "fh": 48,
+   "px_counts": [
+    1194,
+    1280,
+    1330,
+    1316,
+    1300,
+    1300,
+    1280,
+    1125,
+    0
+   ],
+   "empty_frames": [
+    8
+   ],
+   "f0_ratio": 0.9,
+   "spec": [
+    "48x48",
+    8,
+    "fps:10",
+    "B+M",
+    4,
+    "enemy"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B+M"
+  },
+  "vfx_boss_tidal_bullet": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    24,
+    12
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    6,
+    6
+   ],
+   "columns": 2,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    62,
+    62
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "12x12",
+    2,
+    "fps:8",
+    "B",
+    200,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_box_gilhyung_open": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    256,
+    192
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    32,
+    54
+   ],
+   "columns": 4,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    528,
+    1828,
+    1107,
+    466,
+    430,
+    430,
+    436,
+    441,
+    1078,
+    1587,
+    120,
+    0
+   ],
+   "empty_frames": [
+    11
+   ],
+   "f0_ratio": 0.29,
+   "spec": [
+    "64x64",
+    12,
+    "fps:12",
+    "Y+R",
+    1,
+    "pickup"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y+R"
+  },
+  "vfx_box_neokham_open": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    256,
+    192
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    32,
+    56
+   ],
+   "columns": 4,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    302,
+    298,
+    305,
+    308,
+    475,
+    1459,
+    827,
+    783,
+    772,
+    614,
+    414,
+    0
+   ],
+   "empty_frames": [
+    11
+   ],
+   "f0_ratio": 0.21,
+   "spec": [
+    "64x64",
+    12,
+    "fps:12",
+    "W+H",
+    1,
+    "pickup"
+   ],
+   "trailing_empty": true,
+   "bk_px": 4,
+   "white_px": 111,
+   "role": "W+H"
+  },
+  "vfx_buchae_gust": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    320,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    5,
+    24
+   ],
+   "columns": 5,
+   "fw": 64,
+   "fh": 48,
+   "px_counts": [
+    437,
+    554,
+    567,
+    149,
+    134
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "64x48",
+    5,
+    "fps:16",
+    "P",
+    6,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_bujeong_gasim_blast": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    240,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    24,
+    24
+   ],
+   "columns": 5,
+   "fw": 48,
+   "fh": 48,
+   "px_counts": [
+    248,
+    351,
+    221,
+    215,
+    18
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.71,
+   "spec": [
+    "48x48",
+    5,
+    "fps:16",
+    "P",
+    12,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_bulgasari_iron_absorb": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    15,
+    13,
+    13,
+    14
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:12",
+    "M+R",
+    40,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_byeongnyeok_ring": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    288,
+    192
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    742,
+    1037,
+    975,
+    708,
+    54,
+    23
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.72,
+   "spec": [
+    "96x96",
+    6,
+    "fps:16",
+    "R",
+    6,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_candle_flame_s": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    28,
+    9
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    3,
+    8
+   ],
+   "columns": 4,
+   "fw": 7,
+   "fh": 9,
+   "px_counts": [
+    23,
+    19,
+    24,
+    19
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": ""
+  },
+  "vfx_cheoljillyeo_caltrop": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    16,
+    8
+   ],
+   "fps": 4,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    27,
+    27
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    2,
+    "fps:4",
+    "R+M",
+    120,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+M"
+  },
+  "vfx_cheoljillyeojin_pulse": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    128
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 3,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    657,
+    540,
+    376,
+    188,
+    66,
+    4
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x64",
+    6,
+    "beat:1",
+    "R",
+    6,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_cheondo_ascend": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    192,
+    32
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    30
+   ],
+   "columns": 8,
+   "fw": 24,
+   "fh": 32,
+   "px_counts": [
+    60,
+    164,
+    335,
+    387,
+    340,
+    223,
+    127,
+    2
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.16,
+   "spec": [
+    "24x32",
+    8,
+    "fps:12",
+    "W+H",
+    60,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 402,
+   "white_px": 0,
+   "role": "W+H"
+  },
+  "vfx_cheoneum_pulse": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    768,
+    192
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    96,
+    96
+   ],
+   "columns": 4,
+   "fw": 192,
+   "fh": 192,
+   "px_counts": [
+    2668,
+    2870,
+    1530,
+    1237
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.93,
+   "spec": [
+    "192x192",
+    4,
+    "fps:16",
+    "P",
+    3,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_cheonyeo_bullet": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    16,
+    8
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    36,
+    36
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    2,
+    "fps:8",
+    "B",
+    300,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_cheonyeo_bullet_petal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    24,
+    16
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 3,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    27,
+    14,
+    12,
+    2,
+    0
+   ],
+   "empty_frames": [
+    4
+   ],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:12",
+    "W",
+    100,
+    "enemy"
+   ],
+   "trailing_empty": true,
+   "bk_px": 20,
+   "white_px": 1,
+   "role": "W"
+  },
+  "vfx_confirm_ring": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_barigongju": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_chilseong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_janggun": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_jeseok_daegam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_sansin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_confirm_ring_yongwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    12,
+    12
+   ],
+   "columns": 4,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    272,
+    352
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "24x24",
+    12,
+    "fps:12",
+    "D",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_daejakdu_blades": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    576,
+    48
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    48,
+    42
+   ],
+   "columns": 6,
+   "fw": 96,
+   "fh": 48,
+   "px_counts": [
+    1617,
+    1678,
+    1628,
+    1017,
+    667,
+    469
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "spec": [
+    "96x48",
+    6,
+    "fps:14",
+    "R",
+    2,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_daesin_matgi": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    144,
+    24
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    12,
+    16
+   ],
+   "columns": 6,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    118,
+    118,
+    108,
+    88,
+    37,
+    16
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "24x24",
+    6,
+    "fps:16",
+    "W+H",
+    4,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 188,
+   "white_px": 0,
+   "role": "W+H"
+  },
+  "vfx_doryang_mandala": {
+   "issues": [
+    "opaque corners (background not transparent?)"
+   ],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    512,
+    64
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 8,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    596,
+    596,
+    596,
+    596,
+    596,
+    596,
+    596,
+    596
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x64tile",
+    8,
+    "beat:2",
+    "H+D",
+    3,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "H+D"
+  },
+  "vfx_drought_to_rain": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 9,
+   "size": [
+    48,
+    48
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    0,
+    0
+   ],
+   "columns": 3,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    184,
+    76,
+    52,
+    53,
+    155,
+    216,
+    247,
+    247,
+    0
+   ],
+   "empty_frames": [
+    8
+   ],
+   "f0_ratio": 0.74,
+   "spec": [
+    "tile16",
+    8,
+    "fps:10",
+    "C+W",
+    40,
+    "enemy"
+   ],
+   "trailing_empty": true,
+   "bk_px": 34,
+   "white_px": 1,
+   "role": "C+W"
+  },
+  "vfx_dueoksini_slam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 7,
+   "size": [
+    256,
+    256
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    64,
+    36
+   ],
+   "columns": 2,
+   "fw": 128,
+   "fh": 64,
+   "px_counts": [
+    2589,
+    1770,
+    5158,
+    976,
+    983,
+    822,
+    0
+   ],
+   "empty_frames": [
+    6
+   ],
+   "f0_ratio": 0.5,
+   "spec": [
+    "128x64",
+    6,
+    "fps:14",
+    "B+M",
+    2,
+    "enemy"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B+M"
+  },
+  "vfx_eodukssini_body": {
+   "issues": [
+    "frames 8(+0 empty) != spec 0"
+   ],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    288,
+    288
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    48,
+    84
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    3385,
+    3482,
+    3500,
+    3548,
+    3548,
+    3525,
+    3493,
+    3448
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.95,
+   "spec": [
+    "shader",
+    0,
+    "noise",
+    "M",
+    3,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M"
+  },
+  "vfx_eodukssini_vanish": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 11,
+   "size": [
+    512,
+    384
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    64,
+    108
+   ],
+   "columns": 4,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    4113,
+    3433,
+    2218,
+    1145,
+    858,
+    316,
+    2348,
+    265,
+    7,
+    3,
+    0
+   ],
+   "empty_frames": [
+    10
+   ],
+   "f0_ratio": 1.0,
+   "spec": [
+    "128x128",
+    10,
+    "fps:12",
+    "M+W",
+    1,
+    "enemy"
+   ],
+   "trailing_empty": true,
+   "bk_px": 1038,
+   "white_px": 270,
+   "role": "M+W"
+  },
+  "vfx_eolssigu_slam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    96
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    48,
+    16
+   ],
+   "columns": 2,
+   "fw": 96,
+   "fh": 32,
+   "px_counts": [
+    2673,
+    1827,
+    2038,
+    2050,
+    2060,
+    2082
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "96x32",
+    6,
+    "fps:20",
+    "M+H",
+    1,
+    "fever"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+H"
+  },
+  "vfx_gaekgwi_tether": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    4
+   ],
+   "columns": 1,
+   "fw": 16,
+   "fh": 8,
+   "px_counts": [
+    20,
+    20
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "line1px",
+    2,
+    "fps:8",
+    "B",
+    40,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_gakgung_arrow": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 1,
+   "size": [
+    16,
+    4
+   ],
+   "fps": 1,
+   "loop": true,
+   "pivot": [
+    8,
+    2
+   ],
+   "columns": 1,
+   "fw": 16,
+   "fh": 4,
+   "px_counts": [
+    49
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x4",
+    1,
+    "rot16",
+    "R",
+    80,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_gakgung_hit": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 3,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    28,
+    14,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    3,
+    "fps:20",
+    "R",
+    80,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_geogu_inhale": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    256,
+    192
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    10,
+    32
+   ],
+   "columns": 2,
+   "fw": 128,
+   "fh": 64,
+   "px_counts": [
+    996,
+    1014,
+    1004,
+    982,
+    985,
+    990
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.98,
+   "spec": [
+    "128x64",
+    6,
+    "fps:12",
+    "B",
+    3,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_gilbe_cloth_unfold": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    384,
+    16
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    0,
+    8
+   ],
+   "columns": 4,
+   "fw": 96,
+   "fh": 16,
+   "px_counts": [
+    342,
+    648,
+    957,
+    945
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.36,
+   "spec": [
+    "96x16",
+    4,
+    "fps:14",
+    "P",
+    4,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_gildakkeum_fill": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    32
+   ],
+   "fps": 15,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 6,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    128,
+    280,
+    680,
+    1024,
+    962,
+    394
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.12,
+   "spec": [
+    "cells32",
+    6,
+    "fps:15",
+    "W",
+    2,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 240,
+   "white_px": 0,
+   "role": "W"
+  },
+  "vfx_gildakkeum_knot": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    16
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    98,
+    78,
+    36,
+    22
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x16",
+    4,
+    "fps:20",
+    "W",
+    2,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 62,
+   "white_px": 0,
+   "role": "W"
+  },
+  "vfx_gildakkeum_petals": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 4,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    21,
+    13,
+    21,
+    8
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:12",
+    "W+H",
+    40,
+    "procession"
+   ],
+   "trailing_empty": false,
+   "bk_px": 23,
+   "white_px": 0,
+   "role": "W+H"
+  },
+  "vfx_go_maedeup_idle": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    48
+   ],
+   "fps": 4,
+   "loop": true,
+   "pivot": [
+    12,
+    14
+   ],
+   "columns": 2,
+   "fw": 24,
+   "fh": 24,
+   "px_counts": [
+    348,
+    312,
+    291,
+    312
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "24x24",
+    4,
+    "beat:1",
+    "W+M",
+    7,
+    "boss"
+   ],
+   "trailing_empty": false,
+   "bk_px": 77,
+   "white_px": 22,
+   "role": "W+M"
+  },
+  "vfx_go_maedeup_untie": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    384,
+    48
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    24,
+    24
+   ],
+   "columns": 8,
+   "fw": 48,
+   "fh": 48,
+   "px_counts": [
+    1308,
+    1264,
+    377,
+    559,
+    47,
+    30,
+    16,
+    0
+   ],
+   "empty_frames": [
+    7
+   ],
+   "f0_ratio": 1.0,
+   "spec": [
+    "48x48",
+    8,
+    "fps:14",
+    "W",
+    1,
+    "boss"
+   ],
+   "trailing_empty": true,
+   "bk_px": 42,
+   "white_px": 259,
+   "role": "W"
+  },
+  "vfx_gongmulsang_feast": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    128,
+    64
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    32,
+    31
+   ],
+   "columns": 2,
+   "fw": 64,
+   "fh": 32,
+   "px_counts": [
+    949,
+    410,
+    395,
+    396
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x32",
+    4,
+    "beat:1",
+    "Y+H",
+    8,
+    "environment"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y+H"
+  },
+  "vfx_gyeoldanta_cut": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    128,
+    32
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 4,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    167,
+    295,
+    268,
+    172
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.57,
+   "spec": [
+    "32x32",
+    4,
+    "fps:20",
+    "R+M",
+    40,
+    "judgement"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+M"
+  },
+  "vfx_haewon_rise": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    128,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    46
+   ],
+   "columns": 8,
+   "fw": 16,
+   "fh": 48,
+   "px_counts": [
+    147,
+    108,
+    90,
+    98,
+    116,
+    105,
+    35,
+    14
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x48",
+    8,
+    "fps:16",
+    "W",
+    120,
+    "judgement"
+   ],
+   "trailing_empty": false,
+   "bk_px": 237,
+   "white_px": 0,
+   "role": "W"
+  },
+  "vfx_hazard_generic": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    32
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    101,
+    106,
+    106,
+    106
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.95,
+   "spec": [
+    "tile16",
+    4,
+    "fps:8",
+    "B+M",
+    40,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B+M"
+  },
+  "vfx_hazard_generic_fill": {
+   "issues": [
+    "opaque corners (background not transparent?)"
+   ],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    32
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    0
+   ],
+   "columns": 2,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    256,
+    256,
+    256,
+    256
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B+M"
+  },
+  "vfx_hazard_telegraph": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    128,
+    128
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 2,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    3032,
+    3032,
+    3032,
+    3032
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring",
+    4,
+    "fps:10",
+    "B",
+    40,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_hojakdo_fear_ring": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    384,
+    256
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 3,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    695,
+    1435,
+    1933,
+    1797,
+    952,
+    638
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.36,
+   "spec": [
+    "128x128",
+    6,
+    "fps:14",
+    "R+M",
+    2,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+M"
+  },
+  "vfx_hojakdo_sehwa": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    32,
+    20
+   ],
+   "fps": 4,
+   "loop": true,
+   "pivot": [
+    8,
+    10
+   ],
+   "columns": 2,
+   "fw": 16,
+   "fh": 20,
+   "px_counts": [
+    216,
+    206
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x20",
+    2,
+    "beat:1",
+    "Y+R",
+    1,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y+R"
+  },
+  "vfx_hwasin_won": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18208,
+    16671,
+    16037,
+    15010,
+    14046,
+    12328,
+    12325,
+    12325
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_barigongju": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18168,
+    16607,
+    15973,
+    14883,
+    13958,
+    12208,
+    12205,
+    12205
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_chilseong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18168,
+    16607,
+    15949,
+    14867,
+    13942,
+    11998,
+    11995,
+    11995
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_janggun": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18128,
+    16599,
+    15941,
+    14835,
+    13894,
+    12130,
+    12127,
+    12127
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_jeseok_daegam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18216,
+    16671,
+    16109,
+    15042,
+    14070,
+    12368,
+    12365,
+    12365
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_sansin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18208,
+    16671,
+    16037,
+    15010,
+    14046,
+    12328,
+    12325,
+    12325
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_hwasin_won_yongwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1212,
+    1236
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 412,
+   "px_counts": [
+    18096,
+    16575,
+    15917,
+    14771,
+    13862,
+    12054,
+    12051,
+    12051
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ring r=6u",
+    8,
+    "beat:2",
+    "D+H",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_irwolseonpung_whirl": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    32
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 6,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    105,
+    108,
+    107,
+    104,
+    103,
+    107
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "32x32",
+    6,
+    "fps:14",
+    "P+Y",
+    6,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+Y"
+  },
+  "vfx_isippalsu_bolt": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    96
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    90
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 96,
+   "px_counts": [
+    243,
+    212,
+    194,
+    95,
+    49,
+    8
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x96",
+    6,
+    "fps:16",
+    "R+H",
+    28,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+H"
+  },
+  "vfx_isippalsu_constellation": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    192,
+    192
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 3,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    84,
+    64,
+    82,
+    105,
+    147,
+    193,
+    127,
+    65
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.44,
+   "spec": [
+    "64x64",
+    8,
+    "fps:10",
+    "R+H",
+    2,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+H"
+  },
+  "vfx_jakdu_blades": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    384,
+    32
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    32,
+    28
+   ],
+   "columns": 6,
+   "fw": 64,
+   "fh": 32,
+   "px_counts": [
+    790,
+    831,
+    785,
+    658,
+    475,
+    295
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.95,
+   "spec": [
+    "64x32",
+    6,
+    "fps:14",
+    "R",
+    2,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_jakdu_shockwave": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    288,
+    192
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    667,
+    1193,
+    1589,
+    991,
+    746,
+    12
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.42,
+   "spec": [
+    "96x96",
+    6,
+    "fps:16",
+    "R",
+    4,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_jangchang_thrust": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    80,
+    48
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    2,
+    6
+   ],
+   "columns": 1,
+   "fw": 80,
+   "fh": 12,
+   "px_counts": [
+    271,
+    245,
+    146,
+    121
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "80x12",
+    4,
+    "fps:20",
+    "R",
+    10,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_janggu_deong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    640,
+    128
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 5,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    1653,
+    1118,
+    1342,
+    1032,
+    1007
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "128x128",
+    5,
+    "fps:16",
+    "P",
+    2,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_jijeon_bill": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    16,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    44,
+    28
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    2,
+    "fps:12",
+    "P+H",
+    60,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+H"
+  },
+  "vfx_jusahwajeon_arrow": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    20,
+    16
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    10,
+    4
+   ],
+   "columns": 1,
+   "fw": 20,
+   "fh": 8,
+   "px_counts": [
+    61,
+    64
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.95,
+   "spec": [
+    "20x8",
+    2,
+    "fps:16",
+    "R+Y",
+    60,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+Y"
+  },
+  "vfx_jusahwajeon_blast": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    144,
+    96
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    24,
+    24
+   ],
+   "columns": 3,
+   "fw": 48,
+   "fh": 48,
+   "px_counts": [
+    452,
+    610,
+    452,
+    404,
+    301,
+    408
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.74,
+   "spec": [
+    "48x48",
+    6,
+    "fps:18",
+    "R+Y",
+    24,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+Y"
+  },
+  "vfx_lamp_ignite": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    64,
+    64
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    8,
+    31
+   ],
+   "columns": 4,
+   "fw": 16,
+   "fh": 32,
+   "px_counts": [
+    88,
+    238,
+    214,
+    164,
+    138,
+    32
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.37,
+   "spec": [
+    "16x32",
+    6,
+    "fps:12",
+    "Y",
+    8,
+    "environment"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y"
+  },
+  "vfx_maetim_knot": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    72,
+    12
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    6,
+    11
+   ],
+   "columns": 6,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    20,
+    28,
+    59,
+    40,
+    44,
+    24
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.34,
+   "spec": [
+    "12x12",
+    6,
+    "fps:12",
+    "M",
+    60,
+    "judgement"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M"
+  },
+  "vfx_manwoldo_crescent": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    32
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    18,
+    8
+   ],
+   "columns": 2,
+   "fw": 32,
+   "fh": 16,
+   "px_counts": [
+    119,
+    105,
+    93,
+    105
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "32x16",
+    4,
+    "fps:16",
+    "R",
+    48,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_mongdal_dash_tell": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    16
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    0,
+    4
+   ],
+   "columns": 2,
+   "fw": 16,
+   "fh": 8,
+   "px_counts": [
+    28,
+    26,
+    28,
+    26
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "line",
+    4,
+    "fps:10",
+    "B",
+    20,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_mongdal_dash_tell_end": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    24,
+    24
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    6,
+    6
+   ],
+   "columns": 2,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    74,
+    74,
+    68,
+    74
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_mul_puddle_clear": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    24,
+    12
+   ],
+   "columns": 2,
+   "fw": 48,
+   "fh": 24,
+   "px_counts": [
+    719,
+    719,
+    719,
+    719,
+    719,
+    719
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "48x24",
+    6,
+    "fps:8",
+    "C+P",
+    16,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "C+P"
+  },
+  "vfx_mul_puddle_dark": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    72
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    24,
+    12
+   ],
+   "columns": 2,
+   "fw": 48,
+   "fh": 24,
+   "px_counts": [
+    673,
+    673,
+    673,
+    673,
+    673,
+    673
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "48x24",
+    6,
+    "fps:8",
+    "B+M",
+    16,
+    "enemy"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B+M"
+  },
+  "vfx_myeongdu_beam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 3,
+   "size": [
+    36,
+    4
+   ],
+   "fps": 20,
+   "loop": true,
+   "pivot": [
+    0,
+    2
+   ],
+   "columns": 3,
+   "fw": 12,
+   "fh": 4,
+   "px_counts": [
+    40,
+    40,
+    40
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "beam2px",
+    3,
+    "fps:20",
+    "P+Y",
+    8,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+Y"
+  },
+  "vfx_myeongdu_mirror": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    164,
+    164,
+    112,
+    112
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x16",
+    4,
+    "beat:1",
+    "Y+P",
+    4,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y+P"
+  },
+  "vfx_neok_pickup": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    24,
+    20
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    5
+   ],
+   "columns": 3,
+   "fw": 8,
+   "fh": 10,
+   "px_counts": [
+    49,
+    46,
+    46,
+    46
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x10",
+    4,
+    "beat:1",
+    "W+H",
+    100,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 20,
+   "white_px": 0,
+   "role": "W+H"
+  },
+  "vfx_neokjeon_doll": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    6,
+    8
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 16,
+   "px_counts": [
+    100,
+    75,
+    100,
+    75
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "12x16",
+    4,
+    "beat:1",
+    "P+H",
+    12,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+H"
+  },
+  "vfx_neokkkotbi_column": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    16,
+    58
+   ],
+   "columns": 6,
+   "fw": 32,
+   "fh": 64,
+   "px_counts": [
+    153,
+    107,
+    179,
+    196,
+    187,
+    156
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.78,
+   "spec": [
+    "32x64",
+    6,
+    "fps:14",
+    "P",
+    8,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_neokkkotbi_petal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    8
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 4,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    16,
+    11,
+    15,
+    11
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:10",
+    "P+H",
+    120,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+H"
+  },
+  "vfx_nojatdon_chain": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    6
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    0,
+    3
+   ],
+   "columns": 4,
+   "fw": 16,
+   "fh": 6,
+   "px_counts": [
+    56,
+    56,
+    56,
+    56
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "line2px",
+    4,
+    "fps:16",
+    "P+Y",
+    20,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P+Y"
+  },
+  "vfx_obanggi_flag": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "12x24",
+    4,
+    "beat:1",
+    "D",
+    5,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_flag_baek": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_flag_cheong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_flag_heuk": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_flag_hwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_flag_jeok": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    2,
+    23
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 24,
+   "px_counts": [
+    123,
+    123,
+    123,
+    123
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obanggi_zone": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    576,
+    96
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 6,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    1119,
+    1146,
+    1122,
+    1119,
+    1146,
+    1122
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.98,
+   "spec": [
+    "96x96",
+    6,
+    "beat:2",
+    "D",
+    2,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_obangjin_pillar": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x64",
+    6,
+    "beat:1",
+    "D+P",
+    5,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_obangjin_pillar_baek": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_obangjin_pillar_cheong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_obangjin_pillar_heuk": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_obangjin_pillar_hwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_obangjin_pillar_jeok": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 14,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    536,
+    307,
+    194,
+    127,
+    31,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+P"
+  },
+  "vfx_orb_large": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    40,
+    10
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    5,
+    5
+   ],
+   "columns": 4,
+   "fw": 10,
+   "fh": 10,
+   "px_counts": [
+    48,
+    47,
+    48,
+    48
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "10x10",
+    4,
+    "beat:1",
+    "R",
+    60,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_orb_mid": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    8
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 4,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    30,
+    29,
+    29,
+    29
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "beat:1",
+    "Y",
+    200,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y"
+  },
+  "vfx_orb_small": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    24,
+    6
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    3,
+    3
+   ],
+   "columns": 4,
+   "fw": 6,
+   "fh": 6,
+   "px_counts": [
+    23,
+    23,
+    23,
+    23
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "6x6",
+    4,
+    "beat:1",
+    "C",
+    400,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "C"
+  },
+  "vfx_pajinchang_dash": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    96,
+    96
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    4,
+    12
+   ],
+   "columns": 1,
+   "fw": 96,
+   "fh": 24,
+   "px_counts": [
+    573,
+    306,
+    196,
+    23
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "96x24",
+    4,
+    "fps:20",
+    "R",
+    6,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_pickup_magnet_streak": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    12,
+    6
+   ],
+   "fps": 20,
+   "loop": true,
+   "pivot": [
+    11,
+    1
+   ],
+   "columns": 1,
+   "fw": 12,
+   "fh": 3,
+   "px_counts": [
+    13,
+    6
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "line",
+    2,
+    "fps:20",
+    "H",
+    200,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "H"
+  },
+  "vfx_pullil_enter": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    8
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    6,
+    7
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 8,
+   "px_counts": [
+    58,
+    46,
+    33,
+    11
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "12x8",
+    4,
+    "fps:16",
+    "W",
+    300,
+    "judgement"
+   ],
+   "trailing_empty": false,
+   "bk_px": 46,
+   "white_px": 0,
+   "role": "W"
+  },
+  "vfx_pyeongon_swing": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    128,
+    144
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    26,
+    40
+   ],
+   "columns": 2,
+   "fw": 64,
+   "fh": 48,
+   "px_counts": [
+    359,
+    346,
+    208,
+    23,
+    9
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x48",
+    5,
+    "fps:16",
+    "R",
+    6,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_sainsageom_wave": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    96,
+    80
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    3,
+    8
+   ],
+   "columns": 1,
+   "fw": 96,
+   "fh": 16,
+   "px_counts": [
+    590,
+    454,
+    292,
+    157,
+    27
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "96x16",
+    5,
+    "fps:16",
+    "R+H",
+    12,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+H"
+  },
+  "vfx_saja_begareugi": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 12,
+   "size": [
+    3072,
+    64
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    0,
+    32
+   ],
+   "columns": 12,
+   "fw": 256,
+   "fh": 64,
+   "px_counts": [
+    4628,
+    5104,
+    5614,
+    5968,
+    6295,
+    6564,
+    6699,
+    6809,
+    6862,
+    5637,
+    3466,
+    1648
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.67,
+   "spec": [
+    "256x64",
+    12,
+    "fps:10",
+    "W",
+    1,
+    "ending"
+   ],
+   "trailing_empty": false,
+   "bk_px": 26490,
+   "white_px": 0,
+   "role": "W"
+  },
+  "vfx_sal_grain_idle": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    12
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    6,
+    9
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    48,
+    54,
+    56,
+    54
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.86,
+   "spec": [
+    "4..12px",
+    4,
+    "fps:6",
+    "M+R",
+    200,
+    "sal"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_sal_grain_idle_l": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    12
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    6,
+    9
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    68,
+    74,
+    75,
+    72
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.91,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_sal_grain_idle_s": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    48,
+    12
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    6,
+    9
+   ],
+   "columns": 4,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    34,
+    38,
+    44,
+    38
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_sal_merge": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 5,
+   "size": [
+    48,
+    32
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    8,
+    11
+   ],
+   "columns": 3,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    56,
+    66,
+    114,
+    98,
+    0
+   ],
+   "empty_frames": [
+    4
+   ],
+   "f0_ratio": 0.49,
+   "spec": [
+    "16x16",
+    4,
+    "fps:12",
+    "M",
+    10,
+    "sal"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M"
+  },
+  "vfx_salgwi_hapsin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 11,
+   "size": [
+    512,
+    384
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    64,
+    72
+   ],
+   "columns": 4,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    1611,
+    1664,
+    1729,
+    1746,
+    1722,
+    873,
+    6716,
+    988,
+    868,
+    717,
+    0
+   ],
+   "empty_frames": [
+    10
+   ],
+   "f0_ratio": 0.24,
+   "spec": [
+    "128x128",
+    10,
+    "fps:12",
+    "M+R",
+    1,
+    "boss"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_samjichang_mark": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    24,
+    24
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    6,
+    6
+   ],
+   "columns": 2,
+   "fw": 12,
+   "fh": 12,
+   "px_counts": [
+    40,
+    40,
+    40,
+    36
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "12x12",
+    4,
+    "fps:8",
+    "R",
+    20,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_samjichang_thrust": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    64
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    2,
+    8
+   ],
+   "columns": 1,
+   "fw": 64,
+   "fh": 16,
+   "px_counts": [
+    456,
+    285,
+    161,
+    105
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x16",
+    4,
+    "fps:18",
+    "R",
+    15,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_sammul_triple": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    384,
+    32
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    32,
+    16
+   ],
+   "columns": 6,
+   "fw": 64,
+   "fh": 32,
+   "px_counts": [
+    287,
+    283,
+    286,
+    290,
+    280,
+    284
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.99,
+   "spec": [
+    "64x32",
+    6,
+    "fps:10",
+    "C+P+Y",
+    9,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "C+P+Y"
+  },
+  "vfx_sangun_roar": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    288,
+    192
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    26,
+    52
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 64,
+   "px_counts": [
+    823,
+    870,
+    929,
+    951,
+    954,
+    878,
+    804,
+    21
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.86,
+   "spec": [
+    "96x64",
+    8,
+    "fps:12",
+    "M+R",
+    1,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_saseulchang_verdict": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    128,
+    96
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    16,
+    43
+   ],
+   "columns": 4,
+   "fw": 32,
+   "fh": 48,
+   "px_counts": [
+    115,
+    226,
+    306,
+    250,
+    251,
+    251,
+    193,
+    57
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.38,
+   "spec": [
+    "32x48",
+    8,
+    "fps:12",
+    "R+Y",
+    3,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+Y"
+  },
+  "vfx_screen_flash": {
+   "issues": [
+    "png missing"
+   ],
+   "kind": "sheet"
+  },
+  "vfx_silence_desat": {
+   "issues": [
+    "png missing"
+   ],
+   "kind": "sheet"
+  },
+  "vfx_sinjangdae_descend": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_barigongju": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_chilseong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_janggun": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_jeseok_daegam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_sansin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangdae_descend_yongwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    96,
+    128
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "fw": 16,
+   "fh": 64,
+   "px_counts": [
+    129,
+    256,
+    1024,
+    647,
+    264,
+    274,
+    277,
+    269
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.13,
+   "spec": [
+    "16x64",
+    8,
+    "fps:10",
+    "D",
+    2,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D"
+  },
+  "vfx_sinjangkal_proj": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 3,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    132,
+    116,
+    124,
+    126,
+    116,
+    128
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "32x32",
+    6,
+    "fps:16",
+    "R+H",
+    30,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+H"
+  },
+  "vfx_sinjangkal_return_arc": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    96,
+    48
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    24,
+    21
+   ],
+   "columns": 2,
+   "fw": 48,
+   "fh": 24,
+   "px_counts": [
+    246,
+    245,
+    198,
+    35
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "48x24",
+    4,
+    "fps:16",
+    "R",
+    30,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_sinkal_proj": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    32,
+    32
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    7,
+    8
+   ],
+   "columns": 2,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    74,
+    71,
+    74,
+    71
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "16x16",
+    4,
+    "fps:16",
+    "R+H",
+    60,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+H"
+  },
+  "vfx_sinkal_tassel_trail": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 1,
+   "size": [
+    32,
+    6
+   ],
+   "fps": 1,
+   "loop": true,
+   "pivot": [
+    0,
+    3
+   ],
+   "columns": 1,
+   "fw": 32,
+   "fh": 6,
+   "px_counts": [
+    128
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "ribbon",
+    1,
+    "mesh",
+    "H",
+    60,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "H"
+  },
+  "vfx_sinmyeong_oreum_aura": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    192,
+    192
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    32,
+    58
+   ],
+   "columns": 3,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    1955,
+    1825,
+    1794,
+    1770,
+    1739,
+    1687,
+    1686,
+    1696
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "64x64",
+    8,
+    "beat:1",
+    "Y+R",
+    1,
+    "fever"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y+R"
+  },
+  "vfx_sinmyeong_oreum_border": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    1920,
+    1080
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    0,
+    0
+   ],
+   "columns": 3,
+   "fw": 640,
+   "fh": 360,
+   "px_counts": [
+    21289,
+    18398,
+    16428,
+    15028,
+    14106,
+    13645,
+    13376,
+    13145
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "screen",
+    8,
+    "beat:1",
+    "H+D",
+    1,
+    "fever"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "H+D"
+  },
+  "vfx_sogeum_purify_pop": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    64,
+    16
+   ],
+   "fps": 16,
+   "loop": false,
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 4,
+   "fw": 16,
+   "fh": 16,
+   "px_counts": [
+    17,
+    27,
+    36,
+    4
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.47,
+   "spec": [
+    "16x16",
+    4,
+    "fps:16",
+    "P",
+    30,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_sogeum_ring": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    576,
+    96
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 6,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    286,
+    265,
+    290,
+    295,
+    286,
+    280
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.97,
+   "spec": [
+    "96x96",
+    6,
+    "fps:12",
+    "P",
+    3,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "P"
+  },
+  "vfx_ssukmul_pool": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    384,
+    32
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    32,
+    16
+   ],
+   "columns": 6,
+   "fw": 64,
+   "fh": 32,
+   "px_counts": [
+    179,
+    215,
+    214,
+    186,
+    214,
+    220
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.81,
+   "spec": [
+    "64x32",
+    6,
+    "fps:10",
+    "C+P",
+    6,
+    "weapon_white"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "C+P"
+  },
+  "vfx_status_fear": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    4,
+    7
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    15,
+    15,
+    15,
+    15
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:8",
+    "R",
+    200,
+    "status"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_status_gawi": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    640,
+    360
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    0,
+    0
+   ],
+   "columns": 2,
+   "fw": 320,
+   "fh": 180,
+   "px_counts": [
+    35552,
+    36180,
+    35557,
+    34707
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.98,
+   "spec": [
+    "screen-edge",
+    4,
+    "fps:6",
+    "M",
+    1,
+    "status"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M"
+  },
+  "vfx_status_sangmunsal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 6,
+   "loop": true,
+   "pivot": [
+    4,
+    8
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    26,
+    26,
+    27,
+    26
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "spec": [
+    "8x8",
+    4,
+    "fps:6",
+    "B",
+    1,
+    "status"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "B"
+  },
+  "vfx_toechi_burst": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    192,
+    32
+   ],
+   "fps": 20,
+   "loop": false,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 6,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    164,
+    170,
+    114,
+    64,
+    34,
+    33
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "spec": [
+    "32x32",
+    6,
+    "fps:20",
+    "R",
+    120,
+    "judgement"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_trial_block_wall": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    22036,
+    25138,
+    21745,
+    20344,
+    19932,
+    19969
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_barigongju": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    21992,
+    25091,
+    21702,
+    20301,
+    19895,
+    19931
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_chilseong": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    22036,
+    25138,
+    21702,
+    20301,
+    19895,
+    19931
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_janggun": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    21992,
+    25091,
+    21680,
+    20280,
+    19876,
+    19911
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_jeseok_daegam": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    22036,
+    25138,
+    21775,
+    20373,
+    19958,
+    19996
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_sansin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    22036,
+    25138,
+    21745,
+    20344,
+    19932,
+    19969
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_trial_block_wall_yongwang": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    1212,
+    872
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    202,
+    228
+   ],
+   "columns": 3,
+   "fw": 404,
+   "fh": 436,
+   "px_counts": [
+    21952,
+    24999,
+    21680,
+    20280,
+    19876,
+    19911
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.88,
+   "spec": [
+    "ring",
+    6,
+    "fps:12",
+    "D+H",
+    1,
+    "trial"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "D+H"
+  },
+  "vfx_union_chilseong_mgg": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    288,
+    288
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    748,
+    748,
+    744,
+    739,
+    755,
+    739,
+    736,
+    747
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.99,
+   "spec": [
+    "96x96",
+    8,
+    "fps:14",
+    "R+P+Y",
+    4,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P+Y"
+  },
+  "vfx_union_jakdu_dari_ring": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    384,
+    384
+   ],
+   "fps": 14,
+   "loop": true,
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 3,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    3358,
+    3368,
+    3367,
+    3366,
+    3363,
+    3363,
+    3370,
+    3364
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "128x128",
+    8,
+    "fps:14",
+    "R+P",
+    2,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P"
+  },
+  "vfx_union_neoksinkal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    96,
+    64
+   ],
+   "fps": 16,
+   "loop": true,
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 3,
+   "fw": 32,
+   "fh": 32,
+   "px_counts": [
+    268,
+    267,
+    270,
+    270,
+    271,
+    270
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.99,
+   "spec": [
+    "32x32",
+    6,
+    "fps:16",
+    "R+P",
+    20,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P"
+  },
+  "vfx_union_obang_cheoljin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    384,
+    384
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    64,
+    64
+   ],
+   "columns": 3,
+   "fw": 128,
+   "fh": 128,
+   "px_counts": [
+    3112,
+    3034,
+    2976,
+    2914,
+    2845,
+    2832,
+    2808,
+    2807
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "128x128",
+    8,
+    "beat:1",
+    "R+P+D",
+    1,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P+D"
+  },
+  "vfx_union_sanullim": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 8,
+   "size": [
+    576,
+    576
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    96,
+    96
+   ],
+   "columns": 3,
+   "fw": 192,
+   "fh": 192,
+   "px_counts": [
+    4232,
+    856,
+    1776,
+    2804,
+    3860,
+    4824,
+    5488,
+    3549
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.77,
+   "spec": [
+    "192x192",
+    8,
+    "fps:12",
+    "R+P",
+    1,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P"
+  },
+  "vfx_union_sogeumsal": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 2,
+   "size": [
+    20,
+    16
+   ],
+   "fps": 12,
+   "loop": true,
+   "pivot": [
+    10,
+    4
+   ],
+   "columns": 1,
+   "fw": 20,
+   "fh": 8,
+   "px_counts": [
+    46,
+    46
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "20x8",
+    2,
+    "rot16",
+    "R+P",
+    40,
+    "union"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R+P"
+  },
+  "vfx_woldo_spin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 6,
+   "size": [
+    288,
+    192
+   ],
+   "fps": 18,
+   "loop": false,
+   "pivot": [
+    48,
+    48
+   ],
+   "columns": 3,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    1956,
+    1478,
+    956,
+    542,
+    363,
+    9
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "96x96",
+    6,
+    "fps:18",
+    "R",
+    4,
+    "weapon_red"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_wongwi_eye_aura": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    128,
+    128
+   ],
+   "fps": 8,
+   "loop": true,
+   "pivot": [
+    32,
+    32
+   ],
+   "columns": 2,
+   "fw": 64,
+   "fh": 64,
+   "px_counts": [
+    1528,
+    1585,
+    1529,
+    1437
+   ],
+   "empty_frames": [],
+   "f0_ratio": 0.96,
+   "spec": [
+    "64x64",
+    4,
+    "fps:8",
+    "R",
+    12,
+    "sal"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "R"
+  },
+  "vfx_wongwi_form": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 11,
+   "size": [
+    384,
+    288
+   ],
+   "fps": 10,
+   "loop": false,
+   "pivot": [
+    48,
+    84
+   ],
+   "columns": 4,
+   "fw": 96,
+   "fh": 96,
+   "px_counts": [
+    900,
+    747,
+    615,
+    618,
+    730,
+    2414,
+    1347,
+    1552,
+    1595,
+    1582,
+    0
+   ],
+   "empty_frames": [
+    10
+   ],
+   "f0_ratio": 0.37,
+   "spec": [
+    "96x96",
+    10,
+    "fps:10",
+    "M+R",
+    3,
+    "sal"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_wongwi_rise": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 13,
+   "size": [
+    32,
+    32
+   ],
+   "fps": 12,
+   "loop": false,
+   "pivot": [
+    4,
+    8
+   ],
+   "columns": 4,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    4,
+    7,
+    15,
+    17,
+    18,
+    17,
+    14,
+    10,
+    4,
+    3,
+    3,
+    1,
+    0
+   ],
+   "empty_frames": [
+    12
+   ],
+   "f0_ratio": 0.22,
+   "spec": [
+    "8x8",
+    12,
+    "fps:12",
+    "M+R",
+    200,
+    "sal"
+   ],
+   "trailing_empty": true,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "M+R"
+  },
+  "vfx_yeopjeon_spin": {
+   "issues": [],
+   "kind": "sheet",
+   "n": 4,
+   "size": [
+    16,
+    16
+   ],
+   "fps": 10,
+   "loop": true,
+   "pivot": [
+    4,
+    4
+   ],
+   "columns": 2,
+   "fw": 8,
+   "fh": 8,
+   "px_counts": [
+    52,
+    48,
+    12,
+    48
+   ],
+   "empty_frames": [],
+   "f0_ratio": 1.0,
+   "spec": [
+    "8x8",
+    4,
+    "fps:10",
+    "Y",
+    60,
+    "pickup"
+   ],
+   "trailing_empty": false,
+   "bk_px": 0,
+   "white_px": 0,
+   "role": "Y"
+  }
+ },
+ "sprites": {
+  "avatar_barigongju": {
+   "n_png": 35,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "168x168": 19,
+    "128x128": 4,
+    "180x180": 12
+   },
+   "other": []
+  },
+  "avatar_chilseong": {
+   "n_png": 35,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "128x128": 27,
+    "96x96": 8
+   },
+   "other": []
+  },
+  "avatar_janggun": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_janggun__baek": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_janggun__cheong": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_janggun__heuk": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_janggun__hwang": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_janggun__jeok": {
+   "n_png": 46,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "68x68": 18,
+    "48x48": 28
+   },
+   "other": []
+  },
+  "avatar_jeseok_daegam": {
+   "n_png": 35,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "132x132": 9,
+    "96x96": 26
+   },
+   "other": []
+  },
+  "avatar_sansin": {
+   "n_png": 65,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "charge": {
+     "south": 8
+    },
+    "idle": {
+     "east": 9,
+     "south": 9,
+     "west": 9
+    },
+    "roar": {
+     "south": 8
+    },
+    "run": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "144x144": 16,
+    "128x128": 49
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "avatar_yongwang": {
+   "n_png": 34,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack": {
+     "south": 8
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "168x168": 8,
+    "128x128": 26
+   },
+   "other": []
+  },
+  "boss_yeokryeo": {
+   "n_png": 80,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack_1": {
+     "south": 12
+    },
+    "attack_2": {
+     "south": 12
+    },
+    "haewon_finale": {
+     "south": 16
+    },
+    "idle": {
+     "south": 8
+    },
+    "move": {
+     "south": 8
+    },
+    "summon": {
+     "south": 8
+    },
+    "toechi_finale": {
+     "south": 12
+    }
+   },
+   "sizes": {
+    "248x248": 76,
+    "192x192": 4
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "char_baksu": {
+   "n_png": 106,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "bingui": {
+     "south": 8
+    },
+    "death": {
+     "south": 7
+    },
+    "gut_dance": {
+     "south": 9
+    },
+    "hurt": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "jakdu_dance": {
+     "south": 6
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "88x88": 23,
+    "64x64": 83
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "char_dangol": {
+   "n_png": 106,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "bingui": {
+     "south": 8
+    },
+    "death": {
+     "south": 7
+    },
+    "gut_dance": {
+     "south": 9
+    },
+    "hurt": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "jakdu_dance": {
+     "south": 6
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "84x84": 23,
+    "64x64": 83
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "char_mansin": {
+   "n_png": 106,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "bingui": {
+     "south": 8
+    },
+    "death": {
+     "south": 7
+    },
+    "gut_dance": {
+     "south": 9
+    },
+    "hurt": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "jakdu_dance": {
+     "south": 6
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "84x84": 23,
+    "64x64": 83
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "char_myeongdu": {
+   "n_png": 106,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "bingui": {
+     "south": 8
+    },
+    "death": {
+     "south": 7
+    },
+    "gut_dance": {
+     "south": 9
+    },
+    "hurt": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "jakdu_dance": {
+     "south": 6
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "88x88": 23,
+    "64x64": 83
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "char_simbang": {
+   "n_png": 106,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "bingui": {
+     "south": 8
+    },
+    "death": {
+     "south": 7
+    },
+    "gut_dance": {
+     "south": 9
+    },
+    "hurt": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "jakdu_dance": {
+     "south": 6
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "88x88": 23,
+    "64x64": 83
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "chaser_jeoseung_saja": {
+   "n_png": 52,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "appear": {
+     "south": 8
+    },
+    "bow_eup": {
+     "south": 8
+    },
+    "float": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "lead_procession": {
+     "south": 8
+    }
+   },
+   "sizes": {
+    "88x88": 48,
+    "64x64": 4
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "comp_agwi": {
+   "n_png": 24,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "gulp": {
+     "south": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "48x48": 20,
+    "64x64": 4
+   },
+   "other": []
+  },
+  "comp_cheonyeo": {
+   "n_png": 32,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cast": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "64x64": 28,
+    "48x48": 4
+   },
+   "other": []
+  },
+  "comp_dalgyal": {
+   "n_png": 20,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "48x48": 20
+   },
+   "other": []
+  },
+  "comp_dokkaebi_bul": {
+   "n_png": 44,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "32x32": 44
+   },
+   "other": []
+  },
+  "comp_dongja": {
+   "n_png": 20,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "32x32": 4,
+    "40x40": 16
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "comp_gaekgwi": {
+   "n_png": 32,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cling": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "56x56": 12,
+    "40x40": 20
+   },
+   "other": []
+  },
+  "comp_mongdal": {
+   "n_png": 38,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "dash": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "48x48": 38
+   },
+   "other": []
+  },
+  "comp_mulgwi": {
+   "n_png": 26,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "emerge": {
+     "south": 6
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "40x40": 20,
+    "56x56": 6
+   },
+   "other": []
+  },
+  "comp_yeongsan": {
+   "n_png": 36,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "40x40": 36
+   },
+   "other": []
+  },
+  "elite_bulgasari": {
+   "n_png": 39,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "absorb": {
+     "south": 11
+    },
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "96x96": 39
+   },
+   "other": []
+  },
+  "elite_bulgasari__s64": {
+   "n_png": 39,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "absorb": {
+     "south": 11
+    },
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "64x64": 39
+   },
+   "other": []
+  },
+  "elite_bulgasari__s80": {
+   "n_png": 39,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "absorb": {
+     "south": 11
+    },
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "80x80": 39
+   },
+   "other": []
+  },
+  "elite_byeolsang_sonnim": {
+   "n_png": 34,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cast": {
+     "south": 6
+    },
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "88x88": 6,
+    "64x64": 28
+   },
+   "other": []
+  },
+  "elite_dueoksini": {
+   "n_png": 44,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    },
+    "slam": {
+     "south": 8
+    }
+   },
+   "sizes": {
+    "96x96": 36,
+    "132x132": 8
+   },
+   "other": []
+  },
+  "elite_eodukssini": {
+   "n_png": 12,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "edge_mask": {
+     "south": 4
+    },
+    "eyes_blink": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "96x96": 12
+   },
+   "other": []
+  },
+  "elite_geogu_gwi": {
+   "n_png": 40,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "inhale_loop": {
+     "south": 4
+    },
+    "inhale_start": {
+     "south": 8
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "96x96": 28,
+    "132x132": 12
+   },
+   "other": []
+  },
+  "elite_yeokgwi_ttae": {
+   "n_png": 28,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "64x64": 28
+   },
+   "other": []
+  },
+  "enm_agwi": {
+   "n_png": 28,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "gulp": {
+     "south": 4
+    },
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "48x48": 24,
+    "64x64": 4
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_cheonyeo_gwisin": {
+   "n_png": 36,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cast": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "glide": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "64x64": 28,
+    "48x48": 8
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_dalgyal_gwisin": {
+   "n_png": 24,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "48x48": 24
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_dalgyal_gwisin__child": {
+   "n_png": 24,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "36x36": 24
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_dokkaebi_bul": {
+   "n_png": 60,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "32x32": 60
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_dokkaebi_bul__small": {
+   "n_png": 60,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "20x20": 60
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_gaekgwi": {
+   "n_png": 36,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cling": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "56x56": 12,
+    "40x40": 24
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_hosik_wonhon": {
+   "n_png": 24,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "48x48": 24
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_hwehwe_gwisin": {
+   "n_png": 34,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "float": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    },
+    "press": {
+     "south": 6
+    }
+   },
+   "sizes": {
+    "48x48": 4,
+    "60x60": 18,
+    "64x64": 12
+   },
+   "other": []
+  },
+  "enm_mongdal_gwisin": {
+   "n_png": 42,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "dash": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "south": 4
+    }
+   },
+   "sizes": {
+    "48x48": 42
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_mul_gwisin": {
+   "n_png": 26,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "emerge": {
+     "south": 6
+    },
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "40x40": 20,
+    "56x56": 6
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "enm_sangmun": {
+   "n_png": 48,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    },
+    "touch": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "48x48": 36,
+    "68x68": 12
+   },
+   "other": []
+  },
+  "enm_subi": {
+   "n_png": 20,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "32x32": 20
+   },
+   "other": []
+  },
+  "enm_subi__sogwi": {
+   "n_png": 20,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "32x32": 20
+   },
+   "other": []
+  },
+  "enm_yeongsan": {
+   "n_png": 40,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "curse_drop": {
+     "south": 4
+    },
+    "move": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "sizes": {
+    "52x52": 4,
+    "40x40": 36
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "mboss_daegwi": {
+   "n_png": 51,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack_a": {
+     "south": 8
+    },
+    "haewon_release": {
+     "south": 9
+    },
+    "idle": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "172x172": 17,
+    "128x128": 34
+   },
+   "other": []
+  },
+  "mboss_dokkaebi": {
+   "n_png": 53,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack_a": {
+     "south": 8
+    },
+    "haewon_release": {
+     "south": 11
+    },
+    "idle": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "176x176": 19,
+    "128x128": 34
+   },
+   "other": []
+  },
+  "mboss_gangcheori": {
+   "n_png": 31,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack_a": {
+     "south": 9
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "172x172": 9,
+    "128x128": 22
+   },
+   "other": []
+  },
+  "mboss_gumiho": {
+   "n_png": 39,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "attack_a": {
+     "south": 9
+    },
+    "idle": {
+     "south": 8
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "sizes": {
+    "168x168": 9,
+    "128x128": 30
+   },
+   "other": []
+  },
+  "overlay_head": {
+   "n_png": 48,
+   "issues": [
+    "missing south.png",
+    "missing east.png",
+    "missing north.png",
+    "missing west.png"
+   ],
+   "nonconforming": [],
+   "anims": {
+    "barigongju_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "barigongju_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    }
+   },
+   "sizes": {
+    "32x32": 48
+   },
+   "other": []
+  },
+  "overlay_jimul": {
+   "n_png": 24,
+   "issues": [
+    "missing south.png",
+    "missing east.png",
+    "missing north.png",
+    "missing west.png"
+   ],
+   "nonconforming": [],
+   "anims": {
+    "barigongju": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    }
+   },
+   "sizes": {
+    "32x32": 24
+   },
+   "other": []
+  },
+  "yeongga_body_child": {
+   "n_png": 48,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "32x32": 48
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "yeongga_body_f": {
+   "n_png": 48,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "44x44": 12,
+    "32x32": 36
+   },
+   "other": [
+    "anims.json"
+   ]
+  },
+  "yeongga_body_m": {
+   "n_png": 48,
+   "issues": [],
+   "nonconforming": [],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "sizes": {
+    "44x44": 12,
+    "32x32": 36
+   },
+   "other": [
+    "anims.json"
+   ]
+  }
+ },
+ "missing_spec_ids": [],
+ "shader_only": [
+  "vfx_pullil_outline",
+  "vfx_gilbe_trail",
+  "vfx_yeongga_spawn_run",
+  "vfx_last_procession_ghost"
+ ],
+ "extra_ids": [
+  "vfx_mongdal_dash_tell_end",
+  "vfx_sal_grain_idle_s",
+  "vfx_obangjin_pillar_baek",
+  "vfx_obangjin_pillar_hwang",
+  "vfx_hazard_generic_fill",
+  "vfx_obanggi_flag_hwang",
+  "vfx_obangjin_pillar_heuk",
+  "vfx_candle_flame_s",
+  "vfx_obangjin_pillar_jeok",
+  "vfx_bingui_pattern_tiles",
+  "vfx_obanggi_flag_heuk",
+  "vfx_obanggi_flag_jeok",
+  "vfx_sal_grain_idle_l",
+  "vfx_obanggi_flag_baek",
+  "vfx_obangjin_pillar_cheong",
+  "vfx_obanggi_flag_cheong"
+ ]
+}

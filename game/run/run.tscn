@@ -1,0 +1,99 @@
+[gd_scene load_steps=23 format=3]
+
+[ext_resource type="Script" path="res://run/run.gd" id="1_run"]
+[ext_resource type="Script" path="res://run/ground.gd" id="2_ground"]
+[ext_resource type="Script" path="res://haewon/gilbe_trail.gd" id="3_gilbe"]
+[ext_resource type="Script" path="res://haewon/ring_closure.gd" id="4_ring"]
+[ext_resource type="Script" path="res://pickups/pickup_manager.gd" id="5_pickups"]
+[ext_resource type="Script" path="res://enemies/enemy_manager.gd" id="6_enemies"]
+[ext_resource type="Script" path="res://haewon/yeongga_train.gd" id="7_yeongga"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="8_player"]
+[ext_resource type="Script" path="res://weapons/weapon_manager.gd" id="9_weapons"]
+[ext_resource type="Script" path="res://projectiles/projectile_pool.gd" id="10_proj"]
+[ext_resource type="Script" path="res://vfx/vfx_player.gd" id="11_vfx"]
+[ext_resource type="Script" path="res://vfx/damage_numbers.gd" id="12_dmg"]
+[ext_resource type="Script" path="res://run/game_camera.gd" id="13_cam"]
+[ext_resource type="Script" path="res://waves/spawn_director.gd" id="14_spawn"]
+[ext_resource type="Script" path="res://deities/trial_director.gd" id="15_trial"]
+[ext_resource type="Script" path="res://haewon/haewon_system.gd" id="16_haewon"]
+[ext_resource type="Script" path="res://vfx/hit_feedback.gd" id="17_fb"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="18_hud"]
+[ext_resource type="PackedScene" path="res://ui/levelup.tscn" id="19_lv"]
+[ext_resource type="PackedScene" path="res://ui/pause_menu.tscn" id="20_pause"]
+[ext_resource type="Script" path="res://vfx/screen_fx.gd" id="21_post"]
+
+[node name="Run" type="Node2D"]
+script = ExtResource("1_run")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="World"]
+script = ExtResource("2_ground")
+
+[node name="Gilbe" type="Node2D" parent="World"]
+script = ExtResource("3_gilbe")
+
+[node name="Ring" type="Node2D" parent="World"]
+script = ExtResource("4_ring")
+
+[node name="Pickups" type="Node2D" parent="World"]
+script = ExtResource("5_pickups")
+
+[node name="Enemies" type="Node2D" parent="World"]
+script = ExtResource("6_enemies")
+
+[node name="Yeongga" type="Node2D" parent="World"]
+script = ExtResource("7_yeongga")
+
+[node name="Player" parent="World" instance=ExtResource("8_player")]
+
+[node name="Weapons" type="Node2D" parent="World"]
+script = ExtResource("9_weapons")
+
+[node name="Projectiles" type="Node2D" parent="World"]
+script = ExtResource("10_proj")
+
+[node name="Vfx" type="Node2D" parent="World"]
+script = ExtResource("11_vfx")
+
+[node name="DamageNumbers" type="Node2D" parent="World"]
+script = ExtResource("12_dmg")
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("13_cam")
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="SpawnDirector" type="Node" parent="Systems"]
+script = ExtResource("14_spawn")
+
+[node name="TrialDirector" type="Node" parent="Systems"]
+script = ExtResource("15_trial")
+
+[node name="HaewonSystem" type="Node" parent="Systems"]
+script = ExtResource("16_haewon")
+
+[node name="HitFeedback" type="Node" parent="Systems"]
+script = ExtResource("17_fb")
+
+[node name="PostLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="ScreenFx" type="ColorRect" parent="PostLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("21_post")
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HUD" parent="HUDLayer" instance=ExtResource("18_hud")]
+
+[node name="OverlayLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="LevelUp" parent="OverlayLayer" instance=ExtResource("19_lv")]
+
+[node name="PauseMenu" parent="OverlayLayer" instance=ExtResource("20_pause")]

@@ -1,0 +1,49 @@
+{
+ "spec": "art_style_v1",
+ "id": "enm_dalgyal_gwisin",
+ "source": "art/rework/G1_pilot_promote/stage/enm_dalgyal_gwisin",
+ "tier": "common_s",
+ "size": [
+  32,
+  32
+ ],
+ "canvas": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "body_h": 22,
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   32,
+   32
+  ]
+ },
+ "fps": {
+  "move": 8
+ },
+ "loop": {
+  "move": true
+ },
+ "west": "flip_h(east)",
+ "out_of_scope": [
+  "spawn",
+  "face_states"
+ ],
+ "post": {
+  "tool": "art/rework/G1_pilot_promote/_scripts/promote_g1.py",
+  "from": "game/assets/pilot/enm_dalgyal_gwisin__pilot (r3, 사용자 승인 2026-11-22)",
+  "gens": 0
+ }
+}

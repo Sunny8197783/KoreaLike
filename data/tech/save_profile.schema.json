@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "soulpath/save_profile.schema.json",
+  "title": "SOULPATH profile.json (wrapper + payload v1)",
+  "description": "필드 원본은 design/09-meta-economy.md §19. 이 스키마는 기술 계층의 최소 검증(필수 키, 타입, 범위)만 한다. 알 수 없는 키는 보존을 위해 허용한다.",
+  "type": "object",
+  "required": [
+    "payload",
+    "integrity"
+  ],
+  "properties": {
+    "integrity": {
+      "type": "object",
+      "required": [
+        "algo",
+        "digest"
+      ],
+      "properties": {
+        "algo": {
+          "const": "sha256"
+        },
+        "digest": {
+          "type": "string"
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "version",
+        "game_build",
+        "profile_id",
+        "wallet",
+        "unlocks",
+        "myeongdu",
+        "singirok",
+        "counters"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "game_build": {
+          "type": "string"
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 8
+        },
+        "created_utc": {
+          "type": "string"
+        },
+        "updated_utc": {
+          "type": "string"
+        },
+        "playtime_s": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "wallet": {
+          "type": "object",
+          "required": [
+            "cur_gongdeok",
+            "cur_bokjeon"
+          ],
+          "properties": {
+            "cur_gongdeok": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 99999999
+            },
+            "cur_bokjeon": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 99999999
+            }
+          }
+        },
+        "ledger": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "earned": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "spent": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "unlocks": {
+          "type": "object",
+          "properties": {
+            "chars": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "char_ready": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "weapons": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "weapons_discovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "evos_discovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "unions_discovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "recipes_revealed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "forge": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "shrines": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3
+              },
+              "bingui": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "faces": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "face_wieom",
+                    "face_gaho"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "cheongbae_mark": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "myeongdu": {
+          "type": "object",
+          "properties": {
+            "collected": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 12,
+              "uniqueItems": true
+            },
+            "nodes_unlocked": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "loadout": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "singirok": {
+          "type": "object"
+        },
+        "companions": {
+          "type": "object"
+        },
+        "ladder": {
+          "type": "object",
+          "properties": {
+            "max_dan_cleared": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 15
+            }
+          }
+        },
+        "achievements": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ach_progress": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "ach_pending_platform": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "daily": {
+          "type": "object"
+        },
+        "counters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "active_run_uid": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "settled_run_uids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 64
+        },
+        "run_history": {
+          "type": "array",
+          "maxItems": 50
+        },
+        "flags": {
+          "type": "object"
+        },
+        "tamper_flag": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

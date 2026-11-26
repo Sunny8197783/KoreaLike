@@ -1,0 +1,243 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_saseulchang_verdict 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 4",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 5",
+   "frame": {
+    "x": 32,
+    "y": 64,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 6",
+   "frame": {
+    "x": 64,
+    "y": 64,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_saseulchang_verdict 7",
+   "frame": {
+    "x": 96,
+    "y": 64,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_saseulchang_verdict.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 128
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_saseulchang_verdict",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_saseulchang_verdict",
+   "name": "Saseulchang verdict",
+   "fps": 12.0,
+   "loop": false,
+   "frames": 8,
+   "frameSize": [
+    32,
+    64
+   ],
+   "pivot": [
+    16,
+    51
+   ],
+   "columns": 4,
+   "frameWidth": 32,
+   "frameHeight": 48,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "32x48->32x64"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_saseulchang",
+   "color_role": "R+Y",
+   "spec_canvas": "32x48",
+   "spec_frames": 8,
+   "timing": "fps:12",
+   "blend": "normal",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 3,
+   "scope": "v1",
+   "impact_frame": 2,
+   "impact_hold": 2.0,
+   "impact_note": "auto 2026-11-24 vfx: 첫 60% 중 불투명·hj/jk 밝은 픽셀 최대 프레임(파일럿 신칼 규약 따름)"
+  }
+ }
+}

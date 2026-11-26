@@ -1,0 +1,39 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  96,
+  96
+ ],
+ "pivot": [
+  48,
+  88
+ ],
+ "anims": {
+  "absorb": {
+   "south": 11
+  },
+  "walk": {
+   "east": 6,
+   "north": 6,
+   "south": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "absorb": [
+   96,
+   96
+  ],
+  "walk": [
+   96,
+   96
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "elite",
+  "rot": "south/east/north/west.png = walk_<dir>_0 (독립 정지 rotation 반입 제외, L12)"
+ },
+ "west": "flip_h(east)",
+ "notes": "독립 정지 rotation 제외(L12 dh -20 해소). absorb_south 11f 유지. __s64/__s80 축소 파생 런타임 제외(축소 리샘플 금지, 데이터·코드 참조 0)"
+}

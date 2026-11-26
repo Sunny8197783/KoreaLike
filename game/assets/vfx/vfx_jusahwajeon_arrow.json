@@ -1,0 +1,108 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_jusahwajeon_arrow 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_jusahwajeon_arrow 1",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_jusahwajeon_arrow.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_jusahwajeon_arrow",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_jusahwajeon_arrow",
+   "name": "Jusahwajeon arrow",
+   "fps": 16.0,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    32,
+    16
+   ],
+   "pivot": [
+    16,
+    8
+   ],
+   "columns": 1,
+   "frameWidth": 20,
+   "frameHeight": 8,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "20x8->32x16"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "evo_jusahwajeon",
+   "color_role": "R+Y",
+   "spec_canvas": "20x8",
+   "spec_frames": 2,
+   "timing": "fps:16",
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": true,
+   "max_concurrent": 60,
+   "scope": "v1"
+  }
+ }
+}

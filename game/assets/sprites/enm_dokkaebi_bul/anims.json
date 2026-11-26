@@ -1,0 +1,49 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "float": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "spawn": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "split": {
+   "south": 6,
+   "east": 6,
+   "north": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "float": [
+   32,
+   32
+  ],
+  "spawn": [
+   32,
+   32
+  ],
+  "split": [
+   32,
+   32
+  ]
+ },
+ "source": "art/rework/G4_salvage_enemies_boss/_scripts/gen_dokkaebi_bul_r5.py (손그림 절차, 0 gen)",
+ "west": "flip_h(east)",
+ "directionless": true,
+ "notes": "r5: 불꽃 혀 3갈래 + 웃는 얼굴. split 마지막 프레임 = 작은 도깨비불 3(뒤 1 + 앞 2) 위치. 외곽 #1a1a1a(발광체지만 예외 미등록)"
+}

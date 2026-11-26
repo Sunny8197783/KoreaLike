@@ -1,0 +1,144 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_go_maedeup_idle 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 250
+  },
+  {
+   "filename": "vfx_go_maedeup_idle 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 250
+  },
+  {
+   "filename": "vfx_go_maedeup_idle 2",
+   "frame": {
+    "x": 0,
+    "y": 32,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 250
+  },
+  {
+   "filename": "vfx_go_maedeup_idle 3",
+   "frame": {
+    "x": 32,
+    "y": 32,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 250
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_go_maedeup_idle.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_go_maedeup_idle",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_go_maedeup_idle",
+   "name": "Go maedeup idle",
+   "fps": 4,
+   "loop": true,
+   "frames": 4,
+   "frameSize": [
+    32,
+    32
+   ],
+   "pivot": [
+    16,
+    18
+   ],
+   "columns": 2,
+   "frameWidth": 24,
+   "frameHeight": 24,
+   "blend": "normal",
+   "layer": "L08",
+   "color_role": "W+M",
+   "max_concurrent": 7,
+   "beat_sync": "beat:1",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     10,
+     6
+    ],
+    "semi_before": 513,
+    "blend": "normal",
+    "size": "24x24->32x32"
+   }
+  }
+ }
+}

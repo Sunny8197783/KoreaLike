@@ -1,0 +1,3868 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "doc": "design/07-enemies-bosses.md",
+    "canon": "design/01-concept-and-canon.md v1.2",
+    "units": {
+      "unit_px": 32,
+      "player_speed_u": 4.0,
+      "time": "game minutes m (paused during jeomji/pause)"
+    },
+    "notes": "Numbers here are authoritative over the doc tables. Values marked assumption in doc are anchors to be tuned by sections 03/09.",
+    "revision": "v1.2 canon sync 2026-11-21 (doc 07 ch.19); v1.1 review response (doc 07 ch.18)",
+    "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): lore 문구 강철이·두억시니·어둑시니·거구귀·훼훼귀신·수비(A-1), 두억시니 lore_confidence A, 어둑시니·거구귀·훼훼 source_tag 각색, 저승사자 lore·trio 사재삼성(D-55)", "16 C·D 잔존 정리 (2026-11-22): _meta saja_rules의 구 키 saja_trial_* 언급 제거(C-19)"],
+    "id_aliases": {
+      "st_gongpo": "st_gyeongak",
+      "st_gawi_nullim": "st_gawi",
+      "_note": "canon v1.2 D-03: old boss/elite guest-deity ids live only in canon 8.1.1 alias table and data/canon_ids.json aliases"
+    },
+    "ownership": {
+      "enemy_han_time_curve": "07 (scaling.T_han, scaling.E_elite)",
+      "enemy_damage_time_curve": "07 (scaling.C_damage)",
+      "enemy_speed_time_curve": "07 (scaling.V_speed + caps)",
+      "dps_reference": "07 (scaling.reference_curve_assumption) until 09 bot median replaces it",
+      "enemy_status_resistance": "07 (status_profiles)",
+      "player_side_status_effects": "02 / combat_core.json",
+      "currency_amounts": "09 / meta_economy.json income (this file stores refs only)",
+      "sayeon_conditions": "09 11.1 (sc_* keys mirrored here)",
+      "runtime_caps": "07 (caps)",
+      "saja_rules": "07 (chasers). sal_geodum values = combat_core.run_end.E3_sal_geodum (canon v1.2 D-02); bonus coefficient lives in meta_economy settlement.sal_geodum_*"
+    }
+  },
+  "scaling": {
+    "mode_time_mult": {
+      "mode_pyojun": 1.0,
+      "mode_jajinmori": 1.3333,
+      "mode_oneul": 1.0,
+      "mode_muhan": 1.0
+    },
+    "T_han": {
+      "formula": "1 + a*m + b*m^2",
+      "a": 0.12,
+      "b": 0.006,
+      "single_source": true,
+      "note": "T(20)=5.8. Same curve as 04 2.3 H(t)/12. waves hp_mult must not add time growth."
+    },
+    "S_salgi": {
+      "formula": "1 + k*salgi",
+      "k": 0.002,
+      "continuous": true,
+      "canon_request": "approved canon v1.2 D-16: '+0.2% per 1 salgi' continuous (= +2% per 10)"
+    },
+    "C_damage": {
+      "formula": "1 + c*m",
+      "c": 0.06,
+      "single_source": true,
+      "avg_common_contact": "5*C(m) -> 5 / 8 / 11 at 0 / 10 / 20 min"
+    },
+    "V_speed": {
+      "formula": "min(1 + v*m, cap)",
+      "v": 0.0075,
+      "cap": 1.15,
+      "total_time_mult_cap": 1.15,
+      "common_speed_cap_u": 3.6,
+      "wongwi_speed_cap_u": 3.8,
+      "cap_exempt": [
+        "enm_mongdal_gwisin dash",
+        "enm_yeongsan lurch",
+        "enm_agwi greed (toward offering, not player)",
+        "chaser"
+      ]
+    },
+    "X_xp": {
+      "formula": "1 + x*m",
+      "x": 0.04,
+      "assumption": true
+    },
+    "fixed_at_spawn": true,
+    "tiers_using_T": [
+      "common",
+      "minion",
+      "elite",
+      "elite_system"
+    ],
+    "tiers_fixed_han": [
+      "mboss",
+      "boss"
+    ],
+    "boss_mode_mult": {
+      "mode_pyojun": 1.0,
+      "mode_jajinmori": 0.9,
+      "mode_muhan_per_5min_after_boss": 1.25
+    },
+    "wongwi": {
+      "han_mult": 4.0,
+      "speed_mult": 1.2,
+      "contact_mult": 1.5,
+      "xp_mult": 5.0,
+      "mass_mult": 2.0
+    },
+    "reference_curve_assumption": {
+      "source": "weapons.json est_dps, 04 7.4 reference build, all hits land, sinppal_ref (provisional; 09 bot median replaces)",
+      "m": [
+        0,
+        3,
+        5,
+        6,
+        9,
+        10,
+        12,
+        15,
+        18,
+        20
+      ],
+      "dps_single_target": [
+        12,
+        45,
+        60,
+        65,
+        135,
+        185,
+        280,
+        400,
+        730,
+        950
+      ],
+      "red_hit_m": [
+        0,
+        3,
+        5,
+        6,
+        10,
+        12,
+        15,
+        18,
+        20
+      ],
+      "red_single_hit_median": [
+        9.5,
+        13.8,
+        14.3,
+        14.8,
+        26.6,
+        29.1,
+        41.6,
+        46.3,
+        49.4
+      ],
+      "red_hit_basis": "median over 10 red weapons of level dmg (Lv1/3/4/5/8/8/evo/evo/evo) * sinppal_ref",
+      "consumers": [
+        "06 wieom HP = D(m)*18s (canon v1.2 D-36, deities.json constants.wieom_hp_seconds)",
+        "07 elite/mboss/boss han",
+        "04 7.4"
+      ],
+      "wieom_hp_seconds_recommended": 18
+    },
+    "rupture_rule": "n = ceil(0.65/k), k = hit/han_max; rupture iff n*k >= 1 (04 2.3). single-hit view: rupture possible iff r_before in (0.35, k]",
+    "E_elite": {
+      "formula": "1 + e*max(0, m - m0)",
+      "e": 0.25,
+      "m0": 6,
+      "applies_to": [
+        "elite"
+      ],
+      "not_applied_to": [
+        "elite_system (wongwi)",
+        "common",
+        "minion"
+      ],
+      "exception": "saja sal_geodum wongwi (chasers[0].sal_geodum) use E_elite(20)",
+      "assumption": true,
+      "why": "keep elite TTK 12-15s while DPS ref grows x15 from 6 to 20 min"
+    },
+    "salgi_effects": {
+      "han_per_salgi": 0.002,
+      "spawn_per_salgi": 0.005,
+      "elite_rate_per_salgi": 0.005,
+      "eodukssini_p_per_salgi": 0.005,
+      "continuous": true
+    },
+    "stage_event_mults": {
+      "owner": "08 waves (per stage / event)",
+      "keys": [
+        "stage_hp",
+        "stage_dmg",
+        "stage_spd"
+      ],
+      "default": 1.0,
+      "rule": "event/stage correction only; must not contain time growth; stage_spd * V(m) <= 1.15 clamp",
+      "replaces": "waves_stage1.json minutes[].hp_mult / dmg_mult / spd_mult (request to 08)"
+    },
+    "final_formula": {
+      "common_minion": "han = han_base*T(m)*S(salgi)*stage_hp*D_dan.han ; contact = contact_dmg*C(m)*stage_dmg*D_dan.dmg ; speed = min(speed_u*min(V(m)*stage_spd,1.15)*D_dan.speed, 3.6)",
+      "elite": "han = han_base*T(m)*E_elite(m)*S*stage_hp*D_dan.han",
+      "wongwi": "han = src.han_base*T(m)*S*4 ; speed = min(src.speed*V(m)*1.2, 3.8)",
+      "mboss_boss": "han = han_fixed*S*D_dan.han*B_mode"
+    },
+    "rupture_lever": {
+      "chosen_owner": "04 (weapon per-hit), confirmed by 09 bot",
+      "candidate": "red evolution per-hit x1.3-1.5 with cooldown / count scaled so DPS stays equal",
+      "not_lever": "T_han stays fixed (affects white finish, elite, wieom)",
+      "target": "rupture share at sinppal_ref: 3min ~34% -> 20min >= 45%"
+    }
+  },
+  "global_rules": {
+    "contact_cd_s_default": 0.5,
+    "player_hitbox_u": 0.35,
+    "enemy_stops_at_player_radius_fraction": 0.8,
+    "maedeup_jamgeum_tiers": [
+      "common",
+      "minion"
+    ],
+    "giseak": {
+      "threshold_r": 0.35,
+      "speed_mult": 0.7,
+      "white_mult": 3.0,
+      "common_default_disable": [
+        "ranged",
+        "dash",
+        "zone",
+        "aura",
+        "buff",
+        "split",
+        "attach",
+        "seek",
+        "debuff"
+      ],
+      "elite_plus_telegraph_add_s": 0.2,
+      "common_overlay": {
+        "move": "slow_wander_toward_player",
+        "speed_mult": 0.4,
+        "contact_mult": 0.3,
+        "red_projectile_passthrough": true,
+        "red_autoaim_candidate": false,
+        "canon_request": "approved canon v1.2 D-20 (C-09): commons x0.4 wander + contact x0.3; 07 values are canonical",
+        "requests": [
+          "04 2.7: red projectiles pass giseak commons without spending pierce",
+          "02/combat_core aim.red_giseak_penalty -> exclude"
+        ]
+      }
+    },
+    "maetim": {
+      "common_realtime_s": 12.0,
+      "common_second_time_s": 8.0,
+      "recover_to_r": 0.6,
+      "elite_plus_rule_canon_request": "approved canon v1.2 D-22: accumulate only while no player-side damage received in last 1.0s",
+      "elite_plus_s": 12.0,
+      "elite_plus_second_s": 8.0,
+      "common_recover_to_r": 0.45,
+      "common_nonhostile_after_recover_s": 3.0,
+      "recover_to_r_applies": "elite+ only; commons use common_recover_to_r",
+      "canon_request_common": "approved canon v1.2 D-20: common/minion recover to 45% + 3s non-hostile (07 values canonical)"
+    },
+    "resolution": {
+      "toechi": {
+        "orb_xp_mult": 1.0,
+        "sal_algaengi_visual": {
+          "common": 1,
+          "minion": 1,
+          "elite": 5,
+          "elite_system": 5,
+          "mboss": 10,
+          "boss": 0
+        },
+        "salgi_gain": {
+          "common": 0.02,
+          "minion": 0.02,
+          "elite": 1,
+          "elite_system": 1,
+          "mboss": 5,
+          "boss": 0
+        }
+      },
+      "haewon": {
+        "orb_xp_mult": 0.6,
+        "neok": {
+          "owner": "meta_economy",
+          "common": "meta_economy.json#income.neok_sources.haewon",
+          "minion": "meta_economy.json#income.neok_sources.haewon",
+          "elite": "meta_economy.json#income.neok_sources.haewon (+ box_neokham_elite via box)",
+          "elite_system": "meta_economy.json#income.neok_sources.haewon (+ box_neokham_wongwi via box)",
+          "mboss": "meta_economy.json#income.neok_sources.mboss_haewon",
+          "boss": "meta_economy.json#income.neok_sources.boss_han_haewon (request 09: rename to boss_haewon, form-agnostic)"
+        },
+        "sinmyeong_add_pct": {
+          "common": 0.4,
+          "minion": 0.4,
+          "elite": 5,
+          "elite_system": 5,
+          "mboss": 10,
+          "boss": 0
+        }
+      },
+      "release_delay_s": 0.3
+    },
+    "telegraph_min_s": {
+      "common": 0.5,
+      "minion": 0.5,
+      "elite": 0.7,
+      "mboss": 0.8,
+      "boss": 0.8
+    },
+    "enemy_projectile_speed_max_u": {
+      "common": 3.5,
+      "elite": 3.5,
+      "mboss": 6.0,
+      "boss": 6.0
+    },
+    "player_slow_max": 0.6,
+    "player_slow_max_duration_s": 1.5,
+    "palette_keys_allowed_for_enemy_vfx": [
+      "enemy_blue_2a5caa",
+      "enemy_black_1a1a1a"
+    ],
+    "neokduri": {
+      "common_chance": 0.04,
+      "common_duration_s": 2.0,
+      "elite_duration_s": 2.5,
+      "boss_duration_s": 3.0,
+      "max_on_screen": 2,
+      "same_species_cd_s": 8.0,
+      "first_haewon_guaranteed": true
+    },
+    "sayeon_rules": {
+      "owner": "09 11.1",
+      "common": [
+        "first haewon (profile)",
+        "cumulative 150 haewon of species",
+        "species condition sc_* (enemy.sayeon.piece3_key)"
+      ],
+      "elite": [
+        "neokham 1st",
+        "neokham 2nd",
+        "neokham 3rd"
+      ],
+      "mboss": [
+        "1st haewon",
+        "2nd haewon",
+        "3rd haewon"
+      ],
+      "boss": [
+        "han-form gopuri 1",
+        "gopuri at ladder_salpuri_dan (display '살 맺힘 단') >= 3",
+        "gopuri at ladder_salpuri_dan (display '살 맺힘 단') >= 8"
+      ]
+    },
+    "lore_confidence": {
+      "A": "encyclopedia or primary source confirmed",
+      "B": "multiple secondary sources, primary unconfirmed",
+      "C": "blog/community only"
+    },
+    "player_hit_pipeline_ref": "02 12.1 / combat_core: iframe -> jeopsin dodge -> yeongga substitute -> hosinbu shield -> sinbok -> hp"
+  },
+  "status_profiles": {
+    "st_gyeongak": {
+      "name": "경악(공포)",
+      "common": 1.0,
+      "elite": 0.5,
+      "mboss": 0,
+      "boss": 0,
+      "chaser": 0,
+      "effect": "flee from player, speed x1.2, contact off",
+      "alias_old": "st_gongpo",
+      "effect_owner": "combat_core.status.st_gyeongak (duration/flee speed)"
+    },
+    "st_bongbak": {
+      "name": "봉박(속박)",
+      "common": 1.0,
+      "elite": 0.5,
+      "mboss": 0.25,
+      "boss": 0,
+      "chaser": 0,
+      "effect": "move 0, ranged continues"
+    },
+    "st_dunhwa": {
+      "name": "둔화",
+      "common": 1.0,
+      "elite": 1.0,
+      "mboss": 0.5,
+      "boss": 0.5,
+      "chaser": 0,
+      "effect": "multiplicative slow, floor 30% speed",
+      "floor_owner": "07",
+      "floor_speed": 0.3,
+      "note": "speed never below 30% (= slow cap 70%). combat_core floor 0.4 and deities C5 60% must reference this"
+    },
+    "st_gyeongjik": {
+      "name": "경직",
+      "common": 1.0,
+      "elite": 0.5,
+      "mboss": "pattern_windows_only",
+      "boss": "pattern_windows_only",
+      "chaser": 0
+    },
+    "knockback": {
+      "common": 1.0,
+      "elite": 1.0,
+      "mboss": 0.2,
+      "boss": 0,
+      "chaser": 0,
+      "formula": "d = clamp(F/mass, 0, 3.0u), slide 0.15s ease-out"
+    },
+    "reapply": "refresh to longer duration, no stacking",
+    "elite_plus_post_immunity_s": 1.0,
+    "post_immunity_owner": "07 (combat_core dr_immune 2.0 / 04 4s x0.5 must reference this)"
+  },
+  "archetypes": {
+    "arc_chase": {},
+    "arc_greed": {
+      "seek_radius_u": 10,
+      "greed_speed_u": 3.4,
+      "offering_weight": 2.0,
+      "player_weight": 1.0,
+      "eat_s": 1.0,
+      "sated_s": 6.0,
+      "sated_speed_u": 1.4,
+      "sated_heal_pct": 30
+    },
+    "arc_attach": {
+      "wander_speed_u": 1.6,
+      "wander_wobble_deg": 40,
+      "wobble_period_s": 2.0,
+      "host_radius_u": 6,
+      "seek_speed_u": 3.0,
+      "attach_offset_u": 0.4,
+      "buff_speed_pct": 25,
+      "buff_dmg_pct": 20,
+      "detach_stun_s": 0.5
+    },
+    "arc_ranged": {
+      "band_u": [
+        5,
+        7
+      ],
+      "retreat_speed_u": 1.6,
+      "strafe_speed_u": 1.2,
+      "strafe_flip_s": 3.0,
+      "lead_s": 0.5
+    },
+    "arc_charger": {
+      "trigger_dist_u": 6,
+      "cooldown_s": 4.0,
+      "windup_s": 0.6,
+      "dash_speed_u": 9.0,
+      "dash_time_s": 0.55,
+      "dash_mass": 3.0,
+      "recover_s": 1.2,
+      "telegraph_width_u": 0.7,
+      "telegraph_len_u": 5
+    },
+    "arc_zoner": {
+      "zone_cd_s": 6.0,
+      "zone_max_per_entity": 4
+    },
+    "arc_screen": {
+      "cover_search_u": 5,
+      "cover_offset_u": 1.2,
+      "reeval_s": 2.0,
+      "swap_hysteresis_u": 1.5,
+      "cover_projectile_reduction_pct": 30,
+      "break_dist_u": 2.0
+    },
+    "arc_float": {
+      "noise_deg": 60,
+      "noise_hz": 0.8,
+      "split_time_s": 10,
+      "split_count": 3,
+      "split_telegraph_s": 0.4,
+      "light_radius_u": 2
+    },
+    "arc_lurch": {
+      "lurch_cd_s": 4.0,
+      "trigger_dist_u": 8,
+      "freeze_s": 0.4,
+      "lunge_dist_u": 2,
+      "lunge_speed_u": 6.0
+    },
+    "arc_procession": {
+      "line_spacing_u": 0.8,
+      "break_dist_u": 6,
+      "path_pass_offset_u": 3
+    },
+    "arc_swarm": {
+      "cohesion": 1.0,
+      "alignment": 0.6,
+      "separation": 1.4,
+      "leader_follow": 1.2,
+      "rush_dist_u": 4,
+      "center_speed_u": 2.2
+    },
+    "arc_orbit": {
+      "approach_dist_u": 3.0,
+      "orbit_radius_u": 2.5,
+      "orbit_flip_s": 6,
+      "back_off_dist_u": 2.0,
+      "back_off_u": 0.5,
+      "leave_dist_u": 5,
+      "leave_time_s": 2
+    },
+    "common_fsm": {
+      "decision_hz": 10,
+      "min_time_in_state_s": 0.3,
+      "spawn_fade_s": 0.4,
+      "stuck_check": {
+        "window_s": 2.0,
+        "min_progress_u": 0.5
+      },
+      "priority": [
+        "Resolved",
+        "Spawning",
+        "Recalled",
+        "TrialBarrier",
+        "Gyeongjik",
+        "Gyeongak",
+        "Knockback",
+        "Bongbak",
+        "GlobalMode",
+        "Archetype"
+      ]
+    },
+    "movement": {
+      "flowfield": {
+        "cell_u": 1,
+        "window_u": 64,
+        "recompute_hz": 4,
+        "diagonal_cost": 1.4142,
+        "no_corner_cut": true,
+        "budget_ms": 0.6
+      },
+      "direct_seek": {
+        "max_dist_u": 8,
+        "requires_clear_line": true
+      },
+      "steering_priority": [
+        "barrier_avoid",
+        "separation",
+        "seek"
+      ],
+      "separation": {
+        "hash_cell_u": 1,
+        "max_neighbors": 6,
+        "mass_weighted": true
+      },
+      "accel_time_s": {
+        "common": 0.15,
+        "elite": 0.3
+      }
+    },
+    "lod": {
+      "A": {
+        "cond": "on-screen + 2u",
+        "move_hz": 60,
+        "decide_hz": 10
+      },
+      "B": {
+        "cond": "off-screen <= 22u",
+        "move_hz": 30,
+        "decide_hz": 4
+      },
+      "C": {
+        "cond": "> 22u for 3s",
+        "action": "recall"
+      }
+    }
+  },
+  "global_modes": {
+    "ai_trial_barrier": {
+      "duration_s": 3,
+      "common": "cannot enter trial circle",
+      "elite": "speed x0.5 inside"
+    },
+    "ai_kwanmang": {
+      "during": "trial (30s + DESCEND up to 8s, canon v1.2 D-01)",
+      "mboss": {
+        "keep_dist_u": 8,
+        "attacks": false,
+        "summons": false,
+        "anim": "kneel"
+      }
+    },
+    "ai_jakdu": {
+      "window": "18:00-19:15",
+      "ring_event": {
+        "group": "sg_ring",
+        "count": 40,
+        "every_s": 20
+      },
+      "elite_cap_add": 1
+    },
+    "ai_dwitjeon": {
+      "window": "19:15-20:00",
+      "common_target": "obj_gongmulsang",
+      "contact_damage": 0,
+      "drain_radius_u": 3,
+      "drain_pct_per_s": 4,
+      "drain_bonus_per_subi_haewon_pctp": 1,
+      "drain_bonus_cap_pctp": 50,
+      "drain_resolution": "HAEWON_DRAIN",
+      "ignored_by": [
+        "elite",
+        "elite_system"
+      ]
+    },
+    "ai_boss": {
+      "window": "20:00-resolution",
+      "common_population": 60,
+      "new_elites": false
+    },
+    "ai_myeongbu": {
+      "after": "boss resolution",
+      "spawns": false,
+      "leftover_common": "fade 3s, no reward"
+    }
+  },
+  "spawn": {
+    "ring": {
+      "view_half_u": [
+        10.0,
+        5.5
+      ],
+      "margin_u": 1.5,
+      "forward_bias": 0.6,
+      "reject": [
+        "obstacle",
+        "trial_circle",
+        "map_edge"
+      ],
+      "retry_step_u": 0.5,
+      "retry_max": 8
+    },
+    "groups": {
+      "sg_scatter": {
+        "placement": "random ring points one by one over 2s"
+      },
+      "sg_arc": {
+        "arc_deg": 120,
+        "spacing_u": 0.6,
+        "size": [
+          4,
+          14
+        ]
+      },
+      "sg_cluster": {
+        "radius_u": 1.5,
+        "size": [
+          3,
+          8
+        ]
+      },
+      "sg_pincer": {
+        "offset_deg": 90,
+        "size_each": [
+          2,
+          4
+        ]
+      },
+      "sg_ring": {
+        "radius_u": 11,
+        "size": [
+          12,
+          40
+        ]
+      },
+      "sg_line": {
+        "spacing_u": 0.8,
+        "pass_offset_u": 3,
+        "size": [
+          5,
+          7
+        ]
+      },
+      "sg_swarm": {
+        "radius_u": 2,
+        "size": [
+          20,
+          40
+        ],
+        "invisible_center": true
+      },
+      "sg_escort": {
+        "leader": "elite",
+        "orbit_u": 1.5,
+        "followers": "enm_subi",
+        "size": [
+          8,
+          15
+        ]
+      },
+      "sg_elite_solo": {
+        "warning_s": 1.5
+      },
+      "sg_giseak_demo": {
+        "new": true,
+        "at": "00:20",
+        "species": "enm_dalgyal_gwisin",
+        "count": 10,
+        "placement": "front arc 120deg on spawn ring",
+        "why": "show giseak pile-up before bangul at 00:30"
+      },
+      "sg_haengcha_trail": {
+        "new": true,
+        "leader": "npc_byeolsang_sonnim palanquin",
+        "followers": [
+          "elite_yeokgwi_ttae x1",
+          "enm_* 6-10 trailing 2u behind"
+        ],
+        "note": "followers attack player; npc never"
+      },
+      "sg_maetin_tte": {
+        "new": true,
+        "from": "12:00",
+        "size": [
+          8,
+          16
+        ],
+        "overlay": "ovl_maetin_tte"
+      }
+    },
+    "geori_weights": {
+      "geori_jutang_bujeong": {
+        "00:00-00:20": {
+          "enm_agwi": 80,
+          "enm_dalgyal_gwisin": 20
+        },
+        "00:20-03:00": {
+          "enm_dalgyal_gwisin": 60,
+          "enm_agwi": 30,
+          "enm_gaekgwi": 10
+        }
+      },
+      "geori_gamang_sansin": {
+        "enm_dalgyal_gwisin": 30,
+        "enm_agwi": 15,
+        "enm_gaekgwi": 10,
+        "enm_cheonyeo_gwisin": 15,
+        "enm_mongdal_gwisin": 15,
+        "enm_mul_gwisin": 10,
+        "enm_hosik_wonhon": 5
+      },
+      "geori_byeolsang_daegam_jeseok": {
+        "enm_dalgyal_gwisin": 15,
+        "enm_agwi": 10,
+        "enm_gaekgwi": 8,
+        "enm_cheonyeo_gwisin": 12,
+        "enm_mongdal_gwisin": 12,
+        "enm_mul_gwisin": 8,
+        "enm_hosik_wonhon": 8,
+        "enm_dokkaebi_bul": 12,
+        "enm_yeongsan": 8,
+        "enm_sangmun": 7
+      },
+      "geori_janggun_gunung_changbu": {
+        "enm_dalgyal_gwisin": 8,
+        "enm_agwi": 6,
+        "enm_gaekgwi": 6,
+        "enm_cheonyeo_gwisin": 10,
+        "enm_mongdal_gwisin": 10,
+        "enm_mul_gwisin": 6,
+        "enm_hosik_wonhon": 7,
+        "enm_dokkaebi_bul": 8,
+        "enm_yeongsan": 8,
+        "enm_sangmun": 8,
+        "enm_subi": 13,
+        "enm_hwehwe_gwisin": 10
+      },
+      "geori_jakdu": {
+        "enm_dalgyal_gwisin": 10,
+        "enm_agwi": 6,
+        "enm_gaekgwi": 6,
+        "enm_cheonyeo_gwisin": 10,
+        "enm_mongdal_gwisin": 10,
+        "enm_mul_gwisin": 6,
+        "enm_hosik_wonhon": 7,
+        "enm_dokkaebi_bul": 8,
+        "enm_yeongsan": 8,
+        "enm_sangmun": 8,
+        "enm_subi": 13,
+        "enm_hwehwe_gwisin": 8
+      },
+      "geori_dwitjeon": {
+        "enm_dalgyal_gwisin": 15,
+        "enm_agwi": 15,
+        "enm_gaekgwi": 5,
+        "enm_cheonyeo_gwisin": 8,
+        "enm_mongdal_gwisin": 8,
+        "enm_mul_gwisin": 5,
+        "enm_hosik_wonhon": 5,
+        "enm_dokkaebi_bul": 8,
+        "enm_yeongsan": 10,
+        "enm_sangmun": 6,
+        "enm_subi": 15,
+        "enm_hwehwe_gwisin": 0
+      }
+    },
+    "first_spawn_gate": true,
+    "stage_mults": {
+      "stage_guksadang": {},
+      "stage_jindo_ssitgim": {
+        "enm_mul_gwisin": 0,
+        "enm_gaekgwi": 1.3,
+        "enm_dalgyal_gwisin": 0.8,
+        "elite_exclude": [
+          "elite_yeokgwi_ttae"
+        ]
+      },
+      "stage_east_sea_byeolsin": {
+        "enm_mul_gwisin": 2.0,
+        "enm_cheonyeo_gwisin": 1.2,
+        "enm_agwi": 0.8,
+        "elite_exclude": [
+          "elite_yeokgwi_ttae"
+        ]
+      }
+    },
+    "population": {
+      "tick_s": 0.5,
+      "max_spawn_per_tick": 40,
+      "curve": [
+        {
+          "from": "00:00",
+          "to": "03:00",
+          "P": [
+            30,
+            80
+          ]
+        },
+        {
+          "from": "03:00",
+          "to": "06:00",
+          "P": [
+            90,
+            140
+          ]
+        },
+        {
+          "from": "06:00",
+          "to": "12:00",
+          "P": [
+            150,
+            220
+          ]
+        },
+        {
+          "from": "12:00",
+          "to": "18:00",
+          "P": [
+            230,
+            300
+          ]
+        },
+        {
+          "from": "18:00",
+          "to": "19:15",
+          "P": [
+            340,
+            340
+          ]
+        },
+        {
+          "from": "19:15",
+          "to": "20:00",
+          "P": [
+            360,
+            360
+          ]
+        },
+        {
+          "from": "boss",
+          "to": "resolution",
+          "P": [
+            60,
+            60
+          ]
+        }
+      ],
+      "trial_mult": 0.8,
+      "hard_cap": 400,
+      "mode_mult": {
+        "mode_jajinmori": 1.0,
+        "mode_muhan_per_5min_after_boss_pct": 10,
+        "mode_jajinmori_note": "canon v1.2 D-31/C-12: jajinmori x1.33 = time progression (scaling.mode_time_mult), BPM unchanged; no extra population mult"
+      },
+      "salgi_formula": "P*(1+0.005*salgi)",
+      "event_cap": 480
+    },
+    "tutorial_ring": {
+      "at": "01:30",
+      "group": "sg_ring",
+      "species": "enm_dalgyal_gwisin",
+      "count": 24,
+      "radius_u": 11
+    },
+    "recall": {
+      "common": {
+        "dist_u": 22,
+        "after_s": 3,
+        "to": "forward ring",
+        "counts_as_spawn": false
+      },
+      "elite": {
+        "dist_u": 22,
+        "after_s": 5,
+        "to_front_u": 12
+      },
+      "mboss": {
+        "dist_u": 25,
+        "to_front_u": 10
+      },
+      "giseak_common": "no recall; maetim clock continues (returns at 45% + 3s non-hostile)"
+    },
+    "elite_timer": {
+      "start": "07:00",
+      "interval_s": "60 / (1 + 0.005*salgi)",
+      "escort_chance_from_12": 0.5,
+      "cap": 3,
+      "cap_add": {
+        "salgi50": 1,
+        "salgi75": 1,
+        "jakdu": 1
+      },
+      "cap_max": 6,
+      "paused_during_mboss": true,
+      "pools": {
+        "06-12": {
+          "elite_geogu_gwi": 35,
+          "elite_bulgasari": 35,
+          "elite_yeokgwi_ttae": 30
+        },
+        "12-18": {
+          "elite_geogu_gwi": 25,
+          "elite_bulgasari": 25,
+          "elite_dueoksini": 30,
+          "elite_yeokgwi_ttae": 20
+        },
+        "18-19": {
+          "elite_geogu_gwi": 25,
+          "elite_bulgasari": 25,
+          "elite_dueoksini": 25,
+          "elite_yeokgwi_ttae": 25
+        }
+      },
+      "first_elite_note": "first elite at 07:00 (08 canonical, canon v1.2 C-32); pool keys keep minute windows"
+    }
+  },
+  "caps": {
+    "common_active": 400,
+    "elite": 6,
+    "wongwi": 20,
+    "wongwi_muhan": 30,
+    "eodukssini": 2,
+    "mboss": 1,
+    "boss": 1,
+    "boss_segments": 12,
+    "saja": 1,
+    "enemy_projectiles": 600,
+    "enemy_zones": 90,
+    "sal_algaengi": 200,
+    "wonhon_orbs": 300,
+    "neokduri_lines": 2,
+    "frame_budget_ms_steamdeck": {
+      "move_steer_sep": 1.8,
+      "decide": 0.3,
+      "flowfield_avg": 0.15,
+      "contact": 0.2,
+      "projectiles": 0.4,
+      "elite_boss_ai": 0.2,
+      "total": 3.0
+    },
+    "draw_calls_common_max": 12,
+    "common_active_event": 480,
+    "common_active_event_max_s": 30,
+    "wonhon_orbs_ref": "combat_core.xp.orb_merge_count",
+    "enemy_projectiles_note": "enemy projectiles only; player projectile pool is weapons.json globals.projectile_pool",
+    "owner_note": "runtime caps owner = 07 11.1; 14 perf scenes must stay <= these; 2500 = tech headroom only; 14 perf caps.orb_tech_hard_cap 1500 / orb_stress_scene_max 2000 are technical hard caps, not runtime design caps (canon v1.2 D-45)",
+    "eodukssini_full_per_run": 2,
+    "saja_note": "v1.1 reinforcement removed; v1.2 saja non-hostile (D-02); sal_geodum wongwi (1 per lump, 3) count toward wongwi cap"
+  },
+  "drops": {
+    "luck_scaling": "rate * (jeomgwae/100)",
+    "pick_gongmul": {
+      "common": 0.0025,
+      "elite": 0.15,
+      "mboss": {
+        "guaranteed": 2
+      }
+    },
+    "pick_hosinbu": {
+      "common": 0.001,
+      "common_after": "03:00",
+      "elite": 0.04,
+      "mboss": 0.3,
+      "override": {
+        "enm_hwehwe_gwisin": 0.01
+      }
+    },
+    "pick_chohon_bal": {
+      "common": 0.0003,
+      "elite": 0.05,
+      "mboss": 0.5,
+      "max_on_screen": 2
+    },
+    "pick_myeongjul_sil": {
+      "common": 0,
+      "elite": 0.005,
+      "mboss": 0.1,
+      "max_per_run": 1
+    },
+    "cur_yeopjeon_toechi": {
+      "owner": "meta_economy",
+      "elite": "meta_economy.json#income.yeopjeon_sources.elite_toechi",
+      "elite_system": "meta_economy.json#income.yeopjeon_sources.wongwi_toechi",
+      "mboss": "meta_economy.json#income.yeopjeon_sources.mboss_toechi",
+      "boss": "meta_economy.json#income.yeopjeon_sources.boss_sal_toechi (request 09: form-agnostic boss_toechi)"
+    },
+    "box_gilhyung_toechi": {
+      "elite": 1,
+      "mboss": 1,
+      "boss": 2
+    },
+    "box_neokham_haewon": {
+      "elite": 1,
+      "mboss": 1,
+      "boss": 2
+    },
+    "common_same_for_both_endings": true,
+    "box_grade_owner": "09 meta_economy.income.box_gilhyung_grade_prob (02 chest tiers to reference)"
+  },
+  "enemies": [
+    {
+      "id": "enm_dalgyal_gwisin",
+      "name": "달걀귀신",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 32,
+      "hit_radius_u": 0.3,
+      "han_base": 12,
+      "speed_u": 2.2,
+      "accel_time_s": 0.15,
+      "contact_dmg": 5,
+      "contact_cd_s": 0.5,
+      "mass": 0.8,
+      "xp": 1,
+      "first_spawn": "00:00",
+      "archetype": "arc_chase",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [],
+        "face": "mixed_adult",
+        "face_note": "ages/genders mixed; child face only on variant __child and on canon sm_first_haewon (once per profile)"
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "standard",
+        "neokduri_pool": 12
+      },
+      "spawn_groups": [
+        "sg_arc",
+        "sg_scatter",
+        "sg_ring"
+      ],
+      "special_anims": [],
+      "sayeon": {
+        "premise": "얼굴을 기억해 줄 이가 없는 이들 (나이·성별 섞임)",
+        "sample": [
+          "내 얼굴, 이제 보여요?",
+          "누가 내 이름을 불러 준 게 언제였더라.",
+          "…엄마 얼굴이 기억이 안 났어. (sm_first_haewon 전용, 아이 변형)"
+        ],
+        "piece3_condition": "see 09 11.1 sc_ring_species_20",
+        "piece3_key": "sc_ring_species_20"
+      },
+      "design_lock": "han_base (12) must stay > wpn_sinkal Lv1 hit (9) (first haewon scene)",
+      "variants": [
+        "enm_dalgyal_gwisin__child"
+      ]
+    },
+    {
+      "id": "enm_agwi",
+      "name": "아귀",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 40,
+      "hit_radius_u": 0.32,
+      "han_base": 16,
+      "speed_u": 2.0,
+      "accel_time_s": 0.15,
+      "contact_dmg": 6,
+      "contact_cd_s": 0.5,
+      "mass": 1.0,
+      "xp": 1,
+      "first_spawn": "00:00",
+      "archetype": "arc_greed",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [
+          "seek"
+        ]
+      },
+      "special": {
+        "targets": [
+          "pick_gongmul",
+          "obj_gongmulsang",
+          "pick_gajja_gongmul"
+        ],
+        "fake_offering_effect": "enter giseak immediately"
+      },
+      "toechi_result": {
+        "type": "carried_offering_lost"
+      },
+      "haewon_result": {
+        "type": "return_offering",
+        "spawn_if_carrying": "pick_gongmul"
+      },
+      "spawn_groups": [
+        "sg_scatter",
+        "sg_cluster"
+      ],
+      "special_anims": [
+        "eat:4"
+      ],
+      "sayeon": {
+        "premise": "흉년에 굶어 간 사람들. 한 상 받아 보지 못한 서운함",
+        "sample": [
+          "한 숟갈만… 아니, 이제 됐어. 배부르다."
+        ],
+        "piece3_condition": "see 09 11.1 sc_agwi_before_gongmul_30",
+        "piece3_key": "sc_agwi_before_gongmul_30"
+      }
+    },
+    {
+      "id": "enm_gaekgwi",
+      "name": "객귀",
+      "tier": "common",
+      "source_tag": "무속",
+      "lore_confidence": "A",
+      "canvas_px": 32,
+      "hit_radius_u": 0.28,
+      "han_base": 10,
+      "speed_u": 1.6,
+      "speed_alt_u": {
+        "seek_host": 3.0
+      },
+      "accel_time_s": 0.15,
+      "contact_dmg": 4,
+      "contact_cd_s": 0.5,
+      "mass": 0.5,
+      "xp": 2,
+      "first_spawn": "01:00",
+      "archetype": "arc_attach",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [
+          "attach"
+        ],
+        "on_enter": "detach from host"
+      },
+      "special": {
+        "attached_hitbox_u": 0.22,
+        "host_rules": "tier common, not gaekgwi, not attached, not giseak"
+      },
+      "toechi_result": {
+        "type": "host_permanent_buff",
+        "host_speed_pct": 30,
+        "host_han_max_pct": 50,
+        "visual": "ink_smoke_no_red_eye"
+      },
+      "haewon_result": {
+        "type": "host_to_giseak",
+        "set_host_r": 0.35
+      },
+      "spawn_groups": [
+        "sg_scatter"
+      ],
+      "special_anims": [
+        "attached:2"
+      ],
+      "sayeon": {
+        "premise": "집으로 가는 길을 잊은 떠돌이",
+        "sample": [
+          "여기가 어디요? 집에 가는 길을 잊었소."
+        ],
+        "piece3_condition": "see 09 11.1 sc_gaekgwi_attached_10",
+        "piece3_key": "sc_gaekgwi_attached_10"
+      }
+    },
+    {
+      "id": "enm_cheonyeo_gwisin",
+      "name": "처녀귀신",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 48,
+      "hit_radius_u": 0.32,
+      "han_base": 20,
+      "speed_u": 2.0,
+      "accel_time_s": 0.15,
+      "contact_dmg": 5,
+      "contact_cd_s": 0.5,
+      "mass": 0.9,
+      "xp": 3,
+      "first_spawn": "03:00",
+      "archetype": "arc_ranged",
+      "flying": false,
+      "status_profile": "common",
+      "archetype_params": {
+        "fire_cd_s": 3.0,
+        "telegraph_s": 0.5,
+        "projectile": "prj_wonhon_tan",
+        "count": 3,
+        "spread_deg": 30
+      },
+      "giseak_behavior": {
+        "disable": [
+          "ranged"
+        ],
+        "approach_player": true
+      },
+      "toechi_result": {
+        "type": "standard",
+        "projectiles_remain": true
+      },
+      "haewon_result": {
+        "type": "own_projectiles_to_petals"
+      },
+      "spawn_groups": [
+        "sg_scatter",
+        "sg_pincer"
+      ],
+      "spawn_ring_offset_u": 2,
+      "special_anims": [
+        "aim:2",
+        "fire:2"
+      ],
+      "sayeon": {
+        "premise": "이름 대신 누구네 딸로만 불리다 간 사람",
+        "sample": [
+          "내 이름 석 자, 누가 한 번만 불러 줬으면."
+        ],
+        "piece3_condition": "see 09 11.1 sc_cheonyeo_mid_volley_25",
+        "piece3_key": "sc_cheonyeo_mid_volley_25"
+      }
+    },
+    {
+      "id": "enm_mongdal_gwisin",
+      "name": "몽달귀신",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 40,
+      "hit_radius_u": 0.32,
+      "han_base": 18,
+      "speed_u": 2.4,
+      "accel_time_s": 0.15,
+      "contact_dmg": 6,
+      "contact_dmg_dash": 12,
+      "contact_cd_s": 0.5,
+      "mass": 1.0,
+      "xp": 2,
+      "first_spawn": "03:00",
+      "archetype": "arc_charger",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [
+          "dash"
+        ]
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "yeongga_proxy_dash",
+        "dash_dist_u": 5,
+        "damage": "best white weapon base dmg x1.0",
+        "then": "join tail"
+      },
+      "spawn_groups": [
+        "sg_arc",
+        "sg_pincer"
+      ],
+      "special_anims": [
+        "windup:2",
+        "dash:2",
+        "recover:2"
+      ],
+      "sayeon": {
+        "premise": "혼례 날을 받아 놓고 떠난 젊은이",
+        "sample": [
+          "장가 들면 지붕부터 고치려 했는데."
+        ],
+        "piece3_condition": "see 09 11.1 sc_mongdal_mid_dash_25",
+        "piece3_key": "sc_mongdal_mid_dash_25"
+      }
+    },
+    {
+      "id": "enm_mul_gwisin",
+      "name": "물귀신",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 40,
+      "hit_radius_u": 0.34,
+      "han_base": 24,
+      "speed_u": 1.6,
+      "accel_time_s": 0.15,
+      "contact_dmg": 6,
+      "contact_cd_s": 0.5,
+      "mass": 1.3,
+      "xp": 3,
+      "first_spawn": "03:30",
+      "archetype": "arc_zoner",
+      "flying": false,
+      "status_profile": "common",
+      "archetype_params": {
+        "zone": "obj_mul_ungdeongi",
+        "zone_cd_s": 6.0,
+        "zone_max_per_entity": 4,
+        "speed_in_zone_pct": 30
+      },
+      "on_contact_player": "st_mulgwisin_son",
+      "giseak_behavior": {
+        "disable": [
+          "zone",
+          "debuff"
+        ]
+      },
+      "toechi_result": {
+        "type": "own_zones_to",
+        "zone": "obj_mul_ungdeongi__black"
+      },
+      "haewon_result": {
+        "type": "own_zones_to",
+        "zone": "obj_mul_ungdeongi__clear"
+      },
+      "stage_mod": {
+        "stage_jindo_ssitgim": {
+          "spawn_weight_mult": 0,
+          "zone_duration_add_s": 0,
+          "note": "16 A-4: 남도 갯마을 씻김굿판 물귀신 스폰 금지(07 R3)"
+        },
+        "stage_east_sea_byeolsin": {
+          "spawn_weight_mult": 2.0,
+          "zone_duration_add_s": 5
+        }
+      },
+      "spawn_groups": [
+        "sg_scatter",
+        "sg_cluster"
+      ],
+      "special_anims": [
+        "drip:2"
+      ],
+      "sayeon": {
+        "premise": "물이 차가운 줄도 모르고 간 사람",
+        "sample": [
+          "손 잡아 줘서 고마워. 이제 놓을게."
+        ],
+        "piece3_condition": "see 09 11.1 sc_mul_in_puddle_20",
+        "piece3_key": "sc_mul_in_puddle_20"
+      }
+    },
+    {
+      "id": "enm_hosik_wonhon",
+      "name": "호식 원혼",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 40,
+      "hit_radius_u": 0.32,
+      "han_base": 22,
+      "speed_u": 2.6,
+      "accel_time_s": 0.15,
+      "contact_dmg": 6,
+      "contact_cd_s": 0.5,
+      "mass": 0.9,
+      "xp": 3,
+      "first_spawn": "04:00",
+      "archetype": "arc_screen",
+      "flying": false,
+      "status_profile": "common",
+      "trial_link": {
+        "deity": "deity_sansin",
+        "face": "gaho",
+        "target": "lost yeongga x10",
+        "on_touch_gaho_gauge_pct": -10,
+        "on_haewon_gaho_gauge_pct": 4
+      },
+      "giseak_behavior": {
+        "disable": [
+          "buff"
+        ],
+        "stop_screening": true
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "cover_fear",
+        "status": "st_gyeongak",
+        "duration_s": 1.0
+      },
+      "spawn_groups": [
+        "sg_cluster"
+      ],
+      "spawn_solo": false,
+      "special_anims": [],
+      "sayeon": {
+        "premise": "산길에서 돌아오지 못한 사람. 남을 끌어들인 일을 부끄러워함",
+        "sample": [
+          "미안하오. 나도 누가 앞장서 주길 바랐소."
+        ],
+        "piece3_condition": "see 09 11.1 sc_hosik_in_sansin_gaho_10",
+        "piece3_key": "sc_hosik_in_sansin_gaho_10"
+      }
+    },
+    {
+      "id": "enm_dokkaebi_bul",
+      "name": "도깨비불",
+      "tier": "common",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 32,
+      "hit_radius_u": 0.26,
+      "han_base": 14,
+      "speed_u": 2.8,
+      "accel_time_s": 0.15,
+      "contact_dmg": 4,
+      "contact_cd_s": 0.5,
+      "mass": 0.4,
+      "xp": 2,
+      "first_spawn": "06:00",
+      "archetype": "arc_float",
+      "flying": true,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [
+          "split"
+        ]
+      },
+      "toechi_result": {
+        "type": "split",
+        "child": "enm_dokkaebi_bul__small",
+        "count": 3
+      },
+      "haewon_result": {
+        "type": "deungbul_count_bonus",
+        "add": 1
+      },
+      "spawn_groups": [
+        "sg_scatter",
+        "sg_ring"
+      ],
+      "special_anims": [
+        "flicker:4",
+        "swell:2"
+      ],
+      "sayeon": {
+        "premise": "버려진 생활 도구에서 깨어난 불(장난스러운 어조)",
+        "sample": [
+          "빗자루였을 때가 좋았지. 매일 쓸어 주던 그 마당."
+        ],
+        "piece3_condition": "see 09 11.1 sc_dokkaebi_bul_8_lamps",
+        "piece3_key": "sc_dokkaebi_bul_8_lamps"
+      }
+    },
+    {
+      "id": "enm_yeongsan",
+      "name": "영산",
+      "tier": "common",
+      "source_tag": "무속",
+      "lore_confidence": "A",
+      "canvas_px": 40,
+      "hit_radius_u": 0.32,
+      "han_base": 26,
+      "speed_u": 2.4,
+      "accel_time_s": 0.15,
+      "contact_dmg": 8,
+      "contact_cd_s": 0.5,
+      "mass": 1.0,
+      "xp": 3,
+      "first_spawn": "06:30",
+      "archetype": "arc_lurch",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [
+          "dash"
+        ]
+      },
+      "toechi_result": {
+        "type": "spawn_zone",
+        "zone": "obj_hyungsal_jangpan"
+      },
+      "haewon_result": {
+        "type": "heal_player_pct",
+        "value": 1
+      },
+      "spawn_groups": [
+        "sg_cluster",
+        "sg_arc"
+      ],
+      "special_anims": [
+        "freeze:1",
+        "lunge:2"
+      ],
+      "sayeon": {
+        "premise": "아침에 나가며 인사를 못 한 사람들(죽음의 방식은 말하지 않음)",
+        "sample": [
+          "다녀오겠단 말을 못 했어. 그게 제일 마음에 걸려."
+        ],
+        "piece3_condition": "see 09 11.1 sc_yeongsan_on_hyungsal_20",
+        "piece3_key": "sc_yeongsan_on_hyungsal_20"
+      }
+    },
+    {
+      "id": "enm_sangmun",
+      "name": "상문",
+      "tier": "common",
+      "source_tag": "무속",
+      "lore_confidence": "A",
+      "canvas_px": 40,
+      "hit_radius_u": 0.34,
+      "han_base": 30,
+      "speed_u": 1.8,
+      "accel_time_s": 0.15,
+      "contact_dmg": 7,
+      "contact_cd_s": 0.5,
+      "mass": 1.2,
+      "xp": 4,
+      "first_spawn": "08:00",
+      "archetype": "arc_procession",
+      "flying": false,
+      "status_profile": "common",
+      "on_contact_player": "st_sangmunsal",
+      "giseak_behavior": {
+        "disable": [
+          "debuff"
+        ],
+        "stop_procession": true
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "cleanse_aura",
+        "radius_u": 2,
+        "duration_s": 3,
+        "removes": "st_sangmunsal",
+        "immunity_s": 5
+      },
+      "spawn_groups": [
+        "sg_line"
+      ],
+      "line_count": {
+        "before_12": 5,
+        "from_12": 7
+      },
+      "special_anims": [],
+      "sayeon": {
+        "premise": "상여 행렬이 끝난 뒤에도 따라가지 못한 넋",
+        "sample": [
+          "상여 소리가 끝났는데, 나는 못 따라갔네."
+        ],
+        "piece3_condition": "see 09 11.1 sc_sangmun_while_cursed_10",
+        "piece3_key": "sc_sangmun_while_cursed_10"
+      }
+    },
+    {
+      "id": "enm_subi",
+      "name": "수비",
+      "tier": "common",
+      "source_tag": "무속",
+      "lore_confidence": "A",
+      "lore": "[무속] 굿판에 큰 신을 따라 몰려드는 잡귀. 뒷전에서 풀어 먹여 보낸다",
+      "canvas_px": 24,
+      "hit_radius_u": 0.22,
+      "han_base": 6,
+      "speed_u": 3.0,
+      "accel_time_s": 0.15,
+      "contact_dmg": 3,
+      "contact_cd_s": 0.5,
+      "mass": 0.3,
+      "xp": 0.5,
+      "first_spawn": "12:00",
+      "archetype": "arc_swarm",
+      "flying": false,
+      "status_profile": "common",
+      "giseak_behavior": {
+        "disable": [],
+        "leave_swarm": true,
+        "cohesion": 0
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "dwitjeon_bank",
+        "drain_bonus_pctp": 1,
+        "cap_pctp": 50
+      },
+      "spawn_groups": [
+        "sg_swarm",
+        "sg_escort"
+      ],
+      "special_anims": [],
+      "sayeon": {
+        "premise": "신령을 따라다녔지만 상을 받아 본 적 없는 무리",
+        "sample": [
+          "우리도 한 상 받아 본 적이 없어서."
+        ],
+        "piece3_condition": "see 09 11.1 sc_subi_dwitjeon_ring_30",
+        "piece3_key": "sc_subi_dwitjeon_ring_30"
+      }
+    },
+    {
+      "id": "enm_hwehwe_gwisin",
+      "name": "훼훼귀신",
+      "tier": "common",
+      "source_tag": "각색",
+      "lore_confidence": "C",
+      "lore": "[각색] 이 게임의 잡귀. (\"옛 문헌에 전한다\" 같은 단정 금지, 출전 표기 안 함)",
+      "canvas_px": 48,
+      "hit_radius_u": 0.34,
+      "han_base": 34,
+      "speed_u": 2.6,
+      "speed_alt_u": {
+        "orbit": 3.0
+      },
+      "accel_time_s": 0.15,
+      "contact_dmg": 4,
+      "contact_cd_s": 0.5,
+      "mass": 0.8,
+      "xp": 5,
+      "first_spawn": "12:30",
+      "archetype": "arc_orbit",
+      "flying": false,
+      "status_profile": "common",
+      "aura": {
+        "radius_u": 3.0,
+        "stack_per_s_per_entity": 1,
+        "stack_cap_per_s": 3,
+        "stacks_to_trigger": 3,
+        "status": "st_gawi",
+        "decay_per_s_outside": 1
+      },
+      "giseak_behavior": {
+        "disable": [
+          "aura"
+        ],
+        "stop_orbit": true
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "clear_nullim",
+        "immunity_s": 2
+      },
+      "spawn_groups": [
+        "sg_scatter",
+        "sg_pincer"
+      ],
+      "special_anims": [
+        "press:2"
+      ],
+      "sayeon": {
+        "premise": "혼자 잠드는 밤이 길었던 사람",
+        "sample": [
+          "혼자 자는 밤이 너무 길었어."
+        ],
+        "piece3_condition": "see 09 11.1 sc_hwehwe_pinned_10",
+        "piece3_key": "sc_hwehwe_pinned_10"
+      }
+    }
+  ],
+  "minions": [
+    {
+      "id": "enm_dokkaebi_bul__small",
+      "name": "작은 도깨비불",
+      "tier": "minion",
+      "new": true,
+      "parent": "enm_dokkaebi_bul",
+      "canvas_px": 24,
+      "hit_radius_u": 0.2,
+      "han": "parent_han_max * 0.3",
+      "speed_u": 3.1,
+      "contact_dmg": 3,
+      "mass": 0.3,
+      "xp": 0.5,
+      "flying": true,
+      "lifetime_s": 20,
+      "split": false,
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "deungbul_count_bonus",
+        "add": 1
+      },
+      "speed_note": "3.1*1.15=3.57 <= common cap 3.6"
+    },
+    {
+      "id": "mboss_daegwi__sogwi",
+      "name": "소귀",
+      "tier": "minion",
+      "new": true,
+      "parent": "mboss_daegwi",
+      "canvas_px": 32,
+      "hit_radius_u": 0.26,
+      "han_base": 10,
+      "speed_u": 3.0,
+      "contact_dmg": 4,
+      "mass": 0.4,
+      "xp": 0.5,
+      "archetype": "arc_swarm",
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "standard",
+        "on_parent": "parent han_max -1% (cap -30%)"
+      }
+    },
+    {
+      "id": "boss_wongyeol__gohon",
+      "name": "고혼",
+      "tier": "minion",
+      "new": true,
+      "parent": "boss_wongyeol",
+      "canvas_px": 32,
+      "hit_radius_u": 0.28,
+      "han_base": 14,
+      "speed_u": 2.6,
+      "contact_dmg": 5,
+      "mass": 0.6,
+      "xp": 1,
+      "archetype": "arc_chase",
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "type": "standard",
+        "on_parent_sal": "parent han_max -0.2% (cap -20%)",
+        "on_parent_han": "every 10 -> next window +2s"
+      }
+    },
+    {
+      "id": "mboss_gumiho__holin_yeongga",
+      "name": "홀린 영가",
+      "tier": "minion",
+      "new": true,
+      "parent": "mboss_gumiho",
+      "han": null,
+      "speed_u": 2.0,
+      "contact_dmg": 0,
+      "red_weapons": "pass_through_no_effect",
+      "return_triggers": [
+        "white weapon hit",
+        "yeongga aura",
+        "gildakkeum ring"
+      ],
+      "on_reach_parent": {
+        "parent_heal_pct": 3,
+        "neok": 0
+      }
+    },
+    {
+      "id": "mboss_dokkaebi__heosang",
+      "name": "도깨비 허상",
+      "tier": "minion",
+      "new": true,
+      "parent": "mboss_dokkaebi",
+      "canvas_px": 128,
+      "hit_radius_u": 1.0,
+      "han_fixed": 1,
+      "speed_u": 2.4,
+      "contact_dmg": 8,
+      "mass": 10,
+      "xp": 0,
+      "tell": "no shadow"
+    },
+    {
+      "id": "boss_imugi__segment",
+      "name": "이무기 몸마디",
+      "tier": "boss_part",
+      "new": true,
+      "parent": "boss_imugi",
+      "canvas_px": 64,
+      "hit_radius_u": 0.7,
+      "han": "shared; detached = 3% of boss han_max",
+      "speed_u_detached": 4.0,
+      "contact_dmg": {
+        "sal": 18,
+        "han": 8,
+        "detached": 14
+      },
+      "mass": "inf",
+      "reattach_after_s": 20
+    },
+    {
+      "id": "enm_dalgyal_gwisin__child",
+      "name": "달걀귀신 (아이)",
+      "tier": "common",
+      "new": true,
+      "variant_of": "enm_dalgyal_gwisin",
+      "stats": "same as parent",
+      "spawn_share": 0.08,
+      "spawn_share_max": 0.1,
+      "face": "child",
+      "toechi_vfx": "ink_scatter (no red radial rupture, no sal grain burst visual; grain still placed)",
+      "excluded_from": [
+        "wongwi silhouettes",
+        "boss split summon",
+        "tutorial ring 01:30",
+        "sg_giseak_demo"
+      ],
+      "first_haewon_forced": "sm_first_haewon uses this variant once per profile",
+      "rating_note": "see 14 risk register request (GRAC/ESRB/PEGI pre-review)"
+    }
+  ],
+  "elites": [
+    {
+      "id": "elite_eodukssini",
+      "name": "어둑시니",
+      "tier": "elite",
+      "source_tag": "각색",
+      "lore_confidence": "C",
+      "lore": "[각색] 어두운 데서 생긴다는 이름의 귀신. 볼수록 커진다는 성질은 이 게임에서 붙인 것이다.",
+      "canvas_px": [
+        64,
+        192
+      ],
+      "hit_radius_u": "0.6 * S",
+      "han_base": null,
+      "size_gauge": {
+        "S0": 1.0,
+        "min_vanish": 0.3,
+        "max": 3.0
+      },
+      "speed_u": "clamp(1.4 + 0.4*(S-1), 1.0, 2.2)",
+      "contact_dmg": "10 * S",
+      "mass": 4,
+      "xp": 20,
+      "first_spawn": "07:30",
+      "flying": true,
+      "auto_target_exempt": true,
+      "status_profile": "elite",
+      "toechi_path": false,
+      "growth": {
+        "tick_hz": 10,
+        "cone_half_angle_deg": 45,
+        "cone_range_u": 14,
+        "cone_grow_per_s": 0.04,
+        "outside_shrink_per_s": 0.08,
+        "watcher_shrink_per_s": 0.12,
+        "watcher_line_dist_u": 1.0,
+        "watcher_cheondo_after_s": 2.0,
+        "red_hit_grow": 0.03,
+        "white_or_light_hit_shrink": 0.02,
+        "per_weapon_hit_icd_s": 0.25,
+        "lit_grow_mult": 0.5,
+        "ring_shrink": 0.2,
+        "union_chilseong_reflect_shrink": 0.15
+      },
+      "stages": {
+        "dark_at_S": 2.0,
+        "dark_effect": {
+          "player_light_radius_pct": -30,
+          "enemy_brightness_outside_light_pct": -40
+        },
+        "engulf": {
+          "at_S": 3.0,
+          "after_cumulative_s": 10,
+          "every_s": 5,
+          "telegraph_s": 0.8,
+          "dist_u": 4,
+          "speed_u": 6.0,
+          "contact_dmg": 30
+        }
+      },
+      "silence_drop": {
+        "duck_start_S": 0.38,
+        "duck_requires_decreasing_s": 0.3,
+        "duck_db": -30,
+        "duck_fade_s": 0.25,
+        "cancel_above_S": 0.45,
+        "cancel_fade_s": 0.3,
+        "events": [
+          "EOD_SILENCE_BEGIN",
+          "EOD_SILENCE_CANCEL",
+          "EOD_SILENCE_DROP"
+        ],
+        "subtitle": "별거 아니네",
+        "subtitle_s": 2.0
+      },
+      "vanish_result": {
+        "as": "elite_haewon"
+      },
+      "spawn": {
+        "first": "07:30",
+        "roll_every_s": 120,
+        "p": "clamp(0.35 + 0.005*salgi - 0.08*lit_deungbul, 0.05, 0.90)",
+        "full_size_per_run_max": 2,
+        "after_full_cap": "spawn elite_eodukssini__small instead",
+        "concurrent_cap": 1,
+        "concurrent_cap_salgi50": 2,
+        "position": "player move dir front 9u, prefer dark",
+        "telegraph_s": 1.5,
+        "first_meet_hint_gongsu": "보지 마라. 등을 돌려라.",
+        "counts_toward_elite_cap": false,
+        "veteran_rule": {
+          "profile_silence_drops_gte": 3,
+          "red_hit_growth": 0.015
+        },
+        "counter_build_reward": {
+          "if_owned_any": [
+            "union_chilseong_myeonggyeonggeom",
+            "wpn_myeongdu",
+            "evo_irwol_myeongdu"
+          ],
+          "neokham_grade_step": 1,
+          "spawn_weight_unchanged": true
+        }
+      },
+      "sayeon": [
+        "보아 주면 커지고, 미워하면 더 커졌다.",
+        "사람들이 무서워할수록 배가 불렀다. 배가 부를수록 더 외로웠다.",
+        "별거 아니네… 그래, 나는 별거 아니었어. 그게 이렇게 편할 줄이야."
+      ]
+    },
+    {
+      "id": "elite_eodukssini__small",
+      "name": "작은 어둑시니",
+      "tier": "elite",
+      "new": true,
+      "variant_of": "elite_eodukssini",
+      "size_start": 0.6,
+      "vanish_at": 0.4,
+      "silence_drop": false,
+      "vanish_sfx": "short deong (EOD_SMALL_VANISH)",
+      "growth": "same as parent",
+      "reward": "elite haewon standard (neokham)",
+      "uses": [
+        "salgi extra spawns",
+        "3rd+ spawn of run",
+        "08 timeline 17:30 slots"
+      ],
+      "xp": 10
+    },
+    {
+      "id": "elite_geogu_gwi",
+      "name": "거구귀",
+      "tier": "elite",
+      "source_tag": "각색",
+      "lore_confidence": "C",
+      "lore": "[각색] 이 게임의 잡귀. (\"옛 문헌에 전한다\" 같은 단정 금지, 출전 표기 안 함)",
+      "canvas_px": 96,
+      "hit_radius_u": 0.9,
+      "han_base": 420,
+      "speed_u": 1.4,
+      "contact_dmg": 12,
+      "mass": 5,
+      "xp": 30,
+      "first_spawn": "07:00",
+      "status_profile": "elite",
+      "patterns": [
+        {
+          "id": "geogu_inhale",
+          "telegraph_s": 1.0,
+          "cooldown_s": 7,
+          "trigger_dist_u": 8,
+          "cone_deg": 70,
+          "range_u": 7,
+          "duration_s": 2.5,
+          "pull_u": {
+            "player": 2.2,
+            "yeongga": 6.0,
+            "common": 3.0
+          },
+          "mouth_dmg": 15,
+          "swallow_cap": 8,
+          "gulp_stun_s": 1.2,
+          "gulp_damage_taken_mult": 1.5,
+          "sated_at": 5,
+          "sated_speed_pct": 20
+        }
+      ],
+      "giseak_override": {
+        "inhale_cd_s": 10,
+        "inhale_telegraph_s": 1.2
+      },
+      "toechi_result": {
+        "swallowed": "cheondo_each_neok_1"
+      },
+      "haewon_result": {
+        "swallowed": "return_to_procession_lifespan_30"
+      },
+      "spawn_groups": [
+        "sg_elite_solo",
+        "sg_escort"
+      ],
+      "sayeon": [
+        "목구멍이 하늘까지 닿아도 채워지지 않았다.",
+        "다 삼키면 아무도 날 떠나지 않을 줄 알았다.",
+        "뱉어 줄게. 다 데려가."
+      ]
+    },
+    {
+      "id": "elite_bulgasari",
+      "name": "불가사리",
+      "tier": "elite",
+      "source_tag": "전승",
+      "lore_confidence": "A",
+      "canvas_px": [
+        64,
+        128
+      ],
+      "hit_radius_u": [
+        0.7,
+        1.2
+      ],
+      "han_base": 380,
+      "speed_u": 1.8,
+      "contact_dmg": 12,
+      "mass": 4,
+      "xp": 30,
+      "first_spawn": "07:00",
+      "status_profile": "elite",
+      "metal_absorb": {
+        "projectile_tag": "metal",
+        "damage": 0,
+        "consume_projectile": true,
+        "size_pct": 2,
+        "han_max_pct": 1.5,
+        "han_max_cap_pct": 100,
+        "size_cap_mult": 1.75,
+        "metal_melee_dmg_mult": 0.5
+      },
+      "fire_mult": 2.0,
+      "fire_ignores_absorb": true,
+      "move_growth": {
+        "per_u": 4,
+        "size_pct": 1,
+        "cap_mult": 1.6
+      },
+      "eat_caltrops": {
+        "seek_radius_u": 5,
+        "weight": 1.5,
+        "size_pct": 3,
+        "han_max_pct": 2
+      },
+      "assumed_tags": {
+        "metal": [
+          "wpn_sinkal",
+          "evo_sinjangkal",
+          "wpn_samjichang",
+          "evo_saseulchang",
+          "wpn_sainsageom",
+          "wpn_gakgung",
+          "wpn_jangchang",
+          "evo_pajinchang",
+          "wpn_cheoljillyeo"
+        ],
+        "fire": [
+          "evo_jusahwajeon",
+          "psv_jusa",
+          "deity_jowang"
+        ]
+      },
+      "patterns": [
+        {
+          "id": "bulgasari_swipe",
+          "telegraph_s": 0.7,
+          "trigger_dist_u": 3,
+          "cone_deg": 120,
+          "range_u": 2.5,
+          "dmg": "18*C(m)",
+          "cooldown_s": 3
+        }
+      ],
+      "giseak_override": {
+        "swipe_cd_s": 5,
+        "metal_absorb": true
+      },
+      "toechi_result": {
+        "yeopjeon_bonus_pct": 50,
+        "yeopjeon_bonus_cap": 10
+      },
+      "haewon_result": {
+        "spawn": {
+          "pick_gongmul": 2
+        }
+      },
+      "spawn_groups": [
+        "sg_elite_solo",
+        "sg_escort"
+      ],
+      "sayeon": [
+        "나는 밥알로 빚어졌다. 누군가 굶주린 손으로 꼭꼭 뭉쳐서.",
+        "바늘을 먹고, 숟가락을 먹고, 솥을 먹었다. 배고픈 사람들 대신.",
+        "불로 녹여 주면, 다시 쌀이 될 수 있을까."
+      ]
+    },
+    {
+      "id": "elite_dueoksini",
+      "name": "두억시니",
+      "tier": "elite",
+      "source_tag": "전승",
+      "lore_confidence": "A",
+      "lore": "[전승] 모질고 사납다고 전하는 잡귀. 생김새는 전하지 않는다. 게임의 모습은 [각색]",
+      "canvas_px": 96,
+      "hit_radius_u": 0.8,
+      "han_base": 700,
+      "speed_u": 1.6,
+      "contact_dmg": 14,
+      "mass": 8,
+      "xp": 35,
+      "first_spawn": "12:00",
+      "status_profile": "elite",
+      "patterns": [
+        {
+          "id": "dueok_slam",
+          "telegraph_s": 0.9,
+          "trigger_dist_u": 3.0,
+          "cooldown_s": 4,
+          "radius_u": 2.2,
+          "dmg": "25*C(m)",
+          "knockback_u": 2,
+          "shake_px": 3,
+          "shake_s": 0.25,
+          "recover_s": 2.0,
+          "recover_damage_taken_mult": 1.25,
+          "hits_commons": true,
+          "commons_floor_han": 1
+        },
+        {
+          "id": "dueok_slam_second",
+          "telegraph_s": 0.7,
+          "phase_cond": "han<=50%",
+          "delay_s": 0.6,
+          "radius_u": 3.0,
+          "dmg": "25*C(m)"
+        }
+      ],
+      "giseak_override": {
+        "second_slam": false,
+        "slam_telegraph_s": 1.1
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "stun_commons_radius_u": 6,
+        "stun_s": 1.0
+      },
+      "spawn_groups": [
+        "sg_elite_solo",
+        "sg_escort"
+      ],
+      "sayeon": [
+        "누가 내 머리를 짓눌렀다. 그래서 나도 남의 머리를 눌렀다.",
+        "평생 땅만 보고 살았다. 하늘이 있는 줄도 몰랐다.",
+        "고개를 드니, 하늘이 이렇게 넓었구나."
+      ]
+    },
+    {
+      "id": "elite_yeokgwi_ttae",
+      "name": "역귀 떼 (疫鬼)",
+      "alias_ref": "canon 8.1.1 alias table / data/canon_ids.json aliases (D-03)",
+      "tier": "elite",
+      "source_tag": "각색",
+      "lore_confidence": "B",
+      "lore": "손님(별상)을 따라 들어온 잡귀잡신을 뒷전에서 풀어먹여 보내는 굿의 문법(A)에, 역병을 퍼뜨리는 잡귀 무리라는 게임 각색을 더함. 손님신 본체가 아님",
+      "canvas_px": 80,
+      "hit_radius_u": 0.5,
+      "han_base": 360,
+      "speed_u": 2.0,
+      "contact_dmg": 8,
+      "mass": 2,
+      "xp": 30,
+      "first_spawn": "07:00",
+      "stage_only": [
+        "stage_guksadang"
+      ],
+      "status_profile": "elite",
+      "archetype_like": "arc_ranged",
+      "visual": "먹빛 누더기 잡귀 우두머리 + 등 뒤 작은 잡귀 그림자 3. 붉은 갓·화려한 손님 옷 금지",
+      "patterns": [
+        {
+          "id": "yeokgwi_throw",
+          "telegraph_s": 0.8,
+          "every_s": 5,
+          "band_u": [
+            5,
+            7
+          ],
+          "lead_s": 0.5,
+          "flight_s": 0.8,
+          "zone": "obj_yeokbyeong_jangpan",
+          "zone_max_per_entity": 4
+        }
+      ],
+      "daejeop": {
+        "cond": "giseak and pick_gongmul within 3u",
+        "walk_speed_u": 2.5,
+        "eat_s": 1.5,
+        "result": "HAEWON_DRAIN",
+        "bonus_ref": "09 (neok bonus value)"
+      },
+      "giseak_override": {
+        "throw": false,
+        "daejeop": true
+      },
+      "toechi_result": {
+        "spawn_zone": "obj_yeokbyeong_jangpan",
+        "omen": "boss_yeokryeo sal P2 yeokgwi summon +1 (cap +2)"
+      },
+      "haewon_result": {
+        "remove_own_zones": true,
+        "omen": "boss_yeokryeo han start knots -1 (cap -2)"
+      },
+      "spawn_groups": [
+        "sg_elite_solo",
+        "sg_escort",
+        "sg_haengcha_trail"
+      ],
+      "sayeon": [
+        "손님 가시는 길을 따라왔을 뿐이오.",
+        "아무도 우리 몫의 상은 차리지 않았소. 그래서 열이 되어 머물렀소.",
+        "한 그릇 잘 먹었소. 이 마을 앞은 조용히 지나가겠소."
+      ]
+    },
+    {
+      "id": "elite_wongwi",
+      "name": "원귀",
+      "tier": "elite_system",
+      "source_tag": "시스템",
+      "lore_confidence": null,
+      "from_species": "top-3 enm_* by toechi count this run",
+      "multipliers": "scaling.wongwi",
+      "status_profile": "elite",
+      "event": {
+        "thresholds": [
+          25,
+          50,
+          75
+        ],
+        "lift_s": 1.5,
+        "silhouette_ring_u": 9,
+        "activate_after_s": 2.5,
+        "count": "clamp(round(N_alg/10), 2, 20)",
+        "N_alg": "weighted sal_algaengi on map",
+        "clears_map_algaengi": true,
+        "skip_if_no_toechi": true
+      },
+      "modifier": {
+        "ignore_offerings": true,
+        "ignore_dwitjeon": true,
+        "keep_species_behaviors": true
+      },
+      "cap": 20,
+      "cap_muhan": 30,
+      "visual": "original sprite + red eyes 2px + ink smoke shader",
+      "toechi_result": {
+        "as": "elite_toechi"
+      },
+      "haewon_result": {
+        "as": "elite_haewon",
+        "neokduri_pool": "returned_4_lines"
+      },
+      "speed_cap_u": 3.8
+    }
+  ],
+  "midboss_common": {
+    "arrival": "10:00",
+    "intro_s": 2.0,
+    "spawn_dist_u": 10,
+    "status_profile": "mboss",
+    "kwanmang_during_trial": true,
+    "teleport_if_dist_u": 25,
+    "teleport_to_u": 10,
+    "teleport_telegraph_s": 0.8,
+    "withdraw_at": "18:00",
+    "withdraw_salgi": 2,
+    "toechi": {
+      "orb": 1.0,
+      "yeopjeon_ref": "meta_economy.json#income.yeopjeon_sources.mboss_toechi",
+      "box_gilhyung": 1,
+      "sal_visual": 10,
+      "salgi": 5
+    },
+    "haewon": {
+      "orb": 0.6,
+      "neok_ref": "meta_economy.json#income.neok_sources.mboss_haewon",
+      "box_neokham": 1,
+      "sinmyeong_pct": 10
+    },
+    "elite_timer_paused": true,
+    "ttk_target_s": [
+      50,
+      70
+    ],
+    "dps_basis": "D(10..11.5) avg ~220",
+    "dps_measured_2026_11_24": "봇(붙어 싸움) 10:00 도깨비 대상 49~120, 중앙 ~67. 도깨비·대귀 han_fixed 를 이에 맞춰 낮춤(balance_targets ttk_midboss.adjust_2026_11_24)"
+  },
+  "midbosses": [
+    {
+      "id": "mboss_daegwi",
+      "name": "대귀",
+      "tier": "mboss",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "stage_pool": [
+        "stage_guksadang",
+        "stage_jindo_ssitgim"
+      ],
+      "canvas_px": 128,
+      "hit_radius_u": 1.2,
+      "han_fixed": 11500,
+      "speed_u": 1.8,
+      "contact_dmg": 18,
+      "mass": 10,
+      "xp": 150,
+      "phases": [
+        {
+          "id": "P1",
+          "from": 1.0,
+          "to": 0.6
+        },
+        {
+          "id": "P2",
+          "from": 0.6,
+          "to": 0.35
+        },
+        {
+          "id": "P3",
+          "from": 0.35,
+          "to": 0.0,
+          "giseak": true
+        }
+      ],
+      "phase_transition": {
+        "invuln_s": 1.0,
+        "push_radius_u": 3,
+        "clamp_at_boundary": true
+      },
+      "patterns": {
+        "P1": [
+          {
+            "id": "daegwi_summon",
+            "telegraph_s": 0.6,
+            "every_s": 8,
+            "count": 6,
+            "cap": 30,
+            "minion": "mboss_daegwi__sogwi",
+            "ring_u": 3
+          },
+          {
+            "id": "daegwi_wonjin",
+            "telegraph_s": 0.0,
+            "orbit_u": 3,
+            "orbit_speed_u": 2.5
+          },
+          {
+            "id": "daegwi_dolgyeok",
+            "telegraph_s": 1.0,
+            "every_s": 12,
+            "minion_speed_u": 5.0,
+            "duration_s": 1.5
+          },
+          {
+            "id": "daegwi_swing",
+            "telegraph_s": 0.8,
+            "trigger_dist_u": 3,
+            "cone_deg": 90,
+            "range_u": 3,
+            "dmg": 20,
+            "knockback_u": 1.5,
+            "cooldown_s": 4
+          }
+        ],
+        "P2": [
+          {
+            "id": "daegwi_summon",
+            "telegraph_s": 0.6,
+            "every_s": 6,
+            "count": 8,
+            "cap": 45
+          },
+          {
+            "id": "daegwi_hagikjin",
+            "telegraph_s": 1.5,
+            "wing_deg": 120,
+            "radius_u": 5,
+            "close_trigger_u": 3,
+            "close_s": 2,
+            "enclose_radius_u": 4
+          },
+          {
+            "id": "daegwi_charge",
+            "telegraph_s": 1.0,
+            "width_u": 1.5,
+            "length_u": 7,
+            "speed_u": 4.5,
+            "duration_s": 1.5,
+            "dmg": 25
+          },
+          {
+            "id": "daegwi_swing",
+            "telegraph_s": 0.8,
+            "trigger_dist_u": 3,
+            "cone_deg": 90,
+            "range_u": 3,
+            "dmg": 20,
+            "cooldown_s": 4
+          }
+        ],
+        "P3": [
+          {
+            "id": "daegwi_swing",
+            "telegraph_s": 1.0,
+            "trigger_dist_u": 3,
+            "cone_deg": 90,
+            "range_u": 3,
+            "dmg": 20,
+            "cooldown_s": 5
+          }
+        ]
+      },
+      "p3_behavior": {
+        "command": false,
+        "minions": "leaderless wander x0.7",
+        "self_speed_u": 1.2,
+        "anim": "kneel"
+      },
+      "hanpuri": {
+        "cond": "each sogwi haewon",
+        "effect": "han_max -1%",
+        "cap_pct": 30
+      },
+      "toechi_result": {
+        "minions_berserk_s": 15,
+        "minion_speed_pct": 30
+      },
+      "haewon_result": {
+        "all_minions_haewon": true,
+        "procession_fill_to_cap": true
+      },
+      "sayeon": [
+        "나를 따르던 것들은 다 길 잃은 떠돌이들이었다.",
+        "대장이 되면 아무도 버려지지 않을 줄 알았다.",
+        "너희 먼저 가거라. 나는 맨 뒤에서 따라가마."
+      ]
+    },
+    {
+      "id": "mboss_dokkaebi",
+      "name": "도깨비",
+      "tier": "mboss",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "stage_pool": [
+        "stage_guksadang",
+        "stage_east_sea_byeolsin"
+      ],
+      "canvas_px": 128,
+      "hit_radius_u": 1.1,
+      "han_fixed": 8000,
+      "speed_u": 2.4,
+      "contact_dmg": 18,
+      "mass": 10,
+      "xp": 150,
+      "phases": [
+        {
+          "id": "P1",
+          "from": 1.0,
+          "to": 0.6
+        },
+        {
+          "id": "P2",
+          "from": 0.6,
+          "to": 0.35
+        },
+        {
+          "id": "P3",
+          "from": 0.35,
+          "to": 0.0,
+          "giseak": true
+        }
+      ],
+      "phase_transition": {
+        "invuln_s": 1.0,
+        "push_radius_u": 3,
+        "clamp_at_boundary": true
+      },
+      "art_rule": "no twin horns / tiger loincloth / iron club (avoid oni); hornless or single horn, hanbok trousers, wooden club",
+      "patterns": {
+        "P1": [
+          {
+            "id": "dok_ttukttak",
+            "telegraph_s": 0.8,
+            "hits": 3,
+            "reaim_each": true,
+            "radius_u": 1.5,
+            "dmg": 22,
+            "ring": {
+              "radius_to_u": 5,
+              "time_s": 0.6,
+              "thickness_u": 0.4,
+              "dmg": 12,
+              "gaps": 4,
+              "gap_deg": 30
+            }
+          },
+          {
+            "id": "dok_fake_coin",
+            "telegraph_s": 0.5,
+            "every_s": 14,
+            "count": 12,
+            "ring_u": [
+              2,
+              5
+            ],
+            "lifetime_s": 8,
+            "pickup": "pick_gajja_yeopjeon"
+          }
+        ],
+        "P2": [
+          {
+            "id": "dok_heosang",
+            "telegraph_s": 0.8,
+            "count": 2,
+            "shuffle_s": 6,
+            "minion": "mboss_dokkaebi__heosang",
+            "decoy_dmg": 8
+          },
+          {
+            "id": "dok_ssireum",
+            "telegraph_s": 0.0,
+            "every_s": 15,
+            "window_s": 4.0,
+            "ring_u": 2,
+            "left_sector_deg": 90,
+            "success": {
+              "stun_s": 5,
+              "damage_taken_mult": 1.5,
+              "han_cut_pct": 10
+            },
+            "fail": {
+              "knockback_u": 3,
+              "dmg": 10
+            },
+            "hint": "left leg tremble + straw-shoe prints",
+            "first_meet_gongsu": "왼다리를 걸어라."
+          },
+          {
+            "id": "dok_ttukttak",
+            "telegraph_s": 0.8,
+            "hits": 3,
+            "radius_u": 1.5,
+            "dmg": 22
+          }
+        ],
+        "P3": [
+          {
+            "id": "dok_flee",
+            "telegraph_s": 0.0,
+            "speed_u": 3.6,
+            "teleport_every_s": 5,
+            "teleport_u": 6,
+            "teleport_telegraph_s": 0.5
+          },
+          {
+            "id": "dok_fake_coin",
+            "telegraph_s": 0.5,
+            "every_s": 20,
+            "count": 12
+          }
+        ]
+      },
+      "fake_coin_rules": {
+        "not_magnetized": true,
+        "spin_speed_mult": 0.5,
+        "tell_luck_threshold": 130,
+        "pickup_radius_u": 0.4,
+        "on_pickup": {
+          "yeongga_charmed": 3,
+          "walk_speed_u": 2.0,
+          "orbit_parent_u": 1.5
+        },
+        "on_parent_haewon": "return, lifespan 30",
+        "on_parent_toechi": "cheondo neok+1 each"
+      },
+      "hanpuri": {
+        "cond": "ssireum success x2",
+        "effect": {
+          "telegraph_add_s": 0.3,
+          "fake_coin": false,
+          "p3_flee_speed_u": 2.8
+        }
+      },
+      "toechi_result": {
+        "type": "standard"
+      },
+      "haewon_result": {
+        "yeopjeon_rain": 20,
+        "rain_radius_u": 4,
+        "extra_box": "box_gilhyung"
+      },
+      "sayeon": [
+        "부지깽이로 태어나 백 년 동안 아궁이 불을 지폈다.",
+        "씨름 한 판 져 주는 게 그렇게 어렵더냐. 아무도 나랑 놀아 주지 않았다.",
+        "뚝딱. 이건 진짜다. 받아 둬."
+      ]
+    },
+    {
+      "id": "mboss_gumiho",
+      "name": "구미호",
+      "tier": "mboss",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "stage_pool": [
+        "stage_jindo_ssitgim",
+        "stage_jeju_chilmeori"
+      ],
+      "canvas_px": 112,
+      "hit_radius_u": 1.0,
+      "han_fixed": 12100,
+      "speed_u": 2.8,
+      "contact_dmg": 16,
+      "mass": 8,
+      "xp": 150,
+      "phases": [
+        {
+          "id": "P1",
+          "from": 1.0,
+          "to": 0.6
+        },
+        {
+          "id": "P2",
+          "from": 0.6,
+          "to": 0.35
+        },
+        {
+          "id": "P3",
+          "from": 0.35,
+          "to": 0.0,
+          "giseak": true
+        }
+      ],
+      "phase_transition": {
+        "invuln_s": 1.0,
+        "push_radius_u": 3,
+        "clamp_at_boundary": true
+      },
+      "patterns": {
+        "P1": [
+          {
+            "id": "gumiho_foxfire",
+            "telegraph_s": 0.8,
+            "every_s": 8,
+            "count": 9,
+            "speed_u": 2.5,
+            "turn_deg_s": 60,
+            "life_s": 5,
+            "dmg": 10
+          },
+          {
+            "id": "gumiho_tailsweep",
+            "telegraph_s": 0.8,
+            "trigger_dist_u": 3.5,
+            "arc_deg": 270,
+            "radius_u": 3.5,
+            "dmg": 18,
+            "knockback_u": 2,
+            "cooldown_s": 5
+          },
+          {
+            "id": "gumiho_fake_offering",
+            "telegraph_s": 0.5,
+            "every_s": 16,
+            "count": 6,
+            "ring_u": [
+              3,
+              6
+            ],
+            "lifetime_s": 10,
+            "pickup": "pick_gajja_gongmul"
+          }
+        ],
+        "P2": [
+          {
+            "id": "gumiho_foxfire",
+            "telegraph_s": 0.8,
+            "every_s": 8,
+            "count": 18,
+            "volleys": 2,
+            "speed_u": 2.5,
+            "dmg": 10
+          },
+          {
+            "id": "gumiho_disguise",
+            "telegraph_s": 0.8,
+            "every_s": 20,
+            "decoys": 3,
+            "radius_u": 6,
+            "reveal_after_s": 6,
+            "real_tell": "9-tail shadow",
+            "light_reveal_stun_s": 2
+          },
+          {
+            "id": "gumiho_tailsweep",
+            "telegraph_s": 0.8,
+            "radius_u": 3.5,
+            "dmg": 18
+          }
+        ],
+        "P3": [
+          {
+            "id": "gumiho_bead",
+            "telegraph_s": 0.0,
+            "spawn": "pick_yeou_guseul",
+            "dist_u": 4,
+            "lifetime_s": 8
+          },
+          {
+            "id": "gumiho_foxfire",
+            "telegraph_s": 1.0,
+            "every_s": 12,
+            "count": 9,
+            "dmg": 10
+          }
+        ]
+      },
+      "charm_rules": {
+        "on_fake_pickup": {
+          "yeongga": 3,
+          "become": "mboss_gumiho__holin_yeongga"
+        },
+        "agwi_eats_fake": "agwi enters giseak"
+      },
+      "hanpuri": {
+        "cond": "pick up pick_yeou_guseul within 8s",
+        "effect": {
+          "no_maetim_this_fight": true,
+          "run_jeomgwae_add": 20,
+          "telegraph_add_s": 0.3
+        },
+        "fail": {
+          "han_heal_pct": 10,
+          "not_above": 0.6
+        }
+      },
+      "toechi_result": {
+        "charmed": "cheondo neok+1 each"
+      },
+      "haewon_result": {
+        "charmed": "return all",
+        "neok_bonus": 10
+      },
+      "sayeon": [
+        "천 년을 채우면 사람이 될 수 있다 했다.",
+        "사람이 되고 싶었던 게 아니다. 사람 곁에 있고 싶었다.",
+        "구슬은 네가 가져라. 나보다 잘 쓰겠지."
+      ]
+    },
+    {
+      "id": "mboss_gangcheori",
+      "name": "강철이",
+      "tier": "mboss",
+      "source_tag": "전승",
+      "lore_confidence": "A",
+      "lore": "[전승] \"강철이 간 데는 가을도 봄 같다.\" 이수광은 『지봉유설』(1614)에 마을 노인의 말을 빌려, 강철이 사는 곳 몇 리 안은 풀과 곡식이 모두 말라 죽는다고 적었다. [각색] 용의 몸과 가뭄을 부르는 힘은 이 게임의 해석이다. (출전: 지봉유설 권16; 성호사설 '독룡' 설은 쓰지 않음, C-33)",
+      "stage_pool": [
+        "stage_east_sea_byeolsin",
+        "stage_myeongbu"
+      ],
+      "canvas_px": 128,
+      "hit_radius_u": 1.0,
+      "han_fixed": 12800,
+      "speed_u": 2.0,
+      "contact_dmg": 20,
+      "mass": "inf",
+      "xp": 150,
+      "flying": true,
+      "phases": [
+        {
+          "id": "P1",
+          "from": 1.0,
+          "to": 0.6
+        },
+        {
+          "id": "P2",
+          "from": 0.6,
+          "to": 0.35
+        },
+        {
+          "id": "P3",
+          "from": 0.35,
+          "to": 0.0,
+          "giseak": true
+        }
+      ],
+      "phase_transition": {
+        "invuln_s": 1.0,
+        "push_radius_u": 3,
+        "clamp_at_boundary": true
+      },
+      "visual_rule": "dry brown/hanji scales, cracked-earth pattern, short body; distinct from imugi (blue-black, long, wet)",
+      "patterns": {
+        "P1": [
+          {
+            "id": "gang_flyover",
+            "telegraph_s": 1.2,
+            "width_u": 1.5,
+            "speed_u": 7.0,
+            "dmg": 20,
+            "zone": "obj_gamum_jangpan",
+            "zone_width_u": 1.5,
+            "zone_s": 15,
+            "passes_before_hover": 3
+          },
+          {
+            "id": "gang_hover",
+            "telegraph_s": 0.0,
+            "radius_u": 6,
+            "speed_u": 2.0,
+            "duration_s": 6
+          },
+          {
+            "id": "gang_breath",
+            "telegraph_s": 0.9,
+            "cone_deg": 60,
+            "range_u": 6,
+            "dmg": 12,
+            "evaporates_water_zones": true
+          }
+        ],
+        "P2": [
+          {
+            "id": "gang_drought_ring",
+            "telegraph_s": 1.5,
+            "radius_u": 7,
+            "width_u": 1.2,
+            "zone_s": 12
+          },
+          {
+            "id": "gang_flyover_x",
+            "telegraph_s": 1.2,
+            "passes": 2,
+            "dmg": 20
+          },
+          {
+            "id": "gang_breath",
+            "telegraph_s": 0.9,
+            "cone_deg": 60,
+            "range_u": 6,
+            "dmg": 12
+          }
+        ],
+        "P3": [
+          {
+            "id": "gang_landed",
+            "telegraph_s": 0.0,
+            "speed_u": 1.4
+          },
+          {
+            "id": "gang_breath",
+            "telegraph_s": 1.1,
+            "cone_deg": 60,
+            "range_u": 6,
+            "dmg": 12
+          }
+        ]
+      },
+      "hanpuri": {
+        "cond": "standing on water zone (clear water / yongwang wave)",
+        "effect": {
+          "white_damage_mult": 2.0,
+          "stacks_with_giseak": true
+        }
+      },
+      "toechi_result": {
+        "drought_zone_extend_s": 10
+      },
+      "haewon_result": {
+        "drought_to": "obj_gamum_jangpan__danbi",
+        "rain_fx_s": 2
+      },
+      "sayeon": [
+        "내가 지나간 자리는 가을도 봄 같다더라. 다 말라서.",
+        "나도 비가 되고 싶었다. 하늘에 오르지 못한 것은 다 마른다.",
+        "이제 내려가 볼까. 단비로."
+      ]
+    }
+  ],
+  "boss_common": {
+    "arrival": "20:00",
+    "intro_s": 2.0,
+    "spawn_dist_u": 8,
+    "status_profile": "boss",
+    "form_rule": {
+      "han_if_N_gte": 0.70,
+      "sal_if_N_lte": 0.60,
+      "middle": "salgi>=50 -> sal else han",
+      "N_assumption": {
+        "weights": {
+          "common": 1,
+          "minion": 1,
+          "elite": 5,
+          "elite_system": 5,
+          "mboss": 20
+        },
+        "empty": 0.5
+      }
+    },
+    "sal": {
+      "han_fixed": 48000,
+      "han_cap": 54000,
+      "phases": [
+        {
+          "id": "P1",
+          "from": 1.0,
+          "to": 0.7
+        },
+        {
+          "id": "P2",
+          "from": 0.7,
+          "to": 0.35
+        },
+        {
+          "id": "P3",
+          "from": 0.35,
+          "to": 0.0,
+          "giseak": true
+        }
+      ],
+      "phase_invuln_s": 1.0,
+      "reverse_haewon_neok_bonus": {
+        "owner": "09",
+        "note": "value moved to meta_economy (request key boss_reverse_haewon_bonus)"
+      }
+    },
+    "han": {
+      "han_fixed": 48000,
+      "han_cap": 54000,
+      "gopuri": {
+        "segments": 7,
+        "knot_obj": "obj_go_maedeup",
+        "knot_radius_u": 0.8,
+        "knot_dist_u": [
+          7,
+          10
+        ],
+        "min_dist_from_player_u": 5,
+        "min_angle_from_prev_deg": 90,
+        "untie_triggers": {
+          "player_touch": true,
+          "yeongga_pass": {
+            "count": 3,
+            "within_s": 2.0
+          },
+          "ring_enclose": true
+        },
+        "on_untie": {
+          "boss_stun_s": 1.0,
+          "window_s": 8,
+          "window_add_per_extra_knot_s": 4,
+          "white_mult": 3.0,
+          "red_mult": 0.5,
+          "damage_cap": "remaining han of untied segments"
+        },
+        "window_fail": {
+          "respawn_same_knot_after_s": 2.0,
+          "keep_remaining": true
+        },
+        "bound": {
+          "invulnerable": true
+        },
+        "pressure": {
+          "knot_guard_from": 4,
+          "guard": {
+            "minion": "enm_subi",
+            "count": 4,
+            "orbit_u": 1.5
+          },
+          "cloth_sweep_from": 6,
+          "cloth_rev_s": 8,
+          "cloth_dmg": 8,
+          "cloth_push_u": 0.5
+        },
+        "audio_event": "GOPURI_KNOT_k (ssitgim song phrase k)"
+      }
+    },
+    "population_common": 60,
+    "forced_saja_at": "boss_arrival + 3:00 (standard 23:00, jajinmori 18:00)",
+    "toechi": {
+      "orb": 1.0,
+      "yeopjeon_ref": "meta_economy.json#income.yeopjeon_sources.boss_sal_toechi",
+      "box_gilhyung": 2
+    },
+    "haewon": {
+      "orb": 0.6,
+      "neok_ref": "meta_economy.json#income.neok_sources.boss_han_haewon",
+      "box_neokham": 2
+    },
+    "ttk_target_s": {
+      "sal": [
+        130,
+        160
+      ],
+      "han": [
+        120,
+        150
+      ]
+    }
+  },
+  "bosses": [
+    {
+      "id": "boss_yeokryeo",
+      "name": "역려 (疫癘)",
+      "scope": "v1",
+      "stage": "stage_guksadang",
+      "source_tag": "각색(손님굿·뒷전 문법)",
+      "lore_confidence": "A (손님굿 대접·배송 문법) / 보스 자체는 각색",
+      "canvas_px": 256,
+      "hit_radius_u": 1.6,
+      "form_sal": {
+        "id": "boss_yeokryeo__form_sal",
+        "speed_u": 1.6,
+        "contact_dmg": 26,
+        "patterns": {
+          "P1": [
+            {
+              "id": "yeok_pox_spray",
+              "telegraph_s": 0.8,
+              "bullets": 12,
+              "volleys": 3,
+              "rotate_deg": 15,
+              "speed_u": 3.2,
+              "dmg": 14,
+              "every_s": 6
+            },
+            {
+              "id": "yeok_plague_lob",
+              "telegraph_s": 0.8,
+              "count": 3,
+              "lead_s": 0.5,
+              "side_offset_u": 2,
+              "zone": "obj_yeokbyeong_jangpan",
+              "radius_u": 2,
+              "zone_s": 8,
+              "dps": 10,
+              "every_s": 9
+            },
+            {
+              "id": "yeok_split_summon",
+              "telegraph_s": 1.0,
+              "at": [
+                1.0,
+                0.85
+              ],
+              "species": "top1_toechi",
+              "count": 12,
+              "fallback": "enm_dalgyal_gwisin",
+              "T_minute": 20
+            }
+          ],
+          "P2": [
+            {
+              "id": "yeok_mob_charge",
+              "telegraph_s": 1.0,
+              "width_u": 2,
+              "length_u": 8,
+              "speed_u": 10,
+              "duration_s": 0.8,
+              "dmg": 30,
+              "trail": {
+                "width_u": 1,
+                "zone_s": 6,
+                "dps": 10
+              }
+            },
+            {
+              "id": "yeok_pox_ring",
+              "telegraph_s": 0.8,
+              "bullets": 16,
+              "rings": 2,
+              "speeds_u": [
+                2.6,
+                3.6
+              ],
+              "dmg": 14,
+              "every_s": 7
+            },
+            {
+              "id": "yeok_split_summon",
+              "telegraph_s": 1.0,
+              "at": [
+                0.7,
+                0.5
+              ],
+              "species": "top2_toechi",
+              "count_each": 10
+            },
+            {
+              "id": "yeok_ttae_call",
+              "telegraph_s": 1.0,
+              "at": [
+                0.6
+              ],
+              "base": 2,
+              "add": "run yeokgwi_ttae toechi count",
+              "add_cap": 2,
+              "minion": "elite_yeokgwi_ttae"
+            }
+          ],
+          "P3": [
+            {
+              "id": "yeok_pox_spray",
+              "telegraph_s": 1.0,
+              "bullets": 12,
+              "volleys": 2,
+              "speed_u": 3.2,
+              "dmg": 14,
+              "every_s": 8
+            },
+            {
+              "id": "yeok_plague_lob",
+              "telegraph_s": 1.0,
+              "count": 3,
+              "radius_u": 1.5,
+              "every_s": 12
+            },
+            {
+              "id": "yeok_split_summon",
+              "telegraph_s": 1.0,
+              "at": [
+                0.35
+              ],
+              "species": "top3_toechi",
+              "count_each": 8
+            }
+          ]
+        },
+        "name": "역려 합신",
+        "visual": "먹빛 잡귀 덩어리 + 붉은 눈. 붉은 갓·손님 복식 금지"
+      },
+      "form_han": {
+        "id": "boss_yeokryeo__form_han",
+        "speed_u": 1.0,
+        "contact_dmg": 12,
+        "start_knots": "7 - min(2, run yeokgwi_ttae haewon count)",
+        "bound_pressure": [
+          {
+            "id": "yeok_flower_tear",
+            "telegraph_s": 0.8,
+            "bullets": 8,
+            "speed_u": 2.2,
+            "dmg": 6,
+            "every_s": 5
+          }
+        ],
+        "visual": "무명천 매듭이 잡귀 덩어리를 묶음. 매듭마다 잡귀 얼굴 하나가 사람 얼굴로 돌아와 흩어짐",
+        "name": "뒤따른 이들의 한"
+      },
+      "hanpuri": {
+        "sonnim_daejeop": {
+          "npc": "npc_byeolsang_sonnim",
+          "gauge_carry": "evt_sonnim_haengcha gauge carries into boss",
+          "gongmul_within_u": 2,
+          "gongmul_add": 25,
+          "gongmulsang_within_u": 4,
+          "gongmulsang_add": 50,
+          "thresholds": [
+            50,
+            100
+          ],
+          "sal": {
+            "on_threshold": "yeokryeo scatter 3s: stop, no attacks, white taken x1.5"
+          },
+          "han": {
+            "on_threshold": "auto untie 1 knot",
+            "max_per_run": 2
+          }
+        }
+      },
+      "sayeon": [
+        "우리는 손님 행차 뒤를 따라온 이름 없는 것들이었다.",
+        "손님은 상을 받았지만, 뒤따른 우리에게는 물 한 그릇 없었다. 그래서 집집마다 앓는 소리로 남았다.",
+        "이제 됐소. 손님 가시는 길, 우리도 뒤따라 가겠소."
+      ],
+      "respect": [
+        "deity guest (sonnim) is never a damage target; only npc with daejeop gauge",
+        "no realistic smallpox lesions (stylized flower/dancheong spots)",
+        "no red gat / sonnim costume on the hostile body",
+        "no Cheoyong-wife episode"
+      ],
+      "alias_ref": "canon 8.1.1 alias table / data/canon_ids.json aliases (D-03)",
+      "concept": "손님 행차 뒤에 엉겨 붙은 역병 잡귀들의 덩어리(원결형). 손님신 본체(npc_byeolsang_sonnim)는 적이 아니며 아레나 가장자리에서 대접을 받고, 결말 뒤 싸리말로 배송된다",
+      "ending": {
+        "id": "sm_sonnim_baesong",
+        "after": "resolution (either form)",
+        "duration_s": 2.0
+      },
+      "art": "new art/bosses/yeokryeo_{a..d}.png needed; old yeoksin art -> npc_byeolsang_sonnim"
+    },
+    {
+      "id": "boss_wongyeol",
+      "name": "원결",
+      "scope": "v1",
+      "stage": "stage_jindo_ssitgim",
+      "source_tag": "각색",
+      "lore_confidence": "A (gopuri procedure)",
+      "canvas_px": 256,
+      "hit_radius_u": 2.0,
+      "tentacles": {
+        "count": 7,
+        "length_u": 9,
+        "part_of_body": true
+      },
+      "form_sal": {
+        "id": "boss_wongyeol__form_sal",
+        "speed_u": 1.2,
+        "contact_dmg": {
+          "body": 24,
+          "tentacle": 18
+        },
+        "patterns": {
+          "P1": [
+            {
+              "id": "wg_tentacle_slam",
+              "telegraph_s": 1.0,
+              "count": 3,
+              "stagger_s": 0.4,
+              "length_u": 9,
+              "width_u": 1.2,
+              "dmg": 26,
+              "every_s": 6
+            },
+            {
+              "id": "wg_gohon_spawn",
+              "telegraph_s": 0.6,
+              "every_s": 10,
+              "count": 6,
+              "cap": 40,
+              "minion": "boss_wongyeol__gohon",
+              "ring_u": 3
+            }
+          ],
+          "P2": [
+            {
+              "id": "wg_tentacle_sweep",
+              "telegraph_s": 1.2,
+              "tentacles": 2,
+              "arc_deg": 180,
+              "radius_u": 8,
+              "ang_speed_deg_s": 90,
+              "dmg": 22,
+              "every_s": 8
+            },
+            {
+              "id": "wg_mud",
+              "telegraph_s": 0.8,
+              "count": 3,
+              "ring_u": [
+                3,
+                6
+              ],
+              "radius_u": 2.5,
+              "zone_s": 10,
+              "player_slow_pct": 30
+            },
+            {
+              "id": "wg_gohon_bolt",
+              "telegraph_s": 0.8,
+              "count": 6,
+              "speed_u": 2.0,
+              "turn_deg_s": 45,
+              "life_s": 6,
+              "dmg": 8
+            }
+          ],
+          "P3": [
+            {
+              "id": "wg_tentacle_slam",
+              "telegraph_s": 1.3,
+              "count": 1,
+              "every_s": 10,
+              "dmg": 26
+            }
+          ]
+        }
+      },
+      "form_han": {
+        "id": "boss_wongyeol__form_han",
+        "speed_u": 0.8,
+        "contact_dmg": {
+          "body": 24,
+          "tentacle": 6
+        },
+        "knot_layout": "fixed: one knot at each tentacle tip (7-10u)",
+        "tentacle_rev_s": 12,
+        "tentacle_push_u": 0.5,
+        "bound_pressure": [
+          {
+            "id": "wg_sorrow_hands",
+            "telegraph_s": 0.8,
+            "count": 3,
+            "radius_u": 1,
+            "dmg": 8,
+            "every_s": 6
+          },
+          {
+            "id": "wg_gohon_spawn",
+            "telegraph_s": 0.6,
+            "every_s": 10,
+            "count": 4,
+            "cap": 20,
+            "bound_only": true
+          }
+        ]
+      },
+      "hanpuri": {
+        "sal": {
+          "cond": "each gohon haewon",
+          "effect": "han_max -0.2%",
+          "cap_pct": 20
+        },
+        "han": {
+          "cond": "every 10 gohon haewon",
+          "effect": "next window +2s"
+        }
+      },
+      "sayeon": [
+        "우리는 하나가 아니었다. 이름 없는 무덤 하나에 함께 묻혔을 뿐.",
+        "누가 우리를 씻겨 주었더라면 이렇게 엉키지 않았을 텐데.",
+        "매듭이 풀리니 얼굴이 보여. 저기 저 사람은… 내 동생이었구나."
+      ],
+      "respect": [
+        "NO imagery evoking the 2014 maritime disaster: ships, sinking, life jackets, school uniforms, students, specific years/numbers",
+        "gohon = Joseon-era unburied dead of plague/famine/war; earth & cotton-cloth imagery, not water"
+      ]
+    },
+    {
+      "id": "boss_imugi",
+      "name": "이무기",
+      "scope": "v1",
+      "stage": "stage_east_sea_byeolsin",
+      "source_tag": "전승",
+      "lore_confidence": "B",
+      "canvas_px": 128,
+      "hit_radius_u": 1.0,
+      "segments": {
+        "count": 12,
+        "id": "boss_imugi__segment",
+        "spacing_u": 1.4,
+        "follow": "breadcrumb of head"
+      },
+      "form_sal": {
+        "id": "boss_imugi__form_sal",
+        "speed_u": 3.0,
+        "contact_dmg": {
+          "head": 24,
+          "segment": 18
+        },
+        "patterns": {
+          "P1": [
+            {
+              "id": "imugi_tidal",
+              "telegraph_s": 1.0,
+              "wall_width_u": 14,
+              "bullet_spacing_u": 0.5,
+              "gaps": 2,
+              "gap_u": 2.0,
+              "speed_u": 3.0,
+              "dmg": 16,
+              "every_s": 7
+            },
+            {
+              "id": "imugi_coil",
+              "telegraph_s": 1.2,
+              "radius_u": 6,
+              "wrap_s": 3,
+              "constrict_to_u": 2.5,
+              "constrict_s": 2,
+              "head_tail_gap_u": 2.5,
+              "dmg": 18,
+              "every_s": 15
+            },
+            {
+              "id": "imugi_bite",
+              "telegraph_s": 0.8,
+              "dist_u": 4,
+              "speed_u": 8,
+              "dmg": 24,
+              "cooldown_s": 5
+            }
+          ],
+          "P2": [
+            {
+              "id": "imugi_shed",
+              "telegraph_s": 0.8,
+              "at": [
+                0.7,
+                0.5
+              ],
+              "segments": 4,
+              "seg_han_pct": 3,
+              "speed_u": 4.0,
+              "dmg": 14,
+              "reattach_s": 20
+            },
+            {
+              "id": "imugi_waterspout",
+              "telegraph_s": 1.0,
+              "count": 3,
+              "radius_u": 1.5,
+              "dmg": 20,
+              "zone": {
+                "slow_pct": 15,
+                "zone_s": 6
+              }
+            },
+            {
+              "id": "imugi_tidal",
+              "telegraph_s": 1.0,
+              "gaps": 1,
+              "gap_u": 2.5,
+              "speed_u": 3.0,
+              "dmg": 16,
+              "every_s": 6
+            }
+          ],
+          "P3": [
+            {
+              "id": "imugi_ascend",
+              "telegraph_s": 4.0,
+              "shadow_radius_u": 3,
+              "shadow_follow_u": 2.0,
+              "lock_last_s": 1.0,
+              "dmg": 30,
+              "every_s": 14
+            },
+            {
+              "id": "imugi_tidal",
+              "telegraph_s": 1.0,
+              "gaps": 2,
+              "gap_u": 2.0,
+              "every_s": 9,
+              "dmg": 16
+            }
+          ]
+        }
+      },
+      "form_han": {
+        "id": "boss_imugi__form_han",
+        "speed_u": 2.0,
+        "contact_dmg": {
+          "head": 24,
+          "segment": 8
+        },
+        "knot_layout": "segments 2,3,5,7,8,10,12, order head->tail",
+        "circle_player_radius_u": 7,
+        "bound_pressure": [
+          {
+            "id": "imugi_tidal",
+            "telegraph_s": 1.0,
+            "gaps": 2,
+            "gap_u": 4.0,
+            "every_s": 9,
+            "dmg": 16
+          }
+        ],
+        "ending": "rises as a white dragon"
+      },
+      "hanpuri": {
+        "sal_p3_not_looking": {
+          "cone_half_angle_deg": 45,
+          "window_s": 4.0,
+          "cond": "shadow never inside player move-dir cone",
+          "effect": {
+            "no_crash": true,
+            "self_han_cut_pct": 5,
+            "stun_s": 3
+          }
+        },
+        "han_yongwang_gaho": {
+          "cond": "deity_yongwang__gaho possessed",
+          "effect": "start knots -1"
+        }
+      },
+      "sayeon": [
+        "천 년을 물 밑에서 기다렸다.",
+        "오르던 날, 누가 나를 보고 '뱀이다' 했다. 그 한마디에 떨어졌다.",
+        "이제 아무도 나를 뱀이라 부르지 않는구나. 간다."
+      ]
+    },
+    {
+      "id": "boss_yeonggam",
+      "name": "도채비 영감",
+      "scope": "x1",
+      "stage": "stage_jeju_chilmeori",
+      "source_tag": "무속",
+      "lore_confidence": "A (영감놀이), relation to Chilmeoridang under debate",
+      "skeleton": {
+        "sal": "7 brothers, 16000 han each (112000), take turns from 7 directions, last one = main body",
+        "han": "after all 7 in giseak, escort straw boat obj_jipbae to shore (grm_escort) = baebangseon"
+      },
+      "todo": [
+        "folklore consult",
+        "escort route level design"
+      ]
+    },
+    {
+      "id": "boss_daeakgwi",
+      "name": "대악귀",
+      "scope": "x1",
+      "stage": "stage_myeongbu",
+      "source_tag": "각색",
+      "lore_confidence": null,
+      "skeleton": {
+        "sal": "possesses commons -> random elites (han x6, ink aura, not red eye); main body invulnerable while possessing",
+        "han": "haewon possessed ones one by one to expose main body"
+      },
+      "todo": [
+        "possession target rule",
+        "main body patterns"
+      ],
+      "no_ip": [
+        "박일도"
+      ]
+    }
+  ],
+  "chasers": [
+    {
+      "id": "chaser_jeoseung_saja",
+      "name": "저승사자",
+      "tier": "chaser",
+      "source_tag": "무속",
+      "lore_confidence": "A/B",
+      "lore": "[각색] 검은 갓과 두루마기(흰 얼굴)는 20세기 드라마가 만든 모습이다. [무속] 서울굿에서는 '사재삼성'(천황·지황·인황사자)이라 하여 셋으로 여긴다. 해원맥·이덕춘 이름 사용 금지(16 A-1 D-55)",
+      "canvas_px": 64,
+      "hit_radius_u": 0.4,
+      "immune_all": true,
+      "auto_target_exempt": true,
+      "projectiles_pass": true,
+      "mass": "inf",
+      "hostile": false,
+      "chases_player": false,
+      "contact_damage": false,
+      "variants": {
+        "note": "reinforcement removed in v1.1; ids kept for x1 / forced descent visuals",
+        "trio_display_ko": "사재삼성 (16 A-1 D-55; internal variant ids unchanged)",
+        "2nd": "chaser_jeoseung_saja__woljik",
+        "3rd": "chaser_jeoseung_saja__gangnim"
+      },
+      "route_A": {
+        "after_boss_s": 3.0,
+        "spawn_front_u": 8,
+        "N_final": "N + 0.10 (boss haewon) / - 0.10 (boss toechi)",
+        "bow_if_gte": 0.5,
+        "else": "sal_geodum"
+      },
+      "bow": {
+        "walk_speed_u": 1.5,
+        "stop_u": 1.5,
+        "bow_s": 1.5,
+        "line": "수고하셨소. 이 넋들은 내가 모시겠소.",
+        "yeongga_interval_s": 0.1,
+        "yeongga": "cheondo neok+1 each",
+        "ending": "begareugi",
+        "gongdeok_bonus_pct": 50,
+        "result": "clear_haewon"
+      },
+      "sal_geodum": {
+        "name": "살 거둠",
+        "canon": "canon 3.4 / 4.6.5, canon v1.2 D-02 (C-02, C-19)",
+        "values_ref": "combat_core.json run_end.E3_sal_geodum (02 §20 E3), same values",
+        "single_source": true,
+        "condition": "boss_resolved && N_final < 0.50",
+        "saja_hostile": false,
+        "saja_chases": false,
+        "contact_damage": false,
+        "lumps": {
+          "count": 3,
+          "basis": "salgi algaengi left on map merged into 3 lumps by top-3 enm_* by toechi this run (fewer -> repeat top-1; none -> enm_dalgyal_gwisin adult); 3 lumps shown even if algaengi = 0",
+          "ring_radius_u": 9.0,
+          "spacing_deg": 120
+        },
+        "collect_s_per_lump": 30,
+        "base_total_s": 90,
+        "canon_cap_s": 180,
+        "canon_cap_use": "extension room for ladder_salpuri_dan (display 살 맺힘 단) modifiers only",
+        "wake": {
+          "on": "saja starts collecting a lump",
+          "wongwi_per_lump": 1,
+          "wongwi_formula": "wongwi formula at m=20 x E_elite(20)",
+          "escort_per_lump": 8,
+          "escort_species": "same species as the lump",
+          "kill_wongwi_completes_lump": true,
+          "resolve_any": "toechi or haewon both count"
+        },
+        "common_spawns": false,
+        "hp_zero": {
+          "with_myeongjul": "02 12.6 revive + saja 6u push wave",
+          "without_myeongjul": "'gutpan geodum' (not death): settle at current p, clear kept"
+        },
+        "yeongga": "stay with the mudang as shields; all cheondo at end (neok counted)",
+        "drops": false,
+        "ending": {
+          "id": "sm_saja_bow",
+          "variant": "sal_geodum",
+          "anim": "after the last lump the saja bows (eup) to the mudang and leaves",
+          "line_ref": "02 §20 E3 ending cut / 10 settlement lines (end_sal_geodum)"
+        },
+        "reward": {
+          "owner": "09",
+          "ref": "meta_economy.json#income.settlement.sal_geodum_*",
+          "progress": "p = max(t/90, wongwi_done/3)",
+          "formula": "bokjeon x (1 + sal_geodum_bokjeon_mult_max * p)",
+          "cap_s": 90
+        },
+        "result": "clear_sal"
+      },
+      "route_B_forced": {
+        "at": "boss_arrival + 3:00 (23:00 / jajinmori 18:00)",
+        "dan_mod": "ladder_salpuri_dan (display '살 맺힘 단') forced_saja_s: -30s (22:30)",
+        "behavior": "saja descends and closes the gutpan (canon 3.4 / 4.6.5); no chase, no contact check",
+        "hostile": false,
+        "chases_player": false,
+        "contact_damage": false,
+        "fx_s": 3.0,
+        "ref": "combat_core.json run_end.E4_timeout",
+        "result": "incomplete"
+      },
+      "modes": {
+        "mode_jajinmori": {
+          "boss_at": "15:00",
+          "forced_at": "18:00"
+        },
+        "mode_muhan": "waits by myeongbu gate; enter gate (r 1.5u) -> judge bow / sal_geodum; gate moves every 5min"
+      }
+    }
+  ],
+  "zones": {
+    "obj_mul_ungdeongi": {
+      "radius_u": 1.2,
+      "duration_s": 10,
+      "player_slow_pct": 25,
+      "global_cap": 40,
+      "owner_speed_in_pct": 30
+    },
+    "obj_mul_ungdeongi__black": {
+      "radius_u": 1.8,
+      "player_slow_pct": 35,
+      "duration_add_s": 5
+    },
+    "obj_mul_ungdeongi__clear": {
+      "player_domu_pct": 10,
+      "player_saenggi_per_s": 2,
+      "ally": true
+    },
+    "obj_hyungsal_jangpan": {
+      "radius_u": 1.5,
+      "duration_s": 3,
+      "dps": "8*C(m)",
+      "cap": 10
+    },
+    "obj_yeokbyeong_jangpan": {
+      "radius_u": 1.8,
+      "duration_s": 6,
+      "dps": "6*C(m)",
+      "cap": 20,
+      "visual": "stylized flower spots",
+      "owners": [
+        "elite_yeokgwi_ttae",
+        "boss_yeokryeo__form_sal"
+      ]
+    },
+    "obj_gamum_jangpan": {
+      "width_u": 1.5,
+      "duration_s": 15,
+      "player_saenggi": "stop",
+      "yeongga_lifespan_drain_mult": 2.0,
+      "cap": 10
+    },
+    "obj_gamum_jangpan__danbi": {
+      "duration_s": 10,
+      "player_saenggi_per_s": 3,
+      "yeongga_lifespan_drain": "stop",
+      "ally": true
+    },
+    "wg_mud": {
+      "radius_u": 2.5,
+      "duration_s": 10,
+      "player_slow_pct": 30,
+      "cap": 6
+    },
+    "total_enemy_zone_cap": 90
+  },
+  "projectiles": {
+    "prj_wonhon_tan": {
+      "owner": "enm_cheonyeo_gwisin",
+      "speed_u": 3.0,
+      "dmg": "7*C(m)",
+      "life_s": 3.0,
+      "range_u": 9,
+      "radius_u": 0.18,
+      "color": [
+        "enemy_blue_2a5caa",
+        "enemy_black_1a1a1a"
+      ],
+      "opaque": true,
+      "on_owner_haewon": "to_petals_harmless"
+    },
+    "prj_foxfire": {
+      "owner": "mboss_gumiho",
+      "speed_u": 2.5,
+      "turn_deg_s": 60,
+      "life_s": 5,
+      "dmg": 10
+    },
+    "prj_pox": {
+      "owner": "boss_yeokryeo",
+      "speed_u": [
+        2.6,
+        3.2,
+        3.6
+      ],
+      "dmg": 14
+    },
+    "prj_gohon_bolt": {
+      "owner": "boss_wongyeol",
+      "speed_u": 2.0,
+      "turn_deg_s": 45,
+      "life_s": 6,
+      "dmg": 8
+    },
+    "prj_tidal": {
+      "owner": "boss_imugi",
+      "speed_u": 3.0,
+      "dmg": 16,
+      "wall": true
+    },
+    "prj_flower_tear": {
+      "owner": "boss_yeokryeo__form_han",
+      "speed_u": 2.2,
+      "dmg": 6
+    },
+    "pool_cap": 600
+  },
+  "statuses_on_player": {
+    "st_sangmunsal": {
+      "source": "enm_sangmun",
+      "duration_s": 5,
+      "effect": "saenggi = 0 (pickups still heal)"
+    },
+    "st_mulgwisin_son": {
+      "source": "enm_mul_gwisin",
+      "slow_pct": 40,
+      "duration_s": 1.0
+    },
+    "st_gawi": {
+      "source": "enm_hwehwe_gwisin",
+      "alias_old": "st_gawi_nullim",
+      "trigger_stacks": 3,
+      "stack_rate_per_s_per_enemy": 1,
+      "stack_rate_cap_per_s": 3,
+      "effect_owner": "combat_core.status.st_gawi",
+      "slow_pct": 40,
+      "duration_s": 1.5,
+      "post_immunity_s": 3,
+      "blocked_by": "pick_hosinbu"
+    }
+  },
+  "npcs": [
+    {
+      "id": "npc_byeolsang_sonnim",
+      "name": "별상 손님 (손님신)",
+      "new": true,
+      "tier": "deity_guest",
+      "source_tag": "무속",
+      "lore_confidence": "A",
+      "targetable": false,
+      "auto_target_exempt": true,
+      "projectiles_pass": true,
+      "contact": false,
+      "hp_bar": false,
+      "gauge": {
+        "id": "daejeop_gauge",
+        "range": [
+          0,
+          100
+        ],
+        "ui": "06 화신 규격 게이지 계열, HP바 아님"
+      },
+      "never": [
+        "toechi",
+        "sal form",
+        "damage",
+        "red rupture VFX"
+      ],
+      "appearances": [
+        {
+          "event": "evt_sonnim_haengcha",
+          "window": "06:00-12:00 (08 places, once)",
+          "move": "palanquin procession crosses screen 1.2u/s, 30s",
+          "escort": "elite_yeokgwi_ttae 1 + enm_* trail (sg_haengcha_trail)",
+          "daejeop": "pick_gongmul on ground within 2u of the palanquin is received (+25 gauge each); player chooses heal vs offering"
+        },
+        {
+          "event": "boss_yeokryeo arena",
+          "position": "arena edge, seated, non-hostile",
+          "daejeop": "pick_gongmul within 2u +25; obj_gongmulsang left from dwitjeon within 4u +50 (consumed)"
+        },
+        {
+          "event": "sm_sonnim_baesong",
+          "when": "after boss_yeokryeo resolution (either form)",
+          "duration_s": 2.0,
+          "result": "rides ssarimal and leaves; line varies by gauge (>=100 / >=50 / <50), never punitive"
+        }
+      ],
+      "art": "reuse art/bosses/yeoksin_{a..d}.png concept for this NPC (rename request to 13)"
+    }
+  ],
+  "overlays": {
+    "ovl_maetin_tte": {
+      "name": "맺힌 떼",
+      "new": true,
+      "from": "12:00",
+      "applies_to": "sg_maetin_tte group of common (8-16)",
+      "shared_han": "pool = sum of members han_max; any hit reduces pool",
+      "rupture": false,
+      "giseak": "pool r <= 0.35 -> all members giseak together (maedeup lock on pool)",
+      "white": "x3 on pool while giseak -> all members haewon together",
+      "red_gyeoldan": "crit on a giseak member toechis that member only; its share leaves pool",
+      "visual": "faint ink threads between members; white when giseak",
+      "why": "red builds meet giseak crowds after 12 min"
+    },
+    "ovl_maetim_kkeopjil": {
+      "name": "맺힘 껍질",
+      "new": true,
+      "from": "12:00",
+      "applies_to": [
+        "enm_hwehwe_gwisin",
+        "enm_sangmun",
+        "enm_yeongsan"
+      ],
+      "spawn_share": 0.3,
+      "shell_hp_pct_of_han": 0.4,
+      "while_shell": {
+        "white_taken_mult": 0.3,
+        "giseak": false,
+        "ring": "gildakkeum ring ignores shell (haewon path kept)"
+      },
+      "red": "normal damage to shell; shell break -> normal state",
+      "break_fx": "blue-black crack, short 'ttak'",
+      "why": "white builds need red to crack shells"
+    },
+    "spawn_request_08": "12:00-18:00, 1-2 groups per minute per overlay"
+  }
+}

@@ -1,0 +1,1846 @@
+{
+ "_note": "tools/sync_art.py 가 생성. 손으로 고치지 말 것.",
+ "entities": {
+  "char_baksu": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "death": {
+     "east": 8,
+     "south": 8,
+     "west": 8
+    },
+    "hurt": {
+     "east": 2,
+     "north": 2,
+     "south": 2,
+     "west": 2
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G2_pixellab_heroes/stage/char_baksu",
+   "spec": "art_style_v1"
+  },
+  "char_dangol": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "death": {
+     "east": 8,
+     "south": 8,
+     "west": 8
+    },
+    "hurt": {
+     "east": 2,
+     "north": 2,
+     "south": 2,
+     "west": 2
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G2_pixellab_heroes/stage/char_dangol",
+   "spec": "art_style_v1"
+  },
+  "char_mansin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "death": {
+     "east": 8,
+     "south": 8,
+     "west": 8
+    },
+    "hurt": {
+     "east": 2,
+     "north": 2,
+     "south": 2,
+     "west": 2
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G1_pilot_promote/stage/char_mansin",
+   "spec": "art_style_v1"
+  },
+  "char_myeongdu": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "death": {
+     "east": 8,
+     "south": 8,
+     "west": 8
+    },
+    "hurt": {
+     "east": 2,
+     "north": 2,
+     "south": 2,
+     "west": 2
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G2_pixellab_heroes/stage/char_myeongdu",
+   "spec": "art_style_v1"
+  },
+  "char_simbang": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "death": {
+     "east": 8,
+     "south": 8,
+     "west": 8
+    },
+    "hurt": {
+     "east": 2,
+     "north": 2,
+     "south": 2,
+     "west": 2
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G2_pixellab_heroes/stage/char_simbang",
+   "spec": "art_style_v1"
+  },
+  "enm_agwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "art/enemies/sprites/agwi"
+  },
+  "enm_cheonyeo_gwisin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "glide": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "art/enemies/sprites/cheonyeo_gwisin"
+  },
+  "enm_dalgyal_gwisin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G1_pilot_promote/stage/enm_dalgyal_gwisin",
+   "spec": "art_style_v1"
+  },
+  "chaser_jeoseung_saja": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "bow_eup": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    64,
+    64
+   ],
+   "source": "art/rework/G7_review_fixes (0 gen salvage/handdraw)"
+  },
+  "enm_mongdal_gwisin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "art/enemies/sprites/mongdal_gwisin"
+  },
+  "avatar_barigongju": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    160,
+    160
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_chilseong": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    96,
+    96
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun__baek": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun__cheong": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun__heuk": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun__hwang": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_janggun__jeok": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_jeseok_daegam": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 9
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_sansin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "charge": {
+     "south": 8
+    },
+    "idle": {
+     "east": 9,
+     "south": 9,
+     "west": 9
+    },
+    "roar": {
+     "south": 8
+    },
+    "run": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)"
+  },
+  "avatar_yongwang": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack": {
+     "south": 8
+    },
+    "idle": {
+     "south": 4
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)"
+  },
+  "boss_yeokryeo": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack_1": {
+     "south": 12
+    },
+    "attack_2": {
+     "south": 12
+    },
+    "haewon_finale": {
+     "south": 16
+    },
+    "idle": {
+     "south": 8
+    },
+    "move": {
+     "south": 8
+    },
+    "summon": {
+     "south": 8
+    },
+    "toechi_finale": {
+     "south": 12
+    }
+   },
+   "size": [
+    256,
+    256
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "comp_agwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "gulp": {
+     "south": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_cheonyeo": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "cast": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_dalgyal": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_dokkaebi_bul": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_dongja": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_gaekgwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "cling": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_mongdal": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "dash": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_mulgwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "emerge": {
+     "south": 6
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "comp_yeongsan": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 8,
+     "north": 8,
+     "south": 8,
+     "west": 8
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "elite_bulgasari": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "absorb": {
+     "south": 11
+    },
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    96,
+    96
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "elite_byeolsang_sonnim": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "walk": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    80,
+    80
+   ],
+   "source": "art/rework/G7_review_fixes (0 gen salvage/handdraw)"
+  },
+  "elite_dueoksini": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    96,
+    96
+   ],
+   "source": "game/assets (direct)"
+  },
+  "elite_eodukssini": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    96,
+    96
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "elite_geogu_gwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    96,
+    96
+   ],
+   "source": "game/assets (direct)"
+  },
+  "elite_yeokgwi_ttae": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    80,
+    80
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "enm_dalgyal_gwisin__child": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "enm_dokkaebi_bul": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "split": {
+     "east": 6,
+     "north": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "enm_dokkaebi_bul__small": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "spawn": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G7_review_fixes (0 gen salvage/handdraw)"
+  },
+  "enm_gaekgwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)"
+  },
+  "enm_hosik_wonhon": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "enm_hwehwe_gwisin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "float": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "enm_mul_gwisin": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)"
+  },
+  "enm_sangmun": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    48,
+    48
+   ],
+   "source": "game/assets (direct)"
+  },
+  "enm_subi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "game/assets (direct)"
+  },
+  "enm_subi__sogwi": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G4_salvage_enemies_boss (0 gen salvage/handdraw)"
+  },
+  "enm_yeongsan": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    40,
+    40
+   ],
+   "source": "game/assets (direct)"
+  },
+  "mboss_daegwi": {
+   "dirs": [
+    "south",
+    "east",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)"
+  },
+  "mboss_dokkaebi": {
+   "dirs": [
+    "south",
+    "east",
+    "west"
+   ],
+   "anims": {
+    "move": {
+     "east": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)"
+  },
+  "yeongga_body_child": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "art/rework/G7_review_fixes (0 gen salvage/handdraw)"
+  },
+  "yeongga_body_f": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "game/assets (direct)"
+  },
+  "yeongga_body_m": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "cheondo": {
+     "south": 8
+    },
+    "daesin_matgi": {
+     "south": 4
+    },
+    "idle": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    },
+    "walk": {
+     "east": 4,
+     "north": 4,
+     "south": 4,
+     "west": 4
+    }
+   },
+   "size": [
+    32,
+    32
+   ],
+   "source": "game/assets (direct)"
+  },
+  "mboss_gangcheori": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 9
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "mboss_gumiho": {
+   "dirs": [
+    "south",
+    "east",
+    "north",
+    "west"
+   ],
+   "anims": {
+    "attack_a": {
+     "south": 9
+    },
+    "idle": {
+     "south": 8
+    },
+    "move": {
+     "east": 6,
+     "south": 6,
+     "west": 6
+    }
+   },
+   "size": [
+    128,
+    128
+   ],
+   "source": "game/assets (direct)",
+   "status": "v2",
+   "status_note": "G7 2026-11-24: art_lint 10~15 FAIL(마스터 팔레트 0%, 끓음). v1 빌드 노출 금지 — 풀·mboss_fixed·익스포트에서 제외 요청"
+  },
+  "overlay_head": {
+   "dirs": [],
+   "anims": {
+    "barigongju_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "barigongju_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang_gaho": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang_wieom": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    }
+   },
+   "size": null,
+   "source": "game/assets (direct)"
+  },
+  "overlay_jimul": {
+   "dirs": [],
+   "anims": {
+    "barigongju": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "chilseong": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "daegam": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "janggun": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "sansin": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    },
+    "yongwang": {
+     "east": 1,
+     "north": 1,
+     "south": 1,
+     "west": 1
+    }
+   },
+   "size": null,
+   "source": "game/assets (direct)"
+  }
+ },
+ "tilesets": [
+  {
+   "id": "stage1_earth_grass",
+   "size": [
+    128,
+    128
+   ],
+   "meta": true
+  },
+  {
+   "id": "stage1_earth_stone",
+   "size": [
+    128,
+    128
+   ],
+   "meta": true
+  },
+  {
+   "id": "tile_guksadang_earth_needles.godot",
+   "size": [
+    768,
+    256
+   ],
+   "meta": false
+  },
+  {
+   "id": "tile_guksadang_earth_needles_raw",
+   "size": [
+    128,
+    128
+   ],
+   "meta": false
+  },
+  {
+   "id": "tile_guksadang_earth_stone_greyearth_orig",
+   "size": [
+    128,
+    128
+   ],
+   "meta": false
+  },
+  {
+   "id": "tile_guksadang_grass_rock_raw",
+   "size": [
+    128,
+    128
+   ],
+   "meta": false
+  }
+ ],
+ "icons": [
+  {
+   "id": "icons_sheet_1",
+   "size": [
+    200,
+    100
+   ]
+  },
+  {
+   "id": "icons_sheet_2",
+   "size": [
+    200,
+    100
+   ]
+  }
+ ],
+ "vfx": [
+  "vfx_bangul_aura",
+  "vfx_begareugi_shimmer",
+  "vfx_bingui_pillar",
+  "vfx_bingui_pillar_barigongju",
+  "vfx_bingui_pillar_chilseong",
+  "vfx_bingui_pillar_janggun",
+  "vfx_bingui_pillar_jeseok_daegam",
+  "vfx_bingui_pillar_sansin",
+  "vfx_bingui_pillar_yongwang",
+  "vfx_boss_plague_portal",
+  "vfx_boss_tidal_bullet",
+  "vfx_box_gilhyung_open",
+  "vfx_box_neokham_open",
+  "vfx_buchae_gust",
+  "vfx_bujeong_gasim_blast",
+  "vfx_bulgasari_iron_absorb",
+  "vfx_byeongnyeok_ring",
+  "vfx_candle_flame_s",
+  "vfx_cheoljillyeo_caltrop",
+  "vfx_cheoljillyeojin_pulse",
+  "vfx_cheondo_ascend",
+  "vfx_cheoneum_pulse",
+  "vfx_cheonyeo_bullet",
+  "vfx_cheonyeo_bullet_petal",
+  "vfx_confirm_ring",
+  "vfx_confirm_ring_barigongju",
+  "vfx_confirm_ring_chilseong",
+  "vfx_confirm_ring_janggun",
+  "vfx_confirm_ring_jeseok_daegam",
+  "vfx_confirm_ring_sansin",
+  "vfx_confirm_ring_yongwang",
+  "vfx_daejakdu_blades",
+  "vfx_daesin_matgi",
+  "vfx_doryang_mandala",
+  "vfx_drought_to_rain",
+  "vfx_dueoksini_slam",
+  "vfx_eodukssini_body",
+  "vfx_eodukssini_vanish",
+  "vfx_eolssigu_slam",
+  "vfx_gaekgwi_tether",
+  "vfx_gakgung_arrow",
+  "vfx_gakgung_hit",
+  "vfx_geogu_inhale",
+  "vfx_gilbe_cloth_unfold",
+  "vfx_gildakkeum_fill",
+  "vfx_gildakkeum_knot",
+  "vfx_gildakkeum_petals",
+  "vfx_go_maedeup_idle",
+  "vfx_go_maedeup_untie",
+  "vfx_gongmulsang_feast",
+  "vfx_gyeoldanta_cut",
+  "vfx_haewon_rise",
+  "vfx_hazard_generic",
+  "vfx_hazard_generic_fill",
+  "vfx_hazard_telegraph",
+  "vfx_hojakdo_fear_ring",
+  "vfx_hojakdo_sehwa",
+  "vfx_hwasin_won",
+  "vfx_hwasin_won_barigongju",
+  "vfx_hwasin_won_chilseong",
+  "vfx_hwasin_won_janggun",
+  "vfx_hwasin_won_jeseok_daegam",
+  "vfx_hwasin_won_sansin",
+  "vfx_hwasin_won_yongwang",
+  "vfx_irwolseonpung_whirl",
+  "vfx_isippalsu_bolt",
+  "vfx_isippalsu_constellation",
+  "vfx_jakdu_blades",
+  "vfx_jakdu_shockwave",
+  "vfx_jangchang_thrust",
+  "vfx_janggu_deong",
+  "vfx_jijeon_bill",
+  "vfx_jusahwajeon_arrow",
+  "vfx_jusahwajeon_blast",
+  "vfx_lamp_ignite",
+  "vfx_maetim_knot",
+  "vfx_manwoldo_crescent",
+  "vfx_mongdal_dash_tell",
+  "vfx_mongdal_dash_tell_end",
+  "vfx_mul_puddle_clear",
+  "vfx_mul_puddle_dark",
+  "vfx_myeongdu_beam",
+  "vfx_myeongdu_mirror",
+  "vfx_neok_pickup",
+  "vfx_neokjeon_doll",
+  "vfx_neokkkotbi_column",
+  "vfx_neokkkotbi_petal",
+  "vfx_nojatdon_chain",
+  "vfx_obanggi_flag",
+  "vfx_obanggi_flag_baek",
+  "vfx_obanggi_flag_cheong",
+  "vfx_obanggi_flag_heuk",
+  "vfx_obanggi_flag_hwang",
+  "vfx_obanggi_flag_jeok",
+  "vfx_obanggi_zone",
+  "vfx_obangjin_pillar",
+  "vfx_obangjin_pillar_baek",
+  "vfx_obangjin_pillar_cheong",
+  "vfx_obangjin_pillar_heuk",
+  "vfx_obangjin_pillar_hwang",
+  "vfx_obangjin_pillar_jeok",
+  "vfx_orb_large",
+  "vfx_orb_mid",
+  "vfx_orb_small",
+  "vfx_pajinchang_dash",
+  "vfx_pickup_magnet_streak",
+  "vfx_pullil_enter",
+  "vfx_pyeongon_swing",
+  "vfx_sainsageom_wave",
+  "vfx_saja_begareugi",
+  "vfx_sal_grain_idle",
+  "vfx_sal_grain_idle_l",
+  "vfx_sal_grain_idle_s",
+  "vfx_sal_merge",
+  "vfx_salgwi_hapsin",
+  "vfx_samjichang_mark",
+  "vfx_samjichang_thrust",
+  "vfx_sammul_triple",
+  "vfx_sangun_roar",
+  "vfx_saseulchang_verdict",
+  "vfx_sinjangdae_descend",
+  "vfx_sinjangdae_descend_barigongju",
+  "vfx_sinjangdae_descend_chilseong",
+  "vfx_sinjangdae_descend_janggun",
+  "vfx_sinjangdae_descend_jeseok_daegam",
+  "vfx_sinjangdae_descend_sansin",
+  "vfx_sinjangdae_descend_yongwang",
+  "vfx_sinjangkal_proj",
+  "vfx_sinjangkal_return_arc",
+  "vfx_sinkal_proj",
+  "vfx_sinkal_tassel_trail",
+  "vfx_sinmyeong_oreum_aura",
+  "vfx_sinmyeong_oreum_border",
+  "vfx_sogeum_purify_pop",
+  "vfx_sogeum_ring",
+  "vfx_ssukmul_pool",
+  "vfx_status_fear",
+  "vfx_status_gawi",
+  "vfx_status_sangmunsal",
+  "vfx_toechi_burst",
+  "vfx_trial_block_wall",
+  "vfx_trial_block_wall_barigongju",
+  "vfx_trial_block_wall_chilseong",
+  "vfx_trial_block_wall_janggun",
+  "vfx_trial_block_wall_jeseok_daegam",
+  "vfx_trial_block_wall_sansin",
+  "vfx_trial_block_wall_yongwang",
+  "vfx_union_chilseong_mgg",
+  "vfx_union_jakdu_dari_ring",
+  "vfx_union_neoksinkal",
+  "vfx_union_obang_cheoljin",
+  "vfx_union_sanullim",
+  "vfx_union_sogeumsal",
+  "vfx_woldo_spin",
+  "vfx_wongwi_eye_aura",
+  "vfx_wongwi_form",
+  "vfx_wongwi_rise",
+  "vfx_yeopjeon_spin"
+ ],
+ "candidates": [
+  "bosses/imugi_a.png",
+  "bosses/imugi_b.png",
+  "bosses/imugi_c.png",
+  "bosses/imugi_d.png",
+  "bosses/jeoseung_saja_a.png",
+  "bosses/jeoseung_saja_b.png",
+  "bosses/jeoseung_saja_c.png",
+  "bosses/jeoseung_saja_d.png",
+  "bosses/trial_sansin_tiger_a.png",
+  "bosses/trial_sansin_tiger_b.png",
+  "bosses/trial_sansin_tiger_c.png",
+  "bosses/trial_sansin_tiger_d.png",
+  "bosses/wongyeol_a.png",
+  "bosses/wongyeol_b.png",
+  "bosses/wongyeol_c.png",
+  "bosses/wongyeol_d.png",
+  "bosses/yeoksin_a.png",
+  "bosses/yeoksin_b.png",
+  "bosses/yeoksin_c.png",
+  "bosses/yeoksin_d.png",
+  "deities/barigongju_a.png",
+  "deities/barigongju_b.png",
+  "deities/barigongju_c.png",
+  "deities/barigongju_d.png",
+  "deities/chilseong_a.png",
+  "deities/chilseong_b.png",
+  "deities/chilseong_c.png",
+  "deities/chilseong_d.png",
+  "deities/janggun_a.png",
+  "deities/janggun_b.png",
+  "deities/janggun_c.png",
+  "deities/janggun_d.png",
+  "deities/jeseok_daegam_a.png",
+  "deities/jeseok_daegam_b.png",
+  "deities/jeseok_daegam_c.png",
+  "deities/jeseok_daegam_d.png",
+  "deities/sansin_a.png",
+  "deities/sansin_b.png",
+  "deities/sansin_c.png",
+  "deities/sansin_d.png",
+  "deities/yongwang_a.png",
+  "deities/yongwang_b.png",
+  "deities/yongwang_c.png",
+  "deities/yongwang_d.png"
+ ]
+}

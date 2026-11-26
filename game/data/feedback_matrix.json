@@ -1,0 +1,942 @@
+{
+  "_meta": {
+    "source_doc": "design/11-ux-ui-hud.md",
+    "version": "0.10",
+    "units": "lpx = 640x360 logical pixels",
+    "status": "draft",
+    "canon_version": "v1.2",
+    "canon_basis": "design/01-concept-and-canon.md v1.2 + design/99-open-questions-and-next-steps.md (D-xx/C-xx)",
+    "canon_v1_2_log": [
+      "D-47: engine.hitstop time_scale 0.05 → 이중 시계(game_tick 정지, beat_tick 진행)",
+      "D-18/D-21: beat_snap.grid 2분박 1/2, 3분박 1/3, 진양조 1/4",
+      "D-02/C-19: event saja_chase → saja_sal_geodum, ui survival_timer → sal_geodum_progress",
+      "C-18: box_gil_seal 주석 중길·대길",
+      "D-01: hapil = 모신 신령 전원",
+      "C-36: _meta.canon_version v1.2"
+    ]
+  },
+  "tiers": {
+    "T0": {
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "source": "02-core-loop-combat 14.1"
+    },
+    "T1": {
+      "trauma": [
+        0.05,
+        0.15
+      ],
+      "hitstop_ms": 0,
+      "local_freeze_ms": 50,
+      "haptic": "none_or_R0.15-0.3/30-60ms"
+    },
+    "T2": {
+      "trauma": [
+        0.25,
+        0.45
+      ],
+      "hitstop_ms": [
+        50,
+        80
+      ],
+      "haptic": "L0.3-0.5/80-150ms"
+    },
+    "T3": {
+      "trauma": [
+        0.5,
+        0.8
+      ],
+      "hitstop_ms": [
+        100,
+        150
+      ],
+      "haptic": "L0.5-0.7/200-300ms"
+    },
+    "T4": {
+      "trauma": [
+        0.8,
+        1.0
+      ],
+      "hitstop_ms": [
+        150,
+        200
+      ],
+      "haptic": "L0.8/250-400ms"
+    }
+  },
+  "engine": {
+    "source_of_truth": "02-core-loop-combat 14.2-14.4",
+    "shake": {
+      "model": "trauma_squared",
+      "decay_per_s": 1.8,
+      "max_offset_lpx": [
+        6,
+        4
+      ],
+      "rotation": 0,
+      "noise": "0.6*sin(18t+s)+0.4*sin(27t+2s)",
+      "round": "integer_pixel",
+      "option": "opt_screen_shake"
+    },
+    "hitstop": {
+      "clock_model": "dual_clock (14-tech-production 3.9.1, D-47)",
+      "game_clock": "stopped (game_tick)",
+      "beat_clock": "continues (beat_tick)",
+      "timer": "realtime",
+      "overlap": "max(remaining,new)",
+      "cooldown_s_le_T2": 0.3,
+      "budget_ms_per_10s": 400,
+      "music_beat_continue": true,
+      "input_buffered": true,
+      "option": "opt_hitstop"
+    },
+    "flash": {
+      "fullscreen": "hanji 30% 0.1s",
+      "max_per_s": 3,
+      "overflow": "vignette",
+      "option": "opt_flash_reduce"
+    },
+    "beat_snap": {
+      "grid": "next grid boundary: 2-bun-bak 1/2 beat, 3-bun-bak 1/3 beat (D-18/D-21, combat_core.jangdan.geori[].grid_div), jinyangjo 1/4",
+      "max_delay_ms": 250,
+      "threats_never_snap": true
+    }
+  },
+  "ux_budget": {
+    "haptic_concurrent": 2,
+    "haptic_ms_per_s": 400,
+    "ttallang_voices": 8,
+    "text_slam_concurrent": 1,
+    "damage_numbers": 48,
+    "neokduri_concurrent": 1,
+    "neokduri_queue": 3,
+    "offscreen_indicators": 6
+  },
+  "events": [
+    {
+      "event": "hit_red",
+      "ev_key_02": "ev_hit_red",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "damage_number_if_all",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "hit_white",
+      "ev_key_02": "ev_hit_white",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "no_damage_number",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "giseak_enter",
+      "ev_key_02": "ev_giseak_enter",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "maedeup_marker",
+      "accessibility_alt": "opt_pullil_marker",
+      "note": ""
+    },
+    {
+      "event": "knot_block",
+      "ev_key_02": "ev_knot_block",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "knot_tuk_pop_0.25s",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "toechi",
+      "ev_key_02": "ev_toechi",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "number_if_big",
+      "accessibility_alt": "radial_silhouette",
+      "note": "strong weapon T1"
+    },
+    {
+      "event": "gyeoldanta",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0.1,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.15,
+        "ms": 40
+      },
+      "ui": "gyeol_pop",
+      "accessibility_alt": "line_silhouette",
+      "note": "local freeze 50ms"
+    },
+    {
+      "event": "haewon",
+      "ev_key_02": "ev_haewon",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "combo+1",
+      "accessibility_alt": "vertical_silhouette",
+      "note": ""
+    },
+    {
+      "event": "haewon_elite",
+      "ev_key_02": "ev_haewon",
+      "tier": "T2",
+      "trauma": 0.3,
+      "hitstop_ms": 60,
+      "haptic": {
+        "low": 0.3,
+        "high": 0.2,
+        "ms": 80
+      },
+      "ui": "neokduri_2s_offscreen_neokham",
+      "accessibility_alt": "sound_caption",
+      "note": ""
+    },
+    {
+      "event": "toechi_elite",
+      "ev_key_02": "ev_toechi",
+      "tier": "T2",
+      "trauma": 0.3,
+      "hitstop_ms": 60,
+      "haptic": {
+        "low": 0.4,
+        "high": 0,
+        "ms": 80
+      },
+      "ui": "offscreen_box",
+      "accessibility_alt": "sound_caption",
+      "note": ""
+    },
+    {
+      "event": "yeongga_join",
+      "ev_key_02": "ev_yeongga_join",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "procession+1",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "substitute",
+      "ev_key_02": "ev_substitute",
+      "tier": "T1",
+      "trauma": 0.1,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 50
+      },
+      "ui": "procession-1_block_icon",
+      "accessibility_alt": "block_icon",
+      "note": ""
+    },
+    {
+      "event": "lifetime_cheondo",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "procession-1",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "maetim_return",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "gildakkeum",
+      "ev_key_02": "ev_gildakkeum",
+      "tier": "T2",
+      "trauma": 0.35,
+      "hitstop_ms": 80,
+      "haptic": {
+        "low": 0.4,
+        "high": 0,
+        "ms": 120
+      },
+      "ui": "gongdeok_pop_sinmyeong_jump",
+      "accessibility_alt": "tint_if_flash_reduce",
+      "note": ""
+    },
+    {
+      "event": "gildakkeum_large",
+      "ev_key_02": "ev_gildakkeum",
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 110,
+      "haptic": {
+        "low": 0.5,
+        "high": 0.3,
+        "ms": 150
+      },
+      "ui": "doryang_timer",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "ring_too_small",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "grey_dot_fade",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "sal_purified",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "maedeup_decrease",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "salgi_threshold_90",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0.05,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.2,
+        "high": 0,
+        "ms": 60
+      },
+      "ui": "maedeup_shake",
+      "accessibility_alt": "sound_caption",
+      "note": "haptic x2"
+    },
+    {
+      "event": "wongwi_return",
+      "ev_key_02": "ev_wongwi_return",
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 100,
+      "haptic": {
+        "low": 0.5,
+        "high": 0,
+        "ms": 300
+      },
+      "ui": "maedeup_burst_offscreen_red_eyes",
+      "accessibility_alt": "no_flash_desaturate_only",
+      "note": ""
+    },
+    {
+      "event": "deungbul_lit",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "player_hit_small",
+      "ev_key_02": "ev_player_hit",
+      "tier": "T1",
+      "trauma": 0.15,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.3,
+        "high": 0,
+        "ms": 60
+      },
+      "ui": "hp_bar_lag_0.4s_dir_arc",
+      "accessibility_alt": "direction_arc",
+      "note": ""
+    },
+    {
+      "event": "player_hit_big",
+      "ev_key_02": "ev_player_hit",
+      "tier": "T2",
+      "trauma": 0.35,
+      "hitstop_ms": 50,
+      "haptic": {
+        "low": 0.5,
+        "high": 0,
+        "ms": 100
+      },
+      "ui": "hp_bar_lag_vignette_pulse",
+      "accessibility_alt": "direction_arc",
+      "note": ">=10% jeonggi"
+    },
+    {
+      "event": "dodge",
+      "ev_key_02": "ev_dodge",
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "dodge_text",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "gyeongmun_block",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0.1,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.3,
+        "ms": 60
+      },
+      "ui": "pip-1",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "hosin",
+      "ev_key_02": "ev_hosin",
+      "tier": "T2",
+      "trauma": 0.35,
+      "hitstop_ms": 70,
+      "haptic": {
+        "low": 0.5,
+        "high": 0,
+        "ms": 120
+      },
+      "ui": "status_icon_gongsu",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "low_hp_enter",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.15,
+        "high": 0,
+        "ms": 40
+      },
+      "ui": "hp_pulse_vignette15",
+      "accessibility_alt": "",
+      "note": "haptic per beat, max 10s"
+    },
+    {
+      "event": "revive",
+      "ev_key_02": "ev_revive",
+      "tier": "T3",
+      "trauma": 0.7,
+      "hitstop_ms": 200,
+      "haptic": {
+        "low": 0.7,
+        "high": 0,
+        "ms": 300
+      },
+      "ui": "myeongjul-1",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "level_up",
+      "ev_key_02": "ev_level_up",
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 50
+      },
+      "ui": "open_jeomji",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "sinmyeong_oreum",
+      "ev_key_02": "ev_sinmyeong_oreum",
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 100,
+      "haptic": {
+        "low": 0.4,
+        "high": 0.4,
+        "ms": 200
+      },
+      "ui": "jing_ring_reverse_hud_border_cycle",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "combo_chuimsae",
+      "ev_key_02": "ev_combo_chuimsae",
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 40
+      },
+      "ui": "combo_pop_left_cell+slam(얼씨구..)",
+      "accessibility_alt": "fade_if_motion_reduce",
+      "note": "kind=haewon. 퇴치 추임새와 같은 티어·길이(1.2-7)"
+    },
+    {
+      "event": "toechi_combo_chuimsae",
+      "ev_key_02": "ev_combo_chuimsae (kind=toechi) [UX 요청]",
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 40
+      },
+      "ui": "combo_pop_right_cell+slam(물렀거라!..)",
+      "accessibility_alt": "fade_if_motion_reduce",
+      "note": "v0.10 신설. 연속 퇴치 20/40/80/150. 해원 추임새와 대칭"
+    },
+    {
+      "event": "geori_change",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "geori_slam_1.2s",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "trial_warning",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "gongsu_offscreen_pillars",
+      "accessibility_alt": "sound_caption",
+      "note": ""
+    },
+    {
+      "event": "trial_circle_enter",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.1,
+        "ms": 30
+      },
+      "ui": "confirm_ring_1s",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "trial_gauge_full",
+      "ev_key_02": null,
+      "tier": "T2",
+      "trauma": 0.3,
+      "hitstop_ms": 60,
+      "haptic": {
+        "low": 0.4,
+        "high": 0,
+        "ms": 150
+      },
+      "ui": "gauge_burst",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "bingui",
+      "ev_key_02": "ev_bingui",
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 120,
+      "haptic": {
+        "low": 0.5,
+        "high": 0,
+        "ms": 200
+      },
+      "ui": "banner_slot_flight",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "hapil",
+      "ev_key_02": null,
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.6,
+        "high": 0,
+        "ms": 300
+      },
+      "ui": "slots_sequential_light",
+      "accessibility_alt": "",
+      "note": "모신 신령 전원(표준 최대 4)의 강신 칸 순차 점등(D-01)"
+    },
+    {
+      "event": "eodukssini_silence",
+      "ev_key_02": "ev_eodukssini_silence",
+      "tier": "T4",
+      "trauma": 0.9,
+      "hitstop_ms": 150,
+      "haptic": {
+        "low": 0.8,
+        "high": 0,
+        "ms": 250
+      },
+      "ui": "hud_fade30_then_restore_byeolgeo",
+      "accessibility_alt": "visual_silence_desat40",
+      "note": ""
+    },
+    {
+      "event": "midboss_appear",
+      "ev_key_02": null,
+      "tier": "T2",
+      "trauma": 0.3,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.4,
+        "high": 0,
+        "ms": 200
+      },
+      "ui": "offscreen_name",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "midboss_result",
+      "ev_key_02": null,
+      "tier": "T3",
+      "trauma": 0.6,
+      "hitstop_ms": 150,
+      "haptic": {
+        "low": 0.6,
+        "high": 0,
+        "ms": 250
+      },
+      "ui": "",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "gopuri_knot",
+      "ev_key_02": null,
+      "tier": "T2",
+      "trauma": 0.3,
+      "hitstop_ms": 60,
+      "haptic": {
+        "low": 0.3,
+        "high": 0,
+        "ms": 100
+      },
+      "ui": "knot_pip_fill",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "gopuri_last_knot",
+      "ev_key_02": null,
+      "tier": "T4",
+      "trauma": 0.9,
+      "hitstop_ms": 200,
+      "haptic": {
+        "low": 0.8,
+        "high": 0,
+        "ms": 400
+      },
+      "ui": "boss_bar_dissolve",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "boss_result",
+      "ev_key_02": null,
+      "tier": "T4",
+      "trauma": 1.0,
+      "hitstop_ms": 200,
+      "haptic": {
+        "low": 0.8,
+        "high": 0,
+        "ms": 400
+      },
+      "ui": "boss_bar_gone_to_jeongsan",
+      "accessibility_alt": "",
+      "note": "+0.3 slowmo 1.0s (02)"
+    },
+    {
+      "event": "saja_bow",
+      "ev_key_02": null,
+      "tier": "T3",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.3,
+        "high": 0,
+        "ms": 300
+      },
+      "ui": "jeongsan_act1",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "saja_sal_geodum",
+      "ev_key_02": null,
+      "tier": "T4",
+      "trauma": 0.8,
+      "hitstop_ms": 150,
+      "haptic": {
+        "low": 0.6,
+        "high": 0,
+        "ms": 300
+      },
+      "ui": "sal_geodum_progress",
+      "accessibility_alt": "",
+      "note": "D-02 살 거둠: 사자 비적대·추격 없음·접촉 피해 없음, 살 덩어리 3 x 30초(기본 90초). 구 event saja_chase"
+    },
+    {
+      "event": "box_gil_seal",
+      "ev_key_02": null,
+      "tier": "paused",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.3,
+        "ms": 80
+      },
+      "ui": "",
+      "accessibility_alt": "",
+      "note": "중길(jg_junggil)·대길(jg_daegil) 인장. 등급명은 02 §18.1 정본(C-18)"
+    },
+    {
+      "event": "evo_reveal",
+      "ev_key_02": null,
+      "tier": "paused",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.6,
+        "high": 0,
+        "ms": 250
+      },
+      "ui": "evo_name_slam",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "union_reveal",
+      "ev_key_02": null,
+      "tier": "paused",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0.6,
+        "high": 0.6,
+        "ms": 300
+      },
+      "ui": "two_sided_fan_flip",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "bongheon",
+      "ev_key_02": null,
+      "tier": "hub",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 60
+      },
+      "ui": "gongdeok_roll_candle",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "sayeon_piece",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "scroll_new_dot",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "ui_focus",
+      "ev_key_02": null,
+      "tier": "ui",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "gold_frame_slide_0.08s",
+      "accessibility_alt": "",
+      "note": "sfx wood ttok 60ms cd"
+    },
+    {
+      "event": "ui_confirm",
+      "ev_key_02": null,
+      "tier": "ui",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "press_0.1s_ease_out_back",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "ui_cancel",
+      "ev_key_02": null,
+      "tier": "ui",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "panel_fade_0.12s",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "ui_denied",
+      "ev_key_02": null,
+      "tier": "ui",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.1,
+        "ms": 30
+      },
+      "ui": "shake_x2_2lpx",
+      "accessibility_alt": "",
+      "note": ""
+    },
+    {
+      "event": "sintong_ready",
+      "ev_key_02": null,
+      "tier": "T0",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "seal_light_0.2s",
+      "accessibility_alt": "",
+      "note": "v0.10, 03 2.8"
+    },
+    {
+      "event": "sintong_trigger",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0.1,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 50
+      },
+      "ui": "seal_pulse_start",
+      "accessibility_alt": "",
+      "note": "v0.10. 무적·충격파가 붙는 신통(작두 오름)은 T2: trauma 0.3, hitstop 60ms, haptic L0.4/100ms. SFX sfx_sintong_*·VFX vfx_sintong_* → 12/13 요청. 연출은 다음 그리드 경계(2분박 1/2박, 3분박 1/3박) 스냅",
+      "override_t2": {
+        "chars": [
+          "char_baksu"
+        ],
+        "trauma": 0.3,
+        "hitstop_ms": 60,
+        "haptic": {
+          "low": 0.4,
+          "high": 0,
+          "ms": 100
+        }
+      }
+    },
+    {
+      "event": "trait_tier_up",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.2,
+        "ms": 60
+      },
+      "ui": "hud_trait_tier_banner_0.8s",
+      "accessibility_alt": "fade_if_motion_reduce",
+      "note": "v0.10, 03 2.7"
+    },
+    {
+      "event": "bingui_jeomji_open",
+      "ev_key_02": null,
+      "tier": "paused",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "scr_bingui_jeomji cards 60ms stagger",
+      "accessibility_alt": "",
+      "note": "v0.10, 7.8. 빙의 T3 햅틱 직후라 햅틱 생략"
+    },
+    {
+      "event": "gyeoldan_on_pullil_first",
+      "ev_key_02": null,
+      "tier": "T1",
+      "trauma": 0.1,
+      "hitstop_ms": 0,
+      "haptic": {
+        "low": 0,
+        "high": 0.15,
+        "ms": 40
+      },
+      "ui": "決_pop+name_tag(결단타 — 단칼에 끊었다)",
+      "accessibility_alt": "직선 실루엣",
+      "note": "v0.10, 프로필 1회 이름표. 이후는 일반 결단타 행"
+    },
+    {
+      "event": "hud_widget_unlock",
+      "ev_key_02": null,
+      "tier": "ui",
+      "trauma": 0,
+      "hitstop_ms": 0,
+      "haptic": null,
+      "ui": "fade_in_0.6s+border_pulse_x3",
+      "accessibility_alt": "",
+      "note": "v0.10, 13.0 점진 개방"
+    }
+  ]
+}

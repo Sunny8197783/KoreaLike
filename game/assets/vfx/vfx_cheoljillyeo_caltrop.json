@@ -1,0 +1,108 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_cheoljillyeo_caltrop 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 250
+  },
+  {
+   "filename": "vfx_cheoljillyeo_caltrop 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 250
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_cheoljillyeo_caltrop.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_cheoljillyeo_caltrop",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_cheoljillyeo_caltrop",
+   "name": "Cheoljillyeo caltrop",
+   "fps": 4.0,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "8x8->16x16"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_cheoljillyeo",
+   "color_role": "R+M",
+   "spec_canvas": "8x8",
+   "spec_frames": 2,
+   "timing": "fps:4",
+   "blend": "normal",
+   "layer": "L03",
+   "beat_snap": false,
+   "max_concurrent": 120,
+   "scope": "v1"
+  }
+ }
+}

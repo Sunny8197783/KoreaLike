@@ -1,0 +1,125 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_sinkal_windup 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_sinkal_windup 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "hand-drawn grid recipe (art/pilot/_scripts/fix_r3_vfx.py)",
+  "version": "1",
+  "image": "vfx_sinkal_windup.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 16
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_sinkal_windup",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_sinkal_windup",
+   "name": "Sinkal windup",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 2,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    8,
+    8
+   ],
+   "columns": 2,
+   "frameWidth": 16,
+   "frameHeight": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "ok"
+   }
+  },
+  "korealike": {
+   "category": "weapon_red",
+   "owner": "wpn_sinkal",
+   "spec_canvas": "16x16",
+   "spec_frames": 2,
+   "timing": "fps:20",
+   "blend": "normal",
+   "pilot": false,
+   "palette": [
+    "#561318",
+    "#c8322d",
+    "#d2c19c",
+    "#e4604f",
+    "#e9dcc0",
+    "#f5d66b"
+   ],
+   "colors": 6,
+   "source": "art/pilot/_scripts/fix_r3_vfx.py (r3 hand redraw, 0 gen)",
+   "impact_frame": 2,
+   "phases": {
+    "windup": [
+     0,
+     1
+    ]
+   },
+   "anchor": "hand_r",
+   "note": "impact_frame = 시트 끝(f2 = 발사 박 틱). 동쪽 그림, 서쪽은 flip_h",
+   "spec": "art_style_v1",
+   "promoted_from": "vfx_sinkal_windup__pilot"
+  }
+ }
+}

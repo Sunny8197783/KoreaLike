@@ -1,0 +1,191 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_bingui_pillar_chilseong 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  },
+  {
+   "filename": "vfx_bingui_pillar_chilseong 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  },
+  {
+   "filename": "vfx_bingui_pillar_chilseong 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  },
+  {
+   "filename": "vfx_bingui_pillar_chilseong 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  },
+  {
+   "filename": "vfx_bingui_pillar_chilseong 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  },
+  {
+   "filename": "vfx_bingui_pillar_chilseong 5",
+   "frame": {
+    "x": 0,
+    "y": 128,
+    "w": 32,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 128
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_bingui_pillar_chilseong.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 160,
+   "h": 256
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_bingui_pillar_chilseong",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_bingui_pillar",
+   "name": "Bingui pillar (빙의 기둥)",
+   "fps": 24,
+   "loop": false,
+   "frames": 6,
+   "frameSize": [
+    32,
+    128
+   ],
+   "pivot": [
+    16,
+    108
+   ],
+   "columns": 5,
+   "frameWidth": 32,
+   "frameHeight": 96,
+   "blend": "add",
+   "layer": "L10",
+   "hit": {
+    "stop": 0.06,
+    "shake": 0.18,
+    "amp": 3
+   },
+   "variant": "chilseong",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     11,
+     6
+    ],
+    "semi_before": 1960,
+    "blend": "normal",
+    "size": "32x96->32x128"
+   }
+  }
+ }
+}

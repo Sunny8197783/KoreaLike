@@ -1,0 +1,648 @@
+{
+  "schema_version": "1.0",
+  "doc": "design/08-stages-waves.md 5장(스폰 디렉터) 표. 캐논 8.3이 08 소유로 지정, 캐논 v1.2 C-37로 신설(2026-11-21). 모든 스테이지 공통 규칙과 기준값. 분 단위 풀·이벤트 시각은 data/waves_<stage>.json. 시간 곡선(T/C/V/S)은 data/enemies.json#scaling(07)만 소유한다(08 D11).",
+  "canon_version": "1.2",
+  "director": {
+    "tick_hz": 60,
+    "cap_alive": 400,
+    "cap_note": "정예·보스 포함, 영가 제외(영가 60 별도, 08 D5)",
+    "event_cap_bonus": 80,
+    "refill_per_tick": 12,
+    "floor_ratio": 0.5,
+    "periodic_skip_if_alive_gte_target": true,
+    "periodic_interval_divided_by_window_mult": true,
+    "formula": {
+      "target": "min_alive(m) * stage_density * mode_density * salgi_mult * ladder_mult * window_mult",
+      "floor": "target * floor_ratio",
+      "salgi_mult": "1 + 0.005 * salgi",
+      "refill": "alive < floor -> spawn min(floor - alive, refill_per_tick) this tick",
+      "periodic": "every interval(m)/window_mult sec spawn batch(m); skip if alive >= target",
+      "events": "scheduled evt_* run regardless of periodic skip, up to cap_alive + event_cap_bonus"
+    },
+    "enemy_hard_cap_check": "cap_alive + event_cap_bonus <= 2500 (14-tech-production 4.2)"
+  },
+  "salgi": {
+    "effect_mode": "continuous",
+    "spawn_per_point": 0.005,
+    "elite_chance_per_point": 0.005,
+    "han_per_point": 0.002,
+    "source": "canon v1.2 D-16",
+    "elite_extra_rule": "각 예약 정예 슬롯에 0.005 × 살기 확률로 같은 정예 1 추가(08 5.5)"
+  },
+  "window_mult": {
+    "trial_warn": 0.8,
+    "trial": 0.6,
+    "post_trial": 0.7,
+    "post_trial_sec": 15,
+    "post_trial_ramp_sec": 10,
+    "midboss": 0.5,
+    "midboss_post_breather": 0.7,
+    "midboss_post_breather_sec": 20
+  },
+  "supply_table": {
+    "stage_basis": "stage_guksadang (스테이지 배율 적용 전 기준값, 08 5.1.1)",
+    "kills_target_source": "data/combat_core.json curves_assumption.kills_per_min (02 소유, 사본)",
+    "minute": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "kills_target_per_min": [
+      30,
+      45,
+      60,
+      85,
+      100,
+      115,
+      140,
+      160,
+      180,
+      200,
+      215,
+      230,
+      260,
+      285,
+      310,
+      335,
+      360,
+      380,
+      420,
+      450
+    ],
+    "batch": [
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6,
+      6,
+      7,
+      7,
+      8,
+      9
+    ],
+    "interval_sec": [
+      2.0,
+      1.2,
+      1.6,
+      1.2,
+      1.0,
+      1.3,
+      1.1,
+      0.95,
+      1.1,
+      1.0,
+      0.95,
+      1.1,
+      0.95,
+      1.05,
+      0.95,
+      0.9,
+      0.95,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "supply_per_min": [
+      30,
+      50,
+      75,
+      100,
+      120,
+      138,
+      164,
+      189,
+      218,
+      240,
+      253,
+      273,
+      316,
+      343,
+      379,
+      400,
+      442,
+      467,
+      505,
+      540
+    ],
+    "supply_over_kills_range": [
+      1.0,
+      1.3
+    ],
+    "min_alive_ref": "data/waves_stage1.json#minutes[].min_alive",
+    "totals": {
+      "supply_20min_approx": 5240,
+      "event_entities_approx": 330
+    }
+  },
+  "stage_multipliers": {
+    "stage_guksadang": {
+      "scope": "v1",
+      "stage_density": 1.0,
+      "stage_hp": 1.0,
+      "stage_dmg": 1.0
+    },
+    "stage_jindo_ssitgim": {
+      "scope": "v1",
+      "stage_density": 1.1,
+      "stage_hp": 1.25,
+      "stage_dmg": 1.1
+    },
+    "stage_east_sea_byeolsin": {
+      "scope": "v1",
+      "stage_density": 1.2,
+      "stage_hp": 1.55,
+      "stage_dmg": 1.2
+    },
+    "stage_jeju_chilmeori": {
+      "scope": "x1",
+      "stage_density": 1.25,
+      "stage_hp": 1.9,
+      "stage_dmg": 1.25
+    },
+    "stage_myeongbu": {
+      "scope": "x1",
+      "stage_density": 1.3,
+      "stage_hp": 2.3,
+      "stage_dmg": 1.35,
+      "min_alive_offset": 2
+    }
+  },
+  "species_selection": {
+    "rng_stream": "rng_spawn",
+    "pick": "weighted_pick(pool(m))",
+    "first_appear_gate": "canon 4.6.1 first_appear (초 단위 게이트)",
+    "han": "base_han * T(m) * stage_hp * S(salgi) * ladder_hp * event_hp",
+    "contact": "base_dmg * C(m) * stage_dmg",
+    "speed_common": "min(base_spd * V(m) * ladder_spd, base_spd * 1.15, 3.6)",
+    "common_speed_abs_cap": 3.6,
+    "speed_cap_exempt": [
+      "enm_mongdal_gwisin dash",
+      "elite",
+      "midboss",
+      "boss",
+      "chaser_jeoseung_saja"
+    ],
+    "time_curves_owner": "data/enemies.json#scaling",
+    "elite_random_promotion": false
+  },
+  "spawn_ring": {
+    "r_min": 12.5,
+    "r_max": 15.0,
+    "dir_weights": {
+      "front_cone_deg": 60,
+      "front": 0.5,
+      "side": 0.35,
+      "back": 0.15
+    },
+    "idle_uniform_after_sec": 2.0,
+    "max_retries": 6,
+    "on_fail": "defer_to_next_tick",
+    "band_clip": "띠 맵은 진행축 방향 재추첨, 부유체는 blocked 6유닛 이내 허용(08 2.2.1)"
+  },
+  "recycle": {
+    "radius": 22.0,
+    "keep_state": [
+      "han",
+      "giseak",
+      "maetim_timer"
+    ],
+    "exempt_tags": [
+      "elite",
+      "midboss",
+      "boss",
+      "event"
+    ],
+    "exempt_follow_speed_mult": 1.5
+  },
+  "event_types": [
+    {
+      "id": "evt_pullil_demo",
+      "params": [
+        "species",
+        "count",
+        "distance",
+        "han_ratio",
+        "condition"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "evt_ttemolli",
+      "params": [
+        "groups[species, count, speed, width, direction]"
+      ],
+      "defaults": {
+        "speed": 2.2,
+        "start_offset_forward": 4.0,
+        "start_line_dist": 18.0,
+        "grid_spacing": 0.9,
+        "lifetime": "crossing_dist/speed + 2"
+      },
+      "status": "active"
+    },
+    {
+      "id": "evt_ewossagi",
+      "params": [
+        "species",
+        "count",
+        "radius",
+        "shrink_speed",
+        "stop_radius",
+        "gaps",
+        "gap_width",
+        "shape"
+      ],
+      "defaults": {
+        "radius": [
+          9,
+          11
+        ],
+        "shrink_speed": [
+          0.8,
+          1.0
+        ],
+        "stop_radius": 3.0,
+        "gap_width": 2.5,
+        "gap_forward_deg": 30,
+        "pincer_offset": 14
+      },
+      "status": "active"
+    },
+    {
+      "id": "evt_elite_spawn",
+      "params": [
+        "elite_id",
+        "count",
+        "placement"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "evt_sumgoreugi",
+      "params": [
+        "mult",
+        "duration"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "evt_sangcharim",
+      "params": [
+        "gongmulsang layout (08 3.4)"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "evt_changgwi_haengnyeol",
+      "stage_only": [
+        "stage_guksadang"
+      ],
+      "status": "active"
+    },
+    {
+      "id": "evt_gohon_eongkim",
+      "stage_only": [
+        "stage_jindo_ssitgim"
+      ],
+      "params": [
+        "count",
+        "link_radius"
+      ],
+      "rule": "받은 피해 50%를 연결 개체에 나눔, 하나 해원 시 연결 전원 풀릴 기색",
+      "status": "active"
+    },
+    {
+      "id": "evt_sangyeo_honbul",
+      "stage_only": [
+        "stage_jindo_ssitgim"
+      ],
+      "params": [
+        "count",
+        "path",
+        "speed",
+        "duration"
+      ],
+      "rule": "비적대, 반경 2 안 풀릴 기색 적 해원·영가 천도 넋 ×2",
+      "status": "active"
+    },
+    {
+      "id": "evt_baebangseon",
+      "stage_only": [
+        "stage_jeju_chilmeori"
+      ],
+      "scope": "x1",
+      "status": "active"
+    },
+    {
+      "id": "evt_gwanmun",
+      "stage_only": [
+        "stage_myeongbu"
+      ],
+      "scope": "x1",
+      "status": "active"
+    },
+    {
+      "id": "evt_maeteun_tte",
+      "status": "proposed",
+      "owner_def": "07"
+    },
+    {
+      "id": "evt_maetim_kkeopjil",
+      "status": "proposed",
+      "owner_def": "07",
+      "v12_note": "표준 16:15 배치가 시련 4 창 [915, 985] 안 — 07 정의 확정 때 재배치 필요(08 16.1 CI ⑤)"
+    }
+  ],
+  "elite_rules": {
+    "single_source": "표준 모드는 data/waves_<stage>.json#elites + 살기 추가 정예만. data/enemies.json spawn.elite_timer는 무한굿·예약표 없는 모드 전용",
+    "first_elite_sec": 420,
+    "first_elite_source": "canon v1.2 C-32 (07:00)",
+    "none_before_sec": 360,
+    "trial_exclusion": {
+      "defer_if_in_trial": true,
+      "defer_to": "trial_end + 10s",
+      "window_sec": "[T, T+55]"
+    },
+    "midboss_defer": "중간보스 생존 중 예약은 defer_if_midboss_alive",
+    "regular_eodukssini_per_run_max": 2,
+    "extra_eodukssini_variant": "elite_eodukssini__small"
+  },
+  "elite_schedules": {
+    "stage_guksadang": {
+      "source": "data/waves_stage1.json#elites",
+      "count": 14
+    },
+    "stage_jindo_ssitgim": {
+      "status": "draft_until_waves_file",
+      "source_doc": "08 9.8",
+      "count": 13,
+      "note": "waves_stage2.json을 만들면 그 파일 elites가 단일 출처가 되고 이 사본은 지운다",
+      "slots": [
+        {
+          "time_sec": 420,
+          "id": "elite_bulgasari",
+          "count": 1,
+          "placement": "ring",
+          "defer_if_in_trial": true
+        },
+        {
+          "time_sec": 450,
+          "id": "elite_eodukssini",
+          "count": 1,
+          "placement": "darkest_fog_edge"
+        },
+        {
+          "time_sec": 485,
+          "id": "elite_geogu_gwi",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 695,
+          "id": "elite_geogu_gwi",
+          "count": 1,
+          "placement": "ring",
+          "defer_if_midboss_alive": true
+        },
+        {
+          "time_sec": 695,
+          "id": "elite_bulgasari",
+          "count": 1,
+          "placement": "ring",
+          "defer_if_midboss_alive": true
+        },
+        {
+          "time_sec": 820,
+          "id": "elite_dueoksini",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 820,
+          "id": "elite_eodukssini",
+          "count": 1,
+          "placement": "darkest_fog_edge"
+        },
+        {
+          "time_sec": 960,
+          "id": "elite_dueoksini",
+          "count": 2,
+          "placement": "ring",
+          "defer_if_in_trial": true
+        },
+        {
+          "time_sec": 990,
+          "id": "elite_geogu_gwi",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 1005,
+          "id": "elite_bulgasari",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 1050,
+          "id": "elite_eodukssini",
+          "count": 2,
+          "placement": "darkest_fog_edge",
+          "variant": "elite_eodukssini__small",
+          "fallback": "elite_eodukssini"
+        }
+      ]
+    },
+    "stage_east_sea_byeolsin": {
+      "status": "draft_until_waves_file",
+      "source_doc": "08 10.8",
+      "count": 12,
+      "note": "waves_stage3.json을 만들면 그 파일 elites가 단일 출처가 되고 이 사본은 지운다",
+      "slots": [
+        {
+          "time_sec": 420,
+          "id": "elite_bulgasari",
+          "count": 1,
+          "placement": "ring",
+          "defer_if_in_trial": true
+        },
+        {
+          "time_sec": 450,
+          "id": "elite_eodukssini",
+          "count": 1,
+          "placement": "darkest_fog_edge"
+        },
+        {
+          "time_sec": 485,
+          "id": "elite_geogu_gwi",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 695,
+          "id": "elite_bulgasari",
+          "count": 2,
+          "placement": "ring",
+          "defer_if_midboss_alive": true
+        },
+        {
+          "time_sec": 810,
+          "id": "elite_dueoksini",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 860,
+          "id": "elite_eodukssini",
+          "count": 1,
+          "placement": "darkest_fog_edge"
+        },
+        {
+          "time_sec": 960,
+          "id": "elite_geogu_gwi",
+          "count": 2,
+          "placement": "ring",
+          "defer_if_in_trial": true
+        },
+        {
+          "time_sec": 1005,
+          "id": "elite_dueoksini",
+          "count": 1,
+          "placement": "ring"
+        },
+        {
+          "time_sec": 1050,
+          "id": "elite_eodukssini",
+          "count": 2,
+          "placement": "darkest_fog_edge",
+          "variant": "elite_eodukssini__small",
+          "fallback": "elite_eodukssini"
+        }
+      ]
+    }
+  },
+  "trial_link": {
+    "trial_times_sec": [
+      180,
+      390,
+      750,
+      930
+    ],
+    "hapil_sec": 1080,
+    "hapil_participants": "all_enshrined",
+    "source": "canon v1.2 D-01 = data/deities.json#constants.trial_times_s (06 정본)",
+    "trial_duration_sec": 30,
+    "descend_max_sec": 8,
+    "face_resolution": "dual_gauge_first_full",
+    "retreat_unpicked_next_trials": 1,
+    "warn": {
+      "lead_sec": 10,
+      "spawn_mult": 0.8,
+      "no_new_event_booking": true
+    },
+    "circle_placement": {
+      "offset": 8.0,
+      "radius": 6.0,
+      "min_passable_ratio": 0.8,
+      "rotate_step_deg": 45,
+      "pull_in_step": 2.0,
+      "myeongbu_prefers_vertical": true
+    },
+    "event_exclusion_sec": {
+      "before": 15,
+      "after": 55
+    },
+    "hapil": {
+      "no_trial": true,
+      "invuln_and_spawn_stop_sec": 1.2
+    }
+  },
+  "midboss_link": {
+    "time_sec": 600,
+    "rng_stream": "rng_mboss",
+    "intro_sec": 2.0,
+    "time_limit_sec": 90,
+    "time_limit_includes_intro": true,
+    "spawn_mult_alive": 0.5,
+    "post_breather_sec": 20,
+    "post_breather_mult": 0.7,
+    "unresolved": {
+      "action": "exit_offscreen",
+      "reward": "none",
+      "salgi_delta": 0
+    }
+  },
+  "boss_link": {
+    "pre_clear_sec": 1198,
+    "pre_clear": {
+      "pullil": "haewon",
+      "other": "toesong",
+      "toesong_orb_ratio": 0.5
+    },
+    "silence_sec": 2.0,
+    "arena_radius": 11.0,
+    "adds": {
+      "min_alive": 40,
+      "interval_sec": 1.0,
+      "batch": 3
+    },
+    "forced_saja_sec": 1380,
+    "settlement_ref": "data/combat_core.json#run_end (E2 saja_bow / E3 sal_geodum, canon v1.2 D-02)"
+  },
+  "caps_refs": {
+    "enemy_projectiles_runtime": 600,
+    "orb_merge": 300,
+    "source": "canon v1.2 D-45 (07 runtime = data/enemies.json#caps)",
+    "tech_hard_caps_note": "14 perf 1,500/2,000은 기술 하드 캡(의미 분리)"
+  },
+  "rng_streams_used": [
+    "rng_chunk",
+    "rng_spawn",
+    "rng_event",
+    "rng_mboss",
+    "rng_deity",
+    "rng_drop",
+    "rng_box"
+  ],
+  "rng_registry_ref": "14-tech-production.md 3.13.1 (11 streams, canon v1.2 D-48)",
+  "ci_checks": [
+    "minutes_contiguous_0_19",
+    "pool_ids_in_canon_4_6",
+    "from_sec_gte_canon_first_appear",
+    "elite_in_trial_window_requires_defer",
+    "events_outside_trial_and_midboss_windows",
+    "weights_sum_gt_0",
+    "no_time_mult_keys_in_minutes",
+    "trials_match_06",
+    "elites_per_min_rederived",
+    "elite_timer_not_in_pyojun",
+    "supply_over_kills_in_1.0_1.3"
+  ]
+}

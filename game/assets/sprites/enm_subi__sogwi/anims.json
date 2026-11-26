@@ -1,0 +1,32 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "move": {
+   "east": 4,
+   "north": 4,
+   "south": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   32,
+   32
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "common_s",
+  "rot": "south/east/north/west.png = move_<dir>_0 (독립 정지 rotation 반입 제외, L12)"
+ },
+ "west": "flip_h(east)",
+ "notes": "palette_variant of enm_subi (런타임 enm_subi 기준, G3 재생성본 반입 후 재실행). mk 먹 램프 + 호박 눈"
+}

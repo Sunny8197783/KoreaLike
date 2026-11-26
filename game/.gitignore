@@ -1,0 +1,12 @@
+# Godot 4
+.godot/
+/android/
+*.translation
+export_presets.cfg.bak
+# 캡처·로그
+/captures/
+*.log
+# OS
+Thumbs.db
+.DS_Store
+/_capture/

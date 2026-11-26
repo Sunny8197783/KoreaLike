@@ -1,0 +1,72 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  256,
+  256
+ ],
+ "pivot": [
+  128,
+  240
+ ],
+ "anims": {
+  "attack_1": {
+   "south": 12
+  },
+  "attack_2": {
+   "south": 12
+  },
+  "haewon_finale": {
+   "south": 16
+  },
+  "idle": {
+   "south": 8
+  },
+  "move": {
+   "south": 8
+  },
+  "summon": {
+   "south": 8
+  },
+  "toechi_finale": {
+   "south": 12
+  }
+ },
+ "frame_size": {
+  "attack_1": [
+   256,
+   256
+  ],
+  "attack_2": [
+   256,
+   256
+  ],
+  "haewon_finale": [
+   256,
+   256
+  ],
+  "idle": [
+   256,
+   256
+  ],
+  "move": [
+   256,
+   256
+  ],
+  "summon": [
+   256,
+   256
+  ],
+  "toechi_finale": [
+   256,
+   256
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts/do_salvage.py (art_post run + deboil)",
+  "tier": "boss",
+  "rot": "south/east/north.png = move_south_0, west.png = flip_h (192 정지 rotation 반입 제외, 캔버스 통일)"
+ },
+ "directions": "S 1방향 저작 + 좌우 미러(ART_STYLE 4.4 보스)",
+ "notes": "form_han/form_sal 은 셰이더 틴트로 처리(별도 프레임 없음). 248→256 피벗 패딩(리사이즈 없음)",
+ "g7_fix": "G7 2026-11-24 손보정(0 gen): 고스트 얼굴->산발 흑발/반감은 눈/가는 입(idle/move 전부, 다른 애니는 검출분), 허수아비->제웅(짚/새끼줄 3단/엽전), 두건 얼굴 붉은 눈 jk #c8322d 2x1 두 점(63/76 프레임)"
+}

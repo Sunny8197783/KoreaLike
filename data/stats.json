@@ -1,0 +1,415 @@
+{
+  "_meta": {
+    "schema": "soulpath.stats.v1",
+    "doc": "design/05-stats-passives.md v0.10 (2~8장, 10~12장, 17.3, 20장 리뷰 대응 로그)",
+    "canon": "design/01-concept-and-canon.md 4.5",
+    "canon_version": "v1.2",
+    "formula": "final = clamp((base + sum_flat) * (1 + sum_add_pct) * prod_mult, floor, cap); integer stats floor() after clamp",
+    "ops": [
+      "flat",
+      "add_pct",
+      "mult",
+      "floor_override",
+      "cap_override"
+    ],
+    "mult_sources_closed_list": [
+      "M1_incomplete_bingui_x0.7",
+      "M2_char_bingui_mult",
+      "M3_salpuri_dan_penalty",
+      "M4_move_slow",
+      "M5_vulnerability",
+      "M6_state_mult_puri_gyeoldan"
+    ],
+    "source_cats": [
+      "CHAR",
+      "META",
+      "PASSIVE",
+      "FACE",
+      "POWER",
+      "WEAPON",
+      "TEMP",
+      "MOD",
+      "PICKUP"
+    ],
+    "authority": {
+      "single_source_of_truth": [
+        "quantize (05 3.2.2a phase_carry)",
+        "jeomji card generation (05 10장)",
+        "stat pipeline & damage buckets (05 2·5장)"
+      ],
+      "refers_to": {
+        "hit_pipeline_iframes_player_debuffs_revive": "data/combat_core.json (02 12장, 11.3)",
+        "enemy_damage_C_m_and_status_resist": "data/enemies.json (07 2.6, 3.2)",
+        "ritual_ref": "data/weapons.json globals.ritual_ref (04 2.8)",
+        "expected_salgi_curve": "design/02-core-loop-combat.md 9장",
+        "grid_lengths": "data/combat_core.json jangdan.geori[].grid_div = data/weapons.json geori_grid"
+      },
+      "review_log": "design/05-stats-passives.md 20장 (R-01~R-14)"
+    }
+  },
+  "stats": [
+    {"id": "stat_jeonggi", "name_ko": "정기", "hanja": "精氣", "proto": "Max Health", "base": 100, "floor": 1, "cap": null, "unit": "hp", "integer": true, "stack": "add_pct", "tilt": "neutral", "display": "int", "panel": "survival", "vp": {"per": 0.01, "vp": 0.4}},
+    {"id": "stat_saenggi", "name_ko": "생기", "hanja": "生氣", "proto": "Recovery", "base": 0, "floor": 0, "cap": null, "unit": "hp_per_s", "integer": false, "stack": "flat", "tilt": "neutral", "display": "per_s_1", "panel": "survival", "tick_s": 1.0, "vp": {"per": 0.1, "vp": 2.0}},
+    {"id": "stat_sinbok", "name_ko": "신복", "hanja": "神服", "proto": "Armor", "base": 0, "floor": 0, "cap": 30, "unit": "flat_reduction", "integer": true, "stack": "flat", "tilt": "neutral", "display": "int", "panel": "survival", "vp": {"per": 1, "vp": 4.0}},
+    {"id": "stat_jeopsin_hoepi", "name_ko": "접신 회피", "hanja": "接神回避", "proto": "Dodge", "base": 0.0, "floor": 0.0, "cap": 0.5, "unit": "prob", "integer": false, "stack": "flat", "tilt": "neutral", "display": "pct0", "panel": "survival", "rng": "prd", "vp": {"per": 0.01, "vp": 1.5}, "applies_to": "CONTACT only (enemy body); PROJECTILE/HAZARD not dodgeable (02 12.1)"},
+    {"id": "stat_myeongjul", "name_ko": "명줄", "hanja": "命-", "proto": "Revival", "base": 0, "floor": 0, "cap": null, "unit": "count", "integer": true, "stack": "flat", "tilt": "neutral", "display": "int", "panel": "survival", "vp": {"per": 1, "vp": 30}, "pickup_max_per_run": 1},
+    {"id": "stat_sinppal", "name_ko": "신빨", "hanja": null, "proto": "Might", "base": 1.0, "floor": 0.0, "cap": 10.0, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "red", "display": "pct0", "panel": "attack", "vp": {"per": 0.01, "vp": 1.0}},
+    {"id": "stat_jangdan", "name_ko": "장단", "hanja": "長短", "proto": "Cooldown", "base": 1.0, "floor": 0.4, "floor_during_sinmyeong_oreum": 0.25, "cap": 2.0, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "neutral", "display": "pct0_with_garak", "panel": "attack", "quantize": "phase_carry", "vp": {"per": -0.01, "vp": 1.6}, "quantize_ref": "05 3.2.2a; see top-level 'quantize'"},
+    {"id": "stat_gyeoldan", "name_ko": "결단", "hanja": "決斷", "proto": "Crit Chance (red only)", "base": 0.05, "floor": 0.0, "cap": 0.5, "unit": "prob", "integer": false, "stack": "flat", "tilt": "red", "display": "pct0", "panel": "attack", "vp": {"per": 0.01, "vp": 1.2}},
+    {"id": "stat_puri", "name_ko": "풀이", "hanja": "解", "proto": null, "base": 3.0, "floor": 1.0, "cap": 6.0, "unit": "mult_x", "integer": false, "stack": "flat", "tilt": "white", "display": "x1", "panel": "attack", "vp": {"per": 0.1, "vp": 3.0}},
+    {"id": "stat_sinjang", "name_ko": "신장 수", "hanja": "神將數", "proto": "Amount", "base": 0, "floor": 0, "cap": 10, "unit": "count", "integer": true, "stack": "flat", "tilt": "neutral", "display": "plus_int", "panel": "attack", "aura_radius_per_point": 0.05, "vp": {"per": 1, "vp": 25}},
+    {"id": "stat_doryang", "name_ko": "도량", "hanja": "道場", "proto": "Area", "base": 1.0, "floor": 0.1, "cap": 4.0, "unit": "mult_linear", "integer": false, "stack": "add_pct", "tilt": "neutral", "display": "pct0", "panel": "attack", "excludes": ["gildakkeum_ring", "chohon_radius", "hwasin_won", "deungbul_radius"], "vp": {"per": 0.01, "vp": 0.6}},
+    {"id": "stat_gise", "name_ko": "기세", "hanja": "氣勢", "proto": "Projectile Speed", "base": 1.0, "floor": 0.25, "cap": 3.0, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "red", "display": "pct0", "panel": "attack", "orbit_ratio": 0.5, "vp": {"per": 0.01, "vp": 0.2}},
+    {"id": "stat_yeongheom", "name_ko": "영험", "hanja": "靈驗", "proto": "Duration", "base": 1.0, "floor": 0.25, "cap": 3.0, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "neutral", "display": "pct0", "panel": "attack", "excludes": ["stat_neok_sumyeong", "stat_gilbe", "pullil_duration", "sinmyeong_oreum", "doryang_mandala", "myeongjul_iframe", "trial_timer"], "vp": {"per": 0.01, "vp": 0.4}},
+    {"id": "stat_domu", "name_ko": "도무", "hanja": "跳舞", "proto": "Move Speed", "base": 1.0, "base_units_per_s": 4.0, "floor": 0.4, "cap": 2.0, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "white", "display": "pct0_with_units", "panel": "gutpan", "accel_s": 0.08, "vp": {"per": 0.01, "vp": 0.6}},
+    {"id": "stat_chohon", "name_ko": "초혼", "hanja": "招魂", "proto": "Magnet", "base": 2.0, "floor": 0.5, "cap": null, "unit": "units", "integer": false, "stack": "add_pct", "tilt": "neutral", "display": "units_1", "panel": "gutpan", "pull": {"v0": 4.0, "accel": 12.0, "vmax": 16.0}, "vp": {"per": 0.01, "vp": 0.15}},
+    {"id": "stat_haewon_suryeon", "name_ko": "해원 숙련", "hanja": "解冤熟練", "proto": "Growth", "base": 1.0, "floor": 0.0, "cap": null, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "white", "display": "pct0", "panel": "gutpan", "applies_to": "all wonhon_guseul (toechi and haewon)", "vp": {"per": 0.01, "vp": 0.8}},
+    {"id": "stat_siju", "name_ko": "시주", "hanja": "施主", "proto": "Greed", "base": 1.0, "floor": 0.0, "cap": null, "unit": "mult", "integer": false, "stack": "add_pct", "tilt": "neutral", "display": "pct0", "panel": "gutpan", "applies_to": "settlement conversion only (neok->gongdeok, yeopjeon->bokjeon)", "vp": {"per": 0.01, "vp": 0.0}},
+    {"id": "stat_jeomgwae", "name_ko": "점괘", "hanja": "占卦", "proto": "Luck", "base": 100, "floor": 0, "cap": null, "unit": "points", "integer": true, "stack": "flat", "tilt": "neutral", "display": "int", "panel": "gutpan", "L_clamp": [0.5, 3.0], "vp": {"per": 1, "vp": 0.3}},
+    {"id": "stat_salgi", "name_ko": "살기", "hanja": "殺氣", "proto": "Curse", "base": 0, "floor": "baseline", "cap": null, "unit": "gauge", "integer": false, "stack": "baseline_plus_accum_minus_purify", "tilt": "red", "display": "gauge_ui_gutpan_giun", "panel": "gutpan", "accum": {"normal_toechi": 0.02, "elite_toechi": 1, "mboss_toechi": 5}, "purify": {"sogeum_per_algaengi": -0.02, "ring_per_algaengi": -0.02}, "effects_per_point": {"spawn_mult": 0.005, "elite_chance_mult": 0.005, "enemy_han_mult": 0.002}, "wongwi_thresholds": [25, 50, 75], "effects_formula": "continuous: mult = 1 + coef * salgi (equals canon per-10 values at multiples of 10). CANON-REQUEST R-05"},
+    {"id": "stat_haengnyeol", "name_ko": "행렬", "hanja": "行列", "proto": null, "base": 24, "floor": 0, "cap": 60, "unit": "count", "integer": true, "stack": "flat", "tilt": "white", "display": "int", "panel": "gutpan", "vp": {"per": 1, "vp": 1.5}},
+    {"id": "stat_neok_sumyeong", "name_ko": "넋 수명", "hanja": null, "proto": null, "base": 30, "floor": 5, "cap": 60, "unit": "seconds", "integer": false, "stack": "flat", "tilt": "white", "display": "sec_1", "panel": "gutpan", "stamped_on_spawn": true, "vp": {"per": 1, "vp": 1.5}},
+    {"id": "stat_gilbe", "name_ko": "길베", "hanja": null, "proto": null, "base": 4.0, "floor": 1.0, "cap": 8.0, "hard_cap_with_temp": 12.0, "unit": "seconds", "integer": false, "stack": "flat", "tilt": "white", "display": "sec_1", "panel": "gutpan", "vp": {"per": 0.1, "vp": 2.0}},
+    {"id": "stat_gongsu_gyojeong", "name_ko": "다시 묻기(재점)", "hanja": "再占", "name_ko_old": "공수 교정 (canon v1.2 D-04/C-15: display renamed, ID kept)", "proto": "Reroll", "base": 0, "floor": 0, "cap": 10, "unit": "count", "integer": true, "stack": "flat", "tilt": "neutral", "display": "jeomji_button", "panel": null, "meta_max": 5, "run_start_max_with_lineage": 6, "meta_ref": "09 8장 forge_* + myd_d5/d6 (meta_economy.json forge)"},
+    {"id": "stat_mullim", "name_ko": "물림", "hanja": null, "proto": "Skip", "base": 0, "floor": 0, "cap": 10, "unit": "count", "integer": true, "stack": "flat", "tilt": "neutral", "display": "jeomji_button", "panel": null, "meta_max": 3, "run_start_max_with_lineage": 4, "meta_ref": "09 8장 forge_* + myd_d5/d6 (meta_economy.json forge)"},
+    {"id": "stat_geumgi", "name_ko": "금기", "hanja": "禁忌", "proto": "Banish", "base": 0, "floor": 0, "cap": 10, "unit": "count", "integer": true, "stack": "flat", "tilt": "neutral", "display": "jeomji_button", "panel": null, "meta_max": 5, "run_start_max_with_lineage": 6, "meta_ref": "09 8장 forge_* + myd_d5/d6 (meta_economy.json forge)"}
+  ],
+  "characters": {
+    "char_mansin": {
+      "modifiers": [],
+      "bingui_mult": 1.15,
+      "trial_charge_add_pct": 0.15
+    },
+    "char_baksu": {
+      "modifiers": [
+        {
+          "stat": "stat_jeonggi",
+          "op": "add_pct",
+          "value": 0.2
+        },
+        {
+          "stat": "stat_haengnyeol",
+          "op": "flat",
+          "value": -6
+        }
+      ],
+      "bingui_mult": 1.0
+    },
+    "char_dangol": {
+      "modifiers": [
+        {
+          "cond": {
+            "color": "white"
+          },
+          "op": "add_pct",
+          "value": 0.25
+        }
+      ],
+      "bingui_mult": 0.8,
+      "ring_snap_units": 1.8,
+      "sinmyeong_charge_per_instrument_layer": 0.1
+    },
+    "char_myeongdu": {
+      "modifiers": [
+        {
+          "stat": "stat_gyeoldan",
+          "op": "flat",
+          "value": 0.1
+        }
+      ],
+      "bingui_mult": 1.0
+    },
+    "char_simbang": {
+      "modifiers": [
+        {
+          "stat": "stat_jeomgwae",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "bingui_mult": 1.0,
+      "free_reroll_per_jeomji": 1,
+      "box_grade_upgrade_chance": 0.1,
+      "box_grade_upgrade_ref": "combat_core.chest.grade_up.simbang_pp (02 18.1 owner, canon v1.2 C-18)"
+    },
+    "char_beopsa": {
+      "modifiers": [
+        {
+          "stat": "stat_domu",
+          "op": "add_pct",
+          "value": -0.1
+        }
+      ],
+      "bingui_mult": 1.0,
+      "gyeongmun_hold_cap_add": 1,
+      "scope": "x1"
+    }
+  },
+  "constants": {
+    "pullil_threshold": 0.35,
+    "pullil_duration_first_s": 12.0,
+    "pullil_duration_repeat_s": 8.0,
+    "pullil_duration_cap_s": 20.0,
+    "maetim_bokgwi_han_ratio": 0.6,
+    "maetim_bokgwi_han_ratio_common": 0.45,
+    "maetim_bokgwi_note": "0.6 = elite+ only. common/minion recover to 45% + 3s non-hostile (canon v1.2 D-20/C-09; owner 07 enemies.json global_rules.maetim)",
+    "maedeup_jamgeum_min_han": 1.0,
+    "gyeoldan_mult": 2.0,
+    "cond_bucket_cap": 3.0,
+    "vuln_cap": 0.5,
+    "same_frame_order": [
+      "ring",
+      "white_weapon",
+      "yeongga_aura",
+      "red_weapon"
+    ],
+    "yeongga_aura_ratio": 0.15,
+    "yeongga_aura_base": "ritual_ref_top (max ritual_ref among owned white weapons incl. unions; weapons.json globals.ritual_ref)",
+    "yeongga_aura_tick": "grid (per-tick dmg = dps * g; dps constant regardless of jangdan, 02 10.2)",
+    "yeongga_aura_stack_cap_per_target": 8,
+    "yeongga_aura_fallback_ritual_ref": 10,
+    "ring_damage_base": "sum ritual_ref of owned white weapons",
+    "ring_damage_mult": 2.0,
+    "ring_damage_boss_mult": 0.5,
+    "min_damage_ratio": 0.2,
+    "zone_tick_armor_ratio": 0.5,
+    "iframes_owner": "data/combat_core.json player (02 12.1); mirrored here for tooltip/calculator only",
+    "hurt_iframe_s": 0.4,
+    "dodge_iframe_s": 0.2,
+    "proxy_iframe_s": 0.2,
+    "gyeongmun_iframe_s": 0.4,
+    "contact_tick_s": 0.5,
+    "proxy_hit_cd_s": 0.5,
+    "hapil_iframe_s": 1.5,
+    "bingui_iframe_s": 1.2,
+    "myeongjul": {
+      "owner": "data/combat_core.json revive (02 12.6)",
+      "revive_hp_ratio": 0.5,
+      "iframe_s": 2.0,
+      "wave_radius_units": 6.0,
+      "wave_effect": "haewon all pullil normal enemies in radius",
+      "wave_others_knockback_units": 3.0,
+      "wave_others_fear_s": 1.5,
+      "slowmo_scale": 0.3,
+      "slowmo_real_s": 0.5
+    },
+    "gyeongmun_hold_cap": 1,
+    "move_slow_floor_ratio": 0.4,
+    "enemy_slow_floor_ratio": 0.3,
+    "enemy_slow_floor_note": "= max total slow 70%, includes pullil x0.7. owner 07 2.6 / enemies.json",
+    "status_resist": {
+      "owner": "data/enemies.json (07 2.6)",
+      "note": "05 owns only yeongheom applicability"
+    },
+    "yeongheom_applies_to_status": {
+      "st_gyeongak": true,
+      "st_gyeongjik": true,
+      "st_dunhwa": true,
+      "st_bongbak": true,
+      "st_hwasang": false,
+      "st_pyosik": false,
+      "knockback": false
+    },
+    "prd_c": {
+      "0.10": 0.01475,
+      "0.15": 0.03222,
+      "0.20": 0.0557,
+      "0.25": 0.08474,
+      "0.30": 0.11895,
+      "0.35": 0.15798,
+      "0.40": 0.20155,
+      "0.45": 0.24931,
+      "0.50": 0.3021
+    },
+    "sinmyeong_oreum_jangdan_bonus": -0.15,
+    "sinmyeong_oreum_jangdan_bonus_note": "canon v1.2 D-17/C-08 approved (05 3.2.2b): TEMP add_pct -0.15 + floor 0.25. combat_core.sinmyeong.jangdan_bonus must match",
+    "sinmyeong_oreum_gilbe_mult": 2.0,
+    "weapon_min_base_cooldown_note": "not enforced; aura bangul line (0.5~0.52s) is an exception: sub-grid fires dropped, loss = 1 - cd/g. per-weapon min_period owned by 04 2.6",
+    "ring_area_efficiency_assumption": 0.7,
+    "hazard_tick_armor_note": "zone_tick_armor_ratio applies to HAZARD ticks (no iframe, no dodge/substitute/gyeongmun); request 02 12.1 step 5 annotation"
+  },
+  "quantize": {
+    "rule": "phase_carry",
+    "doc": "05 3.2.2a (single source of truth)",
+    "cd": "max(min_period, base_cd * max(floor, stat_jangdan)); floor 0.40, 0.25 during sinmyeong_oreum",
+    "on_acquire": "ideal_t = t (fire on next grid tick)",
+    "on_grid_tick": "if t+eps >= ideal_t and t >= last_fire_t + g: fire; last_fire_t = t; ideal_t += cd; if t - ideal_t > g: ideal_t = t + cd",
+    "on_cd_change": "ideal_t = last_fire_t + (ideal_t - last_fire_t) * cd_new / cd_old",
+    "mean_interval": "max(cd, g)",
+    "min_interval_grids": 1,
+    "grid_source": "combat_core.jangdan.geori[].grid_div (= weapons.json geori_grid); downbeat weapons (wpn_janggu, evo_hapjangdan) use 1 beat",
+    "cr1_position": "canon v1.2 D-18 approved CR1: 3-bun-bak jangdan (jungjungmori, jajinmori) use 1/3 beat, 2-bun-bak 1/2 beat; DPS-neutral under phase_carry",
+    "canon_label": "잔여 이월(위상 이월) — canon v1.2 D-21/C-06 (phase_carry is the canonical algorithm)",
+    "max_fires_per_sec_per_weapon": 6.7,
+    "projectile_check": "6 weapons * 6.7/s * (1+10) * 1.0s ~= 440 < soft cap 600; per-weapon max_active binds first (~200)"
+  },
+  "jeomji": {
+    "authority": "05 10장 single source. combat_core.jeomji keeps only screen timing keys; deities.json power_rules.jeomji refers here",
+    "base_options": 3,
+    "max_options": 4,
+    "p4": {
+      "formula": "clamp((L-1)/2, 0, 0.5) + santong_lv5 0.10",
+      "cap": 0.6
+    },
+    "category_weights": {
+      "weapon": 40,
+      "passive": 30,
+      "power": 20,
+      "power_note": "fixed; 0 if gangsin grade 0; does not grow with grade (R-11)"
+    },
+    "category_boosts": {
+      "weapon_x1.25_if": "level<=10 && free_weapon_slots>=2",
+      "passive_x1.1_if": "level<=10 && free_passive_slots>=4"
+    },
+    "rarity_base_weight": {
+      "common": 100,
+      "uncommon": 60,
+      "rare": 30
+    },
+    "luck_exponent": {
+      "common": 0.0,
+      "uncommon": 0.75,
+      "rare": 1.5
+    },
+    "owned_mult": 1.3,
+    "focus_mult": {
+      "applies_to": "owned weapons only",
+      "formula": "1 + 0.25 * (lv - 1)",
+      "per_level": 0.25,
+      "per_level_note": "growth 2026-11-24: 0.15 -> 0.25 (05 10.10: tune focus first if first Lv8 misses 07:30~09:00; bot seed2 first Lv8 was 10:06~11:30)"
+    },
+    "evo_mult": {
+      "pair_passive": 1.5,
+      "pair_passive_weapon_lv8": 2.5,
+      "pair_weapon": 1.3,
+      "union_partner_new": 2.0,
+      "union_partner_owned": 1.3,
+      "union_note": "growth 2026-11-24: new weapon whose union partner (weapon or its evolution) is owned x2.0; owned weapon upgrade whose union partner is owned x1.3"
+    },
+    "union_mercy_every": 3,
+    "deity_recent_mult": 1.5,
+    "deity_recent_screens": 3,
+    "deity_recent_note": "counts general jeomji screens after bingui (replaces deities.json fresh_bias 60s)",
+    "guarantees": [
+      {
+        "id": "G2",
+        "phase": "pre",
+        "rule": "weapon Lv8 && pair passive missing && free passive slot && not banished -> appears at least once per 3 general jeomji"
+      },
+      {
+        "id": "G1",
+        "phase": "pre",
+        "rule": "gangsin>=1 && 0 power cards in last 3 general jeomji && power candidate exists -> 1 slot power (most recent deity first)",
+        "absorbs": "deities.json drought_guard; old G1 (2 screens after bingui) removed"
+      },
+      {
+        "id": "G6",
+        "phase": "pre",
+        "rule": "owned weapon with Lv<8 exists -> 1 slot owned weapon levelup (item weights)",
+        "absorbs": "04 10.1 owned-upgrade guarantee"
+      },
+      {
+        "id": "G3",
+        "phase": "pre",
+        "rule": "level<=6 && free weapon slot -> at least 1 new weapon"
+      },
+      {
+        "id": "G4",
+        "phase": "post",
+        "rule": "N=3 and all 3 same category -> redraw last free slot from another category once"
+      },
+      {
+        "id": "G5",
+        "phase": "post",
+        "rule": ">=2 weapon cards all same color && opposite-color candidate -> with chance 0.60 replace lowest-weight free weapon card with opposite color",
+        "absorbs": "02 17.4 color guarantee; 04 10.1 color x1.3 dropped"
+      },
+      {
+        "id": "G7",
+        "phase": "pre",
+        "rule": "union partner of an owned weapon/evolution is offerable (new weapon preferred, else its upgrade) && G2 did not fire this screen -> appears at least once per union_mercy_every general jeomji; an upgrade pick here also satisfies G6",
+        "added": "growth 2026-11-24: full bot run had 6 evolutions but 0 unions (partner evolutions came too late for a box)"
+      }
+    ],
+    "guarantee_pre_order": [
+      "G2",
+      "G7",
+      "G1",
+      "G6",
+      "G3"
+    ],
+    "guarantee_post_order": [
+      "G4",
+      "G5"
+    ],
+    "color_balance_chance": 0.6,
+    "guarantee_counters_count": "general jeomji screens only (not bingui jeomji, not rerolls)",
+    "guarantee_max_slots": 2,
+    "input_lock_s": 0.25,
+    "rng_stream": "rng_jeomji = Hash(run_seed, 'jeomji', level, reroll_index) (key-derived; 14 3.13.1 registry, canon v1.2 D-48)",
+    "filler": [
+      {
+        "type": "gongmul",
+        "effect": "heal 25% max jeonggi",
+        "priority_if": "jeonggi < 70%"
+      },
+      {
+        "type": "yeopjeon",
+        "effect": "+(5 + floor(minutes/2)) cur_yeopjeon"
+      }
+    ],
+    "filler_note": "02 17.5 (gongmul 20% / yeopjeon 5*siju / sinmyeong +10%) rejected: siju is settlement-only (05 3.3.4)",
+    "reroll": {
+      "excludes_previous_options": true,
+      "keeps_N": true,
+      "shared_with_trial_reroll": true
+    },
+    "skip": {
+      "refund_xp_ratio_of_next_level": 0.1,
+      "growth_applies": false,
+      "can_chain_levelup": false,
+      "note": "next level req 10% (09 8장). 02 17.3 '25% of this req' rejected"
+    },
+    "banish": {
+      "only_unowned": true,
+      "redraw_that_slot_only": true,
+      "confirm_if_pair_passive": true
+    },
+    "supply_reference": {
+      "level_at_20min_mixed": 48,
+      "source": "02 17.2 / combat_core.curves_assumption",
+      "boxes_per_run": "~15 (08: elites ~14 + mboss 1)",
+      "doc": "05 10.10"
+    }
+  },
+  "box_grade": {
+    "owner": "design/02-core-loop-combat.md 18.1 / data/combat_core.json chest (single source; canon v1.2 C-18)",
+    "tiers": [
+      "jg_sogil",
+      "jg_junggil",
+      "jg_daegil"
+    ],
+    "tier_names": {
+      "jg_sogil": "소길",
+      "jg_junggil": "중길",
+      "jg_daegil": "대길"
+    },
+    "rewards_ref": "combat_core.chest.rewards (소길 1 / 중길 3 / 대길 5)",
+    "luck_formula_ref": "combat_core.chest.luck: J = clamp(jeomgwae/100, 0.5, 3.0); p = min(cap, base*J); sogil = 1 - daegil - junggil",
+    "upgrade_chances_ref": "combat_core.chest.grade_up (daegam wieom: 06 value, simbang +0.10)",
+    "note": "05 no longer defines its own box probabilities (old p5/p3 power formulas and 평/길/대길 names removed)"
+  },
+  "hit_pipeline_ref": {
+    "owner": "02 12.1 / combat_core.player",
+    "order": [
+      "iframe",
+      "dodge (CONTACT only, PRD)",
+      "substitute (CONTACT|PROJECTILE)",
+      "gyeongmun",
+      "armor (min 20%; HAZARD 50% armor)",
+      "hp",
+      "hosin",
+      "myeongjul"
+    ]
+  }
+}

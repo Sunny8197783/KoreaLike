@@ -1,0 +1,19 @@
+{
+ "frames": [],
+ "meta": {
+  "app": "KoreaLike G5 (Godot shader, no sprite sheet)",
+  "version": "1",
+  "image": null,
+  "pixelfx": {
+   "id": "vfx_bingui_pattern_sweep", "name": "빙의 무복 문양 스윕", "kind": "shader",
+   "shader": "res://assets/vfx/vfx_bingui_pattern_sweep.gdshader",
+   "tiles": "res://assets/vfx/vfx_bingui_pattern_tiles.png", "tiles_meta": "res://assets/vfx/vfx_bingui_pattern_tiles.json",
+   "fps": 0, "loop": false, "frames": 0, "duration_s": 0.3, "start_at_s": 0.60,
+   "frameWidth": 64, "frameHeight": 64, "columns": 0, "pivot": [32, 58],
+   "blend": "normal", "layer": "L09", "timing": "0.3s", "beat_synced": false, "max_concurrent": 1,
+   "uniforms": "zone_mask, pattern_atlas, cell_rect, zone_tile[3] (tile+1, 0=empty), zone_progress[3], zone_incomplete[3], ramp_light/base/shadow[3], secondary[3], saekdong[6], sweep_edge",
+   "zone_order": "array index = zone-1: [Z1 sleeves, Z2 body, Z3 hem]; mask R = zone*64",
+   "note": "Tween zone_progress[i] 0->1 over 0.3s at t=0.60s of the 1.2s possession timeline (design/13 §5.5). Compile-tested on Godot 4.7.2 (Compatibility)."
+  }
+ }
+}

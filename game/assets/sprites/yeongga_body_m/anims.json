@@ -1,0 +1,56 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "cheondo": {
+   "south": 8
+  },
+  "daesin_matgi": {
+   "south": 4
+  },
+  "idle": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "walk": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "cheondo": [
+   32,
+   32
+  ],
+  "daesin_matgi": [
+   32,
+   32
+  ],
+  "idle": [
+   32,
+   32
+  ],
+  "walk": [
+   32,
+   32
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "run",
+  "tier": "yeongga",
+  "source": "game\\assets\\sprites\\yeongga_body_m"
+ },
+ "pixellab_id": "7caa48f4-be78-46df-b102-f8392fda1b18"
+}

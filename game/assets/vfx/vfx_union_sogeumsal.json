@@ -1,0 +1,98 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_union_sogeumsal 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 83
+  },
+  {
+   "filename": "vfx_union_sogeumsal 1",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 32,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 16
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_union_sogeumsal.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_union_sogeumsal",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_union_sogeumsal",
+   "name": "Union sogeumsal (소금살)",
+   "fps": 12,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    32,
+    16
+   ],
+   "pivot": [
+    16,
+    8
+   ],
+   "columns": 1,
+   "frameWidth": 20,
+   "frameHeight": 8,
+   "blend": "add",
+   "layer": "L10",
+   "rotate": 16,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     6,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "20x8->32x16"
+   }
+  }
+ }
+}

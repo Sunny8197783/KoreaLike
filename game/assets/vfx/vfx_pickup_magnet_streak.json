@@ -1,0 +1,101 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_pickup_magnet_streak 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_pickup_magnet_streak 1",
+   "frame": {
+    "x": 0,
+    "y": 16,
+    "w": 16,
+    "h": 16
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 16
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 16
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_pickup_magnet_streak.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 16,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_pickup_magnet_streak",
+    "from": 0,
+    "to": 1,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_pickup_magnet_streak",
+   "name": "흡인 잔상",
+   "fps": 20.0,
+   "loop": true,
+   "frames": 2,
+   "frameSize": [
+    16,
+    16
+   ],
+   "pivot": [
+    13,
+    7
+   ],
+   "columns": 1,
+   "frameWidth": 12,
+   "frameHeight": 3,
+   "blend": "add",
+   "layer": "L07",
+   "timing": "fps:20",
+   "beat_synced": false,
+   "max_concurrent": 200,
+   "color_role": "H",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     4,
+     4
+    ],
+    "semi_before": 0,
+    "blend": "add",
+    "size": "12x3->16x16"
+   }
+  }
+ }
+}

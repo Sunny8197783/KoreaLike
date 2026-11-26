@@ -1,0 +1,773 @@
+{
+  "_meta": {
+    "source_doc": "design/11-ux-ui-hud.md",
+    "version": "0.10",
+    "units": "lpx = 640x360 logical pixels",
+    "status": "draft",
+    "review_log": "design/11-ux-ui-hud.md 19장 (#1 #6 #7)",
+    "canon_version": "v1.2",
+    "canon_basis": "design/01-concept-and-canon.md v1.2 + design/99-open-questions-and-next-steps.md (D-xx/C-xx)",
+    "canon_v1_2_log": [
+      "D-01/C-01: hud_gangsin_slots 6칸→4칸(70x16), 면적 예산 재계산, hud_trial_gauge 45s→30s 타이머, hud_trial_countdown trial_times 03:00/06:30/12:30/15:30",
+      "C-17: hud_gutpan_giun 넋 비율 = 캐논 N(가중식), r_h 미사용",
+      "C-36: _meta.canon_version v1.2"
+    ]
+  },
+  "reference_resolution": [
+    640,
+    360
+  ],
+  "scale_policy": {
+    "world": "integer floor(min(W/640,H/360))",
+    "aspect": "keep_letterbox (02-core-loop-combat 4.1)",
+    "visible_units": [
+      20.0,
+      11.25
+    ],
+    "letterbox_hud_option": "opt_letterbox_hud",
+    "ui_scale_offsets": [
+      -1,
+      0,
+      1
+    ],
+    "ui_min_logical": [
+      480,
+      270
+    ]
+  },
+  "safe_margin_lpx": 8,
+  "center_exclusion_ellipse_lpx": [
+    400,
+    220
+  ],
+  "area_budget_pct": 8.0,
+  "proximity_fade": {
+    "distance_lpx": 32,
+    "alpha": 0.35,
+    "time_s": 0.15
+  },
+  "bullet_overlap_alpha": 0.5,
+  "elements": [
+    {
+      "id": "hud_wonhon_bar",
+      "name_ko": "원혼 구슬 바",
+      "anchor": "top_stretch",
+      "offset_lpx": [
+        8,
+        4,
+        -8,
+        10
+      ],
+      "size_lpx": [
+        624,
+        6
+      ],
+      "events": [
+        "xp_changed",
+        "level_up"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "한지 채움, 90%+ 황 반짝임 1Hz, 우측 Lv T4"
+    },
+    {
+      "id": "hud_sintong_seal",
+      "name_ko": "신통 인장",
+      "anchor": "top_left",
+      "offset_lpx": [
+        8,
+        14
+      ],
+      "size_lpx": [
+        14,
+        14
+      ],
+      "events": [
+        "sintong_state_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "states": {
+        "READY": "한지 100% + 황 1lpx 테",
+        "ACTIVE": "박마다 1.15배 맥동 + 바깥 1lpx 링 회전",
+        "COOLDOWN": "먹 60% 덮개 시계 방향으로 걷힘"
+      },
+      "result_overlay_s": 2.0,
+      "unlock": {
+        "run": 3
+      },
+      "notes": "숫자 없음(03 2.8). HUD에 초상화가 없어 '내 무당' 표지를 겸함. 문장 도안 → 13"
+    },
+    {
+      "id": "hud_weapon_slots",
+      "name_ko": "무구 6칸",
+      "anchor": "top_left",
+      "offset_lpx": [
+        26,
+        14
+      ],
+      "size_lpx": [
+        16,
+        16
+      ],
+      "events": [
+        "weapon_added",
+        "weapon_leveled",
+        "evo_ready"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "x6 간격2, 적=마름모 테두리, 백=둥근 테두리, 결합=반반, 레벨 핍 8",
+      "block_size_lpx": [
+        106,
+        18
+      ]
+    },
+    {
+      "id": "hud_passive_slots",
+      "name_ko": "패시브 6칸",
+      "anchor": "top_left",
+      "offset_lpx": [
+        26,
+        34
+      ],
+      "size_lpx": [
+        12,
+        12
+      ],
+      "events": [
+        "passive_added",
+        "passive_leveled"
+      ],
+      "visible_in_modes": [
+        "full"
+      ],
+      "notes": "x6, 레벨 핍 5. 간소 모드는 획득·레벨업·진화 때 3초만",
+      "block_size_lpx": [
+        82,
+        14
+      ]
+    },
+    {
+      "id": "hud_status_icons",
+      "name_ko": "상태 아이콘",
+      "anchor": "top_left",
+      "offset_lpx": [
+        8,
+        50
+      ],
+      "size_lpx": [
+        10,
+        10
+      ],
+      "events": [
+        "status_changed"
+      ],
+      "visible_in_modes": [
+        "full"
+      ],
+      "notes": "최대 6, 가로 흐름. 간소 모드는 플레이어 몸 위 2초 표시만. 보살핌 명줄은 한지 테 별도 아이콘"
+    },
+    {
+      "id": "hud_clock",
+      "name_ko": "시계",
+      "anchor": "top_center",
+      "offset_lpx": [
+        0,
+        14
+      ],
+      "size_lpx": [
+        40,
+        12
+      ],
+      "events": [
+        "clock_tick"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "T2 Bold MM:SS. 보스 시각(표준 20:00/초굿 11:00) 이후 먹 반전"
+    },
+    {
+      "id": "hud_geori_label",
+      "name_ko": "거리·장단",
+      "anchor": "top_center",
+      "offset_lpx": [
+        0,
+        26
+      ],
+      "size_lpx": [
+        150,
+        10
+      ],
+      "events": [
+        "geori_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "T3. 전환 슬램 1.2s 후 이 자리로 축소, 8초 뒤 페이드아웃(상시 아님). 일시정지 머리줄에는 항상"
+    },
+    {
+      "id": "hud_trial_countdown",
+      "name_ko": "다음 시련 칩",
+      "anchor": "top_center",
+      "offset_lpx": [
+        0,
+        36
+      ],
+      "size_lpx": [
+        60,
+        8
+      ],
+      "events": [
+        "clock_tick"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "남은 60초 이하만",
+      "trial_times": [
+        "03:00",
+        "06:30",
+        "12:30",
+        "15:30"
+      ]
+    },
+    {
+      "id": "hud_ritual_slot",
+      "name_ko": "의례 슬롯",
+      "anchor": "top_center",
+      "offset_lpx": [
+        0,
+        46
+      ],
+      "size_lpx": [
+        120,
+        10
+      ],
+      "events": [
+        "context_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "문맥 교체",
+      "context": {
+        "normal": "hud_gutpan_giun",
+        "trial": "hud_trial_gauge",
+        "boss": "hud_boss_bar"
+      }
+    },
+    {
+      "id": "hud_gutpan_giun",
+      "name_ko": "굿판의 기운",
+      "anchor": "slot:hud_ritual_slot",
+      "offset_lpx": [
+        0,
+        0
+      ],
+      "size_lpx": [
+        120,
+        10
+      ],
+      "events": [
+        "ratio_changed",
+        "salgi_changed",
+        "wongwi_return"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "양방향 바: 위 120x6 넋 비율(한지=넋 비율 N(캐논 3.2.6 가중식, 분모 0이면 0.5. r_h 미사용 — C-17), 45/55 눈금, 보스 형태 문양 8x8) + 간격1 + 아래 120x3 살기 트랙(먹=살기/75) + 살 매듭 눈금 3. 2Hz 스로틀",
+      "unlock": {
+        "run": 2,
+        "run1_fade_in": "초굿 10:30 (표준 대체안 19:30)",
+        "early_unlock": "salgi>=20"
+      },
+      "sub_elements": [
+        "hud_sal_maedeup"
+      ]
+    },
+    {
+      "id": "hud_sal_maedeup",
+      "name_ko": "살 매듭 3",
+      "anchor": "sub:hud_gutpan_giun.sal_track",
+      "offset_lpx": [
+        [
+          30,
+          7
+        ],
+        [
+          60,
+          7
+        ],
+        [
+          90,
+          7
+        ]
+      ],
+      "size_lpx": [
+        5,
+        5
+      ],
+      "events": [
+        "salgi_changed",
+        "wongwi_return"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "v0.10부터 독립 위젯 아님. 25/50/75 매듭 눈금. 지난 임계=먹 원형 채움, 다음 임계 90% 도달 시 박마다 떨림 + 붉은 눈 점",
+      "unlock": {
+        "run": 2,
+        "early_unlock": "salgi>=20"
+      }
+    },
+    {
+      "id": "hud_trial_gauge",
+      "name_ko": "시련 이중 게이지",
+      "anchor": "slot:hud_ritual_slot",
+      "offset_lpx": [
+        0,
+        0
+      ],
+      "size_lpx": [
+        120,
+        10
+      ],
+      "events": [
+        "trial_progress"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "런 1: 단일 '모시기' 게이지 110x4 = max(위엄,가호), 앞선 면 색·아이콘. 런 2~: 위엄(적,◇)/가호(한지,○) 각 50x4 + 30s 타이머(시련 30초, 선택 단계 DESCEND 최대 8초는 별도 — D-01)",
+      "variant_by_run": {
+        "1": "single_mosigi",
+        "2+": "dual"
+      }
+    },
+    {
+      "id": "hud_boss_bar",
+      "name_ko": "보스 한 바",
+      "anchor": "slot:hud_ritual_slot",
+      "offset_lpx": [
+        0,
+        0
+      ],
+      "size_lpx": [
+        200,
+        6
+      ],
+      "events": [
+        "boss_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "한형=매듭 핍 7"
+    },
+    {
+      "id": "hud_gangsin_slots",
+      "name_ko": "강신 4칸",
+      "anchor": "top_right",
+      "offset_lpx": [
+        -8,
+        14
+      ],
+      "size_lpx": [
+        16,
+        16
+      ],
+      "events": [
+        "bingui"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "위엄=마름모, 가호=원, 미완=절반 테두리. 간소 모드는 빈칸(점선 원) 숨김",
+      "block_size_lpx": [
+        70,
+        16
+      ],
+      "slot_count": 4,
+      "slot_count_note": "한 런 시련 수(표준 4회, D-01). x1 대동굿 6칸(106x16)"
+    },
+    {
+      "id": "hud_currency",
+      "name_ko": "재화·처치 수",
+      "anchor": "top_right",
+      "offset_lpx": [
+        -8,
+        32
+      ],
+      "size_lpx": [
+        108,
+        22
+      ],
+      "events": [
+        "neok_changed",
+        "yeopjeon_changed",
+        "haewon",
+        "toechi"
+      ],
+      "visible_in_modes": [],
+      "notes": "기본 숨김(opt_hud_counts 기본 false). 켜면 full 모드에서 표시. 일시정지 머리줄·정산은 항상 표시",
+      "option": "opt_hud_counts"
+    },
+    {
+      "id": "hud_gongsu_lane",
+      "name_ko": "공수 자막 레인",
+      "anchor": "top_center",
+      "offset_lpx": [
+        0,
+        64
+      ],
+      "size_lpx": [
+        320,
+        16
+      ],
+      "events": [
+        "gongsu"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "황 「」, 2.5s, 대기열 2"
+    },
+    {
+      "id": "hud_hint_line",
+      "name_ko": "힌트 줄",
+      "anchor": "bottom_center",
+      "offset_lpx": [
+        0,
+        -84
+      ],
+      "size_lpx": [
+        360,
+        13
+      ],
+      "events": [
+        "hint_show"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "T3"
+    },
+    {
+      "id": "hud_neokduri_lane",
+      "name_ko": "넋두리 자막 레인",
+      "anchor": "bottom_center",
+      "offset_lpx": [
+        0,
+        -64
+      ],
+      "size_lpx": [
+        400,
+        16
+      ],
+      "events": [
+        "neokduri"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "2.0s + 0.05s/자, 최대 4s, 대기열 3"
+    },
+    {
+      "id": "hud_haengnyeol_count",
+      "name_ko": "행렬 호",
+      "anchor": "world:player_foot_ring_outer",
+      "offset_lpx": null,
+      "size_lpx": null,
+      "events": [
+        "procession_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "한지 채움=영가/상한, 영가 0이면 트랙 숨김, 상한=황+'가득'. 5단위 변화·상한 도달 시 'n/cap' T4 1.5s. 일시정지 머리줄에 항상 숫자",
+      "arc": {
+        "side": "right",
+        "span_deg": 150,
+        "radius_lpx": "foot_ring+3 (기본 13)",
+        "thickness_lpx": 2
+      }
+    },
+    {
+      "id": "hud_sinmyeong_jing",
+      "name_ko": "신명 호",
+      "anchor": "world:player_foot_ring_outer",
+      "offset_lpx": null,
+      "size_lpx": null,
+      "events": [
+        "sinmyeong_changed",
+        "beat"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "먹50% 트랙 위 한지 채움(아래→위), 위 끝 4x4 징 문양, 박마다 +15% 밝기(opt_beat_pulse). 신명 오름 15s 역방향 감소 + 1lpx 오방 순환",
+      "arc": {
+        "side": "left",
+        "span_deg": 150,
+        "radius_lpx": "foot_ring+3 (기본 13)",
+        "thickness_lpx": 2
+      }
+    },
+    {
+      "id": "hud_combo",
+      "name_ko": "연속 굿 칩 (해원·퇴치 대칭)",
+      "anchor": "bottom_center",
+      "offset_lpx": [
+        120,
+        -34
+      ],
+      "size_lpx": [
+        88,
+        14
+      ],
+      "events": [
+        "haewon",
+        "toechi"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple"
+      ],
+      "notes": "같은 글자 크기(T2)·같은 굵기·같은 임계. 각 칸은 연속>=5일 때만. 퇴치 추임새 [무속]+[각색], 자문 확인",
+      "cells": [
+        {
+          "kind": "haewon",
+          "icon": "●",
+          "color": "pal_hanji",
+          "chuimsae": [
+            "얼씨구",
+            "좋다",
+            "잘한다",
+            "그렇지!"
+          ]
+        },
+        {
+          "kind": "toechi",
+          "icon": "◆",
+          "color": "pal_jeok_light",
+          "chuimsae": [
+            "물렀거라!",
+            "썩 물렀거라!",
+            "훠이, 물렀거라!",
+            "잡귀잡신은 썩 물렀거라!"
+          ]
+        }
+      ],
+      "thresholds": [
+        20,
+        40,
+        80,
+        150
+      ],
+      "window_s": 2.0,
+      "show_min": 5,
+      "repeat_every_after_150": 150,
+      "slam_min_gap_s": 6
+    },
+    {
+      "id": "hud_player_jeonggi",
+      "name_ko": "정기 바(월드)",
+      "anchor": "world:player",
+      "offset_lpx": [
+        0,
+        14
+      ],
+      "size_lpx": [
+        24,
+        3
+      ],
+      "events": [
+        "hp_changed"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "30% 이하 맥박"
+    },
+    {
+      "id": "hud_hp_corner",
+      "name_ko": "정기 코너 바",
+      "anchor": "bottom_left",
+      "offset_lpx": [
+        8,
+        -16
+      ],
+      "size_lpx": [
+        96,
+        6
+      ],
+      "events": [
+        "hp_changed"
+      ],
+      "visible_in_modes": [],
+      "notes": "opt_hp_corner_bar"
+    },
+    {
+      "id": "hud_offscreen",
+      "name_ko": "오프스크린 지시자",
+      "anchor": "screen_edge",
+      "offset_lpx": [
+        12,
+        12
+      ],
+      "size_lpx": [
+        12,
+        12
+      ],
+      "events": [
+        "target_positions"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "notes": "최대 6, 우선순위 표 6.5"
+    },
+    {
+      "id": "hud_trait_tier_banner",
+      "name_ko": "고유 패시브 단계 배너",
+      "anchor": "world:player_head",
+      "offset_lpx": [
+        0,
+        -40
+      ],
+      "size_lpx": [
+        120,
+        16
+      ],
+      "events": [
+        "trait_tier_up"
+      ],
+      "visible_in_modes": [
+        "full",
+        "simple",
+        "hidden"
+      ],
+      "duration_s": 0.8,
+      "notes": "점지·빙의 점지 닫힘 순간 '만신의 그릇 · 二' 붓글씨. 정지 없음(03 2.7). 문자열 char_*.trait.tiers[n].name"
+    }
+  ],
+  "offscreen_priority": [
+    "boss",
+    "trial_avatar_circle",
+    "wongwi",
+    "trial_santong_gongsu_gyojeong",
+    "mboss",
+    "elite",
+    "box",
+    "obj_gongmulsang"
+  ],
+  "damage_numbers": {
+    "pool": 48,
+    "modes": [
+      "off",
+      "big_only",
+      "all"
+    ],
+    "default": "big_only",
+    "rise_lpx": 10,
+    "life_s": 0.6,
+    "jitter_x_lpx": 4
+  },
+  "area_measure": "element_rect_sum (UX-5 HUD mask); block_bbox도 병기",
+  "default_mode_by_run": {
+    "1": "simple",
+    "2": "simple",
+    "3": "simple",
+    "4+": "full",
+    "respect_user_setting_flag": "opt_hud_mode_user_set",
+    "switch_hint": "hint_hud_full_offer"
+  },
+  "foot_ring_arc_priority": {
+    "dim_alpha": 0.3,
+    "dim_when": [
+      "trial_confirm_ring",
+      "santong_fill_ring",
+      "hit_direction_ring_segment",
+      "resume_iframe_dashed_ring"
+    ],
+    "foot_ring_marker_always": 1.0
+  },
+  "widget_unlock_fx": {
+    "fade_in_s": 0.6,
+    "border_pulse_count": 3,
+    "stagger_s": 0.8,
+    "event": "hud_widget_unlock"
+  },
+  "area_budget_lpx2": {
+    "elements": {
+      "hud_wonhon_bar": 3744,
+      "hud_sintong_seal": 196,
+      "hud_weapon_slots": 1908,
+      "hud_passive_slots": 1148,
+      "hud_status_icons_max": 700,
+      "hud_clock": 480,
+      "hud_trial_countdown": 480,
+      "hud_ritual_slot": 1200,
+      "hud_gangsin_slots_max": 1120,
+      "hud_combo": 1232,
+      "player_marker_arcs_plus_jeonggi": 208
+    },
+    "full_max": 12416,
+    "full_max_pct": 5.4,
+    "full_max_with_counts": 14576,
+    "full_max_with_counts_pct": 6.3,
+    "full_max_block_bbox": 17048,
+    "full_max_block_bbox_pct": 7.4,
+    "simple_max": 10568,
+    "simple_max_pct": 4.6,
+    "run_avg_estimate_pct": 4.8,
+    "transient_excluded": {
+      "hud_geori_label": 1500,
+      "hud_gongsu_lane": "transient",
+      "hud_neokduri_lane": "transient",
+      "hud_hint_line": "transient"
+    },
+    "v09_reference": {
+      "block_bbox_pct": 11.3,
+      "element_sum_pct": 7.9
+    },
+    "v1_1_gangsin6_reference": {
+      "hud_gangsin_slots_max": 1696,
+      "full_max": 12992,
+      "full_max_pct": 5.6
+    }
+  }
+}

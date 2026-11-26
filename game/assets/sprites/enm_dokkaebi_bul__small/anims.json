@@ -1,0 +1,39 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  32,
+  32
+ ],
+ "pivot": [
+  16,
+  29
+ ],
+ "anims": {
+  "float": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "spawn": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  }
+ },
+ "frame_size": {
+  "float": [
+   32,
+   32
+  ],
+  "spawn": [
+   32,
+   32
+  ]
+ },
+ "source": "art/rework/G4_salvage_enemies_boss/_scripts/gen_dokkaebi_bul_r5.py (손그림 절차, 0 gen)",
+ "west": "flip_h(east)",
+ "directionless": true,
+ "notes": "G7: r5 기하를 32 캔버스에 몸 18로 다시 래스터화(common_s 18~24, 축소 리샘플 아님). split 없음"
+}

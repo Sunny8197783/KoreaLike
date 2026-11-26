@@ -1,0 +1,234 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 4",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 5",
+   "frame": {
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 6",
+   "frame": {
+    "x": 0,
+    "y": 64,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_sinjangdae_descend_barigongju 7",
+   "frame": {
+    "x": 16,
+    "y": 64,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 100
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_sinjangdae_descend_barigongju.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 96,
+   "h": 128
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_sinjangdae_descend_barigongju",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_sinjangdae_descend",
+   "name": "Sinjangdae descend (신장대 강림)",
+   "fps": 10,
+   "loop": false,
+   "frames": 8,
+   "frameSize": [
+    16,
+    64
+   ],
+   "pivot": [
+    8,
+    62
+   ],
+   "columns": 6,
+   "frameWidth": 16,
+   "frameHeight": 64,
+   "blend": "add",
+   "layer": "L08",
+   "holdLoop": [
+    4,
+    7
+   ],
+   "variant": "barigongju",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     17,
+     6
+    ],
+    "semi_before": 609,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

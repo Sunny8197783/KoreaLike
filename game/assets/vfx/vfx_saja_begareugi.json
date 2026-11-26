@@ -1,0 +1,327 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_saja_begareugi 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 1",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 2",
+   "frame": {
+    "x": 512,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 3",
+   "frame": {
+    "x": 768,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 4",
+   "frame": {
+    "x": 1024,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 5",
+   "frame": {
+    "x": 1280,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 6",
+   "frame": {
+    "x": 1536,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 7",
+   "frame": {
+    "x": 1792,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 8",
+   "frame": {
+    "x": 2048,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 9",
+   "frame": {
+    "x": 2304,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 10",
+   "frame": {
+    "x": 2560,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  },
+  {
+   "filename": "vfx_saja_begareugi 11",
+   "frame": {
+    "x": 2816,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 256,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 256,
+    "h": 64
+   },
+   "duration": 100
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_saja_begareugi.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 3072,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_saja_begareugi",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_saja_begareugi",
+   "name": "Saja begareugi (길베 가르기)",
+   "fps": 10.0,
+   "loop": false,
+   "frames": 12,
+   "frameWidth": 256,
+   "frameHeight": 64,
+   "frameSize": [
+    256,
+    64
+   ],
+   "columns": 12,
+   "pivot": [
+    0,
+    32
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 1,
+   "palette": [
+    "#b29d76",
+    "#f2ece0",
+    "#d6cfc1",
+    "#d2c19c",
+    "#e9dcc0",
+    "#fffdf6"
+   ],
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "keep 256x64"
+   }
+  }
+ }
+}

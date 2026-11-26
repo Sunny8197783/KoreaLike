@@ -1,0 +1,73 @@
+{
+ "frames": [
+  {
+   "filename": "prop_bush_a_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 500
+  },
+  {
+   "filename": "prop_bush_a_1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 500
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_bush_a_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 32
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 2,
+   "loop": true,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "columns": 2,
+   "pivot": {
+    "x": 16,
+    "y": 26
+   }
+  },
+  "korealike": {
+   "collision": "none",
+   "anim": "wind 2 frames"
+  }
+ }
+}

@@ -1,0 +1,752 @@
+{
+  "schema": "soulpath.achievements",
+  "version": 2,
+  "doc": "design/09-meta-economy.md#13",
+  "canon": "v1.2 기준 (2026-11-21 반영)",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): ach_clear_guksadang·ach_clear_jindo 표시 문구 '선바위 굿당'·'남도 갯마을 씻김굿판'"],
+  "note": "보상은 기준가(econ_price_scale 적용 전).",
+  "achievements": [
+    {
+      "id": "ach_first_haewon",
+      "name_ko": "첫 해원",
+      "category": "입문",
+      "condition_ko": "첫 해원 1회",
+      "reward": {
+        "cur_gongdeok": 150,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_HAEWON"
+    },
+    {
+      "id": "ach_first_toechi",
+      "name_ko": "첫 퇴치",
+      "category": "입문",
+      "condition_ko": "첫 퇴치 1회",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 150,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_TOECHI"
+    },
+    {
+      "id": "ach_first_gildakkeum",
+      "name_ko": "길을 닦다",
+      "category": "입문",
+      "condition_ko": "길닦음 1회 성립",
+      "reward": {
+        "cur_gongdeok": 150,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_GILDAKKEUM"
+    },
+    {
+      "id": "ach_first_bingui",
+      "name_ko": "몸에 실리다",
+      "category": "입문",
+      "condition_ko": "시련 1회 통과(빙의)",
+      "reward": {
+        "cur_gongdeok": 150,
+        "cur_bokjeon": 150,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_BINGUI"
+    },
+    {
+      "id": "ach_first_evo",
+      "name_ko": "벼리고 다듬다",
+      "category": "입문",
+      "condition_ko": "진화 1회",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 250,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_EVO"
+    },
+    {
+      "id": "ach_first_union",
+      "name_ko": "양면",
+      "category": "입문",
+      "condition_ko": "결합 1회",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_UNION"
+    },
+    {
+      "id": "ach_first_eodukssini",
+      "name_ko": "별거 아니네",
+      "category": "입문",
+      "condition_ko": "어둑시니 소멸 1회",
+      "reward": {
+        "cur_gongdeok": 250,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": true,
+      "steam_api_name": "ACH_FIRST_EODUKSSINI"
+    },
+    {
+      "id": "ach_first_wongwi",
+      "name_ko": "돌아온 것들",
+      "category": "입문",
+      "condition_ko": "원귀 회귀 1회 겪기",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 250,
+        "item": null
+      },
+      "hidden": true,
+      "steam_api_name": "ACH_FIRST_WONGWI"
+    },
+    {
+      "id": "ach_first_clear",
+      "name_ko": "한 판을 마치다",
+      "category": "입문",
+      "condition_ko": "표준 굿판 클리어 1회",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 1000,
+        "item": "title_saenae_mudang"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_FIRST_CLEAR"
+    },
+    {
+      "id": "ach_haewon_1000",
+      "name_ko": "천 번의 배웅",
+      "category": "해원",
+      "condition_ko": "해원 누적 1,000",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_HAEWON_1000"
+    },
+    {
+      "id": "ach_haewon_10000",
+      "name_ko": "만 번의 배웅",
+      "category": "해원",
+      "condition_ko": "해원 누적 10,000",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 0,
+        "item": "cos_mubok_sosaek"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_HAEWON_10000"
+    },
+    {
+      "id": "ach_haewon_100000",
+      "name_ko": "넋길잡이",
+      "category": "해원",
+      "condition_ko": "해원 누적 100,000",
+      "reward": {
+        "cur_gongdeok": 2500,
+        "cur_bokjeon": 0,
+        "item": "title_neokgiljabi"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_HAEWON_100000"
+    },
+    {
+      "id": "ach_ring_30",
+      "name_ko": "큰 고리",
+      "category": "해원",
+      "condition_ko": "길닦음 1회로 30 해원",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_RING_30"
+    },
+    {
+      "id": "ach_ring_100",
+      "name_ko": "온 마을 씻김",
+      "category": "해원",
+      "condition_ko": "길닦음 1회로 100 해원",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": "cos_gilbe_geumsa"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_RING_100"
+    },
+    {
+      "id": "ach_procession_60",
+      "name_ko": "끝없는 행렬",
+      "category": "해원",
+      "condition_ko": "영가 행렬 60 동시 유지",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_PROCESSION_60"
+    },
+    {
+      "id": "ach_pure_haewon_clear",
+      "name_ko": "풀어 보낸 굿",
+      "category": "해원",
+      "condition_ko": "뒷전 이전(00:00~19:15) 넋 비율 N 0.90 이상으로 클리어",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 0,
+        "item": "title_pureo_bonaen"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_PURE_HAEWON_CLEAR"
+    },
+    {
+      "id": "ach_elite_haewon_all",
+      "name_ko": "큰 한도 풀린다",
+      "category": "해원",
+      "condition_ko": "정예 5종 모두 해원 1회 이상",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_ELITE_HAEWON_ALL"
+    },
+    {
+      "id": "ach_toechi_1000",
+      "name_ko": "천 번의 벽사",
+      "category": "퇴치",
+      "condition_ko": "퇴치 누적 1,000",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_TOECHI_1000"
+    },
+    {
+      "id": "ach_toechi_10000",
+      "name_ko": "만 번의 벽사",
+      "category": "퇴치",
+      "condition_ko": "퇴치 누적 10,000",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1500,
+        "item": "cos_mubok_hongcheollik"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_TOECHI_10000"
+    },
+    {
+      "id": "ach_toechi_100000",
+      "name_ko": "벽사 무당",
+      "category": "퇴치",
+      "condition_ko": "퇴치 누적 100,000",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 2500,
+        "item": "title_byeoksa_mudang"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_TOECHI_100000"
+    },
+    {
+      "id": "ach_hanpa_10",
+      "name_ko": "단칼",
+      "category": "퇴치",
+      "condition_ko": "단일 타격으로 한 파열 10체 동시",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_HANPA_10"
+    },
+    {
+      "id": "ach_gyeoldanta_500",
+      "name_ko": "결단",
+      "category": "퇴치",
+      "condition_ko": "결단타 퇴치 누적 500",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 750,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_GYEOLDANTA_500"
+    },
+    {
+      "id": "ach_pure_toechi_clear",
+      "name_ko": "깎아 부순 굿",
+      "category": "퇴치",
+      "condition_ko": "뒷전 이전(00:00~19:15) 넋 비율 N 0.10 이하로 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1500,
+        "item": "title_kkakka_busun"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_PURE_TOECHI_CLEAR"
+    },
+    {
+      "id": "ach_sal_geodum",
+      "name_ko": "살 거둠을 지켜내다",
+      "category": "퇴치",
+      "condition_ko": "살 거둠 완수(살 덩어리 3개를 거두는 90초를 지켜내거나 깨어난 원귀 3기를 모두 막기)",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_SAL_GEODUM",
+      "id_old": "ach_saja_chase_60"
+    },
+    {
+      "id": "ach_wongwi_3_clear",
+      "name_ko": "세 번 돌아와도",
+      "category": "퇴치",
+      "condition_ko": "한 굿판에서 원귀 회귀 3회 후 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1250,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_WONGWI_3_CLEAR"
+    },
+    {
+      "id": "ach_eoullim_clear",
+      "name_ko": "어울림 굿",
+      "category": "균형",
+      "condition_ko": "넋 비율 N 0.45~0.55로 클리어",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 1000,
+        "item": "title_eoullim"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_EOULLIM_CLEAR"
+    },
+    {
+      "id": "ach_salgi_zero_15m",
+      "name_ko": "맑은 굿판",
+      "category": "균형",
+      "condition_ko": "15:00 시점 살기 0",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_SALGI_ZERO_15M"
+    },
+    {
+      "id": "ach_salgi_100_clear",
+      "name_ko": "살을 안고서도",
+      "category": "균형",
+      "condition_ko": "살기 100 도달 후 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_SALGI_100_CLEAR"
+    },
+    {
+      "id": "ach_bingui_12",
+      "name_ko": "열두 명두",
+      "category": "신령",
+      "condition_ko": "12면 모두 빙의(명두 12점)",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "item": "title_gyeseungja"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_BINGUI_12"
+    },
+    {
+      "id": "ach_hapil_first",
+      "name_ko": "신령 합일",
+      "category": "신령",
+      "condition_ko": "18:00 신령 합일 1회",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_HAPIL_FIRST"
+    },
+    {
+      "id": "ach_all_wieom_run",
+      "name_ko": "위엄의 굿",
+      "category": "신령",
+      "condition_ko": "한 굿판 6면 모두 위엄",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_ALL_WIEOM_RUN"
+    },
+    {
+      "id": "ach_all_gaho_run",
+      "name_ko": "가호의 굿",
+      "category": "신령",
+      "condition_ko": "한 굿판 6면 모두 가호",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_ALL_GAHO_RUN"
+    },
+    {
+      "id": "ach_trial_15s",
+      "name_ko": "단숨의 시련",
+      "category": "신령",
+      "condition_ko": "시련을 15초 이내 통과",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_TRIAL_15S"
+    },
+    {
+      "id": "ach_shrine_l3_first",
+      "name_ko": "정성껏 대접하다",
+      "category": "신령",
+      "condition_ko": "신단 1곳 대접(3단계)",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": "cos_sindan_dancheong"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_SHRINE_L3_FIRST"
+    },
+    {
+      "id": "ach_momju_six",
+      "name_ko": "여섯 몸주",
+      "category": "신령",
+      "condition_ko": "만신으로 6신령 각각을 몸주신으로 두고 클리어",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "item": "cos_mansin_hwarot"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_MOMJU_SIX"
+    },
+    {
+      "id": "ach_clear_guksadang",
+      "name_ko": "인왕산 굿을 마치다",
+      "category": "굿판",
+      "condition_ko": "선바위 굿당 클리어",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_CLEAR_GUKSADANG"
+    },
+    {
+      "id": "ach_clear_jindo",
+      "name_ko": "갯마을 씻김을 마치다",
+      "category": "굿판",
+      "condition_ko": "남도 갯마을 씻김굿판 클리어",
+      "reward": {
+        "cur_gongdeok": 2500,
+        "cur_bokjeon": 2500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_CLEAR_JINDO"
+    },
+    {
+      "id": "ach_clear_east_sea",
+      "name_ko": "별신을 마치다",
+      "category": "굿판",
+      "condition_ko": "동해안 별신굿 바닷가 클리어",
+      "reward": {
+        "cur_gongdeok": 4000,
+        "cur_bokjeon": 4000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_CLEAR_EAST_SEA"
+    },
+    {
+      "id": "ach_boss_han_all",
+      "name_ko": "세 매듭",
+      "category": "굿판",
+      "condition_ko": "보스 3종 한형 모두 해원",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_BOSS_HAN_ALL"
+    },
+    {
+      "id": "ach_boss_sal_all",
+      "name_ko": "세 벽사",
+      "category": "굿판",
+      "condition_ko": "보스 3종 살형 모두 퇴치",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 1500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_BOSS_SAL_ALL"
+    },
+    {
+      "id": "ach_jajinmori_clear",
+      "name_ko": "자진모리",
+      "category": "굿판",
+      "condition_ko": "자진모리 굿판 클리어",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 1000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_JAJINMORI_CLEAR"
+    },
+    {
+      "id": "ach_muhan_40",
+      "name_ko": "밤새 굿",
+      "category": "굿판",
+      "condition_ko": "무한굿 40:00 도달",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 1000,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_MUHAN_40"
+    },
+    {
+      "id": "ach_daily_first",
+      "name_ko": "오늘의 굿판",
+      "category": "굿판",
+      "condition_ko": "오늘의 굿판 기록 시도 1회 완료",
+      "reward": {
+        "cur_gongdeok": 250,
+        "cur_bokjeon": 250,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAILY_FIRST"
+    },
+    {
+      "id": "ach_dwitjeon_three",
+      "name_ko": "뒷전 상차림",
+      "category": "굿판",
+      "condition_ko": "뒷전에서 공물상 3개를 고리 1개로 감싸기",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DWITJEON_THREE"
+    },
+    {
+      "id": "ach_gopuri_60s",
+      "name_ko": "막힘 없는 고풀이",
+      "category": "굿판",
+      "condition_ko": "한형 고풀이를 60초 이내 완료",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 0,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_GOPURI_60S"
+    },
+    {
+      "id": "ach_wpn_all",
+      "name_ko": "무구 스무 점",
+      "category": "수집",
+      "condition_ko": "무구 20종 모두 해금",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "item": "title_mugu_jangin"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_WPN_ALL"
+    },
+    {
+      "id": "ach_evo_all",
+      "name_ko": "스무 진화",
+      "category": "수집",
+      "condition_ko": "진화 20종 모두 발견",
+      "reward": {
+        "cur_gongdeok": 2500,
+        "cur_bokjeon": 2500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_EVO_ALL"
+    },
+    {
+      "id": "ach_union_all",
+      "name_ko": "넷의 양면",
+      "category": "수집",
+      "condition_ko": "v1 결합 4종 모두 발견",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 1500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_UNION_ALL"
+    },
+    {
+      "id": "ach_comp_all",
+      "name_ko": "여덟 동행",
+      "category": "수집",
+      "condition_ko": "해원록 동행령 8종 모두 해금",
+      "reward": {
+        "cur_gongdeok": 1500,
+        "cur_bokjeon": 0,
+        "item": "cos_gilbe_madang_deung"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_COMP_ALL"
+    },
+    {
+      "id": "ach_sayeon_72",
+      "name_ko": "모든 사연",
+      "category": "수집",
+      "condition_ko": "사연 조각 72개 모두",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "title_haewon_girokja"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_SAYEON_72"
+    },
+    {
+      "id": "ach_byeoksa_max",
+      "name_ko": "벽사록 완성",
+      "category": "수집",
+      "condition_ko": "벽사록 24종 모두 3단계(호위 신장 4위 모두 모심)",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "title_byeoksarok"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_BYEOKSA_MAX"
+    },
+    {
+      "id": "ach_chars_all",
+      "name_ko": "다섯 무당",
+      "category": "수집",
+      "condition_ko": "v1 무당 5명 모두 해금",
+      "reward": {
+        "cur_gongdeok": 1000,
+        "cur_bokjeon": 1000,
+        "item": "cos_sindang_geolgae"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_CHARS_ALL"
+    },
+    {
+      "id": "ach_dan_1",
+      "name_ko": "첫 맺힘을 풀다",
+      "category": "살 맺힘",
+      "condition_ko": "살 맺힘 단 1 클리어",
+      "reward": {
+        "cur_gongdeok": 500,
+        "cur_bokjeon": 500,
+        "item": null
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAN_1"
+    },
+    {
+      "id": "ach_dan_5",
+      "name_ko": "다섯 단",
+      "category": "살 맺힘",
+      "condition_ko": "살 맺힘 단 5 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "cos_mubok_dan05"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAN_5"
+    },
+    {
+      "id": "ach_dan_10",
+      "name_ko": "열 단",
+      "category": "살 맺힘",
+      "condition_ko": "살 맺힘 단 10 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "cos_mubok_dan10"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAN_10"
+    },
+    {
+      "id": "ach_dan_15",
+      "name_ko": "살을 다 풀다",
+      "category": "살 맺힘",
+      "condition_ko": "살 맺힘 단 15 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "title_salpuri"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAN_15"
+    },
+    {
+      "id": "ach_dan_15_all_chars",
+      "name_ko": "다섯 갈래 살풀이",
+      "category": "살 맺힘",
+      "condition_ko": "v1 무당 5명 모두로 단 15 클리어",
+      "reward": {
+        "cur_gongdeok": 0,
+        "cur_bokjeon": 0,
+        "item": "cos_myeongdu_geumbak"
+      },
+      "hidden": false,
+      "steam_api_name": "ACH_DAN_15_ALL_CHARS"
+    }
+  ]
+}

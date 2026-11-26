@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "doc": "design/10-narrative-world.md §5.1, §5.1.1, §5.1.2",
+  "owner": "10-narrative-world",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): char_dangol 문옥단·origin 가상 지명, retired_names +박옥단, name_check 대조 완료(D-61), npc_eunsil.forbidden, char_simbang.speech_policy(B-5)"],
+  "note": "인물 개인 이름·나이·계통의 단일 원본. data/characters.json 의 lore_name / companion_name 은 이 파일 값을 따른다(CR-NAME-02). speaker·현지화 키에는 이름이 아니라 id 를 쓴다.",
+  "cast": [
+    {
+      "id": "char_mansin",
+      "label_ko": "만신",
+      "lore_name": { "ko": "한서리", "hanja": "韓서리", "romaja": "Han Seo-ri", "short": "서리" },
+      "age": 31,
+      "gender": "female",
+      "origin": "서울 인왕산 아랫동네",
+      "lineage": "서울굿 강신무",
+      "initiation": { "type": "naerimgut", "age": 24, "by": "npc_eunsil" },
+      "momju": "select",
+      "relation": ["npc_eunsil:신딸", "char_baksu:신형제(무진이 '막내'라 부름)", "char_myeongdu:언니"]
+    },
+    {
+      "id": "char_baksu",
+      "label_ko": "박수무당",
+      "lore_name": { "ko": "강무진", "hanja": "姜武鎭", "romaja": "Kang Mu-jin", "short": "무진" },
+      "age": 38,
+      "gender": "male",
+      "origin": "경기 북부",
+      "lineage": "황해도굿 계통 강신무(남무). 할머니가 황해도 출신 큰무당",
+      "former_job": "소방관",
+      "initiation": { "type": "naerimgut", "age": 29, "by": "npc_eunsil" },
+      "momju": "deity_janggun",
+      "relation": ["npc_eunsil:신당에 남은 신자식 중 맏이"]
+    },
+    {
+      "id": "char_dangol",
+      "label_ko": "단골",
+      "lore_name": { "ko": "문옥단", "hanja": "文玉丹", "romaja": "Mun Ok-dan", "short": "옥단" },
+      "age": 64,
+      "gender": "female",
+      "origin": "전남 남도 갯마을(가상 지명)",
+      "lineage": "호남 세습무, 6대째 단골 집안",
+      "initiation": { "type": "hereditary", "age": null, "by": "어머니(무가 전수)" },
+      "momju": null,
+      "patron_deity": "deity_barigongju",
+      "relation": ["npc_eunsil:40년 굿 동무"]
+    },
+    {
+      "id": "char_myeongdu",
+      "label_ko": "명두",
+      "lore_name": { "ko": "윤연이", "hanja": "尹연이", "romaja": "Yun Yeon-i", "short": "연이" },
+      "age": 20,
+      "adult": true,
+      "gender": "female",
+      "origin": "서울",
+      "lineage": "명두(동자령을 모신 강신무)",
+      "initiation": { "type": "naerimgut", "age": 19, "by": "npc_eunsil" },
+      "momju": "deity_chilseong",
+      "companion": "comp_dongja",
+      "relation": ["npc_eunsil:마지막 신딸", "comp_dongja:친동생"]
+    },
+    {
+      "id": "comp_dongja",
+      "label_ko": "동자령",
+      "lore_name": { "ko": "동이", "hanja": null, "romaja": "Dong-i", "short": "동이" },
+      "age": null,
+      "visual_age_hint": "일곱 살 남짓 아이",
+      "relation": ["char_myeongdu:친동생(혈연 아이 영)", "npc_eunsil:'할매'라 부름"],
+      "forbidden": ["사망 경위", "병명", "사망 당시 나이 언급"]
+    },
+    {
+      "id": "char_simbang",
+      "label_ko": "심방",
+      "lore_name": { "ko": "고해월", "hanja": "高海月", "romaja": "Go Hae-wol", "short": "해월" },
+      "age": 47,
+      "gender": "male",
+      "origin": "제주 동쪽 바닷가 마을",
+      "lineage": "제주 심방, 4대째 멩두 계승",
+      "former_job": "뱃일",
+      "speech_policy": "표준어 + 제주어 어휘 몇 개(혼저 옵서·멩두·요왕·바당·무사 등). 제주어 어미·문장 단위 대사 금지. 유료 감수는 출시 전 선택(16 B-5·D)",
+      "momju": "deity_yongwang",
+      "relation": ["npc_eunsil:목숨을 빚진 이(서른 무렵 뭍 굿판)"]
+    },
+    {
+      "id": "char_beopsa",
+      "label_ko": "법사",
+      "expansion": "x1",
+      "lore_name": { "ko": "최도경", "hanja": "崔道經", "romaja": "Choi Do-gyeong", "short": "도경" },
+      "age": 75,
+      "gender": "male",
+      "origin": "충남 내포(서산)",
+      "lineage": "충청 앉은굿 독경 법사, 법사 집안 맏아들",
+      "momju": "deity_jeseok_daegam",
+      "relation": ["npc_eunsil:친오빠(4살 위)"]
+    },
+    {
+      "id": "npc_eunsil",
+      "label_ko": "은실 만신",
+      "lore_name": { "ko": "최은실", "hanja": "崔銀실", "romaja": "Choi Eun-sil", "short": "은실" },
+      "age_at_death": 71,
+      "gender": "female",
+      "origin": "충남 내포 앉은굿 법사 집안 출생, 서울에서 무업",
+      "lineage": "서울·황해도굿 계통 강신무(황해도 피란민 출신 큰만신에게 20세 내림굿)",
+      "momju": "deity_sansin",
+      "relation": ["char_beopsa:누이"],
+      "forbidden": ["내림굿 큰만신의 이름", "내림굿 큰만신의 고향 마을"]
+    }
+  ],
+  "retired_names": ["새별", "석주", "순례", "여울", "달이", "고만수", "한도경", "yeoul", "dali", "박옥단"],
+  "name_check": {
+    "date": "2026-11",
+    "method": "공개 웹 검색(이름 + 무당/박수/만신/단골/심방/법사)",
+    "result": "실존 무속인·무형유산 보유자와 전체 이름 일치 없음",
+    "pending": [],
+    "result_d61": "국가유산 보유자·전승교육사 명단 대조 완료(16 A-5 D-61): 전체 이름 일치 없음. 연상 2건 처리 — 단골 성씨 박→문(B-3, 세습 단골 설정 유지), 은실에게 내림굿을 해 준 황해도 피란민 큰만신은 이름·고향 마을을 끝까지 밝히지 않는다"
+  }
+}

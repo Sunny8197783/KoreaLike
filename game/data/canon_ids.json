@@ -1,0 +1,1354 @@
+{
+  "_meta": {
+    "owner_section": "01-concept-and-canon",
+    "doc": "design/01-concept-and-canon.md",
+    "canon_version": "1.2",
+    "updated": "2026-11-21",
+    "rule": "ID 변경·삭제 금지. 예외는 aliases(8.1.1)로만. 로더는 aliases의 구 ID를 새 ID로 매핑한다. canon_constants는 소유 섹션 데이터 파일이 일치해야 하는 캐논 값(CI 검증 대상).",
+    "generated_from": "design/01-concept-and-canon.md 4장 레지스트리 자동 추출 + 수기 캐논 상수",
+    "changelog": [
+      {
+        "version": "1.0",
+        "date": "2026-11-20",
+        "note": "최초 캐논"
+      },
+      {
+        "version": "1.1",
+        "date": "2026-11-20",
+        "note": "리뷰 26건 반영(01 10장)"
+      },
+      {
+        "version": "1.2",
+        "date": "2026-11-21",
+        "note": "99-open-questions D-01~D-57 / C-01~C-38 확정 결정 반영(01 문서 끝 '캐논 v1.2 반영 로그')"
+      },
+      {
+        "version": "1.2",
+        "date": "2026-11-22",
+        "note": "16 C·D 반영: lore_names.char_dangol 문옥단(文玉丹), display_names.jd_jinobangjin·geori_dwitjeon.label 당악/자진모리(C-23), saja_settle.trio_name 사재삼성·forbidden_names(D-55), jindo_concept 인페인트(D-50), lore_confidence_c_display_as_gakseak에서 elite_dueoksini 제외(A-1)"
+      }
+    ]
+  },
+  "aliases": {
+    "pick_gyeongmun_gakin": "pick_hosinbu",
+    "stage_island_asylum": "stage_island_bungyo",
+    "union_jin_obangjin": "union_obang_cheoljin",
+    "boss_yeoksin": "boss_yeokryeo",
+    "boss_yeoksin__form_sal": "boss_yeokryeo__form_sal",
+    "boss_yeoksin__form_han": "boss_yeokryeo__form_han",
+    "elite_byeolsang_sonnim": "elite_yeokgwi_ttae",
+    "st_gongpo": "st_gyeongak",
+    "sys_jaegajip_uirae": "sys_jaegajip_uiroe"
+  },
+  "proposed_not_registered": {
+    "deity_jeseok": "x1 분리 검토안(8.4). 승인 전 사용 금지",
+    "deity_daegam": "x1 분리 검토안(8.4). 승인 전 사용 금지"
+  },
+  "prefix_aliases": {
+    "mod_ (03 characters)": "cmod_",
+    "mod_ (08 daily/dan)": "dmod_"
+  },
+  "ids": {
+    "characters": [
+      "char_mansin",
+      "char_baksu",
+      "char_dangol",
+      "char_myeongdu",
+      "char_simbang",
+      "char_beopsa"
+    ],
+    "deities": [
+      "deity_jeseok_daegam",
+      "deity_janggun",
+      "deity_barigongju",
+      "deity_chilseong",
+      "deity_yongwang",
+      "deity_sansin",
+      "deity_jowang",
+      "deity_seongju",
+      "deity_yeongdeung"
+    ],
+    "avatars": [
+      "avatar_sansin",
+      "avatar_yongwang",
+      "avatar_chilseong",
+      "avatar_janggun",
+      "avatar_barigongju",
+      "avatar_jeseok_daegam"
+    ],
+    "weapons": [
+      "wpn_sinkal",
+      "wpn_bangul",
+      "wpn_woldo",
+      "wpn_buchae",
+      "wpn_janggu",
+      "wpn_jijeon",
+      "wpn_gakgung",
+      "wpn_myeongdu",
+      "wpn_hojakdo",
+      "wpn_sogeum",
+      "wpn_samjichang",
+      "wpn_jakdu",
+      "wpn_sainsageom",
+      "wpn_jangchang",
+      "wpn_pyeongon",
+      "wpn_cheoljillyeo",
+      "wpn_neokjeon",
+      "wpn_gilbe",
+      "wpn_ssukmul",
+      "wpn_obanggi"
+    ],
+    "evolutions": [
+      "evo_begareugi",
+      "evo_sinjangkal",
+      "evo_manwoldo",
+      "evo_saseulchang",
+      "evo_daejakdu",
+      "evo_isippalsugeom",
+      "evo_jusahwajeon",
+      "evo_pajinchang",
+      "evo_byeongnyeok_pyeongon",
+      "evo_cheoljillyeojin",
+      "evo_sangun_pohyodo",
+      "evo_cheoneum_bangul",
+      "evo_irwolseonpung",
+      "evo_neokkkotbi",
+      "evo_nojatdon",
+      "evo_sammul_ssitgim",
+      "evo_bujeong_gasim",
+      "evo_irwol_myeongdu",
+      "evo_hapjangdan",
+      "evo_obangjin"
+    ],
+    "unions": [
+      "union_neoksinkal",
+      "union_sogeumsal",
+      "union_jakdu_dari",
+      "union_chilseong_myeonggyeonggeom",
+      "union_obang_cheoljin",
+      "union_sanullim"
+    ],
+    "passives": [
+      "psv_baekjisul",
+      "psv_obangkkeun",
+      "psv_sinjangdae",
+      "psv_mubok",
+      "psv_santong",
+      "psv_jusa",
+      "psv_mituri",
+      "psv_myeongjusil",
+      "psv_jeung",
+      "psv_chotdae",
+      "psv_chohon_jeoksam",
+      "psv_wipae",
+      "psv_yeopjeon",
+      "psv_jeonghwasu",
+      "psv_baritdae",
+      "psv_gungchae"
+    ],
+    "stats": [
+      "stat_jangdan",
+      "stat_haengnyeol",
+      "stat_neok_sumyeong",
+      "stat_gilbe",
+      "stat_jeonggi",
+      "stat_saenggi",
+      "stat_sinbok",
+      "stat_domu",
+      "stat_sinppal",
+      "stat_doryang",
+      "stat_gise",
+      "stat_yeongheom",
+      "stat_sinjang",
+      "stat_chohon",
+      "stat_haewon_suryeon",
+      "stat_siju",
+      "stat_jeomgwae",
+      "stat_salgi",
+      "stat_myeongjul",
+      "stat_gyeoldan",
+      "stat_puri",
+      "stat_jeopsin_hoepi",
+      "stat_gongsu_gyojeong",
+      "stat_mullim",
+      "stat_geumgi"
+    ],
+    "enemies_general": [
+      "enm_dalgyal_gwisin",
+      "enm_agwi",
+      "enm_gaekgwi",
+      "enm_cheonyeo_gwisin",
+      "enm_mongdal_gwisin",
+      "enm_mul_gwisin",
+      "enm_hosik_wonhon",
+      "enm_dokkaebi_bul",
+      "enm_yeongsan",
+      "enm_sangmun",
+      "enm_subi",
+      "enm_hwehwe_gwisin"
+    ],
+    "elites": [
+      "elite_wongwi",
+      "elite_eodukssini",
+      "elite_geogu_gwi",
+      "elite_bulgasari",
+      "elite_dueoksini",
+      "elite_yeokgwi_ttae"
+    ],
+    "midbosses": [
+      "mboss_daegwi",
+      "mboss_dokkaebi",
+      "mboss_gumiho",
+      "mboss_gangcheori"
+    ],
+    "bosses": [
+      "boss_mulgwi_subi",
+      "boss_yeokryeo",
+      "boss_wongyeol",
+      "boss_imugi",
+      "boss_yeonggam",
+      "boss_daeakgwi",
+      "boss_jangsanbeom"
+    ],
+    "chasers": [
+      "chaser_jeoseung_saja"
+    ],
+    "stages": [
+      "stage_guksadang",
+      "stage_jindo_ssitgim",
+      "stage_east_sea_byeolsin",
+      "stage_jeju_chilmeori",
+      "stage_myeongbu",
+      "stage_island_bungyo",
+      "stage_hwarinwon"
+    ],
+    "geori": [
+      "geori_jutang_bujeong",
+      "geori_gamang_sansin",
+      "geori_byeolsang_daegam_jeseok",
+      "geori_janggun_gunung_changbu",
+      "geori_jakdu",
+      "geori_dwitjeon",
+      "geori_myeongbu"
+    ],
+    "currencies": [
+      "cur_neok",
+      "cur_wonhon_guseul",
+      "cur_yeopjeon",
+      "cur_gongdeok",
+      "cur_bokjeon",
+      "cur_myeongdu_jeom",
+      "cur_sayeon_jogak"
+    ],
+    "gauges": [
+      "gauge_byeoksa_gise",
+      "gauge_sinmyeong"
+    ],
+    "objects": [
+      "obj_sal_algaengi",
+      "obj_gutpan_deungbul",
+      "obj_gongmulsang",
+      "obj_hwasin_won",
+      "obj_go_maedeup",
+      "obj_doryang_mandala"
+    ],
+    "pickups": [
+      "pick_gongmul",
+      "pick_hosinbu",
+      "pick_chohon_bal",
+      "pick_myeongjul_sil"
+    ],
+    "boxes": [
+      "box_gilhyung",
+      "box_neokham"
+    ],
+    "modes": [
+      "mode_chogut",
+      "mode_pyojun",
+      "mode_jajinmori",
+      "mode_muhan",
+      "mode_oneul",
+      "mode_daedong"
+    ],
+    "ladders": [
+      "ladder_salpuri_dan"
+    ],
+    "options": [
+      "opt_ppareun_gaemak"
+    ],
+    "companions": [
+      "comp_dongja",
+      "comp_cheonyeo",
+      "comp_dalgyal",
+      "comp_mulgwi",
+      "comp_agwi",
+      "comp_mongdal",
+      "comp_dokkaebi_bul",
+      "comp_gaekgwi",
+      "comp_yeongsan",
+      "comp_sinjang_dong",
+      "comp_sinjang_nam",
+      "comp_sinjang_seo",
+      "comp_sinjang_buk"
+    ],
+    "grammars": [
+      "grm_hold",
+      "grm_escort",
+      "grm_connect",
+      "grm_install",
+      "grm_ring"
+    ],
+    "hubs": [
+      "hub_sindang",
+      "hub_daejanggan",
+      "hub_singirok_seogo",
+      "hub_myeongdu_dan",
+      "hub_gutpan_mun",
+      "hub_gilbe_madang"
+    ],
+    "systems": [
+      "sys_neok_ratio",
+      "sys_byeoksa_oreum",
+      "sys_sinmyeong_oreum",
+      "sys_jaegajip_uiroe",
+      "sys_uiryeseo",
+      "sys_hapil",
+      "sys_sinryeok",
+      "sys_dae_hapil",
+      "sys_gutpan",
+      "sys_geori",
+      "sys_jangdan",
+      "sys_han",
+      "sys_pullil_giseak",
+      "sys_maedeup_jamgeum",
+      "sys_han_pa",
+      "sys_gyeoldanta",
+      "sys_maetim_bokgwi",
+      "sys_toechi",
+      "sys_haewon",
+      "sys_yeongga",
+      "sys_baeung",
+      "sys_sal_geodugi",
+      "sys_haengnyeol",
+      "sys_cheondo",
+      "sys_gilbe",
+      "sys_gildakkeum",
+      "sys_neokduri",
+      "sys_gongsu",
+      "sys_sal",
+      "sys_wongwi_hoegwi",
+      "sys_siryeon",
+      "sys_bingui",
+      "sys_gangsin_deunggeup",
+      "sys_jeomji",
+      "sys_gopuri",
+      "sys_begareugi",
+      "sys_singirok",
+      "sys_myeongdu_gyeseung",
+      "sys_sinryeong_bulsal",
+      "sys_sintong"
+    ],
+    "ui_terms": [
+      "ui_gutpan_giun",
+      "ui_bongheon"
+    ],
+    "signature_moments": [
+      "sm_first_haewon",
+      "sm_gildakkeum_burst",
+      "sm_eodukssini_silence",
+      "sm_wongwi_return",
+      "sm_jakdu_last_procession",
+      "sm_dwitjeon_feast",
+      "sm_gopuri_boss",
+      "sm_saja_bow",
+      "sm_sonnim_baesong"
+    ],
+    "faces": [
+      "face_wieom",
+      "face_gaho"
+    ],
+    "npcs": [
+      "npc_byeolsang_sonnim"
+    ],
+    "statuses": [
+      "st_gumjurim",
+      "st_gyeongak"
+    ],
+    "lore_terms": [
+      "lore_daemaetim",
+      "lore_gut_sigan",
+      "lore_myeongburok"
+    ],
+    "char_fields": [
+      "char_*.momju",
+      "char_*.lore_name",
+      "char_*.bark.n",
+      "char_*.sintong"
+    ]
+  },
+  "meaning_changed_ids": {
+    "boss_yeonggam": "적 보스 → 비적대 의식형 '영감 배송'(한·HP 없음, trial_gauge). 적 보스는 boss_mulgwi_subi",
+    "chaser_jeoseung_saja": "추격자 → 굿판을 거두는 자(살 우세 = 살 거둠: 비적대, 추격·접촉 피해 없음, 살 덩어리 3 × 30초 = 기본 90초)",
+    "deity_jeseok_daegam": "한 신령의 두 면 → 서로 다른 두 신령의 짝 시련(위엄 = 대감, 가호 = 제석)",
+    "stage_jeju_chilmeori": "UI 표기 '제주 바닷가 굿판(제주 굿 문화 종합)'",
+    "ladder_salpuri_dan": "표시명 '살풀이 단' → '살 맺힘 단'(v1.2 D-04). 살풀이 = 단을 깨는 연출명",
+    "stat_gongsu_gyojeong": "표시명 '공수 교정' → '다시 묻기(재점)'(v1.2 D-04)",
+    "comp_dongja": "결단타 분신 공격 → 기색 예고·귀띔만(전투 판정 없음). 명두의 몸주(v1.2 D-27)",
+    "wpn_hojakdo": "'호작도 부적'(符) → '호작도 세화'(畵)(v1.2 D-28)"
+  },
+  "hanja": {
+    "char_myeongdu": "明斗",
+    "wpn_myeongdu": "明斗",
+    "evo_irwol_myeongdu": "日月明斗",
+    "_myeongdu_variant": "明圖 (이칭, 표기 비권장)",
+    "union_obang_cheoljin": "五方鐵陣 [확인 필요]",
+    "pick_hosinbu": "護身符",
+    "wpn_hojakdo": "虎鵲圖 歲畵"
+  },
+  "species_kind": {
+    "_enum": [
+      "human_spirit",
+      "yokai",
+      "beast"
+    ],
+    "_inherit": {
+      "elite_wongwi": "source_species"
+    },
+    "human_spirit": [
+      "enm_dalgyal_gwisin",
+      "enm_agwi",
+      "enm_gaekgwi",
+      "enm_cheonyeo_gwisin",
+      "enm_mongdal_gwisin",
+      "enm_mul_gwisin",
+      "enm_hosik_wonhon",
+      "enm_yeongsan",
+      "enm_sangmun",
+      "enm_subi",
+      "enm_hwehwe_gwisin",
+      "elite_geogu_gwi",
+      "mboss_daegwi",
+      "boss_wongyeol",
+      "boss_mulgwi_subi",
+      "boss_daeakgwi",
+      "elite_yeokgwi_ttae",
+      "boss_yeokryeo"
+    ],
+    "yokai": [
+      "enm_dokkaebi_bul",
+      "mboss_dokkaebi",
+      "elite_bulgasari",
+      "elite_eodukssini",
+      "elite_dueoksini"
+    ],
+    "beast": [
+      "mboss_gumiho",
+      "mboss_gangcheori",
+      "boss_imugi",
+      "boss_jangsanbeom"
+    ],
+    "_unconfirmed": [
+      "enm_subi",
+      "elite_geogu_gwi",
+      "elite_yeokgwi_ttae",
+      "boss_yeokryeo"
+    ],
+    "_non_hostile": [
+      "boss_yeonggam",
+      "npc_byeolsang_sonnim"
+    ],
+    "_note_v1_2": "손님신(npc_byeolsang_sonnim)은 species_kind 대상 아님(적 아님). 역귀 떼·역려는 잡귀 무리로 human_spirit 가정(07 §8.1.2 한형 결말이 사람 얼굴·행렬 합류), 자문 확인 전 _unconfirmed"
+  },
+  "lore_confidence_c_display_as_gakseak": [
+    "enm_hwehwe_gwisin",
+    "elite_eodukssini",
+    "elite_geogu_gwi"
+  ],
+  "momju_labels": {
+    "char_mansin": "몸주",
+    "char_baksu": "몸주",
+    "char_myeongdu": "몸주 동자령 / 인연 신령 칠성(명다리)",
+    "char_dangol": "모시는 신(무조 바리)",
+    "char_simbang": "조상(삼멩두) + 인연 신령 요왕",
+    "char_beopsa": "독경으로 청하는 신",
+    "_system_term": "인연 신령",
+    "_myeongdu_note": "momju 필드 값은 deity_chilseong 유지(03:00 후보 보장 대상). 몸주는 동자령 동이(comp_dongja) — D-27"
+  },
+  "canon_constants": {
+    "ritual_ref": {
+      "by_level": [
+        10,
+        12,
+        14,
+        16,
+        18,
+        21,
+        24,
+        28
+      ],
+      "evolved": 36,
+      "union": 40,
+      "fallback_no_white": 10,
+      "aura_dps": "0.15 * max(ritual_ref) * sinppal",
+      "ring_effect2": "2 * sum(ritual_ref) * sinppal; boss/mboss x0.5",
+      "tick": "every grid g, tick_dmg = dps * g",
+      "data_owner": "04 weapons.json ritual_ref_by_level; 02 combat_core keys yeongga.aura_ref, yeongga.aura_fallback_base=10, ring.dmg_ref"
+    },
+    "ring": {
+      "snap_u": 1.5,
+      "snap_auto_knot_u": 2.5,
+      "min_area_tiles": 9,
+      "cooldown": 1.0,
+      "min_targets_for_effect": {
+        "giseak": 1,
+        "or_enemies": 3
+      },
+      "empty_ring": "no effect, no gilbe consumption, no cooldown, silent",
+      "cheondo_life_max_sec": 10,
+      "life_extend_sec": 5,
+      "aura_burst_mult": 4,
+      "aura_burst_radius_u": 1.0,
+      "heal_per_cheondo": 0.01,
+      "heal_window_sec": 10,
+      "heal_cap_in_window": 0.1,
+      "sinmyeong_per_haewon": 0.02,
+      "sinmyeong_cap_per_ring": 0.15,
+      "mandala_area": 60,
+      "telemetry_flag": "accidental = giseak_in_zone == 0"
+    },
+    "sinmyeong": {
+      "gain": {
+        "haewon": 0.004,
+        "cheondo": 0.005,
+        "elite_haewon": 0.05,
+        "toechi": 0.001
+      },
+      "oreum_duration": 15.0,
+      "oreum_gain_ignored": true,
+      "post_oreum_window": 20,
+      "post_oreum_gain_mult": 0.5,
+      "post_oreum_applies_to": "all_sources",
+      "min_gap_after_oreum": 45,
+      "uptime_cap": 0.25,
+      "target_uptime": [
+        0.15,
+        0.25
+      ],
+      "dangol_layer_bonus": {
+        "per_layer": 0.1,
+        "stack": "additive",
+        "cap": 0.5,
+        "decision": "+10% 유지(D-29)"
+      },
+      "oreum_jangdan_bonus_pp": -0.15
+    },
+    "byeoksa_gise": {
+      "gain_per_grain": 0.006,
+      "gain_wongwi_toechi": 0.1,
+      "collect_radius_u": 0.6,
+      "collect_reduces_salgi": false,
+      "collect_removes_wongwi_material": true,
+      "oreum_duration": 8.0,
+      "oreum_gyeoldan_pp": 0.1,
+      "oreum_shockwave": {
+        "radius_u": 1.5,
+        "dmg_ratio_of_hit": 0.3,
+        "color": "red",
+        "chain": false
+      },
+      "post_oreum_window": 20,
+      "post_oreum_gain_mult": 0.5,
+      "min_gap_after_oreum": 45
+    },
+    "wongwi": {
+      "thresholds": [
+        25,
+        50,
+        75
+      ],
+      "count_per_remaining_grains": 30,
+      "count_min": 1,
+      "count_max": 3,
+      "toechi_reward": "yeopjeon + box_gilhyung grade +1 guaranteed"
+    },
+    "neok_ratio": {
+      "id": "sys_neok_ratio",
+      "formula": "sum(haewon*w) / (sum(haewon*w) + sum(toechi*w))",
+      "weights": {
+        "general": 1,
+        "elite": 5,
+        "wongwi": 5,
+        "mboss": 20
+      },
+      "includes_as_haewon": [
+        "baeung_nonhuman",
+        "eodukssini_vanish(elite)"
+      ],
+      "excludes": [
+        "cheondo_neok",
+        "avatar",
+        "saja",
+        "boss_self"
+      ],
+      "zero_denominator": 0.5,
+      "boss_form": {
+        "han_if_ge": 0.55,
+        "sal_if_le": 0.45,
+        "middle_rule": "salgi>=50 -> sal else han",
+        "evaluated_at": 1200
+      },
+      "saja": {
+        "n_final": "N + 0.10 (boss haewon) / N - 0.10 (boss toechi)",
+        "neok_if_ge": 0.5
+      },
+      "used_by": [
+        "hud_gutpan_giun",
+        "boss_form",
+        "saja_settle",
+        "econ_eoulim(replaces r_h)"
+      ]
+    },
+    "jangdan": {
+      "quantize_rule": "phase_carry",
+      "ceil_forbidden": true,
+      "cooldown_floor": 0.4,
+      "cooldown_floor_sinmyeong": 0.25,
+      "geori": [
+        {
+          "id": "geori_jutang_bujeong",
+          "start": 0,
+          "bpm": 45,
+          "grid_div": 4
+        },
+        {
+          "id": "geori_gamang_sansin",
+          "start": 180,
+          "bpm": 80,
+          "grid_div": 2
+        },
+        {
+          "id": "geori_byeolsang_daegam_jeseok",
+          "start": 360,
+          "bpm": 95,
+          "grid_div": 3,
+          "meter": "3-bun-bak"
+        },
+        {
+          "id": "geori_janggun_gunung_changbu",
+          "start": 720,
+          "bpm": 120,
+          "grid_div": 3,
+          "meter": "3-bun-bak"
+        },
+        {
+          "id": "geori_jakdu",
+          "start": 1080,
+          "bpm": 160,
+          "grid_div": 2
+        },
+        {
+          "id": "geori_dwitjeon",
+          "start": 1155,
+          "bpm": 180,
+          "grid_div": 2,
+          "label": "최고조: 당악(서울·황해) / 자진모리(남도·동해안) (C-23, 16 A-3)"
+        }
+      ],
+      "card_label_rule": "평균 발동 +x% (계단 표기 금지)",
+      "carry_rule": "ideal_t += P_eff (phase carry); if t - ideal_t > g: ideal_t = t + P_eff (overflow beyond 1 grid discarded); min interval 1 grid",
+      "quantize_owner": "05 §3.2.2a (single canonical algorithm, D-21). 04 §2.4.2 accumulator form is an equivalent description",
+      "canon_label": "잔여 이월(위상 이월)",
+      "grid_rule": "3분박 장단 1/3박(grid_div 3), 그 밖 1/2박(grid_div 2), 진양조 구간 1/4박(grid_div 4). weapons.json geori_grid[].grid_beat_fraction = 1/grid_div 와 일치(D-18·D-21)"
+    },
+    "trials": {
+      "max_deities_per_run": 4,
+      "mode_pyojun": {
+        "times_sec": [
+          180,
+          390,
+          750,
+          930
+        ],
+        "hapil_sec": 1080,
+        "limit_sec": 30,
+        "descend_max_sec": 8,
+        "confirm_ring_sec": 1.0,
+        "block_sec": 3
+      },
+      "mode_jajinmori": {
+        "times_sec": [
+          135,
+          293,
+          563,
+          698
+        ],
+        "hapil_sec": 810,
+        "limit_sec": 24,
+        "descend_max_sec": 6,
+        "wieom_target_mult": 0.85,
+        "gaho_target_mult": 0.85,
+        "time_mult": 1.33,
+        "bpm_mult": 1.0,
+        "heung_base_step": 1,
+        "auto_descend_at_hapil": false,
+        "note": "×1.33 = 시간 진행(경계 시각 ×0.75), BPM 불변(D-31·C-12). target_mult 0.85는 캐논값 — 06 §11.1의 0.80과 불일치(잔존)"
+      },
+      "mode_chogut": {
+        "source": "08 §14.6 (정본, C-13)",
+        "trials_sec": [
+          180,
+          360
+        ],
+        "eodukssini_sec": 450,
+        "midboss_sec": 480,
+        "midboss_han_mult": 0.6,
+        "midboss_limit_sec": 75,
+        "last_procession_sec": 570,
+        "last_procession_life_sec": 60,
+        "mini_dwitjeon_sec": 630,
+        "mini_dwitjeon_duration_sec": 30,
+        "boss_sec": 660,
+        "boss_knots": 3,
+        "boss_han_mult": 0.4,
+        "hapil_sec": null,
+        "myeongjul_bonus": 1,
+        "wongwi_return": false
+      },
+      "mode_muhan": {
+        "jaecheong_sec": [
+          1500,
+          1800
+        ],
+        "dae_hapil": true
+      },
+      "mode_daedong": {
+        "trials": 6,
+        "pool": 8
+      },
+      "unchosen": "withdrawn for the next 1 trial only; if available < 2 -> jaecheong from withdrawn (D-01)",
+      "waiting_weight_bonus": null,
+      "auto_descend_at_hapil": false,
+      "hapil_type": {
+        "wise": "wieom>=3",
+        "jabi": "gaho>=3",
+        "yangmyeon": "2:2"
+      },
+      "resonance": "only pairs within possessed set",
+      "wieom_gauge": "trial_gauge (sys_sinryeok); no han/hp on avatars",
+      "face_selection": "dual_gauge: wieom and gaho run simultaneously; first to 100% decides face; on timeout higher gauge, 70% effect (D-01)",
+      "wieom_target": "DPS_ref(t) x 18s x deity_mod (06 §3.5.1, D-36)",
+      "reroll": {
+        "display": "다시 묻기(재점)",
+        "id": "stat_gongsu_gyojeong",
+        "input": "santong object dwell 0.6s (D-25)"
+      },
+      "sinryeong_bulsal": "sys_sinryeong_bulsal: avatar attacks cannot reduce jeonggi below 1 (D-24)",
+      "myeongdu_point": "first possession of a face, incomplete included (D-26 보류 → 캐논 유지)",
+      "five_trial_structure": "abolished (08 / waves_stage1.json)"
+    },
+    "late_run_beats_sec": {
+      "hapil": 1080,
+      "last_procession": 1100,
+      "last_procession_life": 70,
+      "jakdu_descent": 1115,
+      "jakdu_descent_duration": 40,
+      "protagonist_window": 2.0,
+      "dwitjeon_start": 1155,
+      "dwitjeon_duration": 45,
+      "dwitjeon_hostile_rule": "fed_japgwi_non_hostile; unfed after 20s -> st_gumjurim (hostile, move +20%)",
+      "boss": 1200,
+      "forced_saja": 1380
+    },
+    "saja_settle": {
+      "neok": "bow + lead yeongga + begareugi, gongdeok +50%",
+      "sal": "sal_geodum: saja non-hostile, no chase, no contact damage; collects 3 sal clumps x 30s (base 90s) while awakened wongwi attack; player holds; bokjeon by progress (09); hp 0 = settle, not death; saja bows at end. 180s only as salmaetim_dan extension headroom (D-02)",
+      "timeout_1380": "saja descends and closes the gutpan (run end)",
+      "forbidden_text": [
+        "갓을 벗고 읍",
+        "갓을 벗어 인정",
+        "사자의 시험",
+        "추격"
+      ],
+      "rename_examples": {
+        "end_saja_chase": "end_sal_geodum",
+        "achievement": "살 거둠을 지켜내다"
+      },
+      "look": "흑립·흑도포 [각색] (D-55)",
+      "trio_name": "사재삼성(천황·지황·인황사자) [무속] 서울굿 표기 (16 A-1 D-55)",
+      "forbidden_names": [
+        "해원맥",
+        "이덕춘"
+      ]
+    },
+    "chuimsae": {
+      "combo_steps": [
+        20,
+        40,
+        80,
+        150
+      ],
+      "haewon": [
+        "얼씨구",
+        "좋다",
+        "잘한다",
+        "그렇지!"
+      ],
+      "toechi": [
+        "물렀거라!",
+        "썩 물렀거라!",
+        "훠이 훠이!",
+        "잡귀야 물러가라!"
+      ],
+      "separate_counters": true
+    },
+    "companions_common": {
+      "lines": [
+        "yeongga",
+        "sinjang"
+      ],
+      "slot": "front of procession",
+      "counts_toward_cap": false,
+      "lifetime": null,
+      "hitbox": false,
+      "substitute_target": false,
+      "immune": [
+        "geogu_suction",
+        "saja_lead",
+        "hollim_leave",
+        "ring_effect3"
+      ],
+      "dmg_basis": "ritual_ref x coef (02 §7.7)",
+      "duplicate_effect": "no double trigger; value +50%",
+      "save": "run snapshot: id + internal cooldowns",
+      "owner": "02 §7.7, data/companions.json"
+    },
+    "salgi": {
+      "effect_mode": "continuous",
+      "per_point": {
+        "spawn_rate": 0.005,
+        "elite_chance": 0.005,
+        "enemy_han": 0.002
+      },
+      "note": "D-16. 10의 배수에서 v1.1 step10(+5/+5/+2%)과 같은 값"
+    },
+    "giseak": {
+      "enter_ratio": 0.35,
+      "outline": "white #f2ece0 1px + meok knockout 1px (D-51)",
+      "general": {
+        "move_mult": 0.4,
+        "behavior": "slow wander",
+        "contact_mult": 0.3,
+        "maetim_clock": "real-time 12s (2nd 8s)",
+        "maetim_return_han": 0.45,
+        "post_return_nonhostile_s": 3.0
+      },
+      "elite_plus": {
+        "move_mult": 0.7,
+        "behavior": "keep chasing",
+        "maetim_clock": "no-damage cumulative 12s (2nd 8s); paused if damaged within last 1.0s",
+        "maetim_return_han": 0.6
+      },
+      "values_owner": "07 §2.7 / enemies.json global_rules (D-20·D-22)"
+    },
+    "jeomji": {
+      "choices": 3,
+      "conditional_4th": true,
+      "max_cards": 4,
+      "fourth_card_prob_owner": "02·05",
+      "deity_power_design_per_deity": 5,
+      "deity_power_design_split": {
+        "common": 3,
+        "face_specific": 2
+      },
+      "deity_power_exposed_per_run": 4
+    },
+    "uiroe": {
+      "id": "sys_jaegajip_uiroe",
+      "pool_v1": 24,
+      "pool_v1_cutline3": 12,
+      "x1_target": "30 (C-14) / canon 3.5 'x1 36장 이상'",
+      "deity_guarantee_slot": "06:30"
+    },
+    "caps": {
+      "enemy_projectiles": 600,
+      "orb_merge": 300,
+      "runtime_owner": "07 §11.1 / enemies.json caps",
+      "tech_hard_caps": "14 perf_budgets 1500 / 2000 — 기술 하드 캡(런타임 상한과 의미 분리, D-45·C-10)"
+    },
+    "tech": {
+      "engine": "Godot 4.7.2",
+      "language": "GDScript (1st build)",
+      "renderer": "gl_compatibility",
+      "soulsim_gdextension": "C++ GDExtension deferred until perf shortfall",
+      "dual_clock": "hitstop pauses game clock, beat clock continues (D-47)",
+      "rng_streams": 11,
+      "rng_owner": "14 §3.13.1 (D-48)"
+    },
+    "art_audio": {
+      "runtime_dirs": 4,
+      "lobby_dirs": 8,
+      "orb_small_color": "teal variant (cr ramp), not 오방 청 (D-34·C-24)",
+      "orb_sizes_lpx": [
+        6,
+        8,
+        10
+      ],
+      "ui_gaho_gauge": "hanji #e9dcc0 + ○ shape (D-53)",
+      "fonts": [
+        "Galmuri",
+        "Fusion Pixel (OFL)"
+      ],
+      "stems": 44,
+      "jindo_concept": "art/stages/stage_jindo_ssitgim.png = inpaint top ~15% horizon water band -> mountain ridge & sunset; no regenerate (16 A-4, D-50/C-26 closed)",
+      "baksu_sprite": "recolor (D-49)",
+      "simbang_prop": "regenerate as mengdu sinkal (D-49)",
+      "daegwi_red_horn": "fix (D-54)"
+    },
+    "movement": {
+      "rule": "free movement: stick 360°, keyboard 8-dir (D-06)"
+    },
+    "dalgyal_face": {
+      "rule": "human face (adult mix), rare child variant 8%; child face only on profile first haewon (D-30)"
+    }
+  },
+  "prefixes": {
+    "core": [
+      "char_",
+      "deity_",
+      "avatar_",
+      "face_",
+      "wpn_",
+      "evo_",
+      "union_",
+      "psv_",
+      "stat_",
+      "enm_",
+      "elite_",
+      "mboss_",
+      "boss_",
+      "chaser_",
+      "stage_",
+      "geori_",
+      "cur_",
+      "gauge_",
+      "obj_",
+      "pick_",
+      "box_",
+      "mode_",
+      "ladder_",
+      "comp_",
+      "grm_",
+      "hub_",
+      "sys_",
+      "ui_",
+      "sm_"
+    ],
+    "added_v1_1": [
+      "cmod_",
+      "dmod_",
+      "req_",
+      "opt_",
+      "npc_",
+      "pwr_",
+      "ptype_",
+      "grade_",
+      "res_",
+      "hapil_",
+      "tag_",
+      "st_",
+      "fa_",
+      "jg_",
+      "hs_",
+      "ev_",
+      "sg_",
+      "arc_",
+      "ai_",
+      "prj_",
+      "evt_",
+      "haz_",
+      "mus_",
+      "stg_",
+      "vfx_",
+      "tile_",
+      "prop_",
+      "lm_",
+      "icon_",
+      "port_",
+      "overlay_",
+      "hud_",
+      "sku_"
+    ],
+    "retired": [
+      "mod_"
+    ],
+    "added_v1_2": [
+      "jd_",
+      "sfx_",
+      "amb_",
+      "vo_",
+      "bus_",
+      "mix_",
+      "ovl_",
+      "tel_",
+      "lore_",
+      "ep_",
+      "end_",
+      "buff_"
+    ]
+  },
+  "doc_map": {
+    "files": {
+      "01": "01-concept-and-canon.md",
+      "02": "02-core-loop-combat.md",
+      "03": "03-characters.md",
+      "04": "04-weapons-evolution.md",
+      "05": "05-stats-passives.md",
+      "06": "06-deities-possession.md",
+      "07": "07-enemies-bosses.md",
+      "08": "08-stages-waves.md",
+      "09": "09-meta-economy.md",
+      "10": "10-narrative-world.md",
+      "11": "11-ux-ui-hud.md",
+      "12": "12-audio.md",
+      "13": "13-art-direction.md",
+      "14": "14-tech-production.md",
+      "15": "15-balance.md (planned)"
+    },
+    "wrong_refs": {
+      "05-enemies-ai": "07-enemies-bosses",
+      "04-deities-trials": "06-deities-possession",
+      "06-meta-economy": "09-meta-economy",
+      "08-meta-economy": "09-meta-economy",
+      "07-stages-levels": "08-stages-waves",
+      "06-waves-timeline": "08-stages-waves",
+      "07-waves-timeline": "08-stages-waves",
+      "12-narrative-codex": "10-narrative-world",
+      "0X-narrative": "10-narrative-world",
+      "11-audio-music": "12-audio",
+      "10-art": "13-art-direction",
+      "10-ui-ux": "11-ux-ui-hud",
+      "09-ui-hud": "11-ux-ui-hud",
+      "02-combat-core": "02-core-loop-combat",
+      "03-weapons-evolution": "04-weapons-evolution",
+      "07-balance": "15-balance",
+      "09-balance": "15-balance",
+      "10-balance": "15-balance"
+    },
+    "balance_interim_owner": {
+      "combat_levers": "02 §22",
+      "economy_levers": "09"
+    }
+  },
+  "handoffs": [
+    {
+      "owner": "02",
+      "file": "data/combat_core.json",
+      "changes": [
+        "yeongga.aura_ref='ritual_ref'",
+        "yeongga.aura_fallback_base 5->10",
+        "ring.dmg_ref='ritual_ref'",
+        "ring.min_targets_for_effect={giseak:1,or_enemies:3}",
+        "ring.cheondo_life_max=10",
+        "ring.life_extend=5",
+        "ring.aura_burst_mult=4",
+        "ring.heal_window_sec=10",
+        "ring.sinmyeong_cap 0.30->0.15",
+        "sinmyeong.post_oreum_gain_mult=0.5",
+        "sinmyeong.post_oreum_window=20",
+        "sinmyeong.min_gap_after_oreum=45",
+        "sinmyeong.dangol_layer_bonus additive cap 0.50",
+        "sinmyeong.gain.ring_cap 0.30->0.15",
+        "jangdan.quantize_rule -> phase_carry (v1.2 D-21; v1.1 carry_over superseded)",
+        "jangdan.carry_cap removed (v1.2, phase_carry overflow rule)",
+        "jangdan.geori[geori_dwitjeon].start 1140->1155",
+        "pickups.pick_gyeongmun_gakin->pick_hosinbu",
+        "player.gyeongmun_max_layers->hosinbu_max_layers",
+        "chuimsae.toechi_steps",
+        "run_end.E3 -> sal_geodum hold (no chase)",
+        "add byeoksa_gise block"
+      ]
+    },
+    {
+      "owner": "02",
+      "file": "data/companions.json",
+      "changes": [
+        "create (fields in canon 4.11)"
+      ]
+    },
+    {
+      "owner": "03",
+      "file": "data/characters.json",
+      "changes": [
+        "char_myeongdu hanja 明斗",
+        "momju label strings",
+        "mod_* -> cmod_*",
+        "beopsa gyeongmun -> hosinbu"
+      ]
+    },
+    {
+      "owner": "04",
+      "file": "data/weapons.json",
+      "changes": [
+        "wpn_myeongdu hanja 明斗",
+        "evo_irwol_myeongdu hanja 日月明斗",
+        "union_jin_obangjin -> union_obang_cheoljin, name 오방철진"
+      ]
+    },
+    {
+      "owner": "06",
+      "file": "data/deities.json",
+      "changes": [
+        "avatar han/hp -> trial_gauge",
+        "jeseok_daegam description: 짝 시련",
+        "head overlay R3 cleanup",
+        "4-deity run order logic, hapil types"
+      ]
+    },
+    {
+      "owner": "07",
+      "file": "data/enemies.json",
+      "changes": [
+        "species_kind field",
+        "source_tag C-grade -> 각색(전승·C)",
+        "boss_yeonggam non-hostile ritual",
+        "add boss_mulgwi_subi",
+        "wongwi count by remaining grains"
+      ]
+    },
+    {
+      "owner": "08",
+      "file": "data/waves_stage1.json",
+      "changes": [
+        "trial times 180/390/750/930 (v1.2 D-01; 5-slot structure abolished)",
+        "jakdu 1080-1155, dwitjeon 1155-1200",
+        "dwitjeon hostile rule (fed only)",
+        "mod_* -> dmod_*"
+      ]
+    },
+    {
+      "owner": "10",
+      "file": "data/narrative/loc_glossary.json",
+      "changes": [
+        "명두 zh/ja 明斗"
+      ]
+    },
+    {
+      "owner": "12",
+      "file": "data/audio_jangdan.json",
+      "changes": [
+        "remove 진오방진 key, use geori_dwitjeon"
+      ]
+    },
+    {
+      "owner": "12/13",
+      "file": "data/audio_sfx.json, data/art_vfx_list.json",
+      "changes": [
+        "asylum -> bungyo",
+        "gyeongmun -> hosinbu"
+      ]
+    },
+    {
+      "owner": "14",
+      "file": "data/tech/data_tables_registry.json",
+      "changes": [
+        "data/canon_ids.json status planned -> exists",
+        "CI doc cross-ref link check"
+      ]
+    }
+  ],
+  "aliases_policy": "v1.2: 구 ID는 이 aliases와 01 §8.1.1 표에만 남기고 다른 모든 문서·데이터는 새 ID로 치환한다(C-03·C-05·C-22). x1 출시 전 aliases 삭제.",
+  "display_names": {
+    "ladder_salpuri_dan": "살 맺힘 단",
+    "stat_gongsu_gyojeong": "다시 묻기(재점)",
+    "wpn_hojakdo": "호작도 세화 (虎鵲圖 歲畵)",
+    "jd_jinobangjin": "당악(서울·황해) / 자진모리(남도·동해안) — UI 노출 문자열. 내부 ID 유지(C-23, 16 A-3)",
+    "sys_hapil.en": "Union",
+    "sys_dae_hapil.en": "Grand Union",
+    "box_gilhyung.grades": [
+      "소길",
+      "중길",
+      "대길"
+    ],
+    "box_gilhyung.note": "흉 없음 — 도감 명시(D-07)",
+    "settle_sal": "살 거둠",
+    "store_tagline_deities": "여섯 신령, 매 판 다른 네 신령"
+  },
+  "origins": {
+    "巫": "의례용 무구(巫具)",
+    "武": "전통 병기(武具)",
+    "符": "부적",
+    "畵": "세화(歲畵)·그림 [v1.2]"
+  },
+  "lore_names": {
+    "_source": "data/narrative/cast_canon.json (10 소유, 정본 — C-04). characters.json lore_name 은 이 값과 일치해야 한다",
+    "char_mansin": {
+      "ko": "한서리",
+      "hanja": "韓서리",
+      "age": 31
+    },
+    "char_baksu": {
+      "ko": "강무진",
+      "hanja": "姜武鎭",
+      "age": 38
+    },
+    "char_dangol": {
+      "ko": "문옥단",
+      "hanja": "文玉丹",
+      "age": 64
+    },
+    "char_myeongdu": {
+      "ko": "윤연이",
+      "hanja": "尹연이",
+      "age": 20
+    },
+    "char_simbang": {
+      "ko": "고해월",
+      "hanja": "高海月",
+      "age": 47
+    },
+    "char_beopsa": {
+      "ko": "최도경",
+      "hanja": "崔道經",
+      "age": 75
+    }
+  },
+  "handoffs_v1_2": [
+    {
+      "owner": "02",
+      "file": "design/02-core-loop-combat.md, data/combat_core.json",
+      "items": [
+        "D-02 E3 '갓을 벗어 읍/인정' 문구 삭제",
+        "D-20 기색 일반 잡귀 이동 ×0.4·접촉 ×0.3, 맺힘 45%+3초 비적대",
+        "D-16 salgi.effect_mode continuous",
+        "D-21 jangdan.quantize_rule phase_carry, geori[].grid_div 3분박=3",
+        "D-45 caps.enemy_projectiles 600",
+        "D-47 이중 시계 §24 Q3",
+        "C-32 정예 첫 출현 07:00",
+        "D-03 ID 치환"
+      ]
+    },
+    {
+      "owner": "03",
+      "file": "design/03-characters.md, data/characters.json",
+      "items": [
+        "C-04 lore_name = cast_canon.json",
+        "D-27 comp_dongja 기색 예고·귀띔만",
+        "C-22 pick_gyeongmun_gakin·mod_* 치환",
+        "D-04 표시명"
+      ]
+    },
+    {
+      "owner": "04",
+      "file": "design/04-weapons-evolution.md, data/weapons.json",
+      "items": [
+        "D-28 wpn_hojakdo 호작도 세화, origin 畵",
+        "D-18 geori_grid 3분박 1/3",
+        "C-05 st_gongpo→st_gyeongak",
+        "C-22 union_jin_obangjin 치환",
+        "C-23 UI '단모리(최고조)'"
+      ]
+    },
+    {
+      "owner": "05",
+      "file": "design/05-stats-passives.md, data/stats.json, data/passives.json",
+      "items": [
+        "C-05 st_gyeongak",
+        "C-18 box_grade 소길·중길·대길(02 참조)",
+        "D-04 다시 묻기"
+      ]
+    },
+    {
+      "owner": "06",
+      "file": "design/06-deities-possession.md, data/deities.json",
+      "items": [
+        "D-01 반원 선언 → 두 게이지 동시·먼저 찬 쪽(캐논 유지). 시각·30초·DESCEND 8초·다음 1회 물러남은 이미 일치",
+        "D-36 ×18초 유지",
+        "jajinmori target_mult 0.80 vs canon 0.85 정리"
+      ]
+    },
+    {
+      "owner": "07",
+      "file": "design/07-enemies-bosses.md, data/enemies.json",
+      "items": [
+        "C-05 st_gyeongak 정본(id_aliases 방향 반전)",
+        "D-02 chasers '사자의 시험'·추격 → 살 거둠 비적대",
+        "species_kind 필드: elite_yeokgwi_ttae·boss_yeokryeo"
+      ]
+    },
+    {
+      "owner": "08",
+      "file": "design/08-stages-waves.md, data/waves_stage1.json",
+      "items": [
+        "D-01 5회 구조 폐기, 시련 180/390/750/930",
+        "C-11 작두거리 순서 18:00 합일→18:20 마지막 행렬→18:35 작두 강림 40초",
+        "C-12 자진모리 자동 강림 삭제",
+        "C-14 sys_jaegajip_uiroe 철자",
+        "D-03 ID 치환"
+      ]
+    },
+    {
+      "owner": "09",
+      "file": "design/09-meta-economy.md, data/meta_economy.json, data/achievements.json",
+      "items": [
+        "C-01 uiroe.deity_guarantee_slot '06:30'",
+        "C-02/C-19 '사자의 시험' → '살 거둠', 업적 '살 거둠을 지켜내다'",
+        "C-14 pool 24(30은 x1)",
+        "C-16 빠른 개막 정산 규칙",
+        "C-17 N 통일"
+      ]
+    },
+    {
+      "owner": "10",
+      "file": "design/10-narrative-world.md, data/narrative/*",
+      "items": [
+        "C-19 end_saja_chase → end_sal_geodum",
+        "C-30 'Union'/'Grand Union'",
+        "D-03 역신 사연 → 역려·역귀 떼"
+      ]
+    },
+    {
+      "owner": "11",
+      "file": "design/11-ux-ui-hud.md, data/ui_hud_layout.json",
+      "items": [
+        "C-13 초굿 타임라인 08 §14.6",
+        "D-53 가호 게이지 한지+○",
+        "D-04 표시명",
+        "C-18 상자 등급"
+      ]
+    },
+    {
+      "owner": "12",
+      "file": "design/12-audio.md, data/audio_*.json",
+      "items": [
+        "C-31 뒷전 19:15~20:00",
+        "C-23 UI '단모리(최고조)'",
+        "D-57 스템 44",
+        "D-03 ID 치환"
+      ]
+    },
+    {
+      "owner": "13",
+      "file": "design/13-art-direction.md, data/art_*.json",
+      "items": [
+        "D-49 박수 리컬러·심방 멩두 신칼",
+        "D-50 진도 재생성",
+        "D-51 기색 테",
+        "D-52 구슬 6/8/10",
+        "D-54 대귀 뿔",
+        "D-55 저승사자 [각색]",
+        "D-03 yeoksin_* → NPC 손님, yeokryeo_* 신규"
+      ]
+    },
+    {
+      "owner": "14",
+      "file": "design/14-tech-production.md, data/tech/*",
+      "items": [
+        "D-43 gl_compatibility",
+        "D-44 Godot 4.7.2 + GDScript",
+        "D-45 1500/2000 = 기술 하드 캡 의미 분리",
+        "D-48 RNG 11 스트림",
+        "C-34 파일 참조 치환 CI"
+      ]
+    }
+  ]
+}

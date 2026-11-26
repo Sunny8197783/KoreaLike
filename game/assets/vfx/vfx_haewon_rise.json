@@ -1,0 +1,239 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_haewon_rise 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 2",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 3",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 4",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 5",
+   "frame": {
+    "x": 80,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 6",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  },
+  {
+   "filename": "vfx_haewon_rise 7",
+   "frame": {
+    "x": 112,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 64
+   },
+   "duration": 62
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_haewon_rise.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 64
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_haewon_rise",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_haewon_rise",
+   "name": "Haewon rise (넋전 상승·나비)",
+   "fps": 16.0,
+   "loop": false,
+   "frames": 8,
+   "frameWidth": 16,
+   "frameHeight": 48,
+   "frameSize": [
+    16,
+    64
+   ],
+   "columns": 8,
+   "pivot": [
+    8,
+    54
+   ],
+   "blend": "add",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 120,
+   "palette": [
+    "#f2ece0",
+    "#d6cfc1",
+    "#fffdf6",
+    "#d2c19c"
+   ],
+   "color_role": "W",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     4,
+     4
+    ],
+    "semi_before": 88,
+    "blend": "add",
+    "size": "16x48->16x64"
+   }
+  }
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "enm_dalgyal_gwisin__rot_south.png": {
+  "anim": "rot",
+  "dir": "south",
+  "frames": 1,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__rot_east.png": {
+  "anim": "rot",
+  "dir": "east",
+  "frames": 1,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__rot_north.png": {
+  "anim": "rot",
+  "dir": "north",
+  "frames": 1,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__rot_west.png": {
+  "anim": "rot",
+  "dir": "west",
+  "frames": 1,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__move_south.png": {
+  "anim": "move",
+  "dir": "south",
+  "frames": 4,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__move_east.png": {
+  "anim": "move",
+  "dir": "east",
+  "frames": 4,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__move_north.png": {
+  "anim": "move",
+  "dir": "north",
+  "frames": 4,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__move_west.png": {
+  "anim": "move",
+  "dir": "west",
+  "frames": 4,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ },
+ "enm_dalgyal_gwisin__spawn_south.png": {
+  "anim": "spawn",
+  "dir": "south",
+  "frames": 4,
+  "frame_size": [
+   48,
+   48
+  ],
+  "pivot": [
+   24,
+   45
+  ]
+ }
+}

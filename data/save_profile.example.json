@@ -1,0 +1,318 @@
+{
+  "payload": {
+    "version": 1,
+    "game_build": "1.0.0+b1234",
+    "profile_id": "7f3c2a9e-1b4d-4e7a-9c11-2f6b8d0e5a77",
+    "created_utc": "2026-11-20T09:12:00Z",
+    "updated_utc": "2026-11-22T14:03:41Z",
+    "playtime_s": 18240,
+    "wallet": {
+      "cur_gongdeok": 12450,
+      "cur_bokjeon": 7310
+    },
+    "ledger": {
+      "cur_gongdeok": {
+        "earned": 109050,
+        "spent": 96600
+      },
+      "cur_bokjeon": {
+        "earned": 66110,
+        "spent": 58800
+      }
+    },
+    "unlocks": {
+      "chars": [
+        "char_mansin",
+        "char_baksu",
+        "char_dangol"
+      ],
+      "char_ready": [
+        "char_simbang"
+      ],
+      "weapons": [
+        "wpn_sinkal",
+        "wpn_woldo",
+        "wpn_gakgung",
+        "wpn_samjichang",
+        "wpn_jangchang",
+        "wpn_jakdu",
+        "wpn_bangul",
+        "wpn_buchae",
+        "wpn_jijeon",
+        "wpn_neokjeon",
+        "wpn_ssukmul",
+        "wpn_janggu"
+      ],
+      "weapons_discovered": [
+        "wpn_gilbe"
+      ],
+      "evos_discovered": [
+        "evo_sinjangkal",
+        "evo_cheoneum_bangul"
+      ],
+      "unions_discovered": [],
+      "recipes_revealed": [
+        "evo_irwolseonpung"
+      ],
+      "stages": [
+        "stage_guksadang",
+        "stage_jindo_ssitgim"
+      ],
+      "modes": [
+        "mode_pyojun",
+        "mode_jajinmori",
+        "mode_oneul"
+      ]
+    },
+    "forge": {
+      "forge_gongsu": 2,
+      "forge_mullim": 1,
+      "forge_geumgi": 1
+    },
+    "shrines": {
+      "deity_sansin": {
+        "level": 2,
+        "bingui": 11,
+        "faces": [
+          "face_wieom",
+          "face_gaho"
+        ],
+        "gongsu_tier_seen": 2,
+        "jeongseong": 0,
+        "jemul": 0
+      },
+      "deity_yongwang": {
+        "level": 1,
+        "bingui": 4,
+        "faces": [
+          "face_gaho"
+        ],
+        "gongsu_tier_seen": 1,
+        "jeongseong": 6300,
+        "jemul": 0
+      },
+      "deity_chilseong": {
+        "level": 1,
+        "bingui": 3,
+        "faces": [
+          "face_gaho"
+        ],
+        "gongsu_tier_seen": 1,
+        "jeongseong": 0,
+        "jemul": 0
+      },
+      "deity_janggun": {
+        "level": 1,
+        "bingui": 6,
+        "faces": [
+          "face_wieom"
+        ],
+        "gongsu_tier_seen": 1,
+        "jeongseong": 0,
+        "jemul": 0
+      },
+      "deity_barigongju": {
+        "level": 1,
+        "bingui": 2,
+        "faces": [
+          "face_gaho"
+        ],
+        "gongsu_tier_seen": 1,
+        "jeongseong": 0,
+        "jemul": 0
+      },
+      "deity_jeseok_daegam": {
+        "level": 1,
+        "bingui": 1,
+        "faces": [
+          "face_wieom"
+        ],
+        "gongsu_tier_seen": 1,
+        "jeongseong": 0,
+        "jemul": 0
+      }
+    },
+    "cheongbae_mark": "deity_sansin",
+    "myeongdu": {
+      "collected": [
+        "myeongdu_sansin__wieom",
+        "myeongdu_sansin__gaho",
+        "myeongdu_yongwang__gaho",
+        "myeongdu_chilseong__gaho",
+        "myeongdu_janggun__wieom",
+        "myeongdu_barigongju__gaho",
+        "myeongdu_jeseok_daegam__wieom"
+      ],
+      "nodes_unlocked": [
+        "myd_a1_mumyeong_jeogori",
+        "myd_b1_sinppal",
+        "myd_c1_haengnyeol",
+        "myd_c2_neok_sumyeong"
+      ],
+      "loadout": [
+        "myd_a1_mumyeong_jeogori",
+        "myd_b1_sinppal",
+        "myd_c1_haengnyeol",
+        "myd_c2_neok_sumyeong"
+      ]
+    },
+    "singirok": {
+      "haewonrok": {
+        "enm_dalgyal_gwisin": {
+          "pieces": [
+            1,
+            2
+          ],
+          "haewon": 812,
+          "neokduri_seen": 255,
+          "sc_progress": {
+            "sc_ring_species_20": 14
+          }
+        },
+        "enm_agwi": {
+          "pieces": [
+            1
+          ],
+          "haewon": 140,
+          "neokduri_seen": 7
+        }
+      },
+      "byeoksarok": {
+        "enm_dalgyal_gwisin": {
+          "toechi": 655,
+          "tier": 2
+        },
+        "elite_dueoksini": {
+          "toechi": 12,
+          "tier": 1
+        }
+      },
+      "milestones_claimed": [
+        18
+      ],
+      "byeoksa_milestones_claimed": [],
+      "uiryeseo_done": []
+    },
+    "companions": {
+      "unlocked": [
+        "comp_dalgyal"
+      ],
+      "equipped": "comp_dalgyal"
+    },
+    "ladder": {
+      "max_dan_cleared": 3,
+      "best_dan_by_char": {
+        "char_mansin": 3,
+        "char_baksu": 1
+      },
+      "best_dan_by_stage": {
+        "stage_guksadang": 3,
+        "stage_jindo_ssitgim": 2
+      },
+      "first_clear_claimed": [
+        1,
+        2,
+        3
+      ],
+      "selected_dan": 4
+    },
+    "uiroe": {
+      "offered": [
+        "uiroe_jangsa",
+        "uiroe_honrye",
+        "uiroe_horangi"
+      ],
+      "offered_age_runs": [
+        0,
+        1,
+        2
+      ],
+      "accepted": null,
+      "completed": [
+        "uiroe_dokkaebi"
+      ]
+    },
+    "achievements": {
+      "ach_first_haewon": "2026-11-20T09:13:05Z",
+      "ach_first_clear": "2026-11-20T11:40:12Z"
+    },
+    "ach_progress": {
+      "ach_haewon_1000": 1000,
+      "ach_haewon_10000": 3412
+    },
+    "cosmetics": {
+      "owned": [
+        "cos_mubok_sosaek"
+      ],
+      "equipped": {
+        "char_mansin": "cos_mubok_sosaek"
+      },
+      "titles_owned": [
+        "title_saenae_mudang"
+      ],
+      "title_equipped": "title_saenae_mudang"
+    },
+    "lobby": {
+      "lt_yeondeung": 0,
+      "lt_punggyeong": 0,
+      "pending_crossings": [
+        "enm_dalgyal_gwisin"
+      ]
+    },
+    "daily": {
+      "last_record_date_utc": "2026-11-22",
+      "pending_submissions": []
+    },
+    "ach_pending_platform": [],
+    "active_run_uid": null,
+    "run_guard": {
+      "suspend_nonce": null,
+      "crash_resumes": {}
+    },
+    "settled_run_uids": [
+      "r-000014",
+      "r-000015",
+      "r-000016"
+    ],
+    "tamper_flag": false,
+    "counters": {
+      "cnt_haewon_total": 3412,
+      "cnt_toechi_total": 2980,
+      "cnt_bingui_wieom_total": 5,
+      "cnt_box_gilhyung_opened": 27,
+      "cnt_eodukssini_silence": 3,
+      "cnt_companions_unlocked": 1,
+      "cnt_byeoksa_tiers": 9,
+      "cnt_runs": 16,
+      "cnt_clears": 5,
+      "cnt_gildakkeum": 410
+    },
+    "run_history": [
+      {
+        "run_uid": "r-000016",
+        "seed": "4096128833",
+        "stage": "stage_jindo_ssitgim",
+        "mode": "mode_pyojun",
+        "dan": 3,
+        "char": "char_mansin",
+        "result": "CLEAR_BOW",
+        "time_s": 1262,
+        "haewon": 2390,
+        "toechi": 2050,
+        "neok": 6020,
+        "yeopjeon": 4950,
+        "gongdeok_gain": 13137,
+        "bokjeon_gain": 7201,
+        "build_hash": "b1234"
+      }
+    ],
+    "flags": {
+      "tutorial_done": true,
+      "seen_settlement_tips": 3
+    }
+  },
+  "integrity": {
+    "algo": "sha256",
+    "digest": "a50f744f160405976103e39e970f50d491fcfb430a728322d1ac03110c02db3b"
+  }
+}

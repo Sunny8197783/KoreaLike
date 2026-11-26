@@ -1,0 +1,1671 @@
+{
+  "schema_version": 1,
+  "doc": "design/10-narrative-world.md §6-7",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): rules.speech_policy_char_simbang, 심방 bark 7줄 표준어+제주어 어휘(B-5)"],
+  "rules": {
+    "global_cooldown_s": 10,
+    "speech_policy_char_simbang": "표준어 + 제주어 어휘 몇 개(혼저 옵서·멩두·요왕·바당·무사 등). 제주어 어미·문장 단위 대사 금지. 유료 감수는 출시 전 선택(16 B-5·D)",
+    "queue_len": 1,
+    "queue_ttl_s": 3,
+    "display_time_ko": "clamp(0.6 + chars_no_space/12, 1.5, 3.5)",
+    "display_time_en": "clamp(0.6 + chars/20, 1.5, 3.5)",
+    "max_len": {
+      "ko": 26,
+      "en": 52,
+      "ja": 28,
+      "zh": 20
+    },
+    "speaker_score": "1.0 + 2.0*domain + 1.0*latest + 0.5*momju - 0.6*recent60s; weight=max(score,0.1)",
+    "unseen_line_weight": 3.0,
+    "eunsil_inrun": {
+      "min_shards": 6,
+      "replace_chance": 0.25,
+      "cooldown_s": 180
+    },
+    "neokduri": {
+      "p_normal": 0.05,
+      "p_first_species_in_run": 1.0,
+      "min_gap_s": 6.0,
+      "p_dwitjeon": 0.1,
+      "gap_dwitjeon_s": 4.0,
+      "elite_always": true,
+      "ring_max_lines": 1
+    }
+  },
+  "domain_map": {
+    "deity_sansin": [
+      "enm_hosik_wonhon",
+      "elite_dueoksini"
+    ],
+    "deity_yongwang": [
+      "enm_mul_gwisin",
+      "boss_imugi"
+    ],
+    "deity_chilseong": [
+      "enm_dokkaebi_bul",
+      "elite_eodukssini"
+    ],
+    "deity_janggun": [
+      "enm_subi",
+      "enm_yeongsan"
+    ],
+    "deity_barigongju": [
+      "enm_cheonyeo_gwisin",
+      "enm_mongdal_gwisin",
+      "enm_dalgyal_gwisin",
+      "boss_wongyeol"
+    ],
+    "deity_jeseok_daegam": [
+      "enm_agwi",
+      "enm_gaekgwi",
+      "enm_sangmun"
+    ]
+  },
+  "triggers": [
+    {
+      "id": "gs_trial_announce",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "candidate_momju_first",
+      "faces": [
+        "common"
+      ],
+      "condition": "시련 T-10초"
+    },
+    {
+      "id": "gs_trial_enter",
+      "priority": "P1",
+      "cooldown_s": 0,
+      "speaker_rule": "that_deity",
+      "faces": [
+        "common"
+      ],
+      "condition": "화신 원 진입"
+    },
+    {
+      "id": "gs_trial_wieom",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "that_deity",
+      "faces": [
+        "wieom"
+      ],
+      "condition": "위엄 빙의 확정"
+    },
+    {
+      "id": "gs_trial_gaho",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "that_deity",
+      "faces": [
+        "gaho"
+      ],
+      "condition": "가호 빙의 확정"
+    },
+    {
+      "id": "gs_trial_partial",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "that_deity",
+      "faces": [
+        "common"
+      ],
+      "condition": "시련 제한(30초 + DESCEND 최대 8초) 만료 미완 빙의"
+    },
+    {
+      "id": "gs_ring_big",
+      "priority": "P2",
+      "cooldown_s": 25,
+      "speaker_rule": "weighted",
+      "faces": [
+        "wieom",
+        "gaho"
+      ],
+      "condition": "길닦음 해원>=20 또는 면적>=60"
+    },
+    {
+      "id": "gs_elite_haewon",
+      "priority": "P2",
+      "cooldown_s": 15,
+      "speaker_rule": "weighted",
+      "faces": [
+        "common"
+      ],
+      "condition": "정예·중간보스 해원"
+    },
+    {
+      "id": "gs_elite_toechi",
+      "priority": "P2",
+      "cooldown_s": 15,
+      "speaker_rule": "weighted",
+      "faces": [
+        "wieom",
+        "gaho"
+      ],
+      "condition": "정예·중간보스 퇴치"
+    },
+    {
+      "id": "gs_low_hp",
+      "priority": "P1",
+      "cooldown_s": 40,
+      "speaker_rule": "weighted",
+      "faces": [
+        "common"
+      ],
+      "condition": "정기 25% 이하 진입"
+    },
+    {
+      "id": "gs_revive",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "chilseong_then_latest",
+      "faces": [
+        "common"
+      ],
+      "condition": "명줄 소모"
+    },
+    {
+      "id": "gs_salgi_warn",
+      "priority": "P1",
+      "cooldown_s": 0,
+      "speaker_rule": "weighted",
+      "faces": [
+        "common"
+      ],
+      "condition": "살기 22/47/72 첫 도달"
+    },
+    {
+      "id": "gs_wongwi_return",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "latest",
+      "faces": [
+        "common"
+      ],
+      "condition": "원귀 회귀 발동"
+    },
+    {
+      "id": "gs_eodukssini_first",
+      "priority": "P1",
+      "cooldown_s": 0,
+      "speaker_rule": "latest",
+      "faces": [
+        "common"
+      ],
+      "condition": "런 첫 어둑시니 +1.5s, 공략 힌트 필수"
+    },
+    {
+      "id": "gs_sinmyeong_oreum",
+      "priority": "P2",
+      "cooldown_s": 60,
+      "speaker_rule": "weighted",
+      "faces": [
+        "wieom",
+        "gaho"
+      ],
+      "condition": "신명 오름 시작"
+    },
+    {
+      "id": "gs_domain_haewon",
+      "priority": "P3",
+      "cooldown_s": 0,
+      "speaker_rule": "domain_deity",
+      "faces": [
+        "common"
+      ],
+      "condition": "영역 종 런 첫 해원"
+    },
+    {
+      "id": "gs_procession_full",
+      "priority": "P3",
+      "cooldown_s": 90,
+      "speaker_rule": "weighted",
+      "faces": [
+        "wieom",
+        "gaho"
+      ],
+      "condition": "행렬 상한 도달"
+    },
+    {
+      "id": "gs_box_open",
+      "priority": "P3",
+      "cooldown_s": 30,
+      "speaker_rule": "jeseok_daegam_then_chilseong",
+      "faces": [
+        "common"
+      ],
+      "condition": "길흉 상자·넋함 개봉"
+    },
+    {
+      "id": "gs_hapil",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "round_robin_served",
+      "faces": [
+        "common"
+      ],
+      "condition": "18:00 신령 합일 돌림(모신 신령 전원, 시련 순서. 무한굿 대합일만 6신)"
+    },
+    {
+      "id": "gs_dwitjeon",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "janggun_then_latest",
+      "faces": [
+        "common"
+      ],
+      "condition": "19:15 뒷전"
+    },
+    {
+      "id": "gs_boss_enter",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "momju_then_latest",
+      "faces": [
+        "common"
+      ],
+      "condition": "20:00 보스 등장"
+    },
+    {
+      "id": "gs_boss_form",
+      "priority": "P0",
+      "cooldown_s": 0,
+      "speaker_rule": "form_specific",
+      "faces": [
+        "common"
+      ],
+      "condition": "보스 형태 결정"
+    },
+    {
+      "id": "gs_mboss_enter",
+      "priority": "P1",
+      "cooldown_s": 0,
+      "speaker_rule": "weighted",
+      "faces": [
+        "common"
+      ],
+      "condition": "10:00 중간보스"
+    },
+    {
+      "id": "gs_run_start",
+      "priority": "P1",
+      "cooldown_s": 0,
+      "speaker_rule": "momju",
+      "faces": [
+        "common"
+      ],
+      "condition": "00:03 런 시작"
+    }
+  ],
+  "lines": [
+    {
+      "key": "gs.sansin.trial_announce.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "산이 운다…",
+      "en": "The mountain weeps…"
+    },
+    {
+      "key": "gs.sansin.trial_announce.2",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "솔바람이 멎었네. 범이 내려오네.",
+      "en": "The pine wind stills. The tiger descends."
+    },
+    {
+      "key": "gs.sansin.trial_enter.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "내 앞에 섰는가. 어디 보세.",
+      "en": "You stand before me. Let me look at you."
+    },
+    {
+      "key": "gs.sansin__wieom.trial_wieom.1",
+      "speaker": "deity_sansin",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "범의 발톱을 빌려주마. 베어라!",
+      "en": "Take the tiger's claws. Cut!"
+    },
+    {
+      "key": "gs.sansin__wieom.trial_wieom.2",
+      "speaker": "deity_sansin",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "기세가 좋다. 산이 네 편이다.",
+      "en": "Fierce. The mountain stands with you."
+    },
+    {
+      "key": "gs.sansin__gaho.trial_gaho.1",
+      "speaker": "deity_sansin",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "길 잃은 것들은 내가 업고 가세.",
+      "en": "The lost ones, I'll carry on my back."
+    },
+    {
+      "key": "gs.sansin__gaho.trial_gaho.2",
+      "speaker": "deity_sansin",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "산길은 자네가 닦게. 범은 내가 맡지.",
+      "en": "You clear the trail. I'll mind the tiger."
+    },
+    {
+      "key": "gs.sansin__wieom.ring_big.1",
+      "speaker": "deity_sansin",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "한 번에 쓸었구나! 범도 놀라겠다.",
+      "en": "One sweep! Even the tiger is startled."
+    },
+    {
+      "key": "gs.sansin__gaho.ring_big.1",
+      "speaker": "deity_sansin",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "옳지, 산길 닦듯 닦는구먼.",
+      "en": "That's it—like clearing a mountain trail."
+    },
+    {
+      "key": "gs.sansin.elite_haewon.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "저 녀석도 산에 묻은 사연이 있었지.",
+      "en": "That one had a story buried in the hills."
+    },
+    {
+      "key": "gs.sansin__wieom.elite_toechi.1",
+      "speaker": "deity_sansin",
+      "face": "wieom",
+      "trigger": "gs_elite_toechi",
+      "ko": "물러가라! 산신 앞이다!",
+      "en": "Begone! You stand before the Mountain God!"
+    },
+    {
+      "key": "gs.sansin.low_hp.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "숨 고르게. 산은 어디 안 가네.",
+      "en": "Catch your breath. The mountain will wait."
+    },
+    {
+      "key": "gs.sansin.salgi_warn.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "골짜기에 살이 고였네. 곧 일어서겠어.",
+      "en": "Blight pools in the valley. It will rise."
+    },
+    {
+      "key": "gs.sansin.eodukssini_first.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "어둠은 쳐다볼수록 크네. 등을 보이게.",
+      "en": "Darkness grows when watched. Turn your back."
+    },
+    {
+      "key": "gs.sansin.domain_haewon.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_domain_haewon",
+      "ko": "범에게 물려 간 넋이구나… 미안하네.",
+      "en": "Taken by a tiger… I'm sorry, child."
+    },
+    {
+      "key": "gs.sansin.boss_enter.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "큰 손님이 오셨네. 산처럼 버티게.",
+      "en": "A great guest arrives. Stand like a mountain."
+    },
+    {
+      "key": "gs.yongwang.trial_announce.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "물때가 바뀌었소.",
+      "en": "The tide has turned."
+    },
+    {
+      "key": "gs.yongwang.trial_announce.2",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "바다가 숨을 들이쉬오.",
+      "en": "The sea draws a long breath."
+    },
+    {
+      "key": "gs.yongwang.trial_enter.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "물가에 선 이여, 무엇을 청하오?",
+      "en": "You at the water's edge—what do you ask?"
+    },
+    {
+      "key": "gs.yongwang__wieom.trial_wieom.1",
+      "speaker": "deity_yongwang",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "물결이 그대 발을 따를 것이오.",
+      "en": "The waves will follow your feet."
+    },
+    {
+      "key": "gs.yongwang__wieom.trial_wieom.2",
+      "speaker": "deity_yongwang",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "거센 물결로 쓸어 가시오.",
+      "en": "Sweep them away like a heavy swell."
+    },
+    {
+      "key": "gs.yongwang__gaho.trial_gaho.1",
+      "speaker": "deity_yongwang",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "물에 든 넋들, 내가 건져 주리다.",
+      "en": "The souls in the water—I'll draw them up."
+    },
+    {
+      "key": "gs.yongwang__gaho.trial_gaho.2",
+      "speaker": "deity_yongwang",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "맑은 물을 내어 주겠소. 씻겨 보내시오.",
+      "en": "Take my clear water. Wash them, then send them."
+    },
+    {
+      "key": "gs.yongwang__wieom.ring_big.1",
+      "speaker": "deity_yongwang",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "해일처럼 덮쳤구려!",
+      "en": "Like a tidal wave!"
+    },
+    {
+      "key": "gs.yongwang__gaho.ring_big.1",
+      "speaker": "deity_yongwang",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "밀물처럼 감싸고, 썰물처럼 보내시오.",
+      "en": "Embrace like the flood; release like the ebb."
+    },
+    {
+      "key": "gs.yongwang.elite_haewon.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "깊은 물 밑에도 이름은 남는 법이오.",
+      "en": "Even under deep water, a name remains."
+    },
+    {
+      "key": "gs.yongwang.low_hp.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "물러나시오. 파도도 물러났다 다시 오오.",
+      "en": "Fall back. Even waves retreat, then return."
+    },
+    {
+      "key": "gs.yongwang.salgi_warn.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "물이 탁해지고 있소. 맑혀야 하오.",
+      "en": "The water grows murky. It must be cleared."
+    },
+    {
+      "key": "gs.yongwang.eodukssini_first.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "안개 속 그림자는 보지 마오. 지나가오.",
+      "en": "Don't stare at shadows in the fog. Walk on."
+    },
+    {
+      "key": "gs.yongwang.domain_haewon.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_domain_haewon",
+      "ko": "차가웠겠소. 이제 따뜻한 물로 가시오.",
+      "en": "It must have been cold. Go now, into warm water."
+    },
+    {
+      "key": "gs.yongwang.box_open.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_box_open",
+      "ko": "바다는 빈 그물로 돌려보내지 않소.",
+      "en": "The sea never sends back an empty net."
+    },
+    {
+      "key": "gs.yongwang.boss_enter.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "큰 물결이 오오. 발을 단단히 딛으시오.",
+      "en": "A great wave comes. Plant your feet."
+    },
+    {
+      "key": "gs.chilseong.trial_announce.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "북녘 하늘에 일곱 별이 낮게 떴다.",
+      "en": "Seven stars hang low in the north."
+    },
+    {
+      "key": "gs.chilseong.trial_announce.2",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "명(命)을 셈할 때가 왔다.",
+      "en": "The hour has come to count fates."
+    },
+    {
+      "key": "gs.chilseong.trial_enter.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "별을 보러 왔느냐.",
+      "en": "Have you come to see the stars?"
+    },
+    {
+      "key": "gs.chilseong__wieom.trial_wieom.1",
+      "speaker": "deity_chilseong",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "일곱 별을 쏘아라. 하늘이 셈한다.",
+      "en": "Loose the seven stars. Heaven keeps count."
+    },
+    {
+      "key": "gs.chilseong__wieom.trial_wieom.2",
+      "speaker": "deity_chilseong",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "별이 떨어지는 곳마다 길이 난다.",
+      "en": "Wherever a star falls, a path opens."
+    },
+    {
+      "key": "gs.chilseong__gaho.trial_gaho.1",
+      "speaker": "deity_chilseong",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "명줄 하나, 이어 두었다.",
+      "en": "I have tied one more thread of life."
+    },
+    {
+      "key": "gs.chilseong__gaho.trial_gaho.2",
+      "speaker": "deity_chilseong",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "일곱 별을 이었구나. 네 명도 길어졌다.",
+      "en": "You joined the seven. Your fate grows long."
+    },
+    {
+      "key": "gs.chilseong__wieom.ring_big.1",
+      "speaker": "deity_chilseong",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "별자리처럼 맞물렸구나.",
+      "en": "Locked tight, like a constellation."
+    },
+    {
+      "key": "gs.chilseong__gaho.ring_big.1",
+      "speaker": "deity_chilseong",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "고리 하나에 별 일곱. 잘 닦았다.",
+      "en": "Seven stars in one ring. Well cleared."
+    },
+    {
+      "key": "gs.chilseong.elite_haewon.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "저 넋의 별도 다시 빛나는구나.",
+      "en": "That soul's star shines again."
+    },
+    {
+      "key": "gs.chilseong.low_hp.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "명이 짧아진다. 별을 보고 걸어라.",
+      "en": "Your fate runs short. Walk by the stars."
+    },
+    {
+      "key": "gs.chilseong.revive.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_revive",
+      "ko": "아직 네 명은 다하지 않았다.",
+      "en": "Your fate is not yet spent."
+    },
+    {
+      "key": "gs.chilseong.salgi_warn.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "별빛이 흐려진다. 살이 하늘을 가린다.",
+      "en": "Starlight dims. Blight veils the sky."
+    },
+    {
+      "key": "gs.chilseong.eodukssini_first.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "어둠은 빛에 진다. 거울을 비추어라.",
+      "en": "Darkness yields to light. Let the mirror shine."
+    },
+    {
+      "key": "gs.chilseong.box_open.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_box_open",
+      "ko": "괘가 좋다. 열어 보아라.",
+      "en": "The omen is good. Open it."
+    },
+    {
+      "key": "gs.chilseong.boss_enter.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "오늘 밤 하늘이 지켜본다.",
+      "en": "Tonight, the heavens are watching."
+    },
+    {
+      "key": "gs.janggun.trial_announce.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "깃발이 선다! 사방을 살펴라!",
+      "en": "Banners up! Watch all four sides!"
+    },
+    {
+      "key": "gs.janggun.trial_announce.2",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "북을 울려라. 장군이 납신다.",
+      "en": "Sound the drum. The General comes."
+    },
+    {
+      "key": "gs.janggun.trial_enter.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "진 안에 들었느냐. 각오는 됐겠지.",
+      "en": "You've entered the ranks. Ready, I trust."
+    },
+    {
+      "key": "gs.janggun__wieom.trial_wieom.1",
+      "speaker": "deity_janggun",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "칼끝을 세워라. 물러서지 마라!",
+      "en": "Blades up. Do not give ground!"
+    },
+    {
+      "key": "gs.janggun__wieom.trial_wieom.2",
+      "speaker": "deity_janggun",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "가락을 몰아쳐라! 쉬지 마라!",
+      "en": "Drive the rhythm! No rest!"
+    },
+    {
+      "key": "gs.janggun__gaho.trial_gaho.1",
+      "speaker": "deity_janggun",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "오방을 막는다. 뒤는 맡겨라.",
+      "en": "Five directions held. I have your back."
+    },
+    {
+      "key": "gs.janggun__gaho.trial_gaho.2",
+      "speaker": "deity_janggun",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "신장들이 줄을 지킨다. 앞만 보라.",
+      "en": "My guards hold the line. Eyes forward."
+    },
+    {
+      "key": "gs.janggun__wieom.ring_big.1",
+      "speaker": "deity_janggun",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "포위 완료! 잘했다!",
+      "en": "Encirclement complete! Well done!"
+    },
+    {
+      "key": "gs.janggun__gaho.ring_big.1",
+      "speaker": "deity_janggun",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "진형이 단단하다. 다 보내라!",
+      "en": "The formation holds. Send them all!"
+    },
+    {
+      "key": "gs.janggun.elite_haewon.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "적이었으나 백성이었다. 예를 갖춰라.",
+      "en": "A foe, yet one of our people. Show respect."
+    },
+    {
+      "key": "gs.janggun__wieom.elite_toechi.1",
+      "speaker": "deity_janggun",
+      "face": "wieom",
+      "trigger": "gs_elite_toechi",
+      "ko": "베었다! 다음!",
+      "en": "Cut down! Next!"
+    },
+    {
+      "key": "gs.janggun.low_hp.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "진을 물려라! 다시 짠다!",
+      "en": "Pull back the line! Regroup!"
+    },
+    {
+      "key": "gs.janggun.salgi_warn.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "적의 기세가 오른다. 살을 걷어라!",
+      "en": "The enemy surges. Clear the blight!"
+    },
+    {
+      "key": "gs.janggun.eodukssini_first.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "저건 칼로 못 벤다! 등 돌려 빠져라!",
+      "en": "No blade cuts that! Turn and withdraw!"
+    },
+    {
+      "key": "gs.janggun.dwitjeon.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_dwitjeon",
+      "ko": "칼을 거둬라. 이제 먹여 보낼 때다.",
+      "en": "Sheathe your blades. Now we feed and send them."
+    },
+    {
+      "key": "gs.janggun.boss_enter.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "대적이다. 전원, 제자리!",
+      "en": "A great foe. All of you—hold your ground!"
+    },
+    {
+      "key": "gs.barigongju.trial_announce.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "저승길 바람이 분다, 아가.",
+      "en": "The wind from the road below is blowing, child."
+    },
+    {
+      "key": "gs.barigongju.trial_announce.2",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "길 잃은 아이들이 우는구나.",
+      "en": "The lost children are crying."
+    },
+    {
+      "key": "gs.barigongju.trial_enter.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "왔구나. 무섭지 않니?",
+      "en": "You came. Aren't you afraid?"
+    },
+    {
+      "key": "gs.barigongju__wieom.trial_wieom.1",
+      "speaker": "deity_barigongju",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "끊을 것은 끊거라. 나도 그리 걸었다.",
+      "en": "Cut what must be cut. That's how I walked, too."
+    },
+    {
+      "key": "gs.barigongju__wieom.trial_wieom.2",
+      "speaker": "deity_barigongju",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "버려진 아이가 가장 멀리 간단다.",
+      "en": "The abandoned child walks the farthest."
+    },
+    {
+      "key": "gs.barigongju__gaho.trial_gaho.1",
+      "speaker": "deity_barigongju",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "길 잃은 아이들, 내가 데려가마.",
+      "en": "The lost ones—I will lead them."
+    },
+    {
+      "key": "gs.barigongju__gaho.trial_gaho.2",
+      "speaker": "deity_barigongju",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "약수 길을 다녀온 내가 앞장서마.",
+      "en": "I walked the road to the healing water. I'll lead."
+    },
+    {
+      "key": "gs.barigongju__wieom.ring_big.1",
+      "speaker": "deity_barigongju",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "한 번에 끊었구나. 맺힘 없이.",
+      "en": "One clean cut. No knot left behind."
+    },
+    {
+      "key": "gs.barigongju__gaho.ring_big.1",
+      "speaker": "deity_barigongju",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "그래, 이렇게 보내는 거란다.",
+      "en": "Yes. This is how you send them."
+    },
+    {
+      "key": "gs.barigongju.elite_haewon.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "들었니? 그 아이도 이름이 있었어.",
+      "en": "Did you hear? That one had a name, too."
+    },
+    {
+      "key": "gs.barigongju__wieom.elite_toechi.1",
+      "speaker": "deity_barigongju",
+      "face": "wieom",
+      "trigger": "gs_elite_toechi",
+      "ko": "그 매듭은 끊어야 했다. 괜찮다.",
+      "en": "That knot had to be cut. It's all right."
+    },
+    {
+      "key": "gs.barigongju.low_hp.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "넘어져도 돼. 나도 수없이 넘어졌다.",
+      "en": "It's all right to fall. I fell countless times."
+    },
+    {
+      "key": "gs.barigongju.salgi_warn.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "살이 쌓이면 돌아온단다. 겁내지 마.",
+      "en": "Gathered blight returns. Don't be afraid."
+    },
+    {
+      "key": "gs.barigongju.eodukssini_first.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "보지 마. 외면해도 되는 것도 있단다.",
+      "en": "Don't look. Some things you may turn from."
+    },
+    {
+      "key": "gs.barigongju.domain_haewon.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_domain_haewon",
+      "ko": "혼자 떠나지 않게, 손을 잡아 주마.",
+      "en": "You won't leave alone. I'll hold your hand."
+    },
+    {
+      "key": "gs.barigongju.boss_enter.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "큰 한이 온다. 같이 들어 주자.",
+      "en": "A great han approaches. Let's listen together."
+    },
+    {
+      "key": "gs.jeseok_daegam.trial_announce.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "에헴! 대감 납신다! 술상은 봤나?",
+      "en": "Ahem! The Daegam arrives! Is the wine poured?"
+    },
+    {
+      "key": "gs.jeseok_daegam.trial_announce.2",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_trial_announce",
+      "ko": "흰 고깔이 내린다. 굿상을 살펴라.",
+      "en": "The white hood descends. Tend the table."
+    },
+    {
+      "key": "gs.jeseok_daegam.trial_enter.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_trial_enter",
+      "ko": "날 불렀으면 대접부터 해야지!",
+      "en": "You called me? Then treat me properly first!"
+    },
+    {
+      "key": "gs.jeseok_daegam__wieom.trial_wieom.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "옳거니! 엽전 소리 좀 나게 해 보자!",
+      "en": "Splendid! Let's hear those coins jingle!"
+    },
+    {
+      "key": "gs.jeseok_daegam__wieom.trial_wieom.2",
+      "speaker": "deity_jeseok_daegam",
+      "face": "wieom",
+      "trigger": "gs_trial_wieom",
+      "ko": "대감 체면 세워 줬으니 복이 쏟아진다!",
+      "en": "You saved my face—now fortune pours!"
+    },
+    {
+      "key": "gs.jeseok_daegam__gaho.trial_gaho.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "복은 나누어야 불어나는 법이다.",
+      "en": "Blessings grow only when shared."
+    },
+    {
+      "key": "gs.jeseok_daegam__gaho.trial_gaho.2",
+      "speaker": "deity_jeseok_daegam",
+      "face": "gaho",
+      "trigger": "gs_trial_gaho",
+      "ko": "굿상이 넉넉하니 넋들도 배부르겠다.",
+      "en": "A full table—the souls will eat well."
+    },
+    {
+      "key": "gs.jeseok_daegam__wieom.ring_big.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "wieom",
+      "trigger": "gs_ring_big",
+      "ko": "이야, 한 상 거하게 차렸구나!",
+      "en": "Now that's a feast of a ring!"
+    },
+    {
+      "key": "gs.jeseok_daegam__gaho.ring_big.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "gaho",
+      "trigger": "gs_ring_big",
+      "ko": "다 먹여 보내라. 남기지 말고.",
+      "en": "Feed them all and send them. Leave none behind."
+    },
+    {
+      "key": "gs.jeseok_daegam.elite_haewon.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_elite_haewon",
+      "ko": "배불리 먹고 가거라.",
+      "en": "Eat your fill, then go."
+    },
+    {
+      "key": "gs.jeseok_daegam.low_hp.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "아이고, 대감 체면 말이 아니다! 물러서!",
+      "en": "Oh, my dignity! Back off, back off!"
+    },
+    {
+      "key": "gs.jeseok_daegam.salgi_warn.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_salgi_warn",
+      "ko": "굿상에 살이 앉는다. 털어 내야 한다.",
+      "en": "Blight settles on the table. Brush it off."
+    },
+    {
+      "key": "gs.jeseok_daegam.eodukssini_first.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_eodukssini_first",
+      "ko": "저 시커먼 건 쳐다보면 손해다, 손해!",
+      "en": "Staring at that dark thing? Pure loss, I say!"
+    },
+    {
+      "key": "gs.jeseok_daegam.domain_haewon.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_domain_haewon",
+      "ko": "배고팠구나. 이제 실컷 먹거라.",
+      "en": "You were hungry. Now eat all you like."
+    },
+    {
+      "key": "gs.jeseok_daegam.box_open.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_box_open",
+      "ko": "열어라 열어! 대감 몫은 떼어 놓고!",
+      "en": "Open it, open it! Set my share aside!"
+    },
+    {
+      "key": "gs.jeseok_daegam.boss_enter.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "큰손님이다! 상다리 부러지게 차려라!",
+      "en": "A grand guest! Set the table till it groans!"
+    },
+    {
+      "key": "gs.sansin.hapil.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "산이 너를 받친다.",
+      "en": "The mountain bears you."
+    },
+    {
+      "key": "gs.yongwang.hapil.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "바다가 너를 띄운다.",
+      "en": "The sea lifts you."
+    },
+    {
+      "key": "gs.chilseong.hapil.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "하늘이 너를 비춘다.",
+      "en": "The heavens light your way."
+    },
+    {
+      "key": "gs.janggun.hapil.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "오방이 너를 지킨다.",
+      "en": "The five directions guard you."
+    },
+    {
+      "key": "gs.barigongju.hapil.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "저승길도 너를 안다.",
+      "en": "Even the road below knows you."
+    },
+    {
+      "key": "gs.jeseok_daegam.hapil.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "복이 너를 따른다.",
+      "en": "Fortune follows you."
+    },
+    {
+      "key": "gs.sansin.wongwi_return.1",
+      "speaker": "deity_sansin",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "고였던 살이 일어선다!",
+      "en": "The pooled blight rises!"
+    },
+    {
+      "key": "gs.yongwang.wongwi_return.1",
+      "speaker": "deity_yongwang",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "가라앉았던 것이 떠오르오.",
+      "en": "What sank is surfacing."
+    },
+    {
+      "key": "gs.chilseong.wongwi_return.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "흩어진 별이 붉게 모인다.",
+      "en": "Scattered stars gather, red."
+    },
+    {
+      "key": "gs.janggun.wongwi_return.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "적이 돌아왔다! 다시 맞서라!",
+      "en": "The foe returns! Face them again!"
+    },
+    {
+      "key": "gs.barigongju.wongwi_return.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "덜 풀린 아이들이 돌아왔구나.",
+      "en": "The ones not yet untied have come back."
+    },
+    {
+      "key": "gs.jeseok_daegam.wongwi_return.1",
+      "speaker": "deity_jeseok_daegam",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "에구머니, 쫓아낸 손님이 또 왔네!",
+      "en": "Oh my, the guests we shooed are back!"
+    },
+    {
+      "key": "gs.barigongju.boss_form_han.1",
+      "speaker": "deity_barigongju",
+      "face": "common",
+      "trigger": "gs_boss_form",
+      "ko": "한이 짙다. 매듭을 하나씩 풀어 주렴.",
+      "en": "Deep han. Untie its knots, one by one.",
+      "form": "han"
+    },
+    {
+      "key": "gs.janggun.boss_form_sal.1",
+      "speaker": "deity_janggun",
+      "face": "common",
+      "trigger": "gs_boss_form",
+      "ko": "살귀가 붙었다. 끊어 내라!",
+      "en": "Blight has taken it. Cut it free!",
+      "form": "sal"
+    },
+    {
+      "key": "gs.chilseong.trial_partial.1",
+      "speaker": "deity_chilseong",
+      "face": "common",
+      "trigger": "gs_trial_partial",
+      "ko": "반쯤 실렸다. 나머지는 다음 굿에서.",
+      "en": "Half descended. The rest, at the next rite."
+    },
+    {
+      "key": "gs.eunsil.tutorial.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "tutorial",
+      "ko": "얘, 넋들은 문 찾아오는 거다.",
+      "en": "Child, the souls are only looking for a door."
+    },
+    {
+      "key": "gs.eunsil.tutorial.2",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "tutorial",
+      "ko": "하얗게 테 두른 넋은 방울로 쓸어 줘라.",
+      "en": "The ones rimmed in white—sweep them with the bell."
+    },
+    {
+      "key": "gs.eunsil.tutorial.3",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "tutorial",
+      "ko": "빙 둘러 길을 닫아 봐라. 다 같이 간다.",
+      "en": "Walk a circle and close the path. They'll go together."
+    },
+    {
+      "key": "gs.eunsil.tutorial.4",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "tutorial",
+      "ko": "돌아온 것도 손님이다. 다시 보내면 돼.",
+      "en": "What returns is a guest, too. Send it off again."
+    },
+    {
+      "key": "gs.eunsil.shard.sansin__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "범 무섭지? 나도 처음엔 후들거렸다.",
+      "en": "Scary, the tiger? My knees shook, too.",
+      "shard": "sansin__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.sansin__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "산 할아버지가 널 업어 주셨구나.",
+      "en": "The old man of the mountain carried you.",
+      "shard": "sansin__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.yongwang__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "바다는 밀어도 안 무너진다. 너도.",
+      "en": "The sea won't break when pushed. Nor will you.",
+      "shard": "yongwang__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.yongwang__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "물에 든 넋은 손부터 잡아 줘라.",
+      "en": "Hold a drowned soul's hand first. It's cold.",
+      "shard": "yongwang__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.chilseong__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "별을 쏘다니, 너답다. 겁도 없지.",
+      "en": "Shooting stars—so like you. Fearless.",
+      "shard": "chilseong__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.chilseong__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "명줄 받았지? 아껴 써라, 얘.",
+      "en": "They gave you a life thread? Use it sparingly.",
+      "shard": "chilseong__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.janggun__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "무진이가 장군님 받을 때 꼭 너 같았다.",
+      "en": "Mujin looked just like you when the General came.",
+      "shard": "janggun__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.janggun__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "뒤를 맡길 줄 아는 게 진짜 용기다.",
+      "en": "Trusting someone with your back—that's courage.",
+      "shard": "janggun__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.barigongju__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "바리 할머니가 끊으라면, 끊어도 된다.",
+      "en": "If Grandmother Bari says cut, you may cut.",
+      "shard": "barigongju__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.barigongju__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "바리 할머니 따라가면 안 헤맨다. 나도.",
+      "en": "Follow Grandmother Bari and you won't get lost. Me neither.",
+      "shard": "barigongju__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.jeseok_daegam__wieom",
+      "speaker": "npc_eunsil",
+      "face": "wieom",
+      "trigger": "shard_recovered",
+      "ko": "대감님 술값은 내가 달아 놨다. 하하.",
+      "en": "I put the Daegam's wine on my tab. Ha!",
+      "shard": "jeseok_daegam__wieom"
+    },
+    {
+      "key": "gs.eunsil.shard.jeseok_daegam__gaho",
+      "speaker": "npc_eunsil",
+      "face": "gaho",
+      "trigger": "shard_recovered",
+      "ko": "굿상은 나누라고 차리는 거다.",
+      "en": "We set the table so we can share it.",
+      "shard": "jeseok_daegam__gaho"
+    },
+    {
+      "key": "gs.eunsil.shard.complete",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "shard_recovered",
+      "ko": "다 맞췄구나. 길 보이지? …와서 풀어 줘.",
+      "en": "You've pieced it all. See the path? …Come untie me.",
+      "shard": "complete"
+    },
+    {
+      "key": "gs.eunsil.low_hp.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "얘, 발밑 봐라. 넘어질라.",
+      "en": "Watch your feet, child. You'll trip."
+    },
+    {
+      "key": "gs.eunsil.low_hp.2",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_low_hp",
+      "ko": "숨부터 쉬어. 굿은 숨으로 하는 거다.",
+      "en": "Breathe first. A rite runs on breath."
+    },
+    {
+      "key": "gs.eunsil.ring_big.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_ring_big",
+      "ko": "옳지, 내 딸.",
+      "en": "That's it, my girl."
+    },
+    {
+      "key": "gs.eunsil.ring_big.2",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_ring_big",
+      "ko": "그래, 그렇게 둘러 주는 거다.",
+      "en": "Yes—you wrap them just like that."
+    },
+    {
+      "key": "gs.eunsil.wongwi_return.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_wongwi_return",
+      "ko": "덜 풀렸으면 한 번 더 풀면 된다.",
+      "en": "Not untied yet? Untie it once more."
+    },
+    {
+      "key": "gs.eunsil.boss_enter.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "손님 맞듯 해라. 무서워 말고.",
+      "en": "Greet it like a guest. Don't be afraid."
+    },
+    {
+      "key": "gs.eunsil.boss_enter.2",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_boss_enter",
+      "ko": "저 손님도 누가 배웅해 줬어야 했다.",
+      "en": "Someone should have seen that guest off."
+    },
+    {
+      "key": "gs.eunsil.muhan_start.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "mode_muhan_start",
+      "ko": "끝 안 나는 굿은 무당을 먹는다. 쉬어 가.",
+      "en": "An endless rite eats the shaman. Rest sometimes."
+    },
+    {
+      "key": "gs.eunsil.salpuri_start.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "salpuri_first_start",
+      "ko": "오늘 밤은 살이 짙다. 단단히 묶어라.",
+      "en": "The blight runs thick tonight. Tie yourself fast."
+    },
+    {
+      "key": "gs.eunsil.oneul_start.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "mode_oneul_first_start",
+      "ko": "서기 양반 또 장부 찢어 왔구나.",
+      "en": "The clerk tore another page from his ledger, I see."
+    },
+    {
+      "key": "gs.eunsil.hapil.1",
+      "speaker": "npc_eunsil",
+      "face": "common",
+      "trigger": "gs_hapil",
+      "ko": "오늘 밤 모실 분은 다 모셨구나. 큰무당 다 됐다.",
+      "en": "Tonight's gods all came to you. A great shaman now."
+    }
+  ],
+  "barks": [
+    {
+      "key": "bark.char_mansin.run_start.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_run_start",
+      "ko": "자, 굿 열자. 다들 줄 서."
+    },
+    {
+      "key": "bark.char_baksu.run_start.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_run_start",
+      "ko": "부정 쳐내고 시작한다."
+    },
+    {
+      "key": "bark.char_dangol.run_start.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_run_start",
+      "ko": "어디 보자, 오늘 손님 몇이나 되당가."
+    },
+    {
+      "key": "bark.char_myeongdu.run_start.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_run_start",
+      "ko": "동이야, 오늘도 같이 가자."
+    },
+    {
+      "key": "bark.char_simbang.run_start.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_run_start",
+      "ko": "혼저 옵서, 넋들아. 굿 열었습니다."
+    },
+    {
+      "key": "bark.char_mansin.first_ring.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_first_ring",
+      "ko": "가자, 다 같이."
+    },
+    {
+      "key": "bark.char_baksu.first_ring.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_first_ring",
+      "ko": "…이것도 나쁘지 않군."
+    },
+    {
+      "key": "bark.char_dangol.first_ring.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_first_ring",
+      "ko": "옳제, 이 맛에 굿하제!"
+    },
+    {
+      "key": "bark.char_myeongdu.first_ring.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_first_ring",
+      "ko": "됐다…! 동이야, 봤어?"
+    },
+    {
+      "key": "bark.char_simbang.first_ring.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_first_ring",
+      "ko": "멩두 괘대로요."
+    },
+    {
+      "key": "bark.char_mansin.wongwi.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_wongwi",
+      "ko": "돌아왔네. 괜찮아, 다시 보내 줄게."
+    },
+    {
+      "key": "bark.char_baksu.wongwi.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_wongwi",
+      "ko": "돌아왔으면 다시 물린다."
+    },
+    {
+      "key": "bark.char_dangol.wongwi.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_wongwi",
+      "ko": "덜 씻긴 손님이 또 왔구먼."
+    },
+    {
+      "key": "bark.char_myeongdu.wongwi.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_wongwi",
+      "ko": "다시 왔구나. 이번엔 꼭 풀어 줄게."
+    },
+    {
+      "key": "bark.char_simbang.wongwi.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_wongwi",
+      "ko": "돌아온 손님도 손님이지요."
+    },
+    {
+      "key": "bark.char_mansin.boss_enter.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_boss_enter",
+      "ko": "손님, 오래 기다리셨죠."
+    },
+    {
+      "key": "bark.char_baksu.boss_enter.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_boss_enter",
+      "ko": "물러설 데 없다. 간다."
+    },
+    {
+      "key": "bark.char_dangol.boss_enter.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_boss_enter",
+      "ko": "큰손님 오셨네잉. 장구 단단히 메라."
+    },
+    {
+      "key": "bark.char_myeongdu.boss_enter.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_boss_enter",
+      "ko": "무서워도… 할 수 있어요."
+    },
+    {
+      "key": "bark.char_simbang.boss_enter.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_boss_enter",
+      "ko": "큰손님입니다. 잘 놀려서 보냅시다."
+    },
+    {
+      "key": "bark.char_mansin.death.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_death",
+      "ko": "…어머니, 아직이에요."
+    },
+    {
+      "key": "bark.char_baksu.death.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_death",
+      "ko": "다시… 선다."
+    },
+    {
+      "key": "bark.char_dangol.death.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_death",
+      "ko": "아이고, 장구채를 놓쳤네…"
+    },
+    {
+      "key": "bark.char_myeongdu.death.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_death",
+      "ko": "언니… 미안해요…"
+    },
+    {
+      "key": "bark.char_simbang.death.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_death",
+      "ko": "…괘가 틀렸네요."
+    },
+    {
+      "key": "bark.char_mansin.clear.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_clear",
+      "ko": "잘 가요. 다음엔 길 잃지 말고."
+    },
+    {
+      "key": "bark.char_baksu.clear.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_clear",
+      "ko": "끝. 정리하고 들어가자."
+    },
+    {
+      "key": "bark.char_dangol.clear.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_clear",
+      "ko": "다들 잘 씻고 가소."
+    },
+    {
+      "key": "bark.char_myeongdu.clear.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_clear",
+      "ko": "잘 가요. 이름, 기억할게요."
+    },
+    {
+      "key": "bark.char_simbang.clear.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_clear",
+      "ko": "잘 가십시오."
+    },
+    {
+      "key": "bark.char_mansin.eodukssini_vanish.1",
+      "speaker": "char_mansin",
+      "trigger": "bark_eodukssini_vanish",
+      "ko": "봐, 별거 아니지?"
+    },
+    {
+      "key": "bark.char_baksu.eodukssini_vanish.1",
+      "speaker": "char_baksu",
+      "trigger": "bark_eodukssini_vanish",
+      "ko": "쳐다볼 가치도 없었군."
+    },
+    {
+      "key": "bark.char_dangol.eodukssini_vanish.1",
+      "speaker": "char_dangol",
+      "trigger": "bark_eodukssini_vanish",
+      "ko": "겁먹으면 커지는 거여."
+    },
+    {
+      "key": "bark.char_myeongdu.eodukssini_vanish.1",
+      "speaker": "char_myeongdu",
+      "trigger": "bark_eodukssini_vanish",
+      "ko": "아… 진짜 작아졌다."
+    },
+    {
+      "key": "bark.char_simbang.eodukssini_vanish.1",
+      "speaker": "char_simbang",
+      "trigger": "bark_eodukssini_vanish",
+      "ko": "그림자는 그림자일 뿐이지요."
+    },
+    {
+      "key": "bark.comp_dongja.run_start.1",
+      "speaker": "comp_dongja",
+      "trigger": "bark_run_start",
+      "ko": "응! 누나 뒤에 딱 붙을게!"
+    },
+    {
+      "key": "bark.comp_dongja.first_ring.1",
+      "speaker": "comp_dongja",
+      "trigger": "bark_first_ring",
+      "ko": "우와, 다 날아간다!"
+    },
+    {
+      "key": "bark.comp_dongja.boss_enter.1",
+      "speaker": "comp_dongja",
+      "trigger": "bark_boss_enter",
+      "ko": "누나, 저거 엄청 커!"
+    },
+    {
+      "key": "bark.comp_dongja.death.1",
+      "speaker": "comp_dongja",
+      "trigger": "bark_death",
+      "ko": "누나! 일어나!"
+    },
+    {
+      "key": "bark.comp_dongja.clear.1",
+      "speaker": "comp_dongja",
+      "trigger": "bark_clear",
+      "ko": "다들 안녕—!"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+ "frames": [
+  {
+   "filename": "prop_seonang_doltap_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 48
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "prop_seonang_doltap_1",
+   "frame": {
+    "x": 48,
+    "y": 0,
+    "w": 48,
+    "h": 48
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 48
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 48
+   },
+   "duration": 1000
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_seonang_doltap_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 96,
+   "h": 48
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 1,
+   "loop": true,
+   "frameWidth": 48,
+   "frameHeight": 48,
+   "columns": 2,
+   "pivot": {
+    "x": 24,
+    "y": 44
+   }
+  },
+  "korealike": {
+   "anim": "five-colour cloth sway, 2 frames, 1 beat each"
+  }
+ }
+}

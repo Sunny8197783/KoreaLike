@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "canon_version": "v1.2",
+  "doc": "design/12-audio.md#12",
+  "buses": [
+    {
+      "id": "bus_master",
+      "parent": null,
+      "effects": [
+        "limiter(ceiling -1.0 dBTP, release 50ms)",
+        "night_mode_comp(옵션: thr -24dB, 3:1)"
+      ],
+      "slider": "Master"
+    },
+    {
+      "id": "bus_music",
+      "parent": "bus_master",
+      "slider": "Music"
+    },
+    {
+      "id": "bus_music_duck",
+      "parent": "bus_music",
+      "effects": [
+        "sidechain comp key=bus_voice thr -30 ratio 4 attack 2ms release 400ms"
+      ],
+      "note": "덕킹 전용. 플레이어 슬라이더를 덮어쓰지 않음"
+    },
+    {
+      "id": "bus_mus_beat",
+      "parent": "bus_music",
+      "note": "장구. 덕킹 면제(정적 이벤트 제외) = 6.3 '덕킹 최상위'"
+    },
+    {
+      "id": "bus_mus_deity",
+      "parent": "bus_music_duck"
+    },
+    {
+      "id": "bus_mus_choir",
+      "parent": "bus_music_duck"
+    },
+    {
+      "id": "bus_mus_bed",
+      "parent": "bus_music_duck"
+    },
+    {
+      "id": "bus_mus_stinger",
+      "parent": "bus_music"
+    },
+    {
+      "id": "bus_sfx",
+      "parent": "bus_master",
+      "slider": "SFX"
+    },
+    {
+      "id": "bus_sfx_player",
+      "parent": "bus_sfx"
+    },
+    {
+      "id": "bus_sfx_wpn_red",
+      "parent": "bus_sfx",
+      "effects": [
+        "comp thr -18 ratio 3 (물량 피크 제어)"
+      ]
+    },
+    {
+      "id": "bus_sfx_wpn_white",
+      "parent": "bus_sfx",
+      "effects": [
+        "comp thr -18 ratio 3"
+      ]
+    },
+    {
+      "id": "bus_sfx_ritual",
+      "parent": "bus_sfx"
+    },
+    {
+      "id": "bus_sfx_enemy",
+      "parent": "bus_sfx",
+      "effects": [
+        "comp thr -20 ratio 4"
+      ]
+    },
+    {
+      "id": "bus_sfx_pickup",
+      "parent": "bus_sfx"
+    },
+    {
+      "id": "bus_voice",
+      "parent": "bus_master",
+      "slider": "Voice"
+    },
+    {
+      "id": "bus_vo_gongsu",
+      "parent": "bus_voice"
+    },
+    {
+      "id": "bus_vo_chuimsae",
+      "parent": "bus_voice"
+    },
+    {
+      "id": "bus_vo_muga",
+      "parent": "bus_voice"
+    },
+    {
+      "id": "bus_amb",
+      "parent": "bus_master",
+      "slider": "Ambience"
+    },
+    {
+      "id": "bus_ui",
+      "parent": "bus_master",
+      "slider": "UI"
+    },
+    {
+      "id": "bus_rev_gutpan",
+      "parent": "bus_master",
+      "type": "send",
+      "effects": [
+        "reverb room 0.55 damp 0.5 wet 100% predelay 20ms (≈RT60 1.6s)"
+      ]
+    },
+    {
+      "id": "bus_rev_neok",
+      "parent": "bus_master",
+      "type": "send",
+      "effects": [
+        "reverb room 0.8 damp 0.2 + shimmer(+12st 15%) (≈RT60 3.0s)"
+      ]
+    },
+    {
+      "id": "bus_rev_myeongbu",
+      "parent": "bus_master",
+      "type": "send",
+      "effects": [
+        "reverb room 0.95 damp 0.3 (≈RT60 4.5s)"
+      ],
+      "scope": "x1"
+    }
+  ],
+  "ducking": [
+    {
+      "event": "sys_gildakkeum 착지",
+      "targets": {
+        "bus_music_duck": -6,
+        "bus_sfx_enemy": -8,
+        "bus_sfx_wpn_red": -4
+      },
+      "attack_ms": 10,
+      "hold_ms": 120,
+      "release_ms": 400
+    },
+    {
+      "event": "공수 음성",
+      "targets": {
+        "bus_music_duck": -8,
+        "bus_amb": -6,
+        "bus_sfx_enemy": -3
+      },
+      "method": "sidechain(bus_voice)",
+      "attack_ms": 2,
+      "release_ms": 400
+    },
+    {
+      "event": "추임새 음성",
+      "targets": {
+        "bus_music_duck": -3
+      },
+      "attack_ms": 5,
+      "release_ms": 300
+    },
+    {
+      "event": "무가 한 소절(고풀이)",
+      "targets": {
+        "bus_music_duck": -10,
+        "bus_sfx_enemy": -6
+      },
+      "attack_ms": 50,
+      "release_ms": 600
+    },
+    {
+      "event": "빙의 1.2s",
+      "targets": {
+        "bus_music_duck": -4,
+        "bus_sfx_enemy": -10,
+        "bus_sfx_wpn_red": -6,
+        "bus_sfx_wpn_white": -6
+      },
+      "attack_ms": 30,
+      "hold_ms": 900,
+      "release_ms": 300
+    },
+    {
+      "event": "어둑시니 정적 드롭",
+      "targets": {
+        "bus_music": -30,
+        "bus_sfx": -30,
+        "bus_amb": -30,
+        "except_": "sfx_sys_eoduk_heart"
+      },
+      "attack_ms": 800,
+      "release_ms": 0,
+      "note": "캐논 3.2.9: 소멸 0.8s 전 -30dB, 소멸 순간 0ms 복귀 + stg_silence_drop"
+    },
+    {
+      "event": "20:00 보스 정적",
+      "targets": {
+        "bus_music": -60,
+        "bus_sfx_enemy": -60
+      },
+      "attack_ms": 400,
+      "hold_ms": 2600,
+      "release_ms": 0
+    },
+    {
+      "event": "플레이어 피격",
+      "targets": {
+        "bus_sfx_enemy": -3
+      },
+      "attack_ms": 5,
+      "hold_ms": 60,
+      "release_ms": 200
+    },
+    {
+      "event": "원귀 회귀",
+      "targets": {
+        "bus_mus_deity": -12,
+        "bus_mus_choir": -12
+      },
+      "attack_ms": 200,
+      "hold_ms": "2각",
+      "release_ms": 800
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "mix_default",
+      "desc": "전투 기본"
+    },
+    {
+      "id": "mix_jeomji",
+      "desc": "점지·일시정지: bus_music LPF 800Hz -12dB(11-ux-ui-hud 문서 값과 일치), bus_sfx 일시정지(재생 중 원샷은 꼬리만), bus_amb -10dB, bus_ui 0dB",
+      "blend_ms": 150
+    },
+    {
+      "id": "mix_trial",
+      "desc": "시련 30s(+DESCEND 최대 8s, 캐논 v1.2 D-01): bus_mus_deity 기존 -3dB, 후보 신령 프리뷰 위치 패닝, amb_trial_field on",
+      "blend_ms": 500
+    },
+    {
+      "id": "mix_oreum",
+      "desc": "신명 오름: bus_mus_beat +2dB, bus_sfx_ritual +1dB, bus_sfx_enemy -2dB",
+      "blend_ms": 250
+    },
+    {
+      "id": "mix_lowhp",
+      "desc": "정기 25% 이하: bus_music HSF -3dB@4kHz, 심장 루프",
+      "blend_ms": 500
+    },
+    {
+      "id": "mix_boss",
+      "desc": "보스: bus_amb -8dB, bus_sfx_enemy +1dB",
+      "blend_ms": 1000
+    },
+    {
+      "id": "mix_settlement",
+      "desc": "정산: bus_sfx -12dB(남은 적 소리 정리), bus_amb -6dB",
+      "blend_ms": 1500
+    },
+    {
+      "id": "mix_lobby",
+      "desc": "로비: bus_music -3dB, bus_amb 0dB",
+      "blend_ms": 1000
+    }
+  ],
+  "voices": {
+    "oneshot_pool": 48,
+    "music_streams_max": 20,
+    "music_transition_overlap": "흥 전환 120ms 동안 최대 2세트",
+    "ambience": 6,
+    "sfx": 36,
+    "voice": 2,
+    "ui": 2,
+    "stinger": 2,
+    "note": "원샷 풀 48 = sfx 36 + amb 6 + voice 2 + ui 2 + stinger 2 (14-tech-production 오디오 원샷 플레이어 48과 일치)",
+    "steal": "같은 이벤트 내 가장 오래된 것 → 우선순위 낮은 카테고리의 가장 조용한 것",
+    "priority": {
+      "bus_mus_beat": 255,
+      "mus_stinger": 240,
+      "vo": 230,
+      "sfx_ritual_gildakkeum": 220,
+      "sfx_player": 200,
+      "sfx_ritual": 180,
+      "sfx_wpn_white": 150,
+      "sfx_wpn_red": 140,
+      "sfx_pickup": 120,
+      "sfx_enemy_elite": 110,
+      "sfx_enemy": 80,
+      "amb": 60,
+      "ui": 250
+    }
+  },
+  "loudness": {
+    "integrated_lufs": {
+      "pc_tv": -23,
+      "handheld_preset": -18,
+      "tolerance": 2
+    },
+    "true_peak_dbtp": -1.0,
+    "ref_levels_lufs_s": {
+      "music_only_combat": -26,
+      "beat_janggu_over_music_db": 2,
+      "weapons_combined": -25,
+      "ritual_haewon": -26,
+      "enemy_combined": -30,
+      "ui": -28,
+      "voice_dialnorm": -23,
+      "ambience": -34
+    },
+    "measure": "ffmpeg ebur128=peak=true, 5분 표준 캡처 3종(00-05, 12-17, 18-23)"
+  },
+  "spatial": {
+    "mode": "2D",
+    "pan": "clamp(dx/12u,-1,1)*0.7",
+    "attenuation": "4유닛 이내 0dB, 이후 2배 거리마다 -6dB, 16유닛 컷(정예·보스·시련 제외)",
+    "unit_px": 32,
+    "godot": {
+      "max_distance_px": 512,
+      "attenuation": 1.0,
+      "panning_strength": 0.7
+    }
+  },
+  "slider_mapping": "gain_linear = slider^2; slider 0 = mute",
+  "changelog": [
+    "v1.2 canon sync (2026-11-21, 12-audio v0.9.3): D-01 mix_trial 45s -> 30s(+DESCEND), C-34 11-ux-ui-hud 파일명",
+    "v1.2 canon sync 2 (2026-11-21): C-34 원샷 풀 note 축약 파일명 14-tech -> 14-tech-production"
+  ]
+}

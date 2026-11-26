@@ -1,0 +1,79 @@
+{
+ "frames": [
+  {
+   "filename": "prop_obanggi_bundle_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "prop_obanggi_bundle_1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 64
+   },
+   "duration": 1000
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_obanggi_bundle_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 64,
+   "h": 64
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 1,
+   "loop": true,
+   "frameWidth": 32,
+   "frameHeight": 64,
+   "columns": 2,
+   "pivot": {
+    "x": 16,
+    "y": 59
+   }
+  },
+  "korealike": {
+   "anim": "flag wave 2 frames, 1 beat each",
+   "colors": [
+    "청",
+    "적",
+    "황",
+    "백",
+    "흑"
+   ]
+  }
+ }
+}

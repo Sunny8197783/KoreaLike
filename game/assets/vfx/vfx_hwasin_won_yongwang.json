@@ -1,0 +1,231 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_hwasin_won_yongwang 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 1",
+   "frame": {
+    "x": 404,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 2",
+   "frame": {
+    "x": 808,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 3",
+   "frame": {
+    "x": 0,
+    "y": 412,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 4",
+   "frame": {
+    "x": 404,
+    "y": 412,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 5",
+   "frame": {
+    "x": 808,
+    "y": 412,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 6",
+   "frame": {
+    "x": 0,
+    "y": 824,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_hwasin_won_yongwang 7",
+   "frame": {
+    "x": 404,
+    "y": 824,
+    "w": 404,
+    "h": 412
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 404,
+    "h": 412
+   },
+   "sourceSize": {
+    "w": 404,
+    "h": 412
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_hwasin_won_yongwang.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1212,
+   "h": 1236
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_hwasin_won_yongwang",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "vfx_hwasin_won",
+   "name": "Hwasin won (화신 원)",
+   "fps": 8,
+   "loop": true,
+   "frames": 8,
+   "frameSize": [
+    404,
+    412
+   ],
+   "pivot": [
+    202,
+    202
+   ],
+   "columns": 3,
+   "frameWidth": 404,
+   "frameHeight": 412,
+   "blend": "add",
+   "layer": "L03",
+   "beat": 2,
+   "variant": "yongwang",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     28,
+     6
+    ],
+    "semi_before": 55445,
+    "blend": "normal",
+    "size": "keep 404x412"
+   }
+  }
+ }
+}

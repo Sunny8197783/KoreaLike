@@ -1,0 +1,98 @@
+{
+ "spec": "art_style_v1",
+ "id": "char_mansin",
+ "source": "art/rework/G1_pilot_promote/stage/char_mansin",
+ "tier": "player",
+ "size": [
+  64,
+  64
+ ],
+ "canvas": [
+  64,
+  64
+ ],
+ "pivot": [
+  32,
+  58
+ ],
+ "body_h": 45,
+ "anims": {
+  "idle": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "walk": {
+   "south": 8,
+   "east": 8,
+   "north": 8,
+   "west": 8
+  },
+  "hurt": {
+   "south": 2,
+   "east": 2,
+   "north": 2,
+   "west": 2
+  },
+  "death": {
+   "south": 8,
+   "east": 8,
+   "west": 8
+  }
+ },
+ "frame_size": {
+  "idle": [
+   64,
+   64
+  ],
+  "walk": [
+   64,
+   64
+  ],
+  "hurt": [
+   64,
+   64
+  ],
+  "death": [
+   64,
+   64
+  ]
+ },
+ "fps": {
+  "idle": 6,
+  "walk": 12,
+  "hurt": 16,
+  "death": 10
+ },
+ "loop": {
+  "idle": true,
+  "walk": true,
+  "hurt": false,
+  "death": false
+ },
+ "west": "flip_h(east)",
+ "post": {
+  "tool": "art/rework/G1_pilot_promote/_scripts/promote_g1.py",
+  "from": "game/assets/pilot/char_mansin__pilot (r3, 사용자 승인 2026-11-22)",
+  "hurt": "파일 1 = idle_<dir>_0 뒤로 1px(S:-y, E:-x, N:+y, W:+x) + 눈 감음(밀림, 재생 f0), 파일 0 = 제자리 + 눈 감음(복귀, 재생 f1)",
+  "gens": 0,
+  "death": "G2 char_mansin__death (art/rework/G2_pixellab_heroes/stage/char_mansin__death): falling-back-death 7f + 홀드 1, S·E, W=flip, N 없음 → S. 2 gen"
+ },
+ "play": {
+  "hurt": [
+   1,
+   0
+  ]
+ },
+ "atlas_cols": {
+  "hurt": [
+   1,
+   1,
+   0,
+   0,
+   0,
+   0
+  ]
+ }
+}

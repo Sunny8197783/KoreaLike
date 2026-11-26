@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "doc": "design/13-art-direction.md §4",
+  "canon_basis": "v1.2 (2026-11-21)",
+  "anim_tuple": ["name", "frames", "dirs_authored", "loop", "timing"],
+  "timing_legend": {
+    "fps:N": "고정 N fps",
+    "beat:N": "루프 1회 = 현재 장단 N박 (박 동기 애니메이션)",
+    "speed:N": "기준 N fps × (현재 이동속도 / 기준 이동속도), 0.8~1.6배 클램프",
+    "hold": "정지 프레임(상태 표시)"
+  },
+  "direction_sets": {
+    "4": "S, E, N, W 각각 저작 (W는 E 미러 허용)",
+    "3": "S, E, N 저작 + W = E 미러",
+    "2": "S, E 저작 + W = E 미러, N = S 재사용",
+    "1": "S 정면 1방향(필요 시 좌우 미러)",
+    "8": "8방향 회전 스프라이트(분절체 머리 등)"
+  },
+  "entities": [
+    { "id": "char_mansin",   "tier": "player", "scope": "v1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"],["nohat_head_layer",12,4,false,"hold"]] },
+    { "id": "char_baksu",    "tier": "player", "scope": "v1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"],["nohat_head_layer",12,4,false,"hold"]] },
+    { "id": "char_dangol",   "tier": "player", "scope": "v1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"]] },
+    { "id": "char_myeongdu", "tier": "player", "scope": "v1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"]] },
+    { "id": "char_simbang",  "tier": "player", "scope": "v1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"],["nohat_head_layer",12,4,false,"hold"]] },
+    { "id": "char_beopsa",   "tier": "player", "scope": "x1", "canvas": 64, "anims": [["idle",4,4,true,"beat:1"],["walk",8,4,true,"speed:12"],["hurt",2,4,false,"fps:16"],["death",8,1,false,"fps:10"],["bingui",8,1,false,"fps:12"],["gut_dance",9,1,true,"fps:10"],["jakdu_dance",6,1,true,"beat:1"],["dokgyeong_sit",6,1,true,"beat:2"],["nohat_head_layer",12,4,false,"hold"]] },
+
+    { "id": "comp_dongja",          "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["float",4,4,true,"beat:1"],["point",2,1,false,"fps:8"],["whistle",2,1,false,"fps:8"]], "note": "캐논 v1.2 D-27·C-28: 기색 예고·귀띔만, 전투 판정 없음. clone_strike(분신 공격) 삭제. 프레임 수는 03 companion_sprite(float 4·point 2·whistle 2) 기준" },
+    { "id": "yeongga_body_child",   "tier": "yeongga", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["cheondo",8,1,false,"fps:12"],["daesin_matgi",4,1,false,"fps:16"]] },
+    { "id": "yeongga_body_f",       "tier": "yeongga", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["cheondo",8,1,false,"fps:12"],["daesin_matgi",4,1,false,"fps:16"]] },
+    { "id": "yeongga_body_m",       "tier": "yeongga", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["cheondo",8,1,false,"fps:12"],["daesin_matgi",4,1,false,"fps:16"]] },
+    { "id": "comp_dalgyal",       "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_cheonyeo",      "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_mulgwi",        "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_agwi",          "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_mongdal",       "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_dokkaebi_bul",  "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["float",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_gaekgwi",       "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+    { "id": "comp_yeongsan",      "tier": "companion", "scope": "v1", "canvas": 32, "anims": [["walk",4,4,true,"speed:10"],["idle",4,1,true,"beat:1"],["special",6,1,false,"fps:12"]] },
+
+    { "id": "enm_dalgyal_gwisin", "tier": "common", "scope": "v1", "canvas": 32, "anims": [["move",4,4,true,"speed:8"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]], "variants": ["enm_dalgyal_gwisin__child"], "note": "캐논 v1.2 D-30: 사람 얼굴 = 어른 얼굴 9종 혼합. 아이 얼굴은 __child 변형(스폰 8%, 첫 해원 1회)만. 얼굴 변형 소켓 프레임은 합계 미반영(재산정 대상)" },
+    { "id": "enm_agwi",           "tier": "common", "scope": "v1", "canvas": 40, "anims": [["move",4,4,true,"speed:8"],["gulp",4,4,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_gaekgwi",        "tier": "common", "scope": "v1", "canvas": 40, "anims": [["move",4,4,true,"speed:8"],["cling",4,2,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_cheonyeo_gwisin","tier": "common", "scope": "v1", "canvas": 48, "anims": [["glide",4,4,true,"speed:8"],["cast",4,4,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_mongdal_gwisin", "tier": "common", "scope": "v1", "canvas": 48, "anims": [["move",4,4,true,"speed:8"],["dash",4,4,false,"fps:12"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_mul_gwisin",     "tier": "common", "scope": "v1", "canvas": 40, "anims": [["move",4,4,true,"speed:8"],["emerge",6,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_hosik_wonhon",   "tier": "common", "scope": "v1", "canvas": 48, "anims": [["move",4,4,true,"speed:8"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_dokkaebi_bul",   "tier": "common", "scope": "v1", "canvas": 32, "anims": [["float",4,1,true,"beat:1"],["split",6,1,false,"fps:12"],["spawn",4,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "enm_yeongsan",       "tier": "common", "scope": "v1", "canvas": 40, "anims": [["move",4,4,true,"speed:8"],["curse_drop",4,1,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_sangmun",        "tier": "common", "scope": "v1", "canvas": 48, "anims": [["move",4,4,true,"speed:8"],["touch",4,2,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "enm_subi",           "tier": "common", "scope": "v1", "canvas": 32, "anims": [["move",4,2,true,"speed:10"],["spawn",4,1,false,"fps:12"],["face_states",4,1,false,"hold"]], "variants": ["enm_subi__sogwi"] },
+    { "id": "enm_hwehwe_gwisin",  "tier": "common", "scope": "v1", "canvas": 48, "anims": [["float",4,4,true,"speed:8"],["press",6,1,false,"fps:10"],["spawn",4,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+
+    { "id": "elite_eodukssini",       "tier": "elite", "scope": "v1", "canvas": 96, "anims": [["body_noise_tile",1,1,false,"hold"],["edge_mask",4,1,true,"fps:8"],["eyes_blink",4,1,true,"fps:6"],["face_states",4,1,false,"hold"]], "note": "몸체는 셰이더 블롭. 픽셀 스프라이트는 눈·얼굴만" },
+    { "id": "elite_geogu_gwi",        "tier": "elite", "scope": "v1", "canvas": 96, "anims": [["move",6,3,true,"speed:8"],["inhale_start",8,1,false,"fps:10"],["inhale_loop",4,1,true,"fps:10"],["spawn",6,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "elite_bulgasari",        "tier": "elite", "scope": "v1", "canvas": 96, "size_stages": [64, 80, 96], "anims": [["move_s64",6,3,true,"speed:8"],["move_s80",6,3,true,"speed:8"],["move_s96",6,3,true,"speed:8"],["absorb_s64",4,1,false,"fps:12"],["absorb_s80",4,1,false,"fps:12"],["absorb_s96",4,1,false,"fps:12"],["spawn",6,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "elite_dueoksini",        "tier": "elite", "scope": "v1", "canvas": 96, "anims": [["move",6,3,true,"speed:8"],["slam",8,3,false,"fps:12"],["spawn",6,1,false,"fps:10"],["face_states",4,2,false,"hold"]] },
+    { "id": "elite_yeokgwi_ttae",     "tier": "elite", "scope": "v1", "canvas": 64, "anims": [["move",6,3,true,"speed:8"],["cast",6,1,false,"fps:10"],["spawn",6,1,false,"fps:10"],["face_states",4,2,false,"hold"]], "note": "캐논 v1.2 D-03: 손님을 따라온 잡귀. 먹빛 누더기 잡귀 우두머리 + 등 뒤 그림자 3. 손님 복식 금지" },
+    { "id": "elite_wongwi",           "tier": "elite", "scope": "v1", "canvas": 0,  "anims": [["red_eye_aura",4,1,true,"fps:8"]], "note": "원본 종 스프라이트 + face_states 4번째(붉은 눈) + 오라. 별도 몸체 없음" },
+
+    { "id": "mboss_daegwi",     "tier": "midboss", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"speed:8"],["attack_a",8,1,false,"fps:12"],["attack_b",8,1,false,"fps:12"],["summon",6,1,false,"fps:10"],["stagger",4,1,false,"fps:12"],["intro",8,1,false,"fps:10"],["haewon_release",10,1,false,"fps:10"],["toechi_collapse",8,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "mboss_dokkaebi",   "tier": "midboss", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"speed:8"],["attack_a",8,1,false,"fps:12"],["attack_b",8,1,false,"fps:12"],["summon",6,1,false,"fps:10"],["stagger",4,1,false,"fps:12"],["intro",8,1,false,"fps:10"],["haewon_release",10,1,false,"fps:10"],["toechi_collapse",8,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "mboss_gumiho",     "tier": "midboss", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"speed:8"],["attack_a",8,1,false,"fps:12"],["attack_b",8,1,false,"fps:12"],["summon",6,1,false,"fps:10"],["stagger",4,1,false,"fps:12"],["intro",8,1,false,"fps:10"],["haewon_release",10,1,false,"fps:10"],["toechi_collapse",8,1,false,"fps:10"],["face_states",4,1,false,"hold"],["tails_layer",6,2,true,"beat:2"]] },
+    { "id": "mboss_gangcheori", "tier": "midboss", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"speed:8"],["attack_a",8,1,false,"fps:12"],["attack_b",8,1,false,"fps:12"],["summon",6,1,false,"fps:10"],["stagger",4,1,false,"fps:12"],["intro",8,1,false,"fps:10"],["haewon_release",10,1,false,"fps:10"],["toechi_collapse",8,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+
+    { "id": "boss_yeokryeo",  "tier": "boss", "scope": "v1", "canvas": 192, "anims": [["idle",8,1,true,"beat:2"],["move",8,1,true,"speed:8"],["attack_1",10,1,false,"fps:12"],["attack_2",10,1,false,"fps:12"],["attack_3",10,1,false,"fps:12"],["summon",8,1,false,"fps:10"],["intro",12,1,false,"fps:8"],["phase_shift",12,1,false,"fps:10"],["form_sal_overlay",4,1,true,"fps:8"],["form_han_overlay",4,1,true,"fps:8"],["haewon_finale",16,1,false,"fps:10"],["toechi_finale",12,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "boss_wongyeol",  "tier": "boss", "scope": "v1", "canvas": 256, "anims": [["core_idle",8,1,true,"beat:2"],["tentacle_seg_maetim",4,1,true,"fps:8"],["tentacle_seg_pullim",4,1,true,"fps:8"],["attack_1",10,1,false,"fps:12"],["attack_2",10,1,false,"fps:12"],["attack_3",10,1,false,"fps:12"],["intro",12,1,false,"fps:8"],["phase_shift",12,1,false,"fps:10"],["form_sal_overlay",4,1,true,"fps:8"],["form_han_overlay",4,1,true,"fps:8"],["haewon_finale",16,1,false,"fps:10"],["toechi_finale",12,1,false,"fps:10"],["emerging_faces",6,1,false,"hold"]] },
+    { "id": "boss_imugi",     "tier": "boss", "scope": "v1", "canvas": 96, "segmented": true, "anims": [["head_rot",1,8,false,"hold"],["head_bite",4,8,false,"fps:12"],["seg_body_rot",1,8,false,"hold"],["seg_tail_rot",1,8,false,"hold"],["tidal_cast",10,1,false,"fps:12"],["intro",12,1,false,"fps:8"],["phase_shift",12,1,false,"fps:10"],["form_sal_overlay",4,1,true,"fps:8"],["form_han_overlay",4,1,true,"fps:8"],["haewon_finale_ascend",16,1,false,"fps:10"],["toechi_finale",12,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "boss_yeonggam",  "tier": "boss", "scope": "x1", "canvas": 128, "anims": [["idle",8,1,true,"beat:2"],["move",8,1,true,"speed:8"],["attack_1",10,1,false,"fps:12"],["attack_2",10,1,false,"fps:12"],["attack_3",10,1,false,"fps:12"],["summon",8,1,false,"fps:10"],["intro",12,1,false,"fps:8"],["phase_shift",12,1,false,"fps:10"],["form_sal_overlay",4,1,true,"fps:8"],["form_han_overlay",4,1,true,"fps:8"],["haewon_finale",16,1,false,"fps:10"],["toechi_finale",12,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+    { "id": "boss_daeakgwi",  "tier": "boss", "scope": "x1", "canvas": 192, "anims": [["idle",8,1,true,"beat:2"],["move",8,1,true,"speed:8"],["attack_1",10,1,false,"fps:12"],["attack_2",10,1,false,"fps:12"],["attack_3",10,1,false,"fps:12"],["summon",8,1,false,"fps:10"],["intro",12,1,false,"fps:8"],["phase_shift",12,1,false,"fps:10"],["form_sal_overlay",4,1,true,"fps:8"],["form_han_overlay",4,1,true,"fps:8"],["haewon_finale",16,1,false,"fps:10"],["toechi_finale",12,1,false,"fps:10"],["face_states",4,1,false,"hold"]] },
+
+    { "id": "chaser_jeoseung_saja", "tier": "chaser", "scope": "v1", "canvas": 64, "anims": [["float",6,4,true,"beat:2"],["sal_geodum",6,4,true,"fps:12"],["appear",8,1,false,"fps:10"],["bow_eup",8,1,false,"fps:8"],["lead_procession",8,1,true,"beat:2"]], "note": "캐논 v1.2 D-02: 비적대·추격 없음·접촉 피해 없음. 살 거둠 = 살 덩어리 3개 각 30초 거두기(sal_geodum). bow_eup은 넋 우세 경로 읍 인사" },
+
+    { "id": "avatar_sansin",         "tier": "avatar", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["run",6,2,true,"fps:12"],["charge",8,2,false,"fps:14"],["roar",8,1,false,"fps:10"],["accept_smile",8,1,false,"fps:8"],["descend",8,1,false,"fps:10"]] },
+    { "id": "avatar_yongwang",       "tier": "avatar", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"fps:10"],["attack",8,2,false,"fps:12"],["cast_flood",8,1,false,"fps:10"],["accept_smile",8,1,false,"fps:8"],["descend",8,1,false,"fps:10"]] },
+    { "id": "avatar_chilseong",      "tier": "avatar", "scope": "v1", "canvas": 96,  "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"fps:10"],["attack",8,2,false,"fps:12"],["star_cast",8,1,false,"fps:10"],["accept_smile",8,1,false,"fps:8"],["descend",8,1,false,"fps:10"]] },
+    { "id": "avatar_janggun",        "tier": "avatar", "scope": "v1", "canvas": 48,  "anims": [["move",6,4,true,"speed:10"],["attack",6,4,false,"fps:12"],["accept_salute",6,1,false,"fps:8"]], "variants": ["obang_cheong", "obang_jeok", "obang_hwang", "obang_baek", "obang_heuk"] },
+    { "id": "avatar_barigongju",     "tier": "avatar", "scope": "v1", "canvas": 160, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"fps:10"],["attack",8,2,false,"fps:12"],["gate_cast",8,1,false,"fps:10"],["accept_smile",8,1,false,"fps:8"],["descend",8,1,false,"fps:10"]] },
+    { "id": "avatar_jeseok_daegam",  "tier": "avatar", "scope": "v1", "canvas": 128, "anims": [["idle",6,2,true,"beat:1"],["move",6,2,true,"fps:10"],["attack",8,2,false,"fps:12"],["jaedam_gesture",8,1,true,"fps:8"],["accept_smile",8,1,false,"fps:8"],["descend",8,1,false,"fps:10"]] },
+
+    { "id": "overlay_head",   "tier": "possession", "scope": "v1", "canvas": 32, "count_mul": 12, "anims": [["head",1,4,false,"hold"]], "note": "6신령 × 2면 = 12종, 4방향" },
+    { "id": "overlay_jimul",  "tier": "possession", "scope": "v1", "canvas": 32, "count_mul": 6,  "anims": [["jimul",1,4,false,"hold"]] },
+    { "id": "overlay_pattern","tier": "possession", "scope": "v1", "canvas": 16, "count_mul": 12, "anims": [["tile",1,1,false,"hold"]] },
+    { "id": "overlay_aura",   "tier": "possession", "scope": "v1", "canvas": 64, "count_mul": 12, "anims": [["aura",8,1,true,"beat:2"]] },
+    { "id": "overlay_aura_hapil", "tier": "possession", "scope": "v1", "canvas": 64, "count_mul": 1, "anims": [["aura",8,1,true,"beat:1"]] }
+  ]
+}

@@ -1,0 +1,67 @@
+[vfx meta] vfx_byeongnyeok_ring.json: +frameWidth/Height
+[vfx meta] vfx_candle_flame_s.json: +frameSize, pivot dict->list, frames, id
+[vfx meta] vfx_cheoljillyeo_caltrop.json: +frameWidth/Height
+[vfx meta] vfx_cheoljillyeojin_pulse.json: +frameWidth/Height
+[vfx meta] vfx_gakgung_arrow.json: +frameWidth/Height
+[vfx meta] vfx_gakgung_hit.json: +frameWidth/Height
+[vfx meta] vfx_hojakdo_fear_ring.json: +frameWidth/Height
+[vfx meta] vfx_hojakdo_talisman.json: +frameWidth/Height
+[vfx meta] vfx_isippalsu_bolt.json: +frameWidth/Height
+[vfx meta] vfx_isippalsu_constellation.json: +frameWidth/Height
+[vfx meta] vfx_jakdu_shockwave.json: +frameWidth/Height
+[vfx meta] vfx_jangchang_thrust.json: +frameWidth/Height
+[vfx meta] vfx_jusahwajeon_arrow.json: +frameWidth/Height
+[vfx meta] vfx_jusahwajeon_blast.json: +frameWidth/Height
+[vfx meta] vfx_manwoldo_crescent.json: +frameWidth/Height
+[vfx meta] vfx_pajinchang_dash.json: +frameWidth/Height
+[vfx meta] vfx_pyeongon_swing.json: +frameWidth/Height
+[vfx meta] vfx_sainsageom_wave.json: +frameWidth/Height
+[vfx meta] vfx_samjichang_mark.json: +frameWidth/Height
+[vfx meta] vfx_samjichang_thrust.json: +frameWidth/Height
+[vfx meta] vfx_sangun_roar.json: +frameWidth/Height
+[vfx meta] vfx_saseulchang_verdict.json: +frameWidth/Height
+[vfx meta] vfx_sinjangkal_proj.json: +frameWidth/Height
+[vfx meta] vfx_sinjangkal_return_arc.json: +frameWidth/Height
+[vfx meta] vfx_sinkal_proj.json: +frameWidth/Height
+[vfx meta] vfx_sinkal_tassel_trail.json: +frameWidth/Height
+[vfx meta] vfx_status_fear.json: +frameWidth/Height
+[vfx meta] vfx_woldo_spin.json: +frameWidth/Height
+[vfx rename] vfx_hojakdo_talisman -> vfx_hojakdo_sehwa (spec id)
+[vfx split] vfx_obanggi_flag: 20 frames in 5 colour rows -> base(=cheong) + ['vfx_obanggi_flag_cheong', 'vfx_obanggi_flag_jeok', 'vfx_obanggi_flag_hwang', 'vfx_obanggi_flag_baek', 'vfx_obanggi_flag_heuk']
+[vfx split] vfx_obangjin_pillar: 30 frames in 5 colour rows -> base(=cheong) + ['vfx_obangjin_pillar_cheong', 'vfx_obangjin_pillar_jeok', 'vfx_obangjin_pillar_hwang', 'vfx_obangjin_pillar_baek', 'vfx_obangjin_pillar_heuk']
+[vfx frames] vfx_go_maedeup_untie: trimmed extra empty trailing frame(s) -> 8
+[vfx palette] vfx_bingui_pillar (role D): 1487 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_barigongju (role D): 1067 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_chilseong (role D): 1540 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_janggun (role D): 1003 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_jeseok_daegam (role D): 1567 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_sansin (role D): 1487 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_bingui_pillar_yongwang (role D): 1565 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_box_gilhyung_open (role Y+R): 49 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_dueoksini_slam (role B+M): 227 px of near-pure white -> #cee2fc (white is reserved for haewon)
+[vfx palette] vfx_geogu_inhale (role B): 13 px of near-pure white -> #cee2fc (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won (role D+H): 5 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won_barigongju (role D+H): 221 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won_chilseong (role D+H): 5 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won_jeseok_daegam (role D+H): 805 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won_sansin (role D+H): 5 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_hwasin_won_yongwang (role D+H): 2027 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_lamp_ignite (role Y): 1 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend (role D): 115 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_barigongju (role D): 72 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_chilseong (role D): 115 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_janggun (role D): 72 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_jeseok_daegam (role D): 115 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_sansin (role D): 115 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinjangdae_descend_yongwang (role D): 124 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_sinmyeong_oreum_border (role H+D): 10 px of near-pure white -> #faf0d6 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall (role D+H): 2540 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_barigongju (role D+H): 2511 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_chilseong (role D+H): 2540 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_janggun (role D+H): 2510 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_jeseok_daegam (role D+H): 2546 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_sansin (role D+H): 2540 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_trial_block_wall_yongwang (role D+H): 2575 px of near-pure white -> #fff3c8 (white is reserved for haewon)
+[vfx palette] vfx_union_jakdu_dari_ring (role R+P): 9 px of near-pure white -> #ffe0c4 (white is reserved for haewon)
+[vfx palette] vfx_union_sanullim (role R+P): 24 px of near-pure white -> #ffe0c4 (white is reserved for haewon)
+[vfx palette] *_yongwang variants re-tinted to #d8f4ec (용왕 신령색 cr) instead of #fff3c8

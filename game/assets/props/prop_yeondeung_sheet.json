@@ -1,0 +1,78 @@
+{
+ "frames": [
+  {
+   "filename": "prop_yeondeung_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 24
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "prop_yeondeung_1",
+   "frame": {
+    "x": 16,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 16,
+    "h": 24
+   },
+   "sourceSize": {
+    "w": 16,
+    "h": 24
+   },
+   "duration": 1000
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "prop_yeondeung_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 32,
+   "h": 24
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 1,
+   "loop": false,
+   "frameWidth": 16,
+   "frameHeight": 24,
+   "columns": 2,
+   "pivot": {
+    "x": 8,
+    "y": 0
+   }
+  },
+  "korealike": {
+   "object": "obj_gutpan_deungbul",
+   "states": [
+    "off",
+    "on"
+   ],
+   "light_color": "#ffb35a",
+   "light_radius_u": 2
+  }
+ }
+}

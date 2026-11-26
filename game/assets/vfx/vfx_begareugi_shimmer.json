@@ -1,0 +1,160 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_begareugi_shimmer 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 8
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_begareugi_shimmer 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 8
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_begareugi_shimmer 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 8
+   },
+   "duration": 125
+  },
+  {
+   "filename": "vfx_begareugi_shimmer 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 8
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 8
+   },
+   "duration": 125
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_begareugi_shimmer.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 8
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_begareugi_shimmer",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_begareugi_shimmer",
+   "name": "Begareugi shimmer",
+   "fps": 8,
+   "loop": true,
+   "frames": 4,
+   "frameWidth": 32,
+   "frameHeight": 8,
+   "frameSize": [
+    32,
+    8
+   ],
+   "pivot": [
+    0,
+    4
+   ],
+   "columns": 4,
+   "beats": 1,
+   "spec": {
+    "id": "vfx_begareugi_shimmer",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_begareugi",
+    "color_role": "P",
+    "canvas": "ribbon",
+    "frames": 4,
+    "timing": "beat:1",
+    "blend": "normal",
+    "layer": "L04",
+    "beat_snap": false,
+    "max_concurrent": 1,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.715,
+   "layer": "L04",
+   "color_role": "P",
+   "max_concurrent": 1,
+   "beat_sync": "beat:1",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     5,
+     5
+    ],
+    "semi_before": 838,
+    "blend": "normal",
+    "size": "keep 32x8"
+   }
+  }
+ }
+}

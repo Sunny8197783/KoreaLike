@@ -1,0 +1,580 @@
+{
+  "_meta": {
+    "source_doc": "design/11-ux-ui-hud.md",
+    "version": "0.9",
+    "units": "lpx = 640x360 logical pixels",
+    "status": "draft",
+    "canon_version": "v1.2",
+    "canon_basis": "design/01-concept-and-canon.md v1.2 + design/99-open-questions-and-next-steps.md (D-xx/C-xx)",
+    "canon_v1_2_log": [
+      "D-11: stick.sprite_facing 8_dir_snap → runtime 4방향(로비 8방향)",
+      "D-06: stick.direction_rule 자유 이동 명시",
+      "D-08: in_neokduri_log 토글 확정",
+      "D-04/C-15: ui_reroll 표시명 다시 묻기(재점)",
+      "C-36: _meta.canon_version v1.2"
+    ]
+  },
+  "principles": {
+    "gameplay_actions": [
+      "in_move",
+      "in_pause"
+    ],
+    "hold_inputs": 0,
+    "chord_inputs": 0
+  },
+  "actions": [
+    {
+      "id": "in_move",
+      "context": [
+        "run",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [
+          "W",
+          "A",
+          "S",
+          "D",
+          "Up",
+          "Down",
+          "Left",
+          "Right"
+        ],
+        "keyboard_left_hand": [
+          "W",
+          "A",
+          "S",
+          "D"
+        ],
+        "mouse": [],
+        "xbox": [
+          "LeftStick",
+          "DPad"
+        ],
+        "playstation": [
+          "LeftStick",
+          "DPad"
+        ],
+        "switch_pro": [
+          "LeftStick",
+          "DPad"
+        ]
+      }
+    },
+    {
+      "id": "in_mouse_move",
+      "context": [
+        "run",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [],
+        "keyboard_left_hand": [],
+        "mouse": [
+          "LeftButtonHold"
+        ],
+        "xbox": [],
+        "playstation": [],
+        "switch_pro": []
+      }
+    },
+    {
+      "id": "in_pause",
+      "context": [
+        "run",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Escape",
+          "P"
+        ],
+        "keyboard_left_hand": [
+          "Escape"
+        ],
+        "mouse": [],
+        "xbox": [
+          "Menu"
+        ],
+        "playstation": [
+          "Options"
+        ],
+        "switch_pro": [
+          "Plus"
+        ]
+      }
+    },
+    {
+      "id": "ui_navigate",
+      "context": [
+        "ui"
+      ],
+      "bindings": {
+        "keyboard": [
+          "W",
+          "A",
+          "S",
+          "D",
+          "Up",
+          "Down",
+          "Left",
+          "Right"
+        ],
+        "keyboard_left_hand": [
+          "W",
+          "A",
+          "S",
+          "D"
+        ],
+        "mouse": [
+          "Hover"
+        ],
+        "xbox": [
+          "LeftStick",
+          "DPad"
+        ],
+        "playstation": [
+          "LeftStick",
+          "DPad"
+        ],
+        "switch_pro": [
+          "LeftStick",
+          "DPad"
+        ]
+      }
+    },
+    {
+      "id": "ui_confirm",
+      "context": [
+        "ui",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Enter",
+          "Space"
+        ],
+        "keyboard_left_hand": [
+          "Space"
+        ],
+        "mouse": [
+          "LeftClick"
+        ],
+        "xbox": [
+          "A"
+        ],
+        "playstation": [
+          "Cross"
+        ],
+        "switch_pro": [
+          "B_east_if_nintendo_layout_else_A"
+        ]
+      }
+    },
+    {
+      "id": "ui_cancel",
+      "context": [
+        "ui"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Escape",
+          "Backspace"
+        ],
+        "keyboard_left_hand": [
+          "Q"
+        ],
+        "mouse": [
+          "RightClick"
+        ],
+        "xbox": [
+          "B"
+        ],
+        "playstation": [
+          "Circle"
+        ],
+        "switch_pro": [
+          "A_south_if_nintendo_layout_else_B"
+        ]
+      }
+    },
+    {
+      "id": "ui_tab_prev",
+      "context": [
+        "ui",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Q",
+          "PageUp"
+        ],
+        "keyboard_left_hand": [
+          "1"
+        ],
+        "mouse": [
+          "WheelUp_with_MiddleHold"
+        ],
+        "xbox": [
+          "LB"
+        ],
+        "playstation": [
+          "L1"
+        ],
+        "switch_pro": [
+          "L"
+        ]
+      }
+    },
+    {
+      "id": "ui_tab_next",
+      "context": [
+        "ui",
+        "hub"
+      ],
+      "bindings": {
+        "keyboard": [
+          "E",
+          "PageDown"
+        ],
+        "keyboard_left_hand": [
+          "3"
+        ],
+        "mouse": [
+          "WheelDown_with_MiddleHold"
+        ],
+        "xbox": [
+          "RB"
+        ],
+        "playstation": [
+          "R1"
+        ],
+        "switch_pro": [
+          "R"
+        ]
+      }
+    },
+    {
+      "id": "ui_detail",
+      "context": [
+        "ui"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Tab"
+        ],
+        "keyboard_left_hand": [
+          "Tab"
+        ],
+        "mouse": [
+          "Hover0.4s"
+        ],
+        "xbox": [
+          "View",
+          "RS_Click"
+        ],
+        "playstation": [
+          "Touchpad",
+          "R3"
+        ],
+        "switch_pro": [
+          "Minus",
+          "RS_Click"
+        ]
+      }
+    },
+    {
+      "id": "ui_reroll",
+      "context": [
+        "jeomji"
+      ],
+      "bindings": {
+        "keyboard": [
+          "R"
+        ],
+        "keyboard_left_hand": [
+          "R"
+        ],
+        "mouse": [
+          "ButtonClick"
+        ],
+        "xbox": [
+          "Y"
+        ],
+        "playstation": [
+          "Triangle"
+        ],
+        "switch_pro": [
+          "X"
+        ]
+      }
+    },
+    {
+      "id": "ui_skip",
+      "context": [
+        "jeomji"
+      ],
+      "bindings": {
+        "keyboard": [
+          "X"
+        ],
+        "keyboard_left_hand": [
+          "X"
+        ],
+        "mouse": [
+          "ButtonClick"
+        ],
+        "xbox": [
+          "X"
+        ],
+        "playstation": [
+          "Square"
+        ],
+        "switch_pro": [
+          "Y"
+        ]
+      }
+    },
+    {
+      "id": "ui_banish",
+      "context": [
+        "jeomji"
+      ],
+      "bindings": {
+        "keyboard": [
+          "B"
+        ],
+        "keyboard_left_hand": [
+          "B"
+        ],
+        "mouse": [
+          "ButtonClick"
+        ],
+        "xbox": [
+          "LB"
+        ],
+        "playstation": [
+          "L1"
+        ],
+        "switch_pro": [
+          "L"
+        ]
+      }
+    },
+    {
+      "id": "in_neokduri_log",
+      "context": [
+        "run"
+      ],
+      "bindings": {
+        "keyboard": [
+          "Tab"
+        ],
+        "keyboard_left_hand": [
+          "Tab"
+        ],
+        "mouse": [],
+        "xbox": [
+          "View"
+        ],
+        "playstation": [
+          "Touchpad"
+        ],
+        "switch_pro": [
+          "Minus"
+        ]
+      }
+    },
+    {
+      "id": "ui_pick_1",
+      "context": [
+        "jeomji",
+        "box"
+      ],
+      "bindings": {
+        "keyboard": [
+          "1"
+        ],
+        "keyboard_left_hand": [
+          "1"
+        ],
+        "mouse": [
+          "CardClick"
+        ],
+        "xbox": [],
+        "playstation": [],
+        "switch_pro": []
+      }
+    },
+    {
+      "id": "ui_pick_2",
+      "context": [
+        "jeomji",
+        "box"
+      ],
+      "bindings": {
+        "keyboard": [
+          "2"
+        ],
+        "keyboard_left_hand": [
+          "2"
+        ],
+        "mouse": [
+          "CardClick"
+        ],
+        "xbox": [],
+        "playstation": [],
+        "switch_pro": []
+      }
+    },
+    {
+      "id": "ui_pick_3",
+      "context": [
+        "jeomji",
+        "box"
+      ],
+      "bindings": {
+        "keyboard": [
+          "3"
+        ],
+        "keyboard_left_hand": [
+          "3"
+        ],
+        "mouse": [
+          "CardClick"
+        ],
+        "xbox": [],
+        "playstation": [],
+        "switch_pro": []
+      }
+    },
+    {
+      "id": "ui_scroll",
+      "context": [
+        "ui"
+      ],
+      "bindings": {
+        "keyboard": [
+          "PageUp",
+          "PageDown"
+        ],
+        "keyboard_left_hand": [],
+        "mouse": [
+          "Wheel"
+        ],
+        "xbox": [
+          "RightStick"
+        ],
+        "playstation": [
+          "RightStick"
+        ],
+        "switch_pro": [
+          "RightStick"
+        ]
+      }
+    }
+  ],
+  "right_hand_preset": {
+    "in_move": [
+      "Up",
+      "Down",
+      "Left",
+      "Right"
+    ],
+    "ui_confirm": [
+      "Numpad0"
+    ],
+    "ui_cancel": [
+      "NumpadDecimal"
+    ],
+    "in_pause": [
+      "NumpadAdd"
+    ],
+    "ui_tab_prev": [
+      "Numpad4"
+    ],
+    "ui_tab_next": [
+      "Numpad6"
+    ],
+    "ui_reroll": [
+      "Numpad7"
+    ],
+    "ui_skip": [
+      "Numpad8"
+    ],
+    "ui_banish": [
+      "Numpad9"
+    ],
+    "in_neokduri_log": [
+      "NumpadMultiply"
+    ]
+  },
+  "toggle_not_hold": {
+    "ui_banish": "two_step_mode (02-core-loop-combat proposes LB hold; UX proposes toggle)",
+    "in_neokduri_log": "toggle overlay, non-pausing. D-08 확정: 보기 전용 메뉴로 P5 이동+메뉴 원칙에 포함 (02 hold Tab 표기는 02 정정 대상)"
+  },
+  "stick": {
+    "deadzone_inner": 0.2,
+    "deadzone_outer": 0.95,
+    "deadzone_inner_range": [
+      0.05,
+      0.4
+    ],
+    "shape": "radial_rescaled",
+    "magnitude": "ignored_full_speed_outside_deadzone",
+    "direction": "360_continuous",
+    "option_8dir_snap": "opt_move_8dir_snap",
+    "sprite_facing": "runtime_4_dir_snap (lobby 8_dir, D-11)",
+    "source": "02-core-loop-combat 3.2",
+    "direction_rule": "free movement: stick 360_continuous, keyboard 8 directions (D-06)"
+  },
+  "keyboard": {
+    "socd": "last_input_wins",
+    "directions": 8
+  },
+  "modal_input_guard": {
+    "lock_s": 0.35,
+    "first_jeomji_lock_s": 0.8,
+    "require_neutral_release": true
+  },
+  "device_switch": {
+    "pad_threshold": 0.5,
+    "mouse_move_lpx": 4,
+    "mouse_move_time_s": 0.1
+  },
+  "steam_input": {
+    "action_sets": {
+      "set_gameplay": [
+        "in_move",
+        "in_pause",
+        "in_neokduri_log"
+      ],
+      "set_menu": [
+        "ui_navigate",
+        "ui_confirm",
+        "ui_cancel",
+        "ui_tab_prev",
+        "ui_tab_next",
+        "ui_detail",
+        "ui_reroll",
+        "ui_skip",
+        "ui_banish",
+        "ui_scroll"
+      ]
+    },
+    "trackpad_right": "menu_mouse",
+    "touchscreen": "menu_tap",
+    "text_input": "none"
+  },
+  "remap_rules": {
+    "all_remappable": true,
+    "never_unbound": [
+      "in_pause",
+      "ui_confirm"
+    ],
+    "conflict": "warn_then_swap_same_context"
+  },
+  "action_labels_ko": {
+    "ui_reroll": "다시 묻기(재점) — 구 표시명 공수 교정, ID 유지(D-04/C-15)"
+  }
+}

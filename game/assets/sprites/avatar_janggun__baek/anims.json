@@ -1,0 +1,42 @@
+{
+ "spec": "art_style_v1",
+ "size": [
+  48,
+  48
+ ],
+ "pivot": [
+  24,
+  44
+ ],
+ "anims": {
+  "attack": {
+   "east": 6,
+   "south": 6,
+   "west": 6
+  },
+  "move": {
+   "east": 6,
+   "north": 6,
+   "south": 6,
+   "west": 6
+  }
+ },
+ "frame_size": {
+  "attack": [
+   48,
+   48
+  ],
+  "move": [
+   48,
+   48
+  ]
+ },
+ "post": {
+  "tool": "art/rework/G4_salvage_enemies_boss/_scripts (art_post run + deboil)",
+  "tier": "avatar",
+  "rot": "south/east/north/west.png = move_<dir>_0 (독립 정지 rotation 반입 제외, L12)",
+  "stab": "avatar_janggun stab 결과 jk 램프 → baek 치환 (0 gen, 2026-11-24)"
+ },
+ "west": "flip_h(east)",
+ "notes": "G5 오방 변형 baek: avatar_janggun salvage 베이스 jk 램프 → ['#857154', '#b29d76', '#d2c19c', '#e9dcc0'] 치환(0 gen)"
+}

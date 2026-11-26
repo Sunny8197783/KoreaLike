@@ -1,0 +1,38 @@
+{
+ "size": [
+  48,
+  48
+ ],
+ "pivot": [
+  24,
+  45
+ ],
+ "anims": {
+  "move": {
+   "south": 4,
+   "east": 4,
+   "north": 4,
+   "west": 4
+  },
+  "spawn": {
+   "south": 4
+  }
+ },
+ "frame_size": {
+  "move": [
+   48,
+   48
+  ],
+  "spawn": [
+   48,
+   48
+  ]
+ },
+ "post": {
+  "tool": "tools/art_post.py",
+  "mode": "run",
+  "tier": "common_s",
+  "source": "game\\assets\\sprites\\enm_dalgyal_gwisin"
+ },
+ "pixellab_id": "18f23403-dcf3-4092-bc60-36361d620287"
+}

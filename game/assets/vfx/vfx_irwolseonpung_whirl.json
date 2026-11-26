@@ -1,0 +1,202 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_irwolseonpung_whirl 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_irwolseonpung_whirl 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_irwolseonpung_whirl 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_irwolseonpung_whirl 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_irwolseonpung_whirl 4",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  },
+  {
+   "filename": "vfx_irwolseonpung_whirl 5",
+   "frame": {
+    "x": 160,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_irwolseonpung_whirl.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 192,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_irwolseonpung_whirl",
+    "from": 0,
+    "to": 5,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_irwolseonpung_whirl",
+   "name": "Irwolseonpung whirl",
+   "fps": 14.0,
+   "loop": true,
+   "frames": 6,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "frameSize": [
+    32,
+    32
+   ],
+   "pivot": [
+    16,
+    16
+   ],
+   "columns": 6,
+   "spec": {
+    "id": "vfx_irwolseonpung_whirl",
+    "category": "weapon_white",
+    "trigger_or_owner": "evo_irwolseonpung",
+    "color_role": "P+Y",
+    "canvas": "32x32",
+    "frames": 6,
+    "timing": "fps:14",
+    "blend": "normal",
+    "layer": "L10",
+    "beat_snap": false,
+    "max_concurrent": 6,
+    "scope": "v1"
+   },
+   "blend": "normal",
+   "maxRelLuminance": 0.542,
+   "layer": "L10",
+   "color_role": "P+Y",
+   "max_concurrent": 6,
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 298,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

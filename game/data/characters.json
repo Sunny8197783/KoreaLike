@@ -1,0 +1,2335 @@
+{
+  "schema": "soulpath.characters",
+  "version": "1.2.0",
+  "doc": "design/03-characters.md",
+  "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): char_dangol.lore_name 문옥단(B-3), lineage 남도 갯마을, char_simbang.barks 표준어+제주어 어휘(B-5)"],
+  "note": "문서가 우선. 수치가 다르면 문서를 기준으로 이 파일을 고친다. [NEW] 표시 항목은 캐논 추가 요청 대상. v1.1: 03 §2.3.1 단일 정의 규칙 적용(B 레이어 = stat_overrides·bingui_mult, trait 一단은 규칙만, mod_*는 trait 단계에서만, 단계 수치는 누적 총합 op stat_set_total/mod_set_total). 리뷰 대응은 03 §17. v1.2(2026-11-21): 캐논 v1.2 일괄 반영 — lore_name은 data/narrative/cast_canon.json 값(CR-NAME-02), mod_* → cmod_*, pick_gyeongmun_gakin → pick_hosinbu, union_jin_obangjin → union_obang_cheoljin, 시련 4회(180/390/750/930) 반영. 03 끝 '캐논 v1.2 반영 로그'.",
+  "units": {
+    "unit_px": 32,
+    "move_speed_100pct_units_per_s": 4.0,
+    "hitbox_radius_units": 0.35
+  },
+  "stat_base": {
+    "stat_jeonggi": 100,
+    "stat_saenggi": 0,
+    "stat_sinbok": 0,
+    "stat_domu": 1.0,
+    "stat_sinppal": 1.0,
+    "stat_doryang": 1.0,
+    "stat_gise": 1.0,
+    "stat_yeongheom": 1.0,
+    "stat_sinjang": 0,
+    "stat_jangdan": 1.0,
+    "stat_chohon": 2.0,
+    "stat_haewon_suryeon": 1.0,
+    "stat_siju": 1.0,
+    "stat_jeomgwae": 100,
+    "stat_salgi": 0,
+    "stat_myeongjul": 0,
+    "stat_gyeoldan": 0.05,
+    "stat_puri": 3.0,
+    "stat_jeopsin_hoepi": 0.0,
+    "stat_haengnyeol": 24,
+    "stat_neok_sumyeong": 30.0,
+    "stat_gilbe": 4.0
+  },
+  "rules": {
+    "trait_tier_levels": [
+      1,
+      8,
+      16,
+      24,
+      32
+    ],
+    "assumed_avg_level_at_20min": 48,
+    "bingui_mult_applies_to": "face_percent_values_only",
+    "bingui_mult_excludes": [
+      "integer_counts",
+      "durations_s",
+      "flat_points",
+      "proc_periods"
+    ],
+    "start_weapon_times_s": [
+      0,
+      30
+    ],
+    "momju_reroll": {
+      "momju_slot_locked": true,
+      "max_per_trial": 2,
+      "disallowed_trial_s": null,
+      "ref": "06-deities-possession §4.4 (4차 시련 15:30에서도 가능, 캐논 v1.2 D-01)"
+    },
+    "momju_bonus_cards": 4,
+    "sintong_timers_pause_on": [
+      "jeomji",
+      "pause"
+    ],
+    "sintong_fx_snap": "half_beat_max_250ms",
+    "gildakkeum_snap_cap_units": 3.0,
+    "bark_display_s": 2.0,
+    "level_curve_ref": {
+      "source": "data/combat_core.json#xp",
+      "doc": "design/02-core-loop-combat.md §17.2·§21.3",
+      "expected_level_20min": {
+        "toechi_xp1.0": 53,
+        "mixed_xp0.8": 48,
+        "haewon_xp0.6": 43
+      },
+      "note": "이 값들은 02의 사본. 02가 바뀌면 함께 갱신(03 §2.7, C19)"
+    },
+    "trait_tier_reach_time_s": {
+      "note": "03 §2.7 표. 02 §21.3 처치 곡선 1초 보간",
+      "toechi_xp1.0": [
+        0,
+        200,
+        399,
+        585,
+        772
+      ],
+      "mixed_xp0.8": [
+        0,
+        223,
+        434,
+        645,
+        850
+      ],
+      "haewon_xp0.6": [
+        0,
+        256,
+        499,
+        733,
+        932
+      ],
+      "mixed_tier5_window_s": [
+        810,
+        870
+      ]
+    },
+    "gildakkeum_snap_base_ref": "data/combat_core.json#ring.snap_u",
+    "data_layer_rules": {
+      "doc": "design/03-characters.md §2.3.1",
+      "R1_identity_stats_in": [
+        "stat_overrides",
+        "bingui_mult"
+      ],
+      "R2_tier1_rules_only": true,
+      "R3_mods_defined_in": "trait.tiers[].effects",
+      "R4_tier_values": "cumulative_total",
+      "allowed_numeric_ops": [
+        "stat_set_total",
+        "mod_set_total"
+      ],
+      "R5_stat_set_total_replaces_B_layer": true,
+      "R6_no_char_copies_in": [
+        "data/stats.json#characters",
+        "data/combat_core.json#ring.dangol_snap_mult"
+      ],
+      "R6_status": "삭제 요청(03 §15.1) — 05·02 소유 파일"
+    },
+    "momju_bonus_cards_if_trial_model_B": "free_bingui_jeomji_reroll_1",
+    "trial_face_model_dependency": {
+      "doc": "design/03-characters.md §2.13",
+      "active_model": "A",
+      "models": {
+        "A": "gauge_race (확정, 캐논 v1.2 D-01: 시련 30초 + DESCEND 최대 8초, 두 게이지 동시·먼저 찬 쪽)",
+        "B": "half_circle_select (미채택, 캐논 v1.2 D-01 — 기록용)"
+      },
+      "cmod_trial_gauge_pct": {
+        "A": "both_gauges",
+        "B": "chosen_face_gauge_only"
+      },
+      "mansin_confirm_ring_s": {
+        "A": "circle_confirm",
+        "B": "half_circle_confirm"
+      },
+      "mansin_incomplete_mult": {
+        "A": "higher_face",
+        "B": "chosen_face"
+      },
+      "dangol_wieom_white_factor": {
+        "A": 0.4,
+        "B": 0.4
+      },
+      "simbang_sanpanjeom_gauge_bonus": {
+        "A": "both_gauges",
+        "B": "chosen_face_gauge_only"
+      },
+      "beopsa_ward_gaho_progress_pct": {
+        "A": 10,
+        "B": "mosim_half_only"
+      },
+      "decided": "canon v1.2 D-01: A"
+    }
+  },
+  "offer_weight_tags": {
+    "balanced": {},
+    "toechi": {
+      "red_weapon": 1.2,
+      "white_weapon": 0.9
+    },
+    "haewon": {
+      "red_weapon": 0.6,
+      "white_weapon": 1.2
+    },
+    "precision": {
+      "cards_gyeoldan_or_santong": 1.2
+    },
+    "fortune": {},
+    "anchor": {
+      "wpn_sogeum": 1.2,
+      "wpn_ssukmul": 1.2,
+      "wpn_obanggi": 1.2,
+      "wpn_cheoljillyeo": 1.2
+    }
+  },
+  "weapon_variants": [
+    {
+      "id": "wpn_sinkal__mengdu",
+      "base": "wpn_sinkal",
+      "new": true,
+      "overrides": {},
+      "visual": "brass mengdu knives pair with white paper tassels"
+    },
+    {
+      "id": "wpn_bangul__yoryeong",
+      "base": "wpn_bangul",
+      "new": true,
+      "overrides": {
+        "radius_mult": 0.7,
+        "hit_rate_mult": 2.0
+      },
+      "persist_on_evolution": true,
+      "visual": "6cm brass bell with 80cm five-color cords"
+    }
+  ],
+  "characters": [
+    {
+      "id": "char_mansin",
+      "scope": "v1",
+      "name": {
+        "ko": "만신",
+        "hanja": "萬神",
+        "en": "Mansin"
+      },
+      "subtitle_en": "the Shaman of Ten Thousand Spirits",
+      "lore_name": {
+        "ko": "한서리",
+        "hanja": "韓서리",
+        "age": 31,
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "강신무·서울",
+      "momju": "select",
+      "momju_select_rule": "신당 신단 청신(레벨1) 완료 신령 중 1택. 시작 시 deity_sansin만 무료 청신",
+      "start_weapons": [
+        {
+          "wpn": "wpn_sinkal",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_bangul",
+          "at_s": 30
+        }
+      ],
+      "stat_overrides": {},
+      "bingui_mult": 1.15,
+      "tags": [
+        "balanced"
+      ],
+      "tendency_bar": {
+        "toechi": 3,
+        "haewon": 3
+      },
+      "difficulty": 2,
+      "companion_slots": {
+        "unique": null,
+        "general": 1
+      },
+      "trait": {
+        "key": "trait_mansin_geureut",
+        "name": {
+          "ko": "만신의 그릇",
+          "hanja": "萬神之器"
+        },
+        "new": true,
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "mod_set_total",
+                "key": "cmod_trial_gauge_pct",
+                "value": 15
+              }
+            ],
+            "note": "빙의 배율 1.15는 B 레이어(bingui_mult). 게이지 적용 면은 rules.trial_face_model_dependency"
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "trial_confirm_ring_s",
+                "value": 0.6
+              },
+              {
+                "type": "trial_warning_lead_s",
+                "value": 15
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "bingui_mult",
+                "value": 1.2
+              }
+            ]
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "incomplete_bingui_mult_set",
+                "value": 0.85
+              }
+            ]
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "bingui_mult",
+                "value": 1.25
+              },
+              {
+                "type": "hapil_extra_random_power_level",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "sintong": {
+        "key": "sintong_gongsu_naerim",
+        "name": {
+          "ko": "공수 내림"
+        },
+        "new": true,
+        "trigger": {
+          "event": "sinmyeong_oreum_start",
+          "require": {
+            "gangsin_grade_gte": 1
+          }
+        },
+        "target": "last_possessed_face",
+        "effects": [
+          {
+            "type": "face_percent_mult",
+            "value": 1.5
+          },
+          {
+            "type": "deity_power_cards_effect_pct",
+            "value": 50
+          }
+        ],
+        "duration": "sinmyeong_oreum",
+        "cooldown_s": 0,
+        "fx": {
+          "head_overlay_outline": "#c9a24a",
+          "pulse_hz": 2,
+          "instrument_layer_db": 3
+        }
+      },
+      "unlock": {
+        "condition": null,
+        "cost": {
+          "cur_gongdeok": 0
+        }
+      },
+      "visual": {
+        "art_path": "art/characters/mansin/",
+        "palette": {
+          "robe": "#8f1f24",
+          "robe_hi": "#b0403a",
+          "sleeve_lining": "#314a7a",
+          "bell": "#b08d3a"
+        },
+        "hat": "black gat with red tassel",
+        "id_primary": "crimson cheollik body block",
+        "id_secondary": "wide A-line sleeves, bell in right hand",
+        "body_px": [
+          40,
+          48
+        ],
+        "forbid": [
+          "wudang robe sash",
+          "miko white+red combination"
+        ],
+        "status": "rotations8+walk8x8+gut_dance_s9 done; palette remap check"
+      },
+      "barks": [
+        {
+          "key": "char_mansin.bark.1",
+          "when": "run_start",
+          "ko": "굿판 엽니다. 오늘도 다 같이 가요."
+        },
+        {
+          "key": "char_mansin.bark.2",
+          "when": "first_haewon",
+          "ko": "그래, 그래. 이제 얼굴이 보이네."
+        },
+        {
+          "key": "char_mansin.bark.3",
+          "when": "possession",
+          "ko": "오셨어요? …네, 제 몸 빌려 쓰세요."
+        },
+        {
+          "key": "char_mansin.bark.4",
+          "when": "low_hp_25",
+          "ko": "아직이요. 아직 다 못 보냈어요."
+        },
+        {
+          "key": "char_mansin.bark.5",
+          "when": "settle_neok",
+          "ko": "잘 가요. 다음엔 따뜻한 데서 나요."
+        },
+        {
+          "key": "char_mansin.bark.6",
+          "when": "settle_sal",
+          "ko": "다 끊어 냈네요. …그래도 기억은 할게요."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_mansin_a",
+          "name": "범 탈 만신",
+          "momju": "deity_sansin",
+          "weapons": [
+            "wpn_sinkal",
+            "wpn_bangul",
+            "wpn_neokjeon",
+            "wpn_gakgung",
+            "wpn_janggu",
+            "wpn_obanggi"
+          ],
+          "passives": [
+            "psv_baekjisul",
+            "psv_chohon_jeoksam",
+            "psv_wipae",
+            "psv_jusa",
+            "psv_gungchae",
+            "psv_sinjangdae"
+          ],
+          "targets": [
+            "evo_sinjangkal",
+            "evo_cheoneum_bangul",
+            "evo_neokkkotbi",
+            "union_neoksinkal"
+          ],
+          "faces": [
+            "deity_sansin__wieom",
+            "deity_janggun__wieom",
+            "deity_barigongju__gaho",
+            "deity_chilseong__gaho",
+            "deity_jeseok_daegam__gaho"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.45,
+              0.55
+            ],
+            "max_procession": [
+              32,
+              38
+            ]
+          }
+        },
+        {
+          "id": "build_mansin_b",
+          "name": "모심의 길",
+          "momju": "deity_barigongju",
+          "weapons": [
+            "wpn_sinkal",
+            "wpn_bangul",
+            "wpn_gilbe",
+            "wpn_jakdu",
+            "wpn_neokjeon",
+            "wpn_ssukmul"
+          ],
+          "passives": [
+            "psv_chohon_jeoksam",
+            "psv_mituri",
+            "psv_mubok",
+            "psv_wipae",
+            "psv_jeonghwasu",
+            "psv_baekjisul"
+          ],
+          "targets": [
+            "evo_begareugi",
+            "evo_daejakdu",
+            "union_jakdu_dari",
+            "evo_cheoneum_bangul"
+          ],
+          "faces": [
+            "deity_barigongju__gaho",
+            "deity_sansin__gaho",
+            "deity_yongwang__gaho",
+            "deity_chilseong__gaho",
+            "deity_janggun__gaho"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.7,
+              0.85
+            ],
+            "max_procession": [
+              45,
+              60
+            ]
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 6.5,
+        "tier5": 10.3
+      }
+    },
+    {
+      "id": "char_baksu",
+      "scope": "v1",
+      "name": {
+        "ko": "박수무당",
+        "hanja": "博數",
+        "en": "Baksu"
+      },
+      "subtitle_en": "the Male Shaman",
+      "lore_name": {
+        "ko": "강무진",
+        "hanja": "姜武鎭",
+        "age": 38,
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "강신무·남무",
+      "momju": "deity_janggun",
+      "start_weapons": [
+        {
+          "wpn": "wpn_woldo",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_buchae",
+          "at_s": 30
+        }
+      ],
+      "stat_overrides": {
+        "stat_jeonggi": 120,
+        "stat_haengnyeol": 18
+      },
+      "bingui_mult": 1.0,
+      "tags": [
+        "toechi"
+      ],
+      "tendency_bar": {
+        "toechi": 5,
+        "haewon": 1
+      },
+      "difficulty": 2,
+      "companion_slots": {
+        "unique": null,
+        "general": 1
+      },
+      "trait": {
+        "key": "trait_baksu_woldo_bangyeok",
+        "name": {
+          "ko": "월도 반격",
+          "hanja": "月刀反擊"
+        },
+        "new": true,
+        "mechanic": {
+          "trigger": "player_took_damage_gte_1",
+          "not_on": [
+            "dodge",
+            "proxy_hit_by_yeongga",
+            "hosinbu_shield",
+            "invulnerable",
+            "cooldown"
+          ],
+          "action": "extra_woldo_spin",
+          "radius_mult": 1.25,
+          "color": "red",
+          "knot_lock_applies": true,
+          "fx_snap": "quarter_beat",
+          "evolved_includes_wave": false
+        },
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "counter_dmg_mult",
+                "value": 1.5
+              },
+              {
+                "type": "counter_cooldown_s",
+                "value": 3.0
+              }
+            ]
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "counter_clear_enemy_bullets",
+                "max": 6
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "counter_cooldown_s",
+                "value": 2.5
+              }
+            ],
+            "note": "쿨다운 총합 2.5초"
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "counter_dmg_mult",
+                "value": 2.0
+              },
+              {
+                "type": "counter_fear_s",
+                "value": 0.5
+              }
+            ],
+            "note": "반격 배율 총합 ×2.0"
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "counter_heal_pct_per_hit",
+                "value": 0.5,
+                "cap_pct": 5
+              }
+            ]
+          }
+        ]
+      },
+      "sintong": {
+        "key": "sintong_jakdu_oreum",
+        "name": {
+          "ko": "작두 오름"
+        },
+        "new": true,
+        "trigger": {
+          "event": "hp_ratio_cross_below",
+          "threshold": 0.3,
+          "rearm": "hp_ratio_above_threshold"
+        },
+        "effects": [
+          {
+            "type": "invulnerable_s",
+            "value": 2.0
+          },
+          {
+            "type": "shockwave",
+            "radius_units": 3.0,
+            "color": "red",
+            "base_dmg": 40,
+            "jakdu_hit_mult": 2.0,
+            "formula": "max(40, jakdu_hit*2) * sinppal * (1 + (1 - hp_ratio))"
+          },
+          {
+            "type": "fear_s",
+            "value": 1.0
+          },
+          {
+            "type": "heal_max_hp_pct",
+            "value": 10
+          }
+        ],
+        "cooldown_s": 120,
+        "cooldown_mult_in_geori": {
+          "geori_jakdu": 0.5
+        },
+        "lethal_hit_goes_to": "stat_myeongjul"
+      },
+      "unlock": {
+        "condition": {
+          "counter": "cnt_bingui_wieom_total",
+          "gte": 3
+        },
+        "cost": {
+          "cur_gongdeok": 5000
+        }
+      },
+      "visual": {
+        "art_path": "art/characters/baksu/",
+        "palette": {
+          "body": "#1f1d24",
+          "sleeves": "#8f1f24",
+          "vest_jeonbok": "#2b3550",
+          "jakdu_blade": "#c9c2ae"
+        },
+        "hat": "jeollip with peacock feather",
+        "id_primary": "black body + crimson sleeves",
+        "id_secondary": "woldo shaft over right shoulder (+6px)",
+        "body_px": [
+          46,
+          48
+        ],
+        "forbid": [
+          "wuxia glaive pose",
+          "naginata straight blade"
+        ],
+        "status": "rotations8 done; RECOLOR needed (blue robe -> black body + red sleeves); walk missing"
+      },
+      "barks": [
+        {
+          "key": "char_baksu.bark.1",
+          "when": "run_start",
+          "ko": "칼 갈아 놨수. 덤빌 것들은 덤비라우."
+        },
+        {
+          "key": "char_baksu.bark.2",
+          "when": "first_counter",
+          "ko": "어딜— 받아라우!"
+        },
+        {
+          "key": "char_baksu.bark.3",
+          "when": "possession_janggun",
+          "ko": "장군님 오셨다. 길 비키라우."
+        },
+        {
+          "key": "char_baksu.bark.4",
+          "when": "sintong",
+          "ko": "작두 탄 사람이 발 베일까 겁낼 것 같수?"
+        },
+        {
+          "key": "char_baksu.bark.5",
+          "when": "settle_sal",
+          "ko": "다 끊었다. 원망할 거면 나한테 하라우."
+        },
+        {
+          "key": "char_baksu.bark.6",
+          "when": "settle_neok",
+          "ko": "…그래, 가라. 이번엔 풀어서 보냈다."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_baksu_a",
+          "name": "만월 진군",
+          "weapons": [
+            "wpn_woldo",
+            "wpn_buchae",
+            "wpn_jangchang",
+            "wpn_pyeongon",
+            "wpn_sainsageom",
+            "wpn_sogeum"
+          ],
+          "passives": [
+            "psv_obangkkeun",
+            "psv_mituri",
+            "psv_myeongjusil",
+            "psv_santong",
+            "psv_mubok",
+            "psv_jusa"
+          ],
+          "targets": [
+            "evo_manwoldo",
+            "evo_irwolseonpung",
+            "evo_pajinchang",
+            "evo_byeongnyeok_pyeongon",
+            "evo_bujeong_gasim"
+          ],
+          "faces": [
+            "deity_janggun__wieom",
+            "deity_sansin__wieom",
+            "deity_barigongju__wieom",
+            "deity_chilseong__wieom",
+            "deity_jeseok_daegam__wieom"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.15,
+              0.25
+            ],
+            "salgi_at_18min": [
+              55,
+              70
+            ]
+          }
+        },
+        {
+          "id": "build_baksu_b",
+          "name": "칼춤과 부채",
+          "weapons": [
+            "wpn_woldo",
+            "wpn_buchae",
+            "wpn_jakdu",
+            "wpn_janggu",
+            "wpn_hojakdo",
+            "wpn_ssukmul"
+          ],
+          "passives": [
+            "psv_obangkkeun",
+            "psv_mubok",
+            "psv_gungchae",
+            "psv_chotdae",
+            "psv_jeonghwasu",
+            "psv_myeongjusil"
+          ],
+          "targets": [
+            "evo_manwoldo",
+            "evo_irwolseonpung",
+            "evo_daejakdu",
+            "evo_hapjangdan",
+            "evo_sangun_pohyodo"
+          ],
+          "faces": [
+            "deity_janggun__wieom",
+            "deity_jeseok_daegam__gaho",
+            "deity_sansin__wieom",
+            "deity_yongwang__gaho",
+            "deity_chilseong__wieom"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.35,
+              0.45
+            ],
+            "hits_taken_per_min": [
+              8,
+              12
+            ]
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 5.8,
+        "tier5": 9.5
+      }
+    },
+    {
+      "id": "char_dangol",
+      "scope": "v1",
+      "name": {
+        "ko": "단골",
+        "hanja": "丹骨",
+        "en": "Dangol"
+      },
+      "subtitle_en": "the Hereditary Shaman of Honam",
+      "lore_name": {
+        "ko": "문옥단",
+        "hanja": "文玉丹",
+        "age": 64,
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "세습무·호남(남도 갯마을)",
+      "momju": "deity_barigongju",
+      "start_weapons": [
+        {
+          "wpn": "wpn_janggu",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_jijeon",
+          "at_s": 30
+        }
+      ],
+      "start_red_weapon": null,
+      "stat_overrides": {},
+      "bingui_mult": 0.8,
+      "wieom_gauge_rule": {
+        "source": "white_only",
+        "mult": 0.4,
+        "ref": "06-deities-possession"
+      },
+      "tags": [
+        "haewon"
+      ],
+      "tendency_bar": {
+        "toechi": 1,
+        "haewon": 5
+      },
+      "difficulty": 4,
+      "companion_slots": {
+        "unique": null,
+        "general": 1
+      },
+      "trait": {
+        "key": "trait_dangol_goin_jangdan",
+        "name": {
+          "ko": "고인의 장단",
+          "hanja": "鼓人-長短"
+        },
+        "new": true,
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "mod_set_total",
+                "key": "cmod_white_dmg_pct",
+                "value": 25
+              },
+              {
+                "type": "mod_set_total",
+                "key": "cmod_gildakkeum_snap_pct",
+                "value": 20
+              },
+              {
+                "type": "mod_set_total",
+                "key": "cmod_sinmyeong_per_layer_pct",
+                "value": 10
+              }
+            ],
+            "note": "빙의 배율 0.8은 B 레이어(bingui_mult). 신명 배율은 상한 적용 전 원값에 곱하고, 길닦음 1회 신명 상한 30%는 배율 후 적용. 스냅 1.8 = ring.snap_u 1.5 × 1.20(파생값)"
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "janggu_extra_pulse_on_gildakkeum",
+                "count": 1,
+                "fallback_base_dmg": 20
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "mod_set_total",
+                "key": "cmod_gildakkeum_snap_pct",
+                "value": 30
+              }
+            ]
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "stat_puri",
+                "value": 3.5
+              }
+            ]
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "sinmyeong_oreum_duration_s",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "sintong": {
+        "key": "sintong_neokollim",
+        "name": {
+          "ko": "넋올림 울타리"
+        },
+        "new": true,
+        "trigger": {
+          "event": "gildakkeum_success",
+          "min_area_tiles": 9
+        },
+        "effects": [
+          {
+            "type": "fence_from_ring_polyline",
+            "duration_s": 4.0,
+            "duration_scales_with": "stat_yeongheom",
+            "dmg_per_beat": "sum(equipped_white_base_dmg) * 0.25",
+            "color": "white",
+            "cross_slow_pct": 40,
+            "cross_slow_s": 1.0,
+            "yeongga_pass": true
+          }
+        ],
+        "max_active": 3,
+        "overflow": "remove_oldest",
+        "perf": {
+          "max_segments": 64,
+          "resample_units": 0.5,
+          "tick": "beat"
+        },
+        "cooldown_s": 0
+      },
+      "unlock": {
+        "condition": {
+          "counter": "cnt_haewon_total",
+          "gte": 500
+        },
+        "cost": {
+          "cur_gongdeok": 5000
+        }
+      },
+      "visual": {
+        "art_path": "art/characters/dangol/",
+        "palette": {
+          "skirt_ramie": "#cfc8b4",
+          "jeogori": "#8fa66a",
+          "goreum": "#314a7a",
+          "headband": "#d9d2bf",
+          "janggu_cord": "#8f1f24",
+          "janggu_wood": "#7a4a2a",
+          "jijeon": "#e9dcc0"
+        },
+        "hat": "white headband (no hat)",
+        "id_primary": "grey-white ramie + light green jeogori",
+        "id_secondary": "hourglass janggu slung horizontally at waist",
+        "body_px": [
+          42,
+          46
+        ],
+        "forbid": [
+          "full white mourning clothes (#f2ece0)"
+        ],
+        "status": "rotations8 done; REMAP white ramie away from #f2ece0; idle janggu loop needed"
+      },
+      "barks": [
+        {
+          "key": "char_dangol.bark.1",
+          "when": "run_start",
+          "ko": "자, 장구 메었응께 굿 한 판 놀아 봅시다."
+        },
+        {
+          "key": "char_dangol.bark.2",
+          "when": "first_haewon",
+          "ko": "아이고, 고생 많았소. 인자 씻고 가씨요."
+        },
+        {
+          "key": "char_dangol.bark.3",
+          "when": "big_gildakkeum_20",
+          "ko": "길 닦았응께, 그 길로 곱게 가시오잉."
+        },
+        {
+          "key": "char_dangol.bark.4",
+          "when": "low_hp_25",
+          "ko": "워메, 장단 놓치면 안 되제… 덩, 덩."
+        },
+        {
+          "key": "char_dangol.bark.5",
+          "when": "settle_neok",
+          "ko": "우리 영감 장구 소리, 거그서도 들리제라?"
+        },
+        {
+          "key": "char_dangol.bark.6",
+          "when": "settle_sal",
+          "ko": "오늘은 다 못 씻겼네. 내일 또 와야 쓰겄소."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_dangol_a",
+          "name": "씻김 고리",
+          "weapons": [
+            "wpn_janggu",
+            "wpn_jijeon",
+            "wpn_gilbe",
+            "wpn_neokjeon",
+            "wpn_ssukmul",
+            "wpn_bangul"
+          ],
+          "passives": [
+            "psv_gungchae",
+            "psv_yeopjeon",
+            "psv_mituri",
+            "psv_wipae",
+            "psv_jeonghwasu",
+            "psv_chohon_jeoksam"
+          ],
+          "targets": [
+            "evo_hapjangdan",
+            "evo_begareugi",
+            "evo_nojatdon",
+            "evo_neokkkotbi",
+            "evo_sammul_ssitgim"
+          ],
+          "faces": [
+            "deity_barigongju__gaho",
+            "deity_chilseong__gaho",
+            "deity_jeseok_daegam__gaho",
+            "deity_yongwang__gaho",
+            "deity_sansin__gaho"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.95,
+              1.0
+            ],
+            "gildakkeum_per_min": [
+              2.5,
+              3.5
+            ]
+          }
+        },
+        {
+          "id": "build_dangol_b",
+          "name": "시나위 악단",
+          "weapons": [
+            "wpn_janggu",
+            "wpn_jijeon",
+            "wpn_obanggi",
+            "wpn_myeongdu",
+            "wpn_buchae",
+            "wpn_sogeum"
+          ],
+          "passives": [
+            "psv_gungchae",
+            "psv_yeopjeon",
+            "psv_sinjangdae",
+            "psv_baritdae",
+            "psv_obangkkeun",
+            "psv_mubok"
+          ],
+          "targets": [
+            "evo_hapjangdan",
+            "evo_obangjin",
+            "evo_irwol_myeongdu",
+            "evo_nojatdon",
+            "evo_irwolseonpung"
+          ],
+          "faces": [
+            "deity_barigongju__gaho",
+            "deity_janggun__wieom",
+            "deity_yongwang__gaho",
+            "deity_jeseok_daegam__gaho",
+            "deity_chilseong__gaho"
+          ],
+          "kpi": {
+            "sinmyeong_oreum_per_run_gte": 7,
+            "sinmyeong_uptime_gte": 0.12
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 7.6,
+        "tier5": 11.0
+      },
+      "offer_weight_note": "점지 가중치는 tags.haewon(offer_weight_tags)이 단일 출처. mod_red_offer_weight 폐지(v1.1)"
+    },
+    {
+      "id": "char_myeongdu",
+      "scope": "v1",
+      "name": {
+        "ko": "명두",
+        "hanja": "明斗",
+        "en": "Myeongdu"
+      },
+      "subtitle_en": "the Child-Spirit Diviner",
+      "lore_name": {
+        "ko": "윤연이",
+        "hanja": "尹연이",
+        "age": 20,
+        "companion_name": "동이",
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "강신무·동자령",
+      "momju": "deity_chilseong",
+      "start_weapons": [
+        {
+          "wpn": "wpn_gakgung",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_myeongdu",
+          "at_s": 30
+        }
+      ],
+      "stat_overrides": {
+        "stat_jeonggi": 85,
+        "stat_domu": 1.05,
+        "stat_gyeoldan": 0.15
+      },
+      "bingui_mult": 1.0,
+      "tags": [
+        "precision"
+      ],
+      "tendency_bar": {
+        "toechi": 3,
+        "haewon": 2
+      },
+      "difficulty": 4,
+      "companion_slots": {
+        "unique": "comp_dongja",
+        "general": 1
+      },
+      "companion_rules": {
+        "comp_dongja": {
+          "role": "white_support_info",
+          "position": "procession_front",
+          "collides": false,
+          "takes_hits": false,
+          "proxy_hit": false,
+          "counts_toward_procession_cap": false,
+          "combat_judgement": {
+            "deals_damage": false,
+            "rolls_crit": false,
+            "decides_toechi": false,
+            "changes_red_targeting": false,
+            "clears_bullets": false
+          },
+          "giseak_preview": {
+            "radius_units": 5.0,
+            "scales_with_doryang": false,
+            "r_min_exclusive": 0.35,
+            "r_max_inclusive": 0.5,
+            "targets": [
+              "general",
+              "elite"
+            ],
+            "exclude": [
+              "avatar",
+              "boss",
+              "eodukssini"
+            ],
+            "marker": {
+              "px": 2,
+              "color": "#f2ece0",
+              "alpha": 0.5,
+              "outline": false
+            },
+            "max_shown": 12
+          },
+          "return_nudge": {
+            "trigger_remaining_s": 3.0,
+            "extend_giseak_s": 2.0,
+            "once_per_enemy": true,
+            "per_beat_max": 1,
+            "order": "max_han_first",
+            "pose_s": 0.3,
+            "stacks_with": "comp_gaekgwi"
+          },
+          "neokduri_reply": {
+            "radius_units": 3.0,
+            "on": "elite_or_higher_haewon",
+            "reply_line_s": 1.5,
+            "sinmyeong_add_pct": 2
+          },
+          "removed_v1_1": "red_weapon_crit 분신 공격(blink, dmg_mult_of_crit 0.5) — 03 §6.6, 01 4.11 개정 요청"
+        }
+      },
+      "trait": {
+        "key": "trait_myeongdu_dongja_jeomji",
+        "name": {
+          "ko": "동자 점지",
+          "hanja": "童子點指"
+        },
+        "new": true,
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "companion_unique",
+                "value": "comp_dongja"
+              },
+              {
+                "type": "dongja_giseak_preview",
+                "radius_units": 5.0
+              },
+              {
+                "type": "dongja_return_nudge",
+                "extend_s": 2.0
+              },
+              {
+                "type": "dongja_neokduri_reply",
+                "sinmyeong_add_pct": 2
+              }
+            ],
+            "note": "결단 0.15는 B 레이어(stat_overrides). 재가산 없음"
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "dongja_giseak_preview",
+                "radius_units": 6.5
+              },
+              {
+                "type": "dongja_return_nudge",
+                "extend_s": 3.0
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "stat_gyeoldan",
+                "value": 0.18
+              }
+            ]
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "crit_toechi_no_sal_chance",
+                "value": 0.4
+              }
+            ]
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "stat_gyeoldan",
+                "value": 0.2
+              },
+              {
+                "type": "dongja_near_puri_set_total",
+                "radius_units": 3.0,
+                "value": 3.5
+              }
+            ]
+          }
+        ],
+        "assumes": {
+          "crit_dmg_mult_K": 2.0,
+          "ref": "05-stats-passives",
+          "affects": "power_budget only (v1.1)"
+        }
+      },
+      "sintong": {
+        "key": "sintong_dongja_hwiparam",
+        "name": {
+          "ko": "동자 휘파람"
+        },
+        "new": true,
+        "trigger": {
+          "event": "enemy_first_onscreen",
+          "tiers": [
+            "elite",
+            "mboss",
+            "boss"
+          ],
+          "pick": "max_han"
+        },
+        "effects": [
+          {
+            "type": "mark",
+            "duration_s": 10,
+            "duration_scales_with": "stat_yeongheom",
+            "han_gauge_display": {
+              "cells": 7,
+              "numbers": false
+            },
+            "giseak_threshold_override": {
+              "value": 0.45,
+              "applies_to": [
+                "elite",
+                "mboss"
+              ],
+              "boss": "unchanged"
+            },
+            "priority_for": [
+              "wpn_myeongdu_beam"
+            ],
+            "red_targeting_unchanged": true,
+            "on_haewon": {
+              "sinmyeong_pct": 3
+            },
+            "eodukssini_override": {
+              "light_shrink_per_hit_pct": 4,
+              "replaces": "giseak_threshold_override"
+            },
+            "removed_v1_1": [
+              "received_crit_pp 0.3",
+              "final_crit_cap 0.8",
+              "on_toechi cur_yeopjeon 1",
+              "comp_dongja priority"
+            ]
+          }
+        ],
+        "cooldown_s": 20,
+        "fx": {
+          "dongja_fly_whistle": true,
+          "return_after_s": 0.6
+        }
+      },
+      "unlock": {
+        "condition": {
+          "counter": "cnt_companions_unlocked",
+          "gte": 1
+        },
+        "cost": {
+          "cur_gongdeok": 20000
+        }
+      },
+      "visual": {
+        "art_path": "art/characters/myeongdu/",
+        "palette": {
+          "jeogori": "#c9b26a",
+          "skirt": "#c98a8f",
+          "mirror": "#b08d3a",
+          "dongja_body": "#f2ece0"
+        },
+        "hat": "none (bob hair)",
+        "id_primary": "pine-pollen yellow + faded pink",
+        "id_secondary": "round brass mirror on back (14px) + child spirit at shoulder",
+        "body_px": [
+          44,
+          44
+        ],
+        "companion_sprite": {
+          "name": "동이",
+          "size_px": 32,
+          "dirs": 4,
+          "float_frames": 4,
+          "point_frames": 2,
+          "whistle_frames": 2,
+          "holds_weapon": false
+        },
+        "forbid": [
+          "possessed-girl horror tropes",
+          "depiction of child's death or wounds",
+          "carrying body parts lore",
+          "child spirit attacking or holding weapons",
+          "child-servant-spirit folklore",
+          "girlish or underage framing of Yeoni (adult, 20)"
+        ],
+        "status": "rotations8 done (adult-proportion recheck); dongja sprite to create",
+        "proportions": "adult (10-narrative-world §5.1 age rule)"
+      },
+      "barks": [
+        {
+          "key": "char_myeongdu.bark.1",
+          "speaker": "char_myeongdu",
+          "when": "run_start",
+          "ko": "동이야, 오늘도 같이 보자. 누가 울고 있는지."
+        },
+        {
+          "key": "char_myeongdu.bark.2",
+          "speaker": "char_myeongdu",
+          "when": "first_crit_toechi_on_pullil",
+          "ko": "…미안해요. 여기서는 끊어야 해요."
+        },
+        {
+          "key": "comp_dongja.bark.1",
+          "speaker": "comp_dongja",
+          "when": "first_whistle",
+          "ko": "누나, 저기! 저 큰 거, 속이 텅 비었어!"
+        },
+        {
+          "key": "comp_dongja.bark.3",
+          "speaker": "comp_dongja",
+          "when": "first_return_nudge",
+          "ko": "누나, 저 사람 곧 풀려. 조금만 기다려 줘."
+        },
+        {
+          "key": "char_myeongdu.bark.3",
+          "speaker": "char_myeongdu",
+          "when": "low_hp_25",
+          "ko": "동이야, 손 놓지 마. …안 놓을게."
+        },
+        {
+          "key": "char_myeongdu.bark.4",
+          "speaker": "char_myeongdu",
+          "when": "settle_neok",
+          "ko": "다들 잘 가셨어요. 동이 너는… 아직 안 가도 돼."
+        },
+        {
+          "key": "comp_dongja.bark.2",
+          "speaker": "comp_dongja",
+          "when": "settle_sal",
+          "ko": "누나, 오늘은 많이 끊었네. 그래도 나는 누나 편."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_myeongdu_a",
+          "name": "칠성 결단",
+          "weapons": [
+            "wpn_gakgung",
+            "wpn_myeongdu",
+            "wpn_sainsageom",
+            "wpn_samjichang",
+            "wpn_bangul",
+            "wpn_neokjeon"
+          ],
+          "passives": [
+            "psv_jusa",
+            "psv_baritdae",
+            "psv_santong",
+            "psv_sinjangdae",
+            "psv_chohon_jeoksam",
+            "psv_wipae"
+          ],
+          "targets": [
+            "evo_isippalsugeom",
+            "evo_irwol_myeongdu",
+            "union_chilseong_myeonggyeonggeom",
+            "evo_jusahwajeon",
+            "evo_saseulchang"
+          ],
+          "faces": [
+            "deity_chilseong__wieom",
+            "deity_janggun__wieom",
+            "deity_sansin__wieom",
+            "deity_barigongju__gaho"
+          ],
+          "kpi": {
+            "final_gyeoldan": [
+              0.35,
+              0.45
+            ],
+            "haewon_ratio": [
+              0.3,
+              0.4
+            ],
+            "elite_kill_time_vs_others": -0.2
+          }
+        },
+        {
+          "id": "build_myeongdu_b",
+          "name": "소금살 사수",
+          "weapons": [
+            "wpn_gakgung",
+            "wpn_myeongdu",
+            "wpn_sogeum",
+            "wpn_jijeon",
+            "wpn_jangchang",
+            "wpn_cheoljillyeo"
+          ],
+          "passives": [
+            "psv_jusa",
+            "psv_baritdae",
+            "psv_mubok",
+            "psv_yeopjeon",
+            "psv_mituri",
+            "psv_jeung"
+          ],
+          "targets": [
+            "evo_jusahwajeon",
+            "evo_bujeong_gasim",
+            "union_sogeumsal",
+            "evo_cheoljillyeojin"
+          ],
+          "faces": [
+            "deity_chilseong__gaho",
+            "deity_barigongju__wieom",
+            "deity_yongwang__gaho",
+            "deity_janggun__wieom",
+            "deity_jeseok_daegam__gaho"
+          ],
+          "kpi": {
+            "toechi_ratio_gte": 0.6,
+            "salgi_at_18min_lte": 25
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 5.7,
+        "tier5": 9.4
+      },
+      "momju_label": "inyeon",
+      "momju_spirit": "comp_dongja",
+      "momju_note": "명두의 몸주는 동자령 동이(comp_dongja). deity_chilseong은 동이가 명다리로 의지하는 '인연 신령'이며 03:00 시련 보장·재추첨 고정 규칙은 다른 무당과 동일. 01 4.1 표기 개정 요청(03 §15.1)",
+      "codex": {
+        "respect_note_key": "codex.char_myeongdu.respect_note",
+        "respect_note_ko": "명두·태주는 오늘날에도 이어지는 실제 무속의 한 형태입니다. 이 게임은 아이의 넋을 부린다는 속설을 다루지 않습니다. 동이는 누나 곁에서 길을 일러 주는 동자로만 그려집니다.",
+        "show_in": [
+          "codex_first_page",
+          "char_select_tooltip_footer"
+        ]
+      }
+    },
+    {
+      "id": "char_simbang",
+      "scope": "v1",
+      "cut_line_order": 2,
+      "name": {
+        "ko": "심방",
+        "hanja": null,
+        "en": "Simbang"
+      },
+      "subtitle_en": "the Shaman of Jeju",
+      "lore_name": {
+        "ko": "고해월",
+        "hanja": "高海月",
+        "age": 47,
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "제주 무",
+      "momju": "deity_yongwang",
+      "start_weapons": [
+        {
+          "wpn": "wpn_sinkal__mengdu",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_bangul__yoryeong",
+          "at_s": 30
+        }
+      ],
+      "stat_overrides": {
+        "stat_jeomgwae": 130
+      },
+      "bingui_mult": 1.0,
+      "free_trial_reroll_per_run": {
+        "count": 1,
+        "ref": "06-deities-possession 4.4"
+      },
+      "tags": [
+        "fortune"
+      ],
+      "tendency_bar": {
+        "toechi": 3,
+        "haewon": 3
+      },
+      "difficulty": 3,
+      "companion_slots": {
+        "unique": null,
+        "general": 1
+      },
+      "trait": {
+        "key": "trait_simbang_sammengdu",
+        "name": {
+          "ko": "삼멩두"
+        },
+        "new": true,
+        "mechanic": {
+          "free_jeomji_reroll_per_screen": 1,
+          "consumes_gongsu_gyojeong": false,
+          "ui_fx_s": 0.4
+        },
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "free_jeomji_reroll",
+                "value": 1
+              },
+              {
+                "type": "mod_set_total",
+                "key": "cmod_box_upgrade_pp",
+                "value": 10
+              }
+            ],
+            "note": "점괘 130은 B 레이어(stat_overrides). 재가산 없음"
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "gilhyung_odd_chance_pp",
+                "value": 10
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "reroll_lock_one_card",
+                "value": true
+              }
+            ]
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "stat_set_total",
+                "stat": "stat_jeomgwae",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "box_double_evolution_chance_pp",
+                "value": 15
+              }
+            ]
+          }
+        ]
+      },
+      "sintong": {
+        "key": "sintong_sanpanjeom",
+        "name": {
+          "ko": "산판점",
+          "hanja": "算版占"
+        },
+        "new": true,
+        "trigger": {
+          "event": "trial_warning",
+          "trial_times_s": [
+            180,
+            390,
+            750,
+            930
+          ]
+        },
+        "roll": {
+          "p_daegil": "clamp(0.15 + (J-100)*0.002, 0.15, 0.45)",
+          "p_hyung": "clamp(0.25 - (J-100)*0.002, 0.05, 0.25)",
+          "p_gil": "1 - p_daegil - p_hyung"
+        },
+        "outcomes": {
+          "daegil": [
+            {
+              "type": "trial_gauge_charge_pct",
+              "value": 25
+            },
+            {
+              "type": "trial_free_reroll",
+              "value": 1,
+              "respects": [
+                "max_per_trial",
+                "momju_locked"
+              ]
+            }
+          ],
+          "gil": [
+            {
+              "type": "trial_gauge_charge_pct",
+              "value": 10
+            }
+          ],
+          "hyung": [
+            {
+              "type": "next_gilhyung_odd_chance_pp",
+              "value": 15,
+              "uses": 1
+            }
+          ]
+        },
+        "cooldown_s": 0,
+        "fx_s": 0.8
+      },
+      "unlock": {
+        "condition": {
+          "counter": "cnt_box_gilhyung_opened",
+          "gte": 30
+        },
+        "cost": {
+          "cur_gongdeok": 20000
+        }
+      },
+      "visual": {
+        "art_path": "art/characters/simbang/",
+        "palette": {
+          "durumagi": "#1f1d24",
+          "lining": "#c9c2ae",
+          "sash": "#2b3550",
+          "cords": [
+            "#3c5a8a",
+            "#9e3a35",
+            "#c2a24e",
+            "#cfc8b4",
+            "#2a2a2a"
+          ]
+        },
+        "hat": "black horsehair gat (wide brim)",
+        "id_primary": "black robe + grey-white lining",
+        "id_secondary": "five-color yoryeong cords trailing 12-16px, sanpan pouch at left waist",
+        "body_px": [
+          42,
+          44
+        ],
+        "forbid": [
+          "polynesian island-shaman cliche",
+          "carrying dol hareubang"
+        ],
+        "status": "rotations8 done; REGENERATE props (drumsticks -> mengdu knife pair)",
+        "pixellab_prompt": "Jeju island shaman (simbang), wiry man in his late 40s, black durumagi robe with grey-white inner lining, wide-brimmed black horsehair gat hat, holding a pair of small brass ritual knives with white paper tassels in the right hand and a small brass bell with long five-color cords in the left, cloth pouch at waist, straw sandals, weathered sea-wind face, low top-down view"
+      },
+      "barks_speech_policy": "표준어 + 제주어 어휘 몇 개(혼저 옵서·멩두·요왕·바당·무사 등). 제주어 어미·문장 단위 대사 금지. 유료 감수는 출시 전 선택(16 B-5·D). 필드 jeju = 표시 대사(표준어+어휘), ko = 순표준어",
+      "barks": [
+        {
+          "key": "char_simbang.bark.1",
+          "when": "run_start",
+          "jeju": "혼저 옵서. 오늘 굿 하겠습니다.",
+          "ko": "어서 오세요. 오늘 굿 하겠습니다."
+        },
+        {
+          "key": "char_simbang.bark.2",
+          "when": "mengdu_reroll",
+          "jeju": "멩두야, 어느 길로 갈까?",
+          "ko": "멩두야, 어느 길로 갈까?"
+        },
+        {
+          "key": "char_simbang.bark.3",
+          "when": "possession_yongwang",
+          "jeju": "요왕님 오셨습니다. 바당길 열어 주십시오.",
+          "ko": "용왕님 오셨습니다. 바닷길 열어 주십시오."
+        },
+        {
+          "key": "char_simbang.bark.4",
+          "when": "sanpan_hyung",
+          "jeju": "흉이야? 다시 던져 보지.",
+          "ko": "흉이야? 다시 던져 보지."
+        },
+        {
+          "key": "char_simbang.bark.5",
+          "when": "settle_neok",
+          "jeju": "정말 수고 많으셨습니다. 다들 잘 가십시오.",
+          "ko": "정말 수고 많으셨습니다. 다들 잘 가십시오."
+        },
+        {
+          "key": "char_simbang.bark.6",
+          "when": "low_hp_25",
+          "jeju": "무사 이렇게 몰려왔나… 아직 안 끝났다.",
+          "ko": "왜 이렇게 몰려왔나… 아직 안 끝났다."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_simbang_a",
+          "name": "멩두 굴림",
+          "weapons": [
+            "wpn_sinkal",
+            "wpn_bangul",
+            "wpn_jijeon",
+            "wpn_sainsageom",
+            "wpn_samjichang",
+            "wpn_obanggi"
+          ],
+          "passives": [
+            "psv_baekjisul",
+            "psv_chohon_jeoksam",
+            "psv_yeopjeon",
+            "psv_santong",
+            "psv_sinjangdae",
+            "psv_jusa"
+          ],
+          "targets": [
+            "evo_sinjangkal",
+            "evo_saseulchang",
+            "evo_obangjin",
+            "evo_isippalsugeom",
+            "evo_nojatdon",
+            "evo_cheoneum_bangul"
+          ],
+          "faces": [
+            "deity_yongwang__wieom",
+            "deity_jeseok_daegam__wieom",
+            "deity_chilseong__gaho",
+            "deity_janggun__wieom",
+            "deity_sansin__wieom"
+          ],
+          "kpi": {
+            "evolutions_per_run_gte": 6,
+            "gilhyung_boxes_per_run_gte": 8
+          }
+        },
+        {
+          "id": "build_simbang_b",
+          "name": "요왕맞이 물길",
+          "weapons": [
+            "wpn_bangul",
+            "wpn_sinkal",
+            "wpn_ssukmul",
+            "wpn_buchae",
+            "wpn_gilbe",
+            "wpn_janggu"
+          ],
+          "passives": [
+            "psv_chohon_jeoksam",
+            "psv_baekjisul",
+            "psv_jeonghwasu",
+            "psv_obangkkeun",
+            "psv_mituri",
+            "psv_gungchae"
+          ],
+          "targets": [
+            "evo_cheoneum_bangul",
+            "evo_sammul_ssitgim",
+            "evo_irwolseonpung",
+            "evo_begareugi"
+          ],
+          "faces": [
+            "deity_yongwang__gaho",
+            "deity_barigongju__gaho",
+            "deity_sansin__gaho",
+            "deity_jeseok_daegam__gaho",
+            "deity_chilseong__gaho"
+          ],
+          "kpi": {
+            "haewon_ratio": [
+              0.7,
+              0.8
+            ]
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 5.9,
+        "tier5": 9.2
+      }
+    },
+    {
+      "id": "char_beopsa",
+      "scope": "x1",
+      "name": {
+        "ko": "법사",
+        "hanja": "法師",
+        "en": "Beopsa"
+      },
+      "subtitle_en": "the Sutra Reciter of Chungcheong",
+      "lore_name": {
+        "ko": "최도경",
+        "hanja": "崔道經",
+        "age": 75,
+        "source": "data/narrative/cast_canon.json"
+      },
+      "lineage": "충청 앉은굿 독경무",
+      "momju": "deity_jeseok_daegam",
+      "start_weapons": [
+        {
+          "wpn": "wpn_hojakdo",
+          "at_s": 0
+        },
+        {
+          "wpn": "wpn_sogeum",
+          "at_s": 30
+        }
+      ],
+      "stat_overrides": {
+        "stat_jeonggi": 110,
+        "stat_sinbok": 1,
+        "stat_domu": 0.9
+      },
+      "start_pickups": {
+        "pick_hosinbu": 1
+      },
+      "pickup_cap_bonus": {
+        "pick_hosinbu": 1
+      },
+      "bingui_mult": 1.0,
+      "tags": [
+        "anchor"
+      ],
+      "tendency_bar": {
+        "toechi": 2,
+        "haewon": 4
+      },
+      "difficulty": 4,
+      "companion_slots": {
+        "unique": null,
+        "general": 1
+      },
+      "trait": {
+        "key": "trait_beopsa_anjeungut_dokgyeong",
+        "name": {
+          "ko": "앉은굿 독경"
+        },
+        "new": true,
+        "mechanic": {
+          "still_input_threshold": 0.2,
+          "release_grace_s": 0.3,
+          "external_push_keeps_ward": true,
+          "ward_tick": "beat",
+          "color": "white",
+          "dmg_formula": "10 * (1 + 0.05*(min(level,32)-1)) * sinppal * (1 + cmod_white_dmg_pct/100)",
+          "slow_pct": 30,
+          "radius_scales_with": "stat_doryang",
+          "gaho_progress_bonus_pct_inside": 10,
+          "dmg_cap_level": 32
+        },
+        "tiers": [
+          {
+            "level": 1,
+            "effects": [
+              {
+                "type": "ward_still_s",
+                "value": 1.0
+              },
+              {
+                "type": "ward_radius_units",
+                "value": 3.0
+              }
+            ]
+          },
+          {
+            "level": 8,
+            "effects": [
+              {
+                "type": "ward_still_s",
+                "value": 0.8
+              },
+              {
+                "type": "ward_radius_units",
+                "value": 3.5
+              }
+            ]
+          },
+          {
+            "level": 16,
+            "effects": [
+              {
+                "type": "ward_purify_sal_per_beat",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "level": 24,
+            "effects": [
+              {
+                "type": "ward_hosinbu_every_s",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "level": 32,
+            "effects": [
+              {
+                "type": "ward_eodukssini_growth_mult",
+                "value": 0.0
+              },
+              {
+                "type": "ward_eodukssini_shrink_pct_per_s",
+                "value": 10
+              }
+            ]
+          }
+        ]
+      },
+      "sintong": {
+        "key": "sintong_seorwi_seolgyeong",
+        "name": {
+          "ko": "설위설경",
+          "hanja": "設位說經"
+        },
+        "new": true,
+        "trigger": {
+          "event": "ward_continuous_s",
+          "value": 8.0
+        },
+        "effects": [
+          {
+            "type": "ward_upgrade",
+            "radius_mult": 1.3,
+            "slow_pct": 45,
+            "mass_haewon_every_beats": 2,
+            "mass_haewon_targets": "pullil_minor_only",
+            "clear_enemy_bullet_per_beat": 1,
+            "deco_count": 8
+          }
+        ],
+        "ends_on": "ward_release",
+        "cooldown_s": 0
+      },
+      "unlock": {
+        "condition": {
+          "counter": "cnt_eodukssini_silence",
+          "gte": 10
+        },
+        "cost": {
+          "cur_gongdeok": 40000
+        },
+        "retroactive_counter": true
+      },
+      "visual": {
+        "art_path": null,
+        "palette": {
+          "dopo": "#7f9c9a",
+          "collar": "#cfc8b4",
+          "drum_body": "#8f1f24",
+          "drum_skin": "#d8c9a4",
+          "seolgyeong": "#e9dcc0"
+        },
+        "hat": "black gat (heungnip)",
+        "id_primary": "pale jade dopo",
+        "id_secondary": "drum on back; seated drumming pose",
+        "body_px": [
+          42,
+          44
+        ],
+        "extra_sheets": {
+          "sit_drum": {
+            "dirs": 4,
+            "frames": 4
+          }
+        },
+        "forbid": [
+          "buddhist monk robe/shaved head",
+          "taoist bagua robe"
+        ],
+        "status": "not created (x1)",
+        "pixellab_prompt": "Korean Chungcheong-style ritual sutra reciter (beopsa), man in his mid 70s, pale jade-green dopo robe with black sash, black gat hat, a red barrel drum slung on his back, drumstick in right hand, bundle of paper scriptures at waist, calm scholarly face, low top-down view"
+      },
+      "barks": [
+        {
+          "key": "char_beopsa.bark.1",
+          "when": "run_start",
+          "ko": "자리 깔어유. 경 읽을 참이니께."
+        },
+        {
+          "key": "char_beopsa.bark.2",
+          "when": "first_ward",
+          "ko": "앉었으니께, 이제 함부로는 못 넘어와유."
+        },
+        {
+          "key": "char_beopsa.bark.3",
+          "when": "sintong",
+          "ko": "신장님 자리 모셨슈. 들어오면 풀려유."
+        },
+        {
+          "key": "char_beopsa.bark.4",
+          "when": "low_hp_25",
+          "ko": "급헐수록 천천히… 경은 끊으면 안 되는 거유."
+        },
+        {
+          "key": "char_beopsa.bark.5",
+          "when": "settle_neok",
+          "ko": "다들 잘 들으셨쥬? 그럼 이제 가셔유."
+        }
+      ],
+      "builds": [
+        {
+          "id": "build_beopsa_a",
+          "name": "옥추 독경 진",
+          "weapons": [
+            "wpn_hojakdo",
+            "wpn_sogeum",
+            "wpn_obanggi",
+            "wpn_cheoljillyeo",
+            "wpn_janggu",
+            "wpn_ssukmul"
+          ],
+          "passives": [
+            "psv_chotdae",
+            "psv_mubok",
+            "psv_sinjangdae",
+            "psv_jeung",
+            "psv_gungchae",
+            "psv_jeonghwasu"
+          ],
+          "targets": [
+            "evo_bujeong_gasim",
+            "evo_obangjin",
+            "evo_cheoljillyeojin",
+            "union_obang_cheoljin"
+          ],
+          "faces": [
+            "deity_jeseok_daegam__gaho",
+            "deity_janggun__gaho",
+            "deity_yongwang__wieom",
+            "deity_sansin__gaho",
+            "deity_chilseong__wieom"
+          ],
+          "kpi": {
+            "ward_uptime": [
+              0.45,
+              0.55
+            ],
+            "haewon_ratio_gte": 0.7
+          }
+        },
+        {
+          "id": "build_beopsa_b",
+          "name": "산군 포효",
+          "weapons": [
+            "wpn_hojakdo",
+            "wpn_sogeum",
+            "wpn_bangul",
+            "wpn_pyeongon",
+            "wpn_neokjeon",
+            "wpn_myeongdu"
+          ],
+          "passives": [
+            "psv_chotdae",
+            "psv_mubok",
+            "psv_chohon_jeoksam",
+            "psv_myeongjusil",
+            "psv_wipae",
+            "psv_baritdae"
+          ],
+          "targets": [
+            "evo_sangun_pohyodo",
+            "evo_cheoneum_bangul",
+            "union_sanullim",
+            "evo_irwol_myeongdu"
+          ],
+          "faces": [
+            "deity_jeseok_daegam__gaho",
+            "deity_sansin__wieom",
+            "deity_janggun__wieom",
+            "deity_barigongju__gaho",
+            "deity_yongwang__gaho"
+          ],
+          "kpi": {
+            "feared_enemy_ratio_gte": 0.25
+          }
+        }
+      ],
+      "power_budget": {
+        "lv1": 6.5,
+        "tier5": 9.8
+      }
+    }
+  ],
+  "balance": {
+    "power_budget_band": {
+      "lv1": [
+        5.0,
+        8.0
+      ],
+      "tier5": [
+        8.5,
+        11.5
+      ]
+    },
+    "kpi_targets": {
+      "clear_rate_no_ring_bot_min": 0.7,
+      "clear_rate_skilled_bot_spread_max_pp": 5,
+      "boss_resolve_time_spread_max_s": 60,
+      "pick_rate_min": 0.08,
+      "pick_rate_max": 0.35,
+      "per_char": {
+        "char_mansin": {
+          "no_ring": 0.78,
+          "skilled": 0.95,
+          "haewon_median": 0.5,
+          "avg_level_20m": 48
+        },
+        "char_baksu": {
+          "no_ring": 0.8,
+          "skilled": 0.95,
+          "haewon_median": 0.25,
+          "avg_level_20m": 51
+        },
+        "char_dangol": {
+          "no_ring": 0.7,
+          "skilled": 0.96,
+          "haewon_median": 0.95,
+          "avg_level_20m": 44
+        },
+        "char_myeongdu": {
+          "no_ring": 0.72,
+          "skilled": 0.94,
+          "haewon_median": 0.4,
+          "avg_level_20m": 49
+        },
+        "char_simbang": {
+          "no_ring": 0.75,
+          "skilled": 0.94,
+          "haewon_median": 0.5,
+          "avg_level_20m": 48
+        },
+        "char_beopsa": {
+          "no_ring": 0.72,
+          "skilled": 0.94,
+          "haewon_median": 0.7,
+          "avg_level_20m": 45
+        }
+      },
+      "avg_level_20m_tolerance": 4,
+      "avg_level_20m_basis": "02 §17.2 곡선 × XP 배수(1 − 0.4 × 해원비율), 03 §9.4 규칙 5"
+    },
+    "radar": {
+      "axes": [
+        "survival",
+        "toechi_dps",
+        "haewon_eff",
+        "procession",
+        "mobility",
+        "early",
+        "late_ceiling",
+        "meta_farm",
+        "skill_req"
+      ],
+      "char_mansin": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        2,
+        2
+      ],
+      "char_baksu": [
+        5,
+        5,
+        1,
+        1,
+        3,
+        4,
+        3,
+        2,
+        2
+      ],
+      "char_dangol": [
+        2,
+        1,
+        5,
+        5,
+        3,
+        2,
+        5,
+        3,
+        4
+      ],
+      "char_myeongdu": [
+        1,
+        4,
+        3,
+        2,
+        4,
+        3,
+        4,
+        2,
+        4
+      ],
+      "char_simbang": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        5,
+        3
+      ],
+      "char_beopsa": [
+        4,
+        2,
+        4,
+        2,
+        1,
+        3,
+        3,
+        2,
+        4
+      ]
+    }
+  },
+  "telemetry_events": [
+    "tel_char_run_start",
+    "tel_char_trait_tier",
+    "tel_char_sintong_fire",
+    "tel_char_baksu_counter",
+    "tel_char_dangol_fence",
+    "tel_char_myeongdu_dongja",
+    "tel_char_simbang_reroll",
+    "tel_char_beopsa_ward",
+    "tel_char_run_end"
+  ],
+  "canon_version": "1.2"
+}

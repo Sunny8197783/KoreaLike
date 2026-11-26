@@ -1,0 +1,122 @@
+{
+ "frames": [
+  {
+   "filename": "obj_gongmulsang_0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "obj_gongmulsang_1",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "obj_gongmulsang_2",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 1000
+  },
+  {
+   "filename": "obj_gongmulsang_3",
+   "frame": {
+    "x": 192,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 32
+   },
+   "duration": 1000
+  }
+ ],
+ "meta": {
+  "app": "KoreaLike tools/props_handdrawn.py",
+  "image": "obj_gongmulsang_sheet.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 256,
+   "h": 32
+  },
+  "scale": "1",
+  "pixelfx": {
+   "fps": 1,
+   "loop": false,
+   "frameWidth": 64,
+   "frameHeight": 32,
+   "columns": 4,
+   "pivot": {
+    "x": 32,
+    "y": 24
+   }
+  },
+  "korealike": {
+   "states": [
+    "full",
+    "2_3",
+    "1_3",
+    "empty"
+   ],
+   "source_prop": "prop_gutsang"
+  }
+ }
+}

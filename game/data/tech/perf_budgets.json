@@ -1,0 +1,205 @@
+{
+  "_meta": {
+    "owner_section": "14-tech-production",
+    "doc": "design/14-tech-production.md",
+    "version": "0.2",
+    "updated": "2026-11-21",
+    "note": "성능 예산과 측정 씬. 게임 안 설계값이며 외부 수치가 아니다. 런타임 상한(게임 규칙)의 원본은 07 §11.1 / data/enemies.json caps이고, 이 파일의 caps는 기술 하드 캡(성능 보장 범위)이다(D-45).",
+    "canon": "v1.2",
+    "changelog": [
+      "0.2 (캐논 v1.2): D-45 런타임 상한(적 탄 600, 구슬 병합 300, 원본 07 §11.1·enemies.json caps)과 기술 하드 캡(적 탄 1,500, 구슬 1,500·2,000)을 분리. 씬 A 구슬 600 → 300(런타임 병합 상한 안). D-43 렌더러 gl_compatibility, D-44 엔진 Godot 4.7.2 + GDScript 1차."
+    ]
+  },
+  "engine": {
+    "engine": "Godot 4.7.2",
+    "renderer": "gl_compatibility",
+    "sim_core_language": "GDScript (1차 빌드)",
+    "sim_core_followup": "C++ GDExtension soulsim: G0 성능 미달 시 핫 루프만 이관(후속)",
+    "decisions": [
+      "D-43",
+      "D-44"
+    ]
+  },
+  "target_hardware": {
+    "id": "steam_deck_lcd",
+    "cpu": "Zen 2 4C/8T",
+    "gpu": "RDNA2 8CU",
+    "resolution": [
+      1280,
+      800
+    ]
+  },
+  "frame_budget_ms": {
+    "target_fps": 60,
+    "frame_ms": 16.67,
+    "sim": {
+      "move_separate": 1.2,
+      "projectiles": 1.2,
+      "damage_events": 0.6,
+      "pickups": 0.3,
+      "ritual": 0.3,
+      "ritual_ring_close_frame_extra": 1.0,
+      "spawn_ai": 0.4,
+      "total": 4.0
+    },
+    "presentation_script": 2.0,
+    "render_submit_cpu": 3.0,
+    "ui": 1.0,
+    "slack": 6.67,
+    "gpu_max": 10.0
+  },
+  "pass_criteria": {
+    "scenes_a_b_d": {
+      "p95_ms_max": 16.6
+    },
+    "scene_c": {
+      "p95_ms_max": 16.6,
+      "or_p99_ms_max": 20.0
+    },
+    "measurement": {
+      "vsync": false,
+      "build": "release_export",
+      "runs": 3,
+      "report": [
+        "avg",
+        "p95",
+        "p99"
+      ]
+    }
+  },
+  "caps": {
+    "enemy_hard_cap": 2500,
+    "enemy_design_cap_v1": 400,
+    "enemy_store_capacity": 2560,
+    "projectile_capacity": 4096,
+    "player_projectiles_visual_max": 3000,
+    "enemy_bullets_runtime_ref": 600,
+    "enemy_bullets_tech_hard_cap": 1500,
+    "pickup_capacity": 3072,
+    "orb_merge_runtime_ref": 300,
+    "orb_tech_hard_cap": 1500,
+    "orb_stress_scene_max": 2000,
+    "sal_algaengi_max": 200,
+    "procession_capacity": 64,
+    "event_ring_per_tick": 4096,
+    "damage_numbers": 256,
+    "vfx_oneshot_per_type": 64,
+    "audio_oneshot_players": 48,
+    "draw_calls_in_run_max": 120,
+    "_note": "*_runtime_ref = 런타임 상한(원본 07 §11.1, enemies.json caps.enemy_projectiles 600 / combat_core.json xp.orb_merge_count 300). *_tech_hard_cap·orb_stress_scene_max = 기술 하드 캡: 런타임 규칙이 잘못돼도 넘지 않도록 강제하는 안전 상한과 성능 보장 범위이며 게임 규칙 값이 아니다(D-45). 구슬이 orb_tech_hard_cap을 넘으면 런타임 병합 규칙과 같은 방식으로 강제 병합한다"
+  },
+  "scenes": [
+    {
+      "id": "perf_scene_a_normal",
+      "desc": "평시 12분대 (v1 설계 상한)",
+      "enemies": 400,
+      "yeongga": 24,
+      "player_projectiles": 800,
+      "enemy_bullets": 150,
+      "orbs": 300,
+      "sal": 80,
+      "note": "v1 실제 플레이 범위. 적 탄·구슬은 런타임 상한(600 / 300) 안"
+    },
+    {
+      "id": "perf_scene_b_dwitjeon",
+      "desc": "뒷전 + 무한굿·살 맺힘 고단 가정",
+      "enemies": 1200,
+      "yeongga": 60,
+      "player_projectiles": 2000,
+      "enemy_bullets": 100,
+      "orbs": 1500,
+      "sal": 200,
+      "extra": [
+        "gongmulsang_12",
+        "sinmyeong_oreum",
+        "ring_chain"
+      ],
+      "note": "구슬 1,500 = 기술 하드 캡 검증값(런타임 병합 300보다 크다)"
+    },
+    {
+      "id": "perf_scene_c_stress",
+      "desc": "기술 하드 캡 스트레스",
+      "enemies": 2500,
+      "yeongga": 60,
+      "player_projectiles": 3000,
+      "enemy_bullets": 300,
+      "orbs": 2000,
+      "sal": 200,
+      "extra": [
+        "ring_close_1_per_s_for_10s",
+        "subtitles_8"
+      ],
+      "note": "기술 하드 캡 스트레스. 구슬 2,000 = orb_stress_scene_max"
+    },
+    {
+      "id": "perf_scene_d_boss",
+      "desc": "20:00 보스",
+      "enemies": 400,
+      "yeongga": 40,
+      "player_projectiles": 1200,
+      "enemy_bullets": 1500,
+      "orbs": 400,
+      "sal": 120,
+      "extra": [
+        "boss_256px",
+        "knots_7"
+      ],
+      "note": "적 탄 1,500 = 기술 하드 캡 검증값(런타임 상한 600의 2.5배)"
+    },
+    {
+      "id": "perf_scene_e_proto",
+      "desc": "1주 프로토타입 게이트(캐논 8.5 기준 7)",
+      "enemies": 300,
+      "yeongga": 24,
+      "player_projectiles": 400,
+      "enemy_bullets": 50,
+      "orbs": 300,
+      "sal": 50,
+      "note": "1주 프로토타입(GDScript만). 적 = 아귀 + 달걀귀신(C-38)"
+    }
+  ],
+  "memory_budget": {
+    "ram_gb_max": 1.5,
+    "vram_mb_max": 512,
+    "enemy_bytes_each": 48,
+    "install_mb_ea_max": 600,
+    "install_mb_1_0_max": 900
+  },
+  "load_budget_s": {
+    "boot_to_title_ssd": 5,
+    "boot_to_title_sd": 10,
+    "lobby_to_run": 3,
+    "data_json_load_ms": 150
+  },
+  "save_budget_ms": {
+    "serialize_main_thread_max": 5,
+    "compress_write_worker_max": 50,
+    "profile_write_in_run_main_thread_max": 2
+  },
+  "spatial_hash": {
+    "cell_units": 2.0,
+    "buckets": 4096,
+    "separation_neighbors_max": 8,
+    "k_sep_per_s": 8.0
+  },
+  "lod": {
+    "lod0_radius_units": 12,
+    "lod1_radius_units": 24,
+    "recycle_distance_units": 30,
+    "lod1_separation_every_ticks": 4
+  },
+  "spawn_ring": {
+    "min_radius_units": 13.5,
+    "formula": "half_diagonal_of_visible_area + 2.0",
+    "forward_bias": {
+      "share": 0.6,
+      "half_angle_deg": 60
+    }
+  },
+  "tick": {
+    "hz": 60,
+    "max_ticks_per_frame": 4,
+    "run_20min_ticks": 72000,
+    "forced_saja_ticks": 82800
+  }
+}

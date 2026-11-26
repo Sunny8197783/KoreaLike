@@ -1,0 +1,279 @@
+{
+ "entity": "char_mansin",
+ "kind": "sprite",
+ "meta": {
+  "dir": "C:\\Users\\김태양\\Desktop\\KoreaLike\\game\\assets\\_review\\post_only\\char_mansin__master",
+  "tier": "player",
+  "role": "player",
+  "canvas_spec": [
+   64
+  ],
+  "canvas_actual": "80x80",
+  "pivot": [
+   40,
+   74
+  ],
+  "pivot_src": "derived(캔버스 불일치: 사양 64 기준 하단 오프셋)",
+  "palette": "master-all(65)",
+  "frames": 106,
+  "anims": [
+   "bingui",
+   "death",
+   "gut_dance",
+   "hurt",
+   "idle",
+   "jakdu_dance",
+   "rot",
+   "walk"
+  ]
+ },
+ "summary": {
+  "PASS": 12,
+  "FAIL": 6,
+  "WARN": 2,
+  "N/A": 2
+ },
+ "checks": [
+  {
+   "id": "L1",
+   "name": "캔버스",
+   "status": "FAIL",
+   "value": {
+    "80x80": 106
+   },
+   "detail": "사양 [64]"
+  },
+  {
+   "id": "L2",
+   "name": "알파",
+   "status": "PASS",
+   "value": {
+    "semi_px": 0,
+    "semi_frames_pct": 0.0
+   },
+   "detail": "0<a<255 픽셀 0개 (0.00% of canvas px)"
+  },
+  {
+   "id": "L3",
+   "name": "팔레트 소속",
+   "status": "PASS",
+   "value": {
+    "off_colors": 0,
+    "off_px_pct": 0.0,
+    "compliance_pct": 100.0
+   },
+   "detail": "기준 master-all(65), 마스터 최근접 평균 ΔE2000 0.00"
+  },
+  {
+   "id": "L4",
+   "name": "색 수",
+   "status": "FAIL",
+   "value": {
+    "entity_colors": 47,
+    "budget": 24,
+    "frame_max": 36
+   },
+   "detail": "엔티티 전 프레임·방향 합집합"
+  },
+  {
+   "id": "L5",
+   "name": "예약 백",
+   "status": "PASS",
+   "value": {
+    "px": 0,
+    "colors": []
+   },
+   "detail": "#f2ece0 ±ΔE2000 6"
+  },
+  {
+   "id": "L6",
+   "name": "예약 청",
+   "status": "FAIL",
+   "value": {
+    "exact_pct": 9.88,
+    "nearest_snap_pct": 9.88
+   },
+   "detail": "ch 램프 ≤2% (정확 일치 / 마스터 최근접 스냅 기준 중 큰 값)"
+  },
+  {
+   "id": "L7",
+   "name": "외곽선",
+   "status": "PASS",
+   "value": {
+    "outline_1a1a1a_pct": 100.0,
+    "dark_outer_pct": 100.0
+   },
+   "detail": "실루엣 외곽(4이웃 투명) 픽셀 21950개 중 #1a1a1a ≥95%"
+  },
+  {
+   "id": "L8",
+   "name": "여백",
+   "status": "PASS",
+   "value": {
+    "left": 8,
+    "right": 15,
+    "top": 14,
+    "bottom": 5
+   },
+   "detail": "최소 사방 2 / 위 3. 위반: -"
+  },
+  {
+   "id": "L9",
+   "name": "피벗",
+   "status": "PASS",
+   "value": {
+    "foot_min": 74,
+    "foot_max": 74,
+    "pivot_y": 74,
+    "bad_frames": 0
+   },
+   "detail": "모든 프레임 발끝 = 피벗 y ±1"
+  },
+  {
+   "id": "L10",
+   "name": "방향 중심",
+   "status": "PASS",
+   "value": {
+    "worst_range_px": 1.0,
+    "worst_anim": "rot",
+    "pivot_x": 40
+   },
+   "detail": "애니별 0프레임 방향간 bbox 중심 x 범위: {\"hurt\": 0.5, \"idle\": 0.5, \"rot\": 1.0, \"walk\": 1.0}"
+  },
+  {
+   "id": "L11",
+   "name": "몸 높이",
+   "status": "FAIL",
+   "value": {
+    "height": 60,
+    "target": [
+     44,
+     48
+    ],
+    "over_pct": 25.0
+   },
+   "detail": "south.png 기준, +15% 초과 → 7.2 재생성 조건 1"
+  },
+  {
+   "id": "L12",
+   "name": "정지↔이동",
+   "status": "PASS",
+   "value": {
+    "south": {
+     "idle": "idle_south_0.png",
+     "move": "walk_south_0.png",
+     "dh": 1,
+     "dfoot": 0
+    },
+    "east": {
+     "idle": "idle_east_0.png",
+     "move": "walk_east_0.png",
+     "dh": 0,
+     "dfoot": 0
+    },
+    "north": {
+     "idle": "idle_north_0.png",
+     "move": "walk_north_0.png",
+     "dh": 1,
+     "dfoot": 0
+    }
+   },
+   "detail": "위반 방향: -"
+  },
+  {
+   "id": "L13",
+   "name": "루프 일관성",
+   "status": "FAIL",
+   "value": {
+    "area_var_pct": 9.4,
+    "area_worst": "gut_dance_south",
+    "cx_range": 5.0,
+    "cx_worst": "gut_dance_south"
+   },
+   "detail": "루프 애니 ['gut_dance', 'idle', 'jakdu_dance', 'walk']. 위반 1묶음: gut_dance_south"
+  },
+  {
+   "id": "L14",
+   "name": "고립 픽셀",
+   "status": "PASS",
+   "value": {
+    "isolated_pct": 0.04,
+    "worst_frame_pct": 0.3,
+    "worst_frame": "death_south_1.png",
+    "avg_cluster_px": 9.56
+   },
+   "detail": "내부(외곽 제외) 8이웃 같은 RGB 없음 >8% FAIL, 평균 클러스터 <2.5 WARN"
+  },
+  {
+   "id": "L15",
+   "name": "미러 정책",
+   "status": "PASS",
+   "value": {
+    "west_files": 19,
+    "flip_of_east": 19,
+    "independent": 0
+   },
+   "detail": "독립 생성 west는 FAIL(flip_h(E)와 픽셀 동일한 파생본은 허용, --strict-west면 전부 FAIL)"
+  },
+  {
+   "id": "L16",
+   "name": "방향 의상 일관성",
+   "status": "PASS",
+   "value": {
+    "S-E": 0.75,
+    "S-N": 0.875
+   },
+   "detail": "정지 프레임 내부 상위 8색(마스터 스냅) 겹침 <75% WARN → G0 육안 확인"
+  },
+  {
+   "id": "L17",
+   "name": "광원",
+   "status": "WARN",
+   "value": -0.0324,
+   "detail": "south.png 좌반−우반 평균 상대휘도(추정 지표)"
+  },
+  {
+   "id": "L18",
+   "name": "명도 띠",
+   "status": "PASS",
+   "value": {
+    "max_lum": 0.723,
+    "cap": 0.723,
+    "px_over": 0
+   },
+   "detail": "플레이어 최고 명도 ≤ #e9dcc0"
+  },
+  {
+   "id": "L19",
+   "name": "VFX",
+   "status": "N/A",
+   "value": null,
+   "detail": "VFX 시트 입력에서만"
+  },
+  {
+   "id": "L20",
+   "name": "import 회귀",
+   "status": "N/A",
+   "value": {
+    "import_files": 0
+   },
+   "detail": "전역 검사는 --imports game/"
+  },
+  {
+   "id": "L21",
+   "name": "앵커",
+   "status": "FAIL",
+   "value": {
+    "file": "data\\anchors\\char_mansin.json"
+   },
+   "detail": "앵커 파일 없음(오버레이·지물·발사 대상)"
+  },
+  {
+   "id": "L22",
+   "name": "workbench 점수",
+   "status": "WARN",
+   "value": null,
+   "detail": "미측정: pixelart_workbench score 결과를 --workbench-score/--workbench 로 전달"
+  }
+ ]
+}

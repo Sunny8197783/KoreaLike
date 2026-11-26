@@ -1,0 +1,154 @@
+{
+ "frames": [
+  {
+   "filename": "vfx_gyeoldanta_cut 0",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_gyeoldanta_cut 1",
+   "frame": {
+    "x": 32,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_gyeoldanta_cut 2",
+   "frame": {
+    "x": 64,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  },
+  {
+   "filename": "vfx_gyeoldanta_cut 3",
+   "frame": {
+    "x": 96,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 32,
+    "h": 32
+   },
+   "sourceSize": {
+    "w": 32,
+    "h": 32
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "https://github.com/patch-gg/pixelfx",
+  "version": "1",
+  "image": "vfx_gyeoldanta_cut.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 128,
+   "h": 32
+  },
+  "scale": "1",
+  "frameTags": [
+   {
+    "name": "vfx_gyeoldanta_cut",
+    "from": 0,
+    "to": 3,
+    "direction": "forward"
+   }
+  ],
+  "pixelfx": {
+   "id": "korean/vfx_gyeoldanta_cut",
+   "name": "Gyeoldanta cut (먹 X자 베기)",
+   "fps": 20.0,
+   "loop": false,
+   "frames": 4,
+   "frameWidth": 32,
+   "frameHeight": 32,
+   "frameSize": [
+    32,
+    32
+   ],
+   "columns": 4,
+   "pivot": [
+    16,
+    16
+   ],
+   "blend": "normal",
+   "layer": "L10",
+   "beat_snap": false,
+   "max_concurrent": 40,
+   "palette": [
+    "#e4604f",
+    "#fff1b8",
+    "#c8322d",
+    "#544a6b",
+    "#3f3654",
+    "#8c1f22",
+    "#2f2840"
+   ],
+   "color_role": "R+M",
+   "note": "one-shot: last frame is empty (effect has ended)",
+   "art_fix": {
+    "tool": "game/vfx/tools/vfx_art_fix.py",
+    "colors": [
+     7,
+     6
+    ],
+    "semi_before": 0,
+    "blend": "normal",
+    "size": "ok"
+   }
+  }
+ }
+}

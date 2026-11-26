@@ -1,0 +1,405 @@
+{
+  "_meta": {
+    "doc": "design/02-core-loop-combat.md 7.8 (동행령)",
+    "owner": "02 (canon 8.3: data/companions.json, 02 소유)",
+    "version": "0.11",
+    "canon": "design/01-concept-and-canon.md v1.2 (4.11 동행령 공통 규칙·ID)",
+    "created": "2026-11-21",
+    "source": "canon 4.11 공통 규칙·효과표, 02 7.2·7.4(행렬 자리·대신 맞기 제외), 03 2.10·6.6(슬롯·comp_dongja), 09 11.3·12(해금), characters.json char_myeongdu.companion_rules",
+    "note": "C-37 신규 파일. 결정·캐논에 없는 수치는 만들지 않고 null(TBD)로 둔다. 효과 피해 계수(ritual_ref × 계수)는 canon 4.11이 02에 위임했으나 아직 미정이다(15-balance 신설 전까지 02 22장 임시 소유)."
+  },
+  "rules": {
+    "lines": {
+      "yeongga": "동행령(영가형). 해원록에서 해당 종 사연 조각을 모두 모으면 해금(v1 3조각)",
+      "sinjang": "호위 신장(신장형, 적 계열). 벽사록 단계 합으로 해금"
+    },
+    "slots": {
+      "general": 1,
+      "myeongdu": "comp_dongja 고정 + general 1",
+      "ref": "canon 4.11 / 03 2.10 / characters.json companion_slots"
+    },
+    "position": "procession_front (무당 바로 뒤, 첫 브레드크럼 오프셋)",
+    "follow_slot_index": {
+      "comp_dongja": 0,
+      "general": 1,
+      "ref": "02 7.2"
+    },
+    "counts_toward_procession_cap": false,
+    "lifetime": null,
+    "cheondo": false,
+    "hitbox": false,
+    "substitute_target": false,
+    "substitute_rule": "대신 맞기는 '동행이 아닌 가장 앞 영가'부터 (02 7.4)",
+    "immunities": [
+      "geogugwi_suction",
+      "saja_guidance",
+      "gumiho_dokkaebi_mihok_detach",
+      "ring_effect3_cheondo_and_lifetime_extend"
+    ],
+    "damage": {
+      "yeongga_color": "white",
+      "sinjang_color": "red",
+      "base": "ritual_ref (canon 3.2.3a, 04 2.8 / weapons.json ritual_ref_by_level)",
+      "coeff_of_ritual_ref": null,
+      "coeff_status": "미정 — canon 4.11이 02에 위임"
+    },
+    "overlap_with_deity": {
+      "rule": "같은 효과를 신령 면·권능이 이미 주면 중복 발동하지 않고 그 효과 수치 +50%",
+      "bonus_mult": 0.5,
+      "example": "comp_cheonyeo 대리 사격 + 바리 가호",
+      "ref": "canon 4.11"
+    },
+    "guard_sinjang_vs_janggun_gaho": "호위 신장 동행은 행렬 맨 앞, 장군 가호 '오방신장 4기 호위'(권능)는 무당 공전. 둘 다 있으면 06 9.3 C3 자리 규칙 (canon 4.11)",
+    "save": "런 스냅샷에 동행 ID·내부 쿨다운 저장 (canon 4.11, 14)",
+    "bark_key": "comp_*.bark.n (canon v1.2 D-33)"
+  },
+  "companions": [
+    {
+      "id": "comp_dongja",
+      "name_ko": "동자령",
+      "line": "yeongga",
+      "character_unique": "char_myeongdu",
+      "unlock": {
+        "type": "character_unique",
+        "ref": "03 2.10"
+      },
+      "follow_slot": 0,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": null,
+      "combat_judgement": false,
+      "effect_ko": "풀릴 기색 예고·복귀 귀띔(백 지원)만 한다. 전투 판정 없음 — 피해·결단·퇴치 판정·적 무구 조준 변경·적 탄 소거를 하지 않는다 (캐논 v1.2 D-27/C-28)",
+      "effect": {
+        "kind": "giseak_preview_and_return_nudge",
+        "params_owner": "03 6.6 / characters.json char_myeongdu.companion_rules.comp_dongja",
+        "summary": {
+          "giseak_preview_radius_u": 5.0,
+          "return_nudge_extend_s": 2.0,
+          "neokduri_reply_radius_u": 3.0
+        },
+        "removed": "결단타 시 분신 공격 (v1.0 canon 4.11 원문, 캐논 v1.2 D-27로 폐지)"
+      }
+    },
+    {
+      "id": "comp_dalgyal",
+      "name_ko": "달걀귀신 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_dalgyal_gwisin",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_dalgyal_gwisin",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "해원 시 원혼 구슬 +10%",
+      "effect": {
+        "trigger": "haewon",
+        "orb_xp_mult_add": 0.1
+      }
+    },
+    {
+      "id": "comp_cheonyeo",
+      "name_ko": "처녀귀신 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_cheonyeo_gwisin",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_cheonyeo_gwisin",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "행렬 영가가 원혼 탄막 대리 사격",
+      "effect": {
+        "trigger": "procession",
+        "kind": "yeongga_proxy_fire",
+        "fire_params": null,
+        "damage_coeff_of_ritual_ref": null,
+        "overlap_note": "바리 가호와 겹치면 중복 없이 +50% (rules.overlap_with_deity)"
+      }
+    },
+    {
+      "id": "comp_mulgwi",
+      "name_ko": "물귀신 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_mul_gwisin",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_mul_gwisin",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "해원 시 맑은 물 장판",
+      "effect": {
+        "trigger": "haewon",
+        "kind": "spawn_clear_water_zone",
+        "zone_params": null
+      }
+    },
+    {
+      "id": "comp_agwi",
+      "name_ko": "아귀 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_agwi",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_agwi",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "공물 회복 ×2, 뒷전 공물상 효율 ×2",
+      "effect": {
+        "pick_gongmul_heal_mult": 2.0,
+        "obj_gongmulsang_efficiency_mult": 2.0,
+        "ref": "02 19 pick_gongmul / obj_gongmulsang"
+      }
+    },
+    {
+      "id": "comp_mongdal",
+      "name_ko": "몽달귀신 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_mongdal_gwisin",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_mongdal_gwisin",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "길닦음 시 고리 둘레 돌진 1회",
+      "effect": {
+        "trigger": "gildakkeum",
+        "kind": "ring_perimeter_dash",
+        "count": 1,
+        "damage_coeff_of_ritual_ref": null,
+        "ref": "02 8.4 효과 6"
+      }
+    },
+    {
+      "id": "comp_dokkaebi_bul",
+      "name_ko": "도깨비불 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_dokkaebi_bul",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_dokkaebi_bul",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "등불 점화 필요 해원 100→70",
+      "effect": {
+        "lantern_haewon_required_from": 100,
+        "lantern_haewon_required_to": 70,
+        "ref": "02 19 obj_gutpan_deungbul"
+      }
+    },
+    {
+      "id": "comp_gaekgwi",
+      "name_ko": "객귀 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_gaekgwi",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_gaekgwi",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "풀릴 기색 지속 12→16초",
+      "effect": {
+        "giseak_duration_from_s": 12.0,
+        "giseak_duration_to_s": 16.0,
+        "ref": "combat_core.json han.giseak_duration_gaekgwi",
+        "stacks_with": "comp_dongja return_nudge (가산, 타이머 리셋 없음 — 02 6.4)"
+      }
+    },
+    {
+      "id": "comp_yeongsan",
+      "name_ko": "영산 동행령",
+      "line": "yeongga",
+      "species_ref": "enm_yeongsan",
+      "unlock": {
+        "type": "haewonrok_species_complete",
+        "species": "enm_yeongsan",
+        "fragments_v1": 3,
+        "ref": "canon 4.11 / 09 12 / 10"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "white",
+      "effect_ko": "대신 맞기 천도 시 정기 +2%",
+      "effect": {
+        "trigger": "substitute_cheondo",
+        "heal_hp_ratio": 0.02,
+        "ref": "02 7.1"
+      }
+    },
+    {
+      "id": "comp_sinjang_dong",
+      "name_ko": "동방 청제 신장",
+      "line": "sinjang",
+      "unlock": {
+        "type": "byeoksarok_tier_sum",
+        "tiers": 18,
+        "ref": "09 11.3 / meta_economy.json byeoksarok.milestones"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "red",
+      "adaptation": "[각색] 오방신장의 사방 신장 모티프 (canon 4.11)",
+      "effect_ko": "살 거두기 반경 +1.0유닛",
+      "effect": {
+        "byeoksa_collect_radius_add_u": 1.0,
+        "ref": "combat_core.json byeoksa.collect_radius_u"
+      }
+    },
+    {
+      "id": "comp_sinjang_seo",
+      "name_ko": "서방 백제 신장",
+      "line": "sinjang",
+      "unlock": {
+        "type": "byeoksarok_tier_sum",
+        "tiers": 36,
+        "ref": "09 11.3 / meta_economy.json byeoksarok.milestones"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "red",
+      "adaptation": "[각색] 오방신장의 사방 신장 모티프 (canon 4.11)",
+      "effect_ko": "원귀 회귀 시 원귀 전원에 표식(받는 피해 +20%, 6초)",
+      "effect": {
+        "trigger": "wongwi_return",
+        "kind": "mark_all_wongwi",
+        "status_id": null,
+        "status_note": "st_pyosik(+10%, 02 11.3)과 수치가 달라 별도 표식. ID 미정",
+        "damage_taken_add": 0.2,
+        "duration_s": 6.0,
+        "art_note": "갑옷 악센트는 오방 백 예약색 대신 한지 베이지 (canon 4.11)"
+      }
+    },
+    {
+      "id": "comp_sinjang_nam",
+      "name_ko": "남방 적제 신장",
+      "line": "sinjang",
+      "unlock": {
+        "type": "byeoksarok_tier_sum",
+        "tiers": 54,
+        "ref": "09 11.3 / meta_economy.json byeoksarok.milestones"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "red",
+      "adaptation": "[각색] 오방신장의 사방 신장 모티프 (canon 4.11)",
+      "effect_ko": "한 파열 시 8% 확률로 소형 충격파(벽사 오름과 같은 규격, 오름 중에는 중복 없음)",
+      "effect": {
+        "trigger": "han_rupture",
+        "chance": 0.08,
+        "shockwave_ref": "combat_core.json byeoksa.shockwave",
+        "suppressed_during_byeoksa_oreum": true,
+        "rng": "rng_combat"
+      }
+    },
+    {
+      "id": "comp_sinjang_buk",
+      "name_ko": "북방 흑제 신장",
+      "line": "sinjang",
+      "unlock": {
+        "type": "byeoksarok_tier_sum",
+        "tiers": 72,
+        "ref": "09 11.3 / meta_economy.json byeoksarok.milestones"
+      },
+      "follow_slot": 1,
+      "hitbox": false,
+      "counts_toward_cap": false,
+      "suction_immune": true,
+      "saja_immune": true,
+      "mihok_immune": true,
+      "ring_effect3_immune": true,
+      "damage_color": "red",
+      "adaptation": "[각색] 오방신장의 사방 신장 모티프 (canon 4.11)",
+      "effect_ko": "결단타 성공 시 '막기' 1회 충전(최대 1, 쿨 10초) — 적 빌드의 방어 수단",
+      "effect": {
+        "trigger": "gyeoldan_success",
+        "block_charges_max": 1,
+        "cooldown_s": 10.0
+      }
+    }
+  ]
+}

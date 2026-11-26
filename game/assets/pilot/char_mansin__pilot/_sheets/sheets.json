@@ -1,0 +1,106 @@
+{
+ "char_mansin__pilot__idle_south.png": {
+  "anim": "idle",
+  "dir": "south",
+  "frames": 4,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__idle_east.png": {
+  "anim": "idle",
+  "dir": "east",
+  "frames": 4,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__idle_north.png": {
+  "anim": "idle",
+  "dir": "north",
+  "frames": 4,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__idle_west.png": {
+  "anim": "idle",
+  "dir": "west",
+  "frames": 4,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__walk_south.png": {
+  "anim": "walk",
+  "dir": "south",
+  "frames": 8,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__walk_east.png": {
+  "anim": "walk",
+  "dir": "east",
+  "frames": 8,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__walk_north.png": {
+  "anim": "walk",
+  "dir": "north",
+  "frames": 8,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ },
+ "char_mansin__pilot__walk_west.png": {
+  "anim": "walk",
+  "dir": "west",
+  "frames": 8,
+  "frame_size": [
+   64,
+   64
+  ],
+  "pivot": [
+   32,
+   58
+  ]
+ }
+}
