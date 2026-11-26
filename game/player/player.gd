@@ -37,6 +37,10 @@ var sprite: Sprite2D
 var shadow: Sprite2D
 var rim: Sprite2D                           # 금 테·점멸 실루엣(z7)
 var foot_mark: Node2D                       # 발밑 마름모·타원(z7)
+var held: HeldWeapon = null                 # 손에 든 무기(design/19 §6, 렌더 전용)
+var cell_anim: String = "idle"              # 이번 프레임 셀(손 기준점 anchors 조회용)
+var cell_frame: int = 0
+var _aim: Vector2 = Vector2.DOWN            # 마지막 공격 방향(가장 가까운 적 쪽). 쏜 적 없으면 이동 방향
 var _bot: PlayerBot = null
 
 # --- 렌더 상태 ---
@@ -125,6 +129,7 @@ func _ready() -> void:
 	_mat.shader = load("res://shaders/actor_pixel.gdshader") as Shader
 	sprite.material = _mat
 	_setup_rim()
+	_setup_held()
 	shadow = $Shadow as Sprite2D
 	shadow.texture = SpriteLib.shadow_tex(SHADOW_W, SHADOW_H)
 	shadow.centered = false
@@ -170,6 +175,27 @@ func _setup_rim() -> void:
 	_mark = _player_mark()
 	if _mark >= 2:
 		_build_ellipse()
+
+
+## 손 무기 층: 몸 Sprite 바로 다음(트리 순서 = 같은 z 에서 몸 위), 금 테 Rim(z7) 아래.
+func _setup_held() -> void:
+	held = HeldWeapon.new()
+	held.name = "Held"
+	held.player = self
+	add_child(held)
+	move_child(held, sprite.get_index() + 1)
+
+
+## 손 위치(월드, 렌더 정수 좌표). which: &"main" | &"off" | &"both" (design/19 §6.1)
+func hand_world(which: StringName = &"main") -> Vector2:
+	if held == null:
+		return render_pos + Vector2(0, -16)
+	return global_position + held.hand_local(which)
+
+
+## 마지막 공격 방향(쏜 순간 가장 가까운 적 쪽). 쏜 적이 없으면 이동 방향.
+func aim_dir() -> Vector2:
+	return _aim if _aim.length_squared() > 0.01 else last_move_dir
 
 
 static func _player_mark() -> int:
@@ -416,6 +442,8 @@ func render(alpha: float) -> void:
 		_place(Vector2.ZERO)
 		sprite.visible = true
 		_sync_rim(false, Game.anim_tick_cur)
+		if held != null:
+			held.sync(false)
 		return
 	# --- 이동/정지 판정(히스테리시스) ---
 	var v2: float = vel.length_squared()
@@ -536,6 +564,8 @@ func render(alpha: float) -> void:
 		hidden = bt >= _blink_on
 	sprite.visible = not hidden
 	_sync_rim(hidden, tick)
+	if held != null:
+		held.sync(hidden)
 
 
 func _enter_idle(tick: int) -> void:
@@ -563,6 +593,8 @@ func _apply_cell(key: StringName, row: int, frame: int) -> void:
 		_set_p(&"pivot", Vector2(piv))
 		_set_p(&"hinge_y", float(at["hinge_y"]))
 	var c: Vector2i = at["cell"]
+	cell_anim = String(at.get("anim", key))
+	cell_frame = clampi(frame, 0, int(at["cols"]) - 1)
 	var origin: Vector2 = Vector2(clampi(frame, 0, int(at["cols"]) - 1) * c.x, clampi(row, 0, 2) * c.y)
 	sprite.region_rect = Rect2(origin, Vector2(c))
 	_set_p(&"cell_origin", origin)
@@ -593,6 +625,15 @@ func _on_damaged(_amount: float, _src: StringName, _hp: float, _hp_max: float) -
 
 
 func _on_weapon_fired(weapon_id: StringName, _slot: int, _pos: Vector2) -> void:
+	if held != null:
+		held.note_fired(weapon_id)
+	var em0: EnemyManager = Game.enemies as EnemyManager
+	if em0 != null:
+		var i0: int = em0.nearest(global_position, 16.0 * K.UNIT_PX)
+		if i0 >= 0:
+			var d0: Vector2 = em0.pos_of(i0) - global_position
+			if d0.length_squared() > 1.0:
+				_aim = d0.normalized()
 	var px_: int = int(_recoil_map.get(weapon_id, 0))
 	var wd: Dictionary = Data.weapon(String(weapon_id))
 	var fe: Variant = wd.get("feel", null)

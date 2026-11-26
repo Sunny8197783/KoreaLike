@@ -50,6 +50,13 @@ var _beats: int = 0
 var _counter_cd: float = 0.0
 var _res_tick: int = -100000
 var _aura_hits: int = 0
+# 손 무기·화려함(design/19 §5.2 C, §5.3 작두·방울 — 렌더 전용)
+const FLOWER_CAP: int = 8              # 흰 무기 적중 '풀림 꽃'(같은 적 1초 1회)
+var _fl_pos: PackedVector2Array = PackedVector2Array()
+var _fl_tick: PackedInt32Array = PackedInt32Array()
+var _fl_head: int = 0
+var _fl_last: PackedInt32Array = PackedInt32Array()      # 적 슬롯별 마지막 꽃 틱
+var _j2_tick: int = -100000                              # 작두 J2 무구당 0.5초 쿨다운
 
 
 func _on_setup() -> void:
@@ -67,6 +74,12 @@ func _on_setup() -> void:
 	p_slam.resize(PULSE_CAP)
 	p_slam.fill(0)
 	_hit_pulse.resize(PULSE_CAP * EnemyManager.CAPACITY)
+	_fl_pos.resize(FLOWER_CAP)
+	_fl_tick.resize(FLOWER_CAP)
+	_fl_tick.fill(-100000)
+	if _is_aura() and is_white():
+		_fl_last.resize(EnemyManager.CAPACITY)
+		_fl_last.fill(-100000)
 	if bool(params.get("gideok", false)):
 		Events.player_damaged.connect(_on_player_damaged)
 	if bool(params.get("sub_trail", false)):
@@ -115,6 +128,11 @@ func fire() -> void:
 				continue
 			deal(i, s("dmg", 3.0), (em.pos_of(i) - player_pos()).normalized(), s("kb", 0.0))
 			_aura_hits += 1
+			if not _fl_last.is_empty() and (em.flags[i] & EnemyManager.F_PULLIL) != 0 and Game.game_tick - _fl_last[i] >= K.TICK_HZ:
+				_fl_last[i] = Game.game_tick       # 풀림 꽃(렌더 전용 기록 — 판정 무관)
+				_fl_pos[_fl_head] = em.pos_of(i) + Vector2(0, -roundf(em.body_h_of(i) * 0.5) - 4.0)
+				_fl_tick[_fl_head] = Game.game_tick
+				_fl_head = (_fl_head + 1) % FLOWER_CAP
 			if slow > 0.0 and (em.flags[i] & EnemyManager.F_PULLIL) != 0:
 				apply_status(i, &"st_dunhwa", s("cd", 0.6) + 0.1, slow)
 		return
@@ -225,6 +243,11 @@ func tick(dt: float) -> void:
 				m = 1.3                       # 등 뒤 반원 강화(세화)
 			deal(i, p_dmg[p], kd, p_kb[p], m)
 			p_hits[p] += 1
+			if p_slam[p] > 0 and p_hits[p] == 1 and Game.game_tick - _j2_tick >= 30 and new_hitstop_on():
+				# J2(design/19 §5.0): 무거운 무구 첫 적중 16ms + 킥 1px(무구당 0.5초). 3마리 이상이면 아래 J3(jakdu_slam)
+				_j2_tick = Game.game_tick
+				Juice.hitstop(16, 2)
+				Juice.kick(Vector2.DOWN, 1)
 			if fear:
 				apply_status(i, &"st_gyeongak", s("fear", 1.5) * dur_mult())
 				apply_status(i, &"st_gyeongjik", s("stagger", 0.3))
@@ -312,13 +335,18 @@ func draw_ground(ci: CanvasItem) -> void:
 	if bool(params.get("fear", false)):
 		_draw_sehwa(ci, o)
 	if _is_aura():
-		# 상시 오라 테: 1px 점선(어두운 팔레트), 박마다 시트
+		# 상시 오라 테: 1px 점선 한지 α0.35(평시는 낮게 — 박 순간만 밝다, design/19 §5.2 C)
 		var r: float = _radius()
+		# 박 맥동 원판(2f, 한지 α0.14): 바닥 층(z−2)이라 잡귀·무당 아래에서 땅만 밝힌다 — 적 실루엣은 또렷이 남고
+		# 무당 몸 상자 채움은 0(design/19 §5.1 그리기 순서 '−2 장판 채움'). 군중이면 끔.
+		var bage: int = Game.anim_tick_cur - fire_anim_tick
+		if bage >= 0 and bage < 2 and not fx_crowd():
+			ci.draw_circle(K.rndv(o), roundf(r), Color(K.COL_HANJI, 0.14))
 		var seg: int = clampi(int(r / 3.0), 16, 64)
 		for k in seg:
 			if k % 2 == 0:
 				var a0: float = TAU * float(k) / float(seg)
-				ci.draw_arc(K.rndv(o), roundf(r), a0, a0 + TAU / float(seg), 2, K.COL_HANJI_DK, 1.0)
+				ci.draw_arc(K.rndv(o), roundf(r), a0, a0 + TAU / float(seg), 2, Color(K.COL_HANJI, 0.35), 1.0)
 
 
 func draw(ci: CanvasItem) -> void:
@@ -338,15 +366,17 @@ func draw(ci: CanvasItem) -> void:
 			if not draw_sheet(ci, fx_name("fx_cast"), o + Vector2(0, -2), sf):
 				if sf < 0.1:
 					draw_ring(ci, o, _radius(), col_hi())
-		if sf < 0.05:
-			draw_ring(ci, o, _radius(), K.COL_HANJI)        # 박 1f 밝음(GAME_FEEL: 고리 1f)
+		_draw_beat_pulse(ci, o, Game.anim_tick_cur)
 		var rt: float = float(now - _res_tick) / K.TICK_HZ
 		if rt >= 0.0 and rt < 0.35:
 			if not draw_sheet(ci, fx_name("fx_ring"), o, rt):
 				draw_ring(ci, o, s("res_r", 6.0) * K.UNIT_PX * area_mult() * clampf(rt / 0.25, 0.0, 1.0), K.COL_HANJI_DK)
+		_draw_flowers(ci, Game.anim_tick_cur)
 		return
 	if fx_name("fx_prop") != &"" and sf < hold_s() + recovery_s() and bool(params.get("jakdu", false)):
 		draw_sheet(ci, fx_name("fx_prop"), o + Vector2(0, 2), sf + 0.25)
+	if bool(params.get("jakdu", false)):
+		_draw_slam(ci, o, Game.anim_tick_cur)
 	for p in PULSE_CAP:
 		var age: float = float(now - p_tick[p]) / K.TICK_HZ
 		var ln: float = maxf(p_len[p], 0.1)
@@ -363,3 +393,69 @@ func draw(ci: CanvasItem) -> void:
 			# 후딜: 최대 반경 테가 2f 간격으로 점멸하며 사라짐
 			if (now / 3) % 2 == 0:
 				draw_ring(ci, o, p_r[p], col_dk())
+
+
+## 방울 박 맥동 3f(design/19 §5.2 C): 손 악기에서 시작 — 1f 2px 한지 고리 + 손 고리 + 안쪽 원판 한지 α0.14
+## → 2f 1px 한지_dk → 3f 점선(바닥 층). 군중이면 원판 끔·고리 1px. 무당 몸 상자 안 채움 α ≤0.15.
+func _draw_beat_pulse(ci: CanvasItem, o: Vector2, now: int) -> void:
+	var age: int = now - fire_anim_tick
+	if age < 0 or age >= 6:
+		return
+	var r: float = _radius()
+	var crowd: bool = fx_crowd()
+	var pl: Player = Game.player as Player
+	var hp: Vector2 = pl.hand_world(&"off") if pl != null else o + Vector2(0, -16)
+	if age < 3:
+		# (안쪽 원판은 바닥 층 draw_ground 에서 — 잡귀 위에 덮으면 무리가 뿌옇게 바랜다)
+		draw_ring(ci, o, r, K.COL_HANJI, 1.0 if crowd else 2.0)
+		draw_ring(ci, hp, 4.0, K.COL_HANJI, 2.0)
+	else:
+		draw_ring(ci, o, r, K.COL_HANJI_DK, 1.0)
+		draw_ring(ci, hp, 7.0, K.COL_HANJI_DK, 1.0)
+
+
+## 풀림 꽃: 흰 무기에 맞은 흰 테두리 귀신 위 3색 꽃잎(적·황·한지 — 청은 적 탄 전용이라 뺀다), 0.3초.
+const FLOWER_COLS: Array[Color] = [Color(0.8941, 0.3765, 0.3098), Color(0.9098, 0.7255, 0.1922), Color(0.9137, 0.8627, 0.7529)]
+
+
+func _draw_flowers(ci: CanvasItem, now: int) -> void:
+	var cap: int = 3 if fx_crowd() else FLOWER_CAP
+	var n: int = 0
+	for k in FLOWER_CAP:
+		var age: int = now - _fl_tick[k]
+		if age < 0 or age >= 18 or n >= cap:
+			continue
+		n += 1
+		var kk: float = float(age) / 18.0
+		var pr: float = 2.0 + 3.0 * (1.0 - (1.0 - kk) * (1.0 - kk))
+		for m in 3:
+			var q: Vector2 = K.rndv(_fl_pos[k] + Vector2.from_angle(-PI * 0.5 + TAU * float(m) / 3.0 + kk) * pr)
+			ci.draw_rect(Rect2(q - Vector2(1, 1), Vector2(3, 3)), Color(FLOWER_COLS[m], 1.0 - kk * kk))
+		if age < 2:
+			ci.draw_rect(Rect2(K.rndv(_fl_pos[k]), Vector2.ONE), K.COL_HANJI)
+
+
+## 작두 내리찍기(design/19 §5.3): 내리찍는 틱에 충격파 첫 프레임 한지 가산 겹침(2f) + 한지 고리 2px 1f → jk-hi 1px 1f
+## + 흙먼지 6(0.3초, 빠른 감쇠). 충격파·날 시트(기존)는 그대로. 위치는 무당 발밑 중심(판정 원과 같은 중심).
+func _draw_slam(ci: CanvasItem, o: Vector2, now: int) -> void:
+	var age: int = now - fire_anim_tick
+	if age < 0 or age > 20:
+		return
+	var r: float = _radius()
+	if age < 2:
+		var ro: Vector2 = K.rndv(o)
+		add_overlay(fx_name("fx_cast"), o + Vector2(0, -4), 0, 0, 0.6, 1, Rect2(ro + Vector2(-14, -40), Vector2(28, 44)))
+		draw_ring(ci, o, r * 0.45, K.COL_HANJI, 1.0 if fx_crowd() else 2.0)
+		ci.draw_rect(Rect2(K.rndv(o) + Vector2(-5, -1), Vector2(11, 1)), K.COL_HANJI)
+	elif age < 4:
+		draw_ring(ci, o, r * 0.6, K.COL_JEOK_HI, 1.0)
+	# 흙먼지 6: 발밑에서 바깥으로(각도는 발사 횟수로 정함 — 난수 없음)
+	var k0: float = float(fires_total % 6) * 0.37
+	var kt: float = float(age) / 20.0
+	var e: float = 1.0 - (1.0 - kt) * (1.0 - kt)
+	for m in 6:
+		var ang: float = k0 + TAU * float(m) / 6.0
+		var d: Vector2 = Vector2(cos(ang), sin(ang) * 0.5)
+		var q: Vector2 = K.rndv(o + d * (6.0 + 18.0 * e) + Vector2(0, -2.0 - 4.0 * sin(kt * PI)))
+		var c: Color = K.COL_HANJI_DK if m % 2 == 0 else K.COL_JEOK_DK
+		ci.draw_rect(Rect2(q, Vector2(2, 1) if kt < 0.5 else Vector2.ONE), Color(c, 1.0 - kt))

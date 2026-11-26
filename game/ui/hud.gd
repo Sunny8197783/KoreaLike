@@ -48,6 +48,16 @@ var _lv_pop: float = 0.0
 var _clock_s: String = "00:00"
 var _clock_last: int = -1
 var _boss_time: float = 1200.0
+var _end_s: String = " / 20:00"     # 시계 뒤 끝 시각(design/19 §1.3)
+# 목표 줄(design/19 §1.3 — 시계 아래 상시 한 줄, 가운데 슬롯 아님: top:goal)
+var _goal_s: String = ""
+var _goal_icon: int = 0             # 0 없음 1 사자 2 ! 3 신령 점 4 ◆ 5 ○
+var _goal_id: String = ""
+var _goal_flash: float = 0.0
+var _goal_poll: float = 0.0
+var _has_white: bool = false
+var _white_name: String = "흰 무기"
+var _first_ring: bool = false
 # 박
 var _beat_k: float = 0.0
 var _beat_down: bool = false
@@ -127,13 +137,15 @@ var vis_rects: Dictionary = {}
 const LANE_SEC: float = 2.0       # 위 레인 수명 2.5→2.0(design/18 §2.3)
 const LANE_QUEUE: int = 1         # 대기열 2→1
 const EDGE_SEC: float = 2.0
-const EDGE_W: float = 236.0       # 가운데 의례 슬롯(cx−60) 앞에서 멈춘다
+const EDGE_W: float = 176.0       # 기운 바 왼쪽 라벨('풀어 줌 ○ N', x≈190~) 앞에서 멈춘다(design/19 §4.4)
 # 연속 굿
 var _streak: PackedInt32Array = PackedInt32Array([0, 0])          # 0 해원 1 퇴치
 var _streak_last: PackedFloat32Array = PackedFloat32Array([-10, -10])
 var _streak_s: PackedStringArray = PackedStringArray(["", ""])
 var _streak_vis: PackedFloat32Array = PackedFloat32Array([0, 0])
 var _streak_stage: PackedInt32Array = PackedInt32Array([0, 0])
+var _streak_pop: PackedFloat32Array = PackedFloat32Array([-10, -10])   # 처치마다 1f +2px 팝(실시간)
+var _streak_hot: PackedFloat32Array = PackedFloat32Array([0, 0])       # 10·25·50·100 테 주색 0.15초
 var _slam_text: String = ""
 var _slam_t: float = 0.0
 var _slam_col: Color = UiKit.HANJI
@@ -182,6 +194,8 @@ func _ready() -> void:
 	ledger.name = "RunLedger"
 	add_child(ledger)
 	_boss_time = Data.num("waves_stage1", "boss_time_sec", 1200.0)
+	_end_s = " / " + K.fmt_time(_boss_time)
+	Events.ring_closed.connect(func(_a: int, _h: int, _c: Vector2) -> void: _first_ring = true)
 	_trial_dur = Data.num("deities", "constants.trial_duration_s", 30.0)
 	var tr: Variant = Data.get_value("waves_stage1", "trials", [])
 	if tr is Array:
@@ -314,8 +328,11 @@ func _on_killed(_h: int, _sp: StringName, _pos: Vector2, kind: StringName, _caus
 		_streak_stage[k] = 0
 	_streak_last[k] = now
 	var n: int = _streak[k]
+	_streak_pop[k] = Time.get_ticks_msec() / 1000.0
+	if n == 10 or n == 25 or n == 50 or n == 100:
+		_streak_hot[k] = 0.15
 	if n >= 5:
-		_streak_s[k] = ("○ %d" if k == 0 else "◆ %d") % n
+		_streak_s[k] = ("풀어 줌 ×%d" if k == 0 else "처치 ×%d") % n
 	# 추임새 슬램(붓 큰 글자)은 haewon(haewon_system.slam, combat_core.chuimsae)이 그린다 — HUD 는 연속 칩만(중복 금지)
 
 
@@ -323,6 +340,9 @@ func _on_weapon_added(id: StringName, slot: int) -> void:
 	if slot >= 0 and slot < 6:
 		_slot_new[slot] = 1.0
 	_icon_of(id)
+	if not _has_white and String(Data.weapon(String(id)).get("color", "")) == "white":
+		_has_white = true
+		_white_name = "방울" if String(id).begins_with("wpn_bangul") else "흰 무기"
 
 
 func _on_weapon_leveled(id: StringName, _lv: int) -> void:
@@ -501,7 +521,6 @@ func _process(delta: float) -> void:
 	if ts != _clock_last:
 		_clock_last = ts
 		_clock_s = "연습" if Game.tutorial_mode else K.fmt_time(float(ts))
-		_update_chip(ts)
 	# 수치 따라가기(실시간)
 	var xk: float = Game.xp / maxf(Game.xp_next, 1.0)
 	_xp_show = xk if xk < _xp_show else lerpf(_xp_show, xk, minf(1.0, delta * 12.0))
@@ -533,6 +552,13 @@ func _process(delta: float) -> void:
 	_hp_hit = maxf(0.0, _hp_hit - delta)
 	_trial_msg_t = maxf(0.0, _trial_msg_t - delta)
 	_slam_t = maxf(0.0, _slam_t - delta)
+	_goal_flash = maxf(0.0, _goal_flash - delta)
+	for k0 in 2:
+		_streak_hot[k0] = maxf(0.0, _streak_hot[k0] - delta)
+	_goal_poll -= delta
+	if _goal_poll <= 0.0:
+		_goal_poll = 0.25
+		_update_goal()
 	if _oreum:
 		_oreum_t += delta
 	for i in 6:
@@ -589,17 +615,115 @@ func _process(delta: float) -> void:
 		b.queue_redraw()
 
 
-func _update_chip(ts: int) -> void:
-	_chip_s = ""
-	if _trial_active or Game.tutorial_mode:
-		return   # 연습 굿판: 다음 시련 칩 숨김(시련은 디렉터가 부른다)
-	for t: float in _trial_times:
-		var left: int = int(t) - ts
-		if left > 0 and left <= 60:
-			if left != _chip_sec:
-				_chip_sec = left
-			_chip_s = "시련 %s" % K.fmt_time(float(left))
-			return
+## 목표 줄 문구(design/19 §1.3 GOAL — 위에서부터 먼저 맞는 것 하나). 0.25초마다, 바뀔 때만 문자열을 만든다.
+## 견본 범위: 판 목표 · 위험 · 시련 임박 · 시간대 기본. 시련·보스·중간보스 중에는 그 제목 줄이 이 자리를 쓴다(그리지 않음).
+func _update_goal() -> void:
+	if Game.tutorial_mode:
+		_goal_s = ""
+		return
+	var t: float = Game.time_sec()
+	var id: String = ""
+	var icon: int = 0
+	var next_tr: float = -1.0
+	for tt: float in _trial_times:
+		if tt > t:
+			next_tr = tt
+			break
+	if t < 4.0:
+		id = "goal"
+		icon = 1
+	elif Game.hp_max > 0.0 and Game.hp / Game.hp_max < (0.4 if _goal_id == "danger" else 0.3) and t > 1.0:
+		# 이력(30% 아래 켜짐 · 40% 위 꺼짐): 30% 언저리에서 목표 줄이 깜박·틱 소리를 되풀이하지 않게(검토 11-26)
+		id = "danger"
+		icon = 2
+	elif next_tr > 0.0 and next_tr - t <= 20.0:
+		id = "trial_soon"
+		icon = 3
+	elif t < 180.0:
+		if not _has_white:
+			id = "walk"
+		elif Game.kills_haewon <= 0:
+			id = "white"
+			icon = 5
+		elif t < 90.0:
+			id = "yeongga"
+			icon = 5
+		elif not _first_ring:
+			id = "ring"
+			icon = 5
+		else:
+			id = "grow"
+	elif t >= 1180.0:
+		id = "boss_soon"
+		icon = 1
+	elif t >= 1155.0:
+		id = "gongmul"
+		icon = 5
+	elif t >= 1080.0:
+		id = "hapil"
+		icon = 3
+	elif t >= 720.0:
+		id = "to_hapil"
+		icon = 3
+	elif t >= 360.0 and t < 600.0:
+		id = "elite"
+		icon = 4
+	else:
+		id = "next_trial"
+	if (id == "hapil" or id == "to_hapil") and _possessed_n() == 0:
+		# 모신 신령이 없는 판(시련을 다 놓친 처음 하는 사람)에게 '신령과 함께'라고 말하지 않는다(검토 11-26)
+		id += "_solo"
+		icon = 0
+	if id == _goal_id and id != "next_trial":
+		return
+	var txt: String = String(GOAL.get(id, ""))
+	if id == "white":
+		txt = txt % ("방울이" if _white_name == "방울" else "흰 무기가")
+	elif id == "goal" or id == "boss_soon":
+		txt = txt % K.fmt_time(_boss_time)
+	elif id == "next_trial":
+		txt = (txt % K.fmt_time(next_tr)) if next_tr > 0.0 else String(GOAL["last_stand"]) % K.fmt_time(_boss_time)
+	if txt == _goal_s:
+		_goal_id = id
+		return
+	var first: bool = _goal_s == ""
+	_goal_id = id
+	_goal_s = txt
+	_goal_icon = icon
+	if not first:
+		_goal_flash = 0.3
+		Audio.play_sfx(&"sfx_ui_card_hover", &"UI", -8.0)
+	if Game.autotest:
+		print("[ui] goal t=%.1f id=%s" % [t, id])
+
+
+## 지금까지 모신(빙의한) 신령 수 — 합일 목표 줄 분기용(0.25초마다 한 번)
+func _possessed_n() -> int:
+	var rr: Node = Game.run_root
+	var td: TrialDirector = (rr.get("trials") as TrialDirector) if rr != null else null
+	return td.possessed.size() if td != null else 1
+
+
+## 목표 줄 문구(design/19 §1.3 표 — 22자 이내, 행동부터). 분할 A 가 UiCopy.GOAL 로 옮길 자리.
+const GOAL: Dictionary = {
+	"goal": "목표: %s까지 버티고 역려를 보내라",
+	"danger": "위험! 무리에서 빠져나가세요",
+	"trial_soon": "곧 신령의 시험 — 빛나는 원으로",
+	"walk": "걸어 다니며 버티세요 · 무기는 저절로",
+	"white": "흰 테두리 귀신 곁으로 — %s 풀어 준다",
+	"yeongga": "풀어 준 넋이 뒤따르며 지켜 준다",
+	"ring": "흰 길로 한 바퀴 감싸면 한꺼번에 풀린다",
+	"grow": "구슬을 모아 무기를 키우세요",
+	"next_trial": "다음 시험 %s · 버티세요",
+	"last_stand": "버티세요 · %s 역려가 온다",
+	"elite": "강한 귀신을 잡으면 상자 · 10:00 큰 귀신",
+	"to_hapil": "18:00 모신 신령이 모두 내려온다",
+	"hapil": "신령과 함께 마지막 공세를 버티세요",
+	"to_hapil_solo": "18:00 마지막 공세가 온다 · 버티세요",
+	"hapil_solo": "마지막 공세 — 홀로 끝까지 버티세요",
+	"gongmul": "공물상을 흰 길로 감싸 보내세요",
+	"boss_soon": "%s 역병 귀신 역려가 온다",
+}
 
 
 ## 근접 투명화: 플레이어 화면 위치가 블록 사각형 32 lpx 안이면 35%(0.15초)
@@ -654,10 +778,13 @@ func _draw_xp(ci: Control) -> void:
 	var w: float = size.x
 	var r: Rect2 = Rect2(8, 4, w - 16 - 34, 5)
 	var full: bool = _xp_show >= 0.9
-	var fill: Color = UiKit.HANJI
+	var fill: Color = UiKit.HWANG                        # 경험치 = 황(체력·기운 바 한지와 갈림, design/19 §4.4)
 	if full and fposmod(Time.get_ticks_msec() / 1000.0, 1.0) < 0.5:
 		fill = UiKit.HWANG_HI
 	UiKit.draw_bar(ci, r, _xp_show, fill, UiKit.MEOK_1, UiKit.HANJI_5)
+	var xw: float = roundf(r.size.x * clampf(_xp_show, 0.0, 1.0))
+	if xw > 0.0:
+		ci.draw_rect(Rect2(r.position.x, r.end.y - 1.0, xw, 1.0), UiKit.HWANG_DK)
 	# 4분할 눈금
 	for i in range(1, 4):
 		var x: float = roundf(r.position.x + r.size.x * float(i) / 4.0)
@@ -695,9 +822,19 @@ func _draw_tl(ci: Control) -> void:
 		ci.draw_rect(Rect2(hr.position, Vector2(fw, hr.size.y)), hcol)
 		ci.draw_rect(Rect2(hr.position, Vector2(fw, 1.0)), hcol.lightened(0.3))
 	ci.draw_rect(hr.grow(1.0), UiKit.HANJI_5, false, 1.0)
-	# 정기 표지(작은 붉은 마름모) + 숫자
-	UiKit.draw_diamond(ci, Vector2(15, 39), 3.0, UiKit.JEOK_HI if pulse else UiKit.JEOK)
+	# 체력 표지: 촛불(8×7 코드 그림 — ◆ 처치 표지와 겹치지 않게, design/19 §4.4). 30% 아래 깜박
+	_draw_candle(ci, Vector2(12, 34), pulse)
 	UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(hr.end.x + 4.0, 42), _hp_s, UiKit.HANJI if not low else UiKit.JEOK_HI)
+
+
+## 촛불: 먹 테 + 한지 초 3×4 + 심지 + 불꽃(jk-hi·황). lo = 깜박(불꽃 주색).
+func _draw_candle(ci: Control, o: Vector2, lo: bool) -> void:
+	ci.draw_rect(Rect2(o + Vector2(1, 3), Vector2(5, 6)), UiKit.MEOK)
+	ci.draw_rect(Rect2(o + Vector2(2, 4), Vector2(3, 4)), UiKit.HANJI)
+	ci.draw_rect(Rect2(o + Vector2(0, 8), Vector2(7, 1)), UiKit.HANJI_3)
+	ci.draw_rect(Rect2(o + Vector2(3, 3), Vector2(1, 1)), UiKit.MEOK_4)
+	ci.draw_rect(Rect2(o + Vector2(3, 0), Vector2(1, 3)), UiKit.JEOK_HI if lo else UiKit.HWANG)
+	ci.draw_rect(Rect2(o + Vector2(3, 1), Vector2(1, 1)), UiKit.HWANG_HI if not lo else UiKit.JEOK)
 
 
 func _draw_weapon_slot(ci: Control, r: Rect2, w: WeaponBase, i: int) -> void:
@@ -769,29 +906,33 @@ func _draw_tc(ci: Control) -> void:
 		var mleft: float = _mb_limit - (t - _mb_t0)
 		if mleft <= 15.0:
 			col = UiKit.HWANG_HI if fposmod(t, 0.5) < 0.3 else UiKit.HWANG
+	# 시계 'mm:ss / 20:00'(design/19 §1.3): 지금 시각 Bold 12 + 끝 시각 Galmuri9 10 HANJI_3 — 언제 끝나는지 늘 보인다
+	var half_l: float = 26.0
+	var half_r: float = 25.0
 	if t >= _boss_time:
 		var bw: float = 40.0
 		ci.draw_rect(Rect2(cx - bw * 0.5, 13, bw, 13), UiKit.HANJI)
 		UiKit.text(ci, _f_bold, UiKit.SZ_BODY, Vector2(cx, 24), _clock_s, UiKit.MEOK, 1, false)
-	else:
+	elif Game.tutorial_mode:
 		UiKit.text(ci, _f_bold, UiKit.SZ_BODY, Vector2(cx, 24), _clock_s, col, 1)
+	else:
+		var w1: float = _f_bold.get_string_size(_clock_s, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
+		var w2: float = _f_small.get_string_size(_end_s, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL).x
+		var x0: float = roundf(cx - (w1 + w2) * 0.5)
+		UiKit.text(ci, _f_bold, UiKit.SZ_BODY, Vector2(x0, 24), _clock_s, col, 0)
+		UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(x0 + w1, 24), _end_s, UiKit.HANJI_3, 0)
+		half_l = roundf(cx - x0 + 5.0)
+		half_r = roundf(x0 + w1 + w2 - cx + 5.0)
+		_draw_progress(ci, cx, t)
 	# 박 징 표지(시계 양옆 작은 마름모, 박마다 밝아짐 · 박 머리 황)
 	var bc: Color = UiKit.HWANG_HI if _beat_down else UiKit.HANJI
 	var ba: float = 0.25 + 0.75 * _beat_k
-	UiKit.draw_diamond(ci, Vector2(cx - 26, 19), 2.0, Color(bc, ba))
-	UiKit.draw_diamond(ci, Vector2(cx + 25, 19), 2.0, Color(bc, ba))
-	# 거리 라벨(전환 뒤 8초, 마지막 1초 페이드)
-	# 시련·보스 중에는 그 제목이 같은 줄(y=37)을 쓰므로 거리 줄을 그리지 않는다(겹침 방지, core 통합)
-	# 시련 안내판(deities, 예고~여운)이 떠 있는 동안에도 거리 줄은 쉰다 — 위쪽 글줄은 한 번에 하나(시련 칩·제목이 말한다)
-	if _geori_t < 8.0 and _gslam_t <= 0.0 and not _trial_active and not _trial_panel_on() and _boss_handle < 0 and _mb_handle < 0:
-		var a: float = clampf(8.0 - _geori_t, 0.0, 1.0)
-		UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx, 36), _geori_line, Color(UiKit.HANJI_2, a), 1)
-	# 다음 시련 칩(≤60초)
-	elif _chip_s != "" and _mb_handle < 0 and not _trial_panel_on():   # 예고 중엔 안내판이 '강림 n' 을 센다
-		var cw: float = 62.0
-		var cr: Rect2 = Rect2(cx - cw * 0.5, 27, cw, 12)
-		UiKit.draw_meok_panel(ci, cr, 0.85, false, UiKit.HWANG_DK)
-		UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx, 37), _chip_s, UiKit.HWANG_HI, 1)
+	UiKit.draw_diamond(ci, Vector2(cx - half_l, 19), 2.0, Color(bc, ba))
+	UiKit.draw_diamond(ci, Vector2(cx + half_r, 19), 2.0, Color(bc, ba))
+	# 거리 줄(장단·BPM)과 다음 시련 칩은 없앤다(design/19 §4.4) — 그 자리(y31~44)는 '지금 할 일' 목표 줄이 늘 쓴다.
+	# 시련·보스·중간보스 중에는 그 제목 줄이 같은 자리를 쓰므로 목표 줄을 그리지 않는다.
+	if _goal_s != "" and not _trial_active and _boss_handle < 0 and _mb_handle < 0:
+		_draw_goal(ci, cx)
 	# 의례 슬롯(y=46): 보스 > 시련 > 굿판의 기운
 	if _boss_handle >= 0:
 		_draw_boss(ci, cx)
@@ -801,6 +942,69 @@ func _draw_tc(ci: Control) -> void:
 		_draw_trial(ci, cx)
 	# 굿판의 기운은 B_GIUN 블록이 그린다
 	# 시련 결과 큰 글자(면 이름·빙의)는 deities(trial_hud)가 그린다 — HUD 는 강신 칸 팝만(겹침 금지)
+
+
+## 진행 줄(y28, 폭 160, 2px): 지난 부분 한지 · 남은 부분 먹. 눈금 = 시련(황) · 10:00 큰 귀신(주) · 18:00 신령 모두 내림(한지)
+## · 20:00 역려(주 마름모). 금 #f5d66b 는 무당 전용이라 쓰지 않는다.
+func _draw_progress(ci: Control, cx: float, t: float) -> void:
+	var x0: float = cx - 80.0
+	var w: float = 160.0
+	var y: float = 28.0
+	var k: float = clampf(t / maxf(_boss_time, 1.0), 0.0, 1.0)
+	ci.draw_rect(Rect2(x0 - 1.0, y - 1.0, w + 2.0, 4.0), Color(UiKit.MEOK, 0.8))
+	ci.draw_rect(Rect2(x0, y, w, 2.0), UiKit.MEOK_4)
+	var fw: float = roundf(w * k)
+	if fw > 0.0:
+		ci.draw_rect(Rect2(x0, y, fw, 2.0), UiKit.HANJI_2)
+	for tt: float in _trial_times:
+		if tt >= _boss_time:
+			continue
+		var tx: float = roundf(x0 + w * tt / _boss_time)
+		var hapil: bool = absf(tt - 1080.0) < 1.0
+		var tc: Color = UiKit.HANJI_UI if hapil else UiKit.HWANG
+		ci.draw_rect(Rect2(tx - 1.0, y - 1.0, 3.0, 4.0), UiKit.MEOK)
+		ci.draw_rect(Rect2(tx, y - 1.0, 1.0, 4.0), tc if tt > t else UiKit.HANJI_4)
+	var mx: float = roundf(x0 + w * 600.0 / _boss_time)
+	ci.draw_rect(Rect2(mx - 1.0, y - 1.0, 3.0, 4.0), UiKit.MEOK)
+	ci.draw_rect(Rect2(mx, y - 1.0, 1.0, 4.0), UiKit.JEOK_HI if t < 600.0 else UiKit.HANJI_4)
+	UiKit.draw_diamond(ci, Vector2(x0 + w + 1.0, y + 1.0), 3.0, UiKit.MEOK)
+	UiKit.draw_diamond(ci, Vector2(x0 + w + 1.0, y + 1.0), 2.0, UiKit.JEOK_HI)
+
+
+## 목표 줄: 먹 띠 α0.55(글 폭 + 12, 높이 14, y31~45) + 아이콘 8px + Bold 12 한지. 바뀐 순간 0.3초 황 테 깜박.
+func _draw_goal(ci: Control, cx: float) -> void:
+	var tw: float = _f_bold.get_string_size(_goal_s, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
+	var iw: float = 11.0 if _goal_icon != 0 else 0.0
+	var bw: float = tw + iw + 12.0
+	var r: Rect2 = Rect2(roundf(cx - bw * 0.5), 31, roundf(bw), 14)
+	vis_rects["top:goal"] = [r, Engine.get_process_frames()]
+	ci.draw_rect(r, Color(UiKit.MEOK, 0.55))
+	if _goal_flash > 0.0 and fposmod(_goal_flash, 0.1) > 0.05:
+		ci.draw_rect(r, UiKit.HWANG_HI, false, 1.0)
+	var ix: float = r.position.x + 6.0
+	if _goal_icon != 0:
+		_draw_goal_icon(ci, Vector2(ix + 4.0, 38.0), _goal_icon)
+	var tc: Color = UiKit.JEOK_HI if _goal_icon == 2 else UiKit.HANJI_UI
+	UiKit.text_outline(ci, _f_bold, UiKit.SZ_BODY, Vector2(ix + iw, 42), _goal_s, tc, 0, 1)
+
+
+func _draw_goal_icon(ci: Control, c: Vector2, icon: int) -> void:
+	match icon:
+		1:  # 사자(흑립): 갓 테 + 먹 갓
+			ci.draw_rect(Rect2(c + Vector2(-4, 1), Vector2(9, 2)), UiKit.HANJI_3)
+			ci.draw_rect(Rect2(c + Vector2(-2, -3), Vector2(5, 4)), UiKit.HANJI_3)
+			ci.draw_rect(Rect2(c + Vector2(-1, -2), Vector2(3, 3)), UiKit.MEOK)
+		2:  # !
+			ci.draw_rect(Rect2(c + Vector2(-1, -4), Vector2(3, 9)), UiKit.MEOK)
+			ci.draw_rect(Rect2(c + Vector2(0, -3), Vector2(1, 5)), UiKit.JEOK_HI)
+			ci.draw_rect(Rect2(c + Vector2(0, 3), Vector2(1, 1)), UiKit.JEOK_HI)
+		3:  # 신령 점
+			ci.draw_circle(c, 3.0, UiKit.MEOK)
+			ci.draw_circle(c, 2.0, UiKit.HWANG)
+		4:
+			UiKit.draw_kind_mark(ci, c, 2.0, false)
+		5:
+			UiKit.draw_kind_mark(ci, c, 2.0, true)
 
 
 ## deities 시련 안내판이 화면 위쪽을 쓰는 단계(예고·강림·확인·정리·시련·해결·여운)
@@ -816,7 +1020,7 @@ func _draw_giun(ci: Control, cx: float) -> void:
 	# 별도 블록(B_GIUN): 근접 투명도 × 첫 판 페이드인(_giun_vis)은 modulate 로
 	if _giun_vis <= 0.0 or _boss_handle >= 0 or _mb_handle >= 0 or _trial_active:
 		return
-	var r: Rect2 = Rect2(cx - 60, 46, 120, 6)
+	var r: Rect2 = Rect2(cx - 60, 48, 120, 6)
 	# 위: 넋 비율 N (한지 = 왼쪽부터, 나머지 먹)
 	ci.draw_rect(r.grow(1.0), UiKit.MEOK)
 	ci.draw_rect(r, UiKit.MEOK_3)
@@ -834,7 +1038,7 @@ func _draw_giun(ci: Control, cx: float) -> void:
 	var fc: Color = UiKit.HWANG_HI if _giun_flash > 0.0 and fposmod(_giun_flash, 0.2) > 0.1 else UiKit.HANJI_5
 	ci.draw_rect(r.grow(1.0), fc, false, 1.0)
 	# 아래: 살기 트랙(3px) — 살기/100, 매듭 25/50/75
-	var sr: Rect2 = Rect2(cx - 60, 54, 120, 4 if _sal_big > 0.0 else 3)
+	var sr: Rect2 = Rect2(cx - 60, 56, 120, 4 if _sal_big > 0.0 else 3)
 	ci.draw_rect(sr.grow(1.0), UiKit.MEOK)
 	ci.draw_rect(sr, UiKit.MEOK_2)
 	var sk: float = clampf(Game.salgi / 100.0, 0.0, 1.0)
@@ -853,17 +1057,31 @@ func _draw_giun(ci: Control, cx: float) -> void:
 		ci.draw_rect(Rect2(c - Vector2(1, 1), Vector2(3, 3)), UiKit.JEOK_DK if crossed else UiKit.HANJI_4)
 		if near or _knot_flash[i] > 0.0:
 			ci.draw_rect(Rect2(c, Vector2.ONE), UiKit.JEOK_HI)
-	# 양 끝 수치(같은 글자 크기 — 동등 표기): 왼쪽 '넋' 해원 ○, 오른쪽 퇴치 ◆ '살'
-	UiKit.draw_kind_mark(ci, Vector2(cx - 66, 50), 2.0, true)
-	var hw: float = UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx - 71, 54), _h_s, UiKit.HANJI, 2)
-	UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx - 74.0 - hw, 54), "넋", UiKit.HANJI_3, 2)
-	UiKit.draw_kind_mark(ci, Vector2(cx + 65, 50), 2.0, false)
-	var tw2: float = UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx + 70, 54), _t_s, UiKit.JEOK_HI, 0)
-	UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx + 73.0 + tw2, 54), "살", UiKit.JEOK, 0)
+	# 양 끝 라벨(Galmuri9 10 — 한글 8px 금지, design/19 §4.4): 왼쪽 '풀어 줌 ○ N', 오른쪽 '◆ 처치 N'. 숫자는 2:00 전엔 숨긴다.
+	var show_n: bool = Game.time_sec() >= 120.0
+	var lx: float = cx - 66.0
+	# 라벨은 바 바깥 전장 위에 놓이므로 그림자 대신 먹 외곽선 1(바쁜 바닥·붉은 바닥 위 주색 '처치' 대비, 검토 11-26)
+	if show_n:
+		lx -= UiKit.text_outline(ci, _f_small, UiKit.SZ_SMALL, Vector2(lx, 57), _short_num(_h_last), UiKit.HANJI, 2, 1) + 3.0
+	UiKit.draw_kind_mark(ci, Vector2(lx - 2.0, 52), 2.0, true)
+	UiKit.text_outline(ci, _f_small, UiKit.SZ_SMALL, Vector2(lx - 7.0, 57), "풀어 줌", UiKit.HANJI_2, 2, 1)
+	UiKit.draw_kind_mark(ci, Vector2(cx + 67, 52), 2.0, false)
+	var tw2: float = UiKit.text_outline(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx + 72, 57), "처치", UiKit.JEOK_HI, 0, 1)
+	if show_n:
+		UiKit.text_outline(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx + 75.0 + tw2, 57), _short_num(_t_last), UiKit.HANJI, 0, 1)
 	# 신명 오름: 오방색 1px 순환 테
 	if _oreum:
 		var oc: Color = OBANG[int(_oreum_t * 8.0) % 5]
-		ci.draw_rect(Rect2(cx - 62, 44, 124, 15), oc, false, 1.0)
+		ci.draw_rect(Rect2(cx - 62, 46, 124, 15), oc, false, 1.0)
+
+
+## 큰 수 줄임(1,234 → 1.2천, 12,345 → 1.2만).
+static func _short_num(n: int) -> String:
+	if n < 1000:
+		return str(maxi(n, 0))
+	if n < 10000:
+		return "%.1f천" % (float(n) / 1000.0)
+	return "%.1f만" % (float(n) / 10000.0)
 
 
 func _draw_trial(ci: Control, cx: float) -> void:
@@ -881,8 +1099,8 @@ func _draw_trial(ci: Control, cx: float) -> void:
 	ci.draw_rect(Rect2(cx - 60, 54, 120, 1), UiKit.MEOK_3)
 	ci.draw_rect(Rect2(cx - 60, 54, lw, 1), UiKit.HWANG)
 	# 라벨은 막대 양 끝 바깥(y=64 공수 레인과 겹치지 않게)
-	UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx - 72, 52), "위엄", UiKit.JEOK_HI, 2)
-	UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(cx + 72, 52), "가호", UiKit.HANJI, 0)
+	UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx - 72, 53), "싸움", UiKit.JEOK_HI, 2)
+	UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx + 72, 53), "모심", UiKit.HANJI, 0)
 
 
 func _draw_boss(ci: Control, cx: float) -> void:
@@ -998,13 +1216,18 @@ func _draw_misc(ci: Control) -> void:
 	# 연속 굿 칩(하단 가운데): ○ 해원 | ◆ 퇴치 — 같은 글자 크기·굵기
 	var any: bool = _streak_vis[0] > 0.0 or _streak_vis[1] > 0.0
 	if any:
+		var nowr: float = Time.get_ticks_msec() / 1000.0
 		for k in 2:
 			if _streak_vis[k] <= 0.0:
 				continue
 			var a3: float = _streak_vis[k]
-			var r: Rect2 = Rect2(cx - 44 + k * 48, h - 34, 40, 14)
+			# '처치 ×N' / '풀어 줌 ×N'(design/19 §4.4): 처치마다 1f +2px 팝, 10·25·50·100 에 테 주색 0.15초
+			var r: Rect2 = Rect2(cx - 84 + k * 88, h - 34, 80, 14)
+			if nowr - _streak_pop[k] < 0.034:
+				r = r.grow(2.0)
 			ci.draw_rect(r, Color(UiKit.MEOK_1, 0.8 * a3))
-			ci.draw_rect(r, Color(UiKit.HANJI_4 if k == 0 else UiKit.JEOK_DK, a3), false, 1.0)
+			var bc2: Color = UiKit.JEOK_HI if _streak_hot[k] > 0.0 else (UiKit.HANJI_4 if k == 0 else UiKit.JEOK_DK)
+			ci.draw_rect(r, Color(bc2, a3), false, 1.0)
 			UiKit.text(ci, _f_bold, UiKit.SZ_BODY, Vector2(r.get_center().x, r.end.y - 3.0), _streak_s[k],
 				Color(UiKit.HANJI if k == 0 else UiKit.JEOK_HI, a3), 1)
 	# 추임새 슬램(붓, 0.9초): 크기 단계 팝(정수 크기만)

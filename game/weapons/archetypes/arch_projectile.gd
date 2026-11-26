@@ -27,10 +27,19 @@ var _waves: int = 0
 var _catch_tick: int = -100000
 var _mirror_phase: float = 0.0
 var _flash_t: float = -1.0
+# 손 무기·날리는 것 연출(design/19 §5.2 B, 렌더 전용)
+var _out_n: int = 0                    # 손을 떠난 귀환 탄 수(신칼: 0 이 되면 손에 다시 잡힌다)
+const HS_CAP: int = 8                  # 꽂힘 hit_spark scale 2 1f 링 버퍼
+var _hs_pos: PackedVector2Array = PackedVector2Array()
+var _hs_tick: PackedInt32Array = PackedInt32Array()
+var _hs_head: int = 0
 
 
 func _on_setup() -> void:
 	_targets.resize(16)
+	_hs_pos.resize(HS_CAP)
+	_hs_tick.resize(HS_CAP)
+	_hs_tick.fill(-100000)
 	if _tracks():
 		_trav.resize(ProjectilePool.CAPACITY)
 		_lastp.resize(ProjectilePool.CAPACITY)
@@ -91,6 +100,8 @@ func fire() -> void:
 			var t: float = 0.0 if n == 1 else (float(k) / float(n - 1) - 0.5)
 			dir = base.rotated(fan * t)
 		var i: int = pp.spawn_player(slot, o, dir * spd, range_px / maxf(spd, 1.0), hit_r, s("dmg", 5.0), int(s("pierce", 1)), ret, TAG_MAIN, red, track)
+		if ret and i >= 0:
+			_out_n += 1
 		if track and i >= 0:
 			_trav[i] = 0.0
 			_lastp[i] = o
@@ -138,6 +149,10 @@ func on_projectile_hit(enemy_slot: int, dmg: float, dir: Vector2, tag: int = 0, 
 			_near_to = K.rndv(ep + Vector2(0, -roundf(bh * 0.5)) - dir * 3.0)
 	if proj_index >= 0 and not bool(params.get("return", false)) and fx_name("fx_hit") != &"":
 		play_fx(fx_name("fx_hit"), em.pos_of(enemy_slot) + Vector2(0, -8))
+		# 꽂힘(design/19 §5.2 B③): hit_spark 첫 프레임 scale 2 를 1f — 관통 탄은 마지막 대상(관통 1 = 첫 대상)만
+		_hs_pos[_hs_head] = em.pos_of(enemy_slot) + Vector2(0, -roundf(em.body_h_of(enemy_slot) * 0.5))
+		_hs_tick[_hs_head] = Game.game_tick
+		_hs_head = (_hs_head + 1) % HS_CAP
 
 
 ## 노잣돈 연쇄 해원: chain_r 안 다른 풀릴 기색 일반 잡귀 1체(연쇄의 연쇄 없음).
@@ -163,7 +178,14 @@ var _chain_b: Vector2 = Vector2.ZERO
 var _chain_tick: int = -100000
 
 
-func on_projectile_end(_tag: int, pos: Vector2, _vel: Vector2, reason: int) -> void:
+## 손 무기(design/19 §6): 귀환 탄이 날아가 있는 동안 손에서 숨긴다(4초 넘으면 안전하게 다시 보임).
+func held_out() -> bool:
+	return _out_n > 0 and since_fire() < 4.0
+
+
+func on_projectile_end(tag: int, pos: Vector2, _vel: Vector2, reason: int) -> void:
+	if tag == TAG_MAIN and bool(params.get("return", false)):
+		_out_n = maxi(0, _out_n - 1)
 	if reason == ProjectilePool.END_RETURNED:
 		if bool(params.get("catch", false)):
 			deal_circle(player_pos(), s("catch_r", 1.5) * K.UNIT_PX * area_mult(), s("dmg", 20.0), 0.3)
@@ -230,6 +252,12 @@ func proj_visual(tag: int) -> Dictionary:
 	var out: Dictionary = super.proj_visual(tag)
 	if bool(params.get("blade", false)) and not out.has("fx"):
 		out["orient"] = &"dir4"
+	# 날아감(design/19 §5.2 B②): 몸통 한지 심(진행 방향 선) + 잔상 2장(붉은 = jk-hi, 흰 = 한지). 신칼 10px · 각궁 화살 몸통.
+	var hd: Dictionary = HeldWeapon.def_for(self)
+	if not hd.is_empty() and tag == TAG_MAIN:
+		out["core_len"] = 10 if stem == "sinkal" else 9
+		out["ghosts"] = 2
+		out["ghost_col"] = K.COL_JEOK_HI if is_red() else K.COL_HANJI
 	return out
 
 
@@ -248,7 +276,7 @@ func draw(ci: CanvasItem) -> void:
 	if wu_target >= 0.0:
 		var d: Vector2 = aim_dir(s("area", 8.0) + 2.0, String(params.get("aim", "")) == "elite")
 		var drew: bool = false
-		if stem == "sinkal":
+		if stem == "sinkal" and HeldWeapon.def_for(self).is_empty():
 			var fx: Dictionary = VfxLib.get_fx(&"vfx_sinkal_windup")
 			var regions: Array = fx.get("regions", [])
 			if not bool(fx.get("placeholder", true)) and not regions.is_empty():
@@ -260,7 +288,7 @@ func draw(ci: CanvasItem) -> void:
 				ci.draw_texture_rect_region(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r)
 				ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 				drew = true
-		if not drew:
+		if not drew and HeldWeapon.def_for(self).is_empty():
 			draw_windup_hand(ci, d)
 			if bool(params.get("blade", false)):
 				# 칼날 기 모음: 손 앞 검기 예고선(진행에 따라 길어짐)
@@ -270,11 +298,31 @@ func draw(ci: CanvasItem) -> void:
 				ci.draw_line(hp2, hp2 + K.rndv(K.dir8(d) * ln), col_dk(), 1.0)
 	# 발사 섬광(손 16px 1f) + 검기 시전 시트
 	var sf: float = since_fire()
-	if sf < 0.05 and fx_name("fx_cast") == &"":
+	var hd: Dictionary = HeldWeapon.def_for(self)
+	if not hd.is_empty():
+		# 손 무기가 있으면 출발 십자 6px(2f): 손 기준점에서 한지 십자 + 붉은 무기는 jk-hi 테(design/19 §5.2 B①). 활은 HeldWeapon 이 활 끝에.
+		var age: int = Game.anim_tick_cur - fire_anim_tick
+		if age >= 0 and age < 2 and String(hd.get("anim", "")) != "bow":
+			var pl: Player = Game.player as Player
+			var hw: Vector2 = pl.hand_world(&"main") if pl != null else hand_point(fire_dir, 8.0)
+			var hp4: Vector2 = K.rndv(hw + K.dir8(fire_dir) * 3.0)
+			if age == 0:
+				ci.draw_rect(Rect2(hp4 + Vector2(-4, -1), Vector2(9, 3)), col_hi())
+				ci.draw_rect(Rect2(hp4 + Vector2(-1, -4), Vector2(3, 9)), col_hi())
+				ci.draw_rect(Rect2(hp4 + Vector2(-3, 0), Vector2(7, 1)), K.COL_HANJI)
+				ci.draw_rect(Rect2(hp4 + Vector2(0, -3), Vector2(1, 7)), K.COL_HANJI)
+			else:
+				ci.draw_rect(Rect2(hp4 + Vector2(-2, 0), Vector2(5, 1)), col_hi())
+				ci.draw_rect(Rect2(hp4 + Vector2(0, -2), Vector2(1, 5)), col_hi())
+	elif sf < 0.05 and fx_name("fx_cast") == &"":
 		var hp3: Vector2 = hand_point(fire_dir, 8.0)
 		ci.draw_rect(Rect2(hp3 - Vector2(2, 2), Vector2(5, 5)), col_hi())
 		ci.draw_rect(Rect2(hp3 - Vector2(0, 4), Vector2(1, 9)), K.COL_HANJI)
 		ci.draw_rect(Rect2(hp3 - Vector2(4, 0), Vector2(9, 1)), K.COL_HANJI)
+	# 꽂힘 1f: hit_spark 첫 프레임 scale 2(24~32px)
+	for k5 in HS_CAP:
+		if Game.anim_tick_cur - _hs_tick[k5] >= 0 and Game.anim_tick_cur - _hs_tick[k5] < 2:
+			draw_sheet_frame(ci, &"vfx_hit_spark_red", _hs_pos[k5], 0, 2)
 	if fx_name("fx_cast") != &"" and sf < 0.6 and not bool(params.get("catch", false)):
 		draw_sheet(ci, fx_name("fx_cast"), hand_point(fire_dir, 4.0), sf, dir4_of(fire_dir))
 	# 신장칼 귀환 참격

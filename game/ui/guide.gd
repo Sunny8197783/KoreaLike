@@ -246,6 +246,8 @@ func _stale(id: String) -> bool:
 			return _ring_step == 3
 		"sinmyeong":
 			return not _oreum
+		"trial_faces":
+			return not _trial_busy                # 시련이 끝났으면 버린다(늦은 설명 금지)
 	return false
 
 
@@ -330,7 +332,8 @@ func _on_wave_event(id: StringName, p: Dictionary) -> void:
 func _on_hint_requested(hint_id: StringName) -> void:
 	var k: String = String(hint_id)
 	if UiCopy.HINT.has(k):
-		_hint(k, String(UiCopy.HINT[k]), 4.5, 1)
+		# trial_faces(시련 두 면 설명)는 고르는 순간에 떠야 한다 — 시련 중 prio<2 는 대기열로 밀려 시련이 끝난 뒤에 떴다(design/19 §3 버그)
+		_hint(k, String(UiCopy.HINT[k]), 4.5, 2 if k == "trial_faces" else 1)
 
 
 func _on_yg_joined(c: int, _sp: StringName) -> void:

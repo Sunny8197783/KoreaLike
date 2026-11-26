@@ -373,6 +373,8 @@ func _visual(ws: int, tag: int, wm: WeaponManager) -> Dictionary:
 func _draw() -> void:
 	var wm: WeaponManager = Game.weapons as WeaponManager
 	var al: float = _alpha
+	# 잔상(design/19 §5.1): 내 탄 60개 이하·군중 아님일 때만 2장. 몸통 한지 심은 늘.
+	var ghosts_ok: bool = player_alive <= 60 and not WeaponBase.fx_crowd()
 	for i in CAPACITY:
 		var f: int = flags[i]
 		if (f & F_ALIVE) == 0:
@@ -395,6 +397,22 @@ func _draw() -> void:
 		if trd != null:
 			_draw_sheet(trd, pp, ang, scl, age, tint, true)
 		var fxd: Variant = vis.get("fxd")
+		var gn: int = int(vis.get("ghosts", 0)) if ghosts_ok else 0
+		var vdir: Vector2 = Vector2(vx[i], vy[i])
+		if gn > 0 and vdir.length_squared() > 1.0:
+			# 잔상: 직전 프레임 자리(속도 1틱분, 최소 3px)에 같은 그림을 jk-hi/한지 α0.5·0.25 로
+			var stp: Vector2 = vdir.normalized() * maxf(3.0, vdir.length() / float(K.TICK_HZ))
+			var gc: Color = vis.get("ghost_col", K.COL_JEOK_HI)
+			for g in range(gn, 0, -1):
+				var gpos: Vector2 = K.rndv(pp - stp * float(g))
+				var gcol: Color = Color(gc, 0.5 / float(g))
+				if fxd != null:
+					_draw_sheet(fxd, gpos, ang, scl, age, gcol, false, _phase_frame(i, f, vis, fxd))
+				else:
+					var tex0: Texture2D = vis.get("tex")
+					if tex0 != null:
+						draw_set_transform(gpos, ang, Vector2(scl, scl))
+						draw_texture(tex0, -K.rndv(tex0.get_size() * 0.5), gcol)
 		if fxd != null:
 			_draw_sheet(fxd, pp, ang, scl, age, tint, false, _phase_frame(i, f, vis, fxd))
 		else:
@@ -402,6 +420,12 @@ func _draw() -> void:
 			if tex != null:
 				draw_set_transform(pp, ang, Vector2(scl, scl))
 				draw_texture(tex, -K.rndv(tex.get_size() * 0.5), tint)
+		var cl: int = int(vis.get("core_len", 0))
+		if cl > 0 and vdir.length_squared() > 1.0:
+			# 몸통 한지 심(진행 방향 1px 선): 어두운 붉은 탄도 L ≥0.5 로 읽힌다
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+			var hd: Vector2 = vdir.normalized() * (float(cl) * 0.5)
+			draw_line(K.rndv(pp - hd), K.rndv(pp + hd), K.COL_HANJI, 1.0)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 

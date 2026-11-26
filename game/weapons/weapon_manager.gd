@@ -44,8 +44,14 @@ var _debug_spec: String = ""
 var _verdict_ready_tick: int = 0
 
 
+## 가산 층(design/19 §5.1): art_vfx_list 가 add 로 지정한 무구 시트와 첫 프레임 한지 겹침을 BLEND_ADD 로 그린다.
+## 본 층 _draw 에서 WeaponBase.draw_sheet/add_overlay 가 명령을 쌓고, 자식 _add_ci 의 draw 가 그대로 재생한다(머티리얼 1개).
+var _add_ci: Node2D = null
+var add_cmds: Array = []                 # [texture, dst Rect2, src Rect2, Transform2D, modulate]
+
+
 func _ready() -> void:
-	z_index = 3
+	z_index = 4                          # 내 무구 VFX 는 앞줄 잡귀(z3) 위(design/19 §5.1 그리기 순서)
 	_mark_h.resize(EnemyManager.CAPACITY)
 	_mark_h.fill(-1)
 	_mark_until.resize(EnemyManager.CAPACITY)
@@ -63,6 +69,13 @@ func _ready() -> void:
 	_ground.z_index = -2
 	add_child(_ground)
 	_ground.draw.connect(_draw_ground)
+	_add_ci = Node2D.new()
+	_add_ci.name = "WeaponAdd"
+	var am: CanvasItemMaterial = CanvasItemMaterial.new()
+	am.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	_add_ci.material = am
+	add_child(_add_ci)
+	_add_ci.draw.connect(_draw_add)
 	Events.levelup_chosen.connect(_on_levelup_chosen)
 	Events.enemy_killed.connect(_on_enemy_killed)
 
@@ -999,11 +1012,26 @@ func _exit_tree() -> void:
 func _process(_delta: float) -> void:
 	queue_redraw()
 	_ground.queue_redraw()
+	_add_ci.queue_redraw()
 
 
 func _draw() -> void:
+	add_cmds.clear()
 	for w in slots:
 		w.draw_all(self)
+
+
+## 가산 층 명령 한 개(본 층 _draw 안에서만 부른다).
+func push_add(tex: Texture2D, dst: Rect2, src: Rect2, xf: Transform2D, modc: Color) -> void:
+	if add_cmds.size() < 64:
+		add_cmds.append([tex, dst, src, xf, modc])
+
+
+func _draw_add() -> void:
+	for c: Array in add_cmds:
+		_add_ci.draw_set_transform_matrix(c[3])
+		_add_ci.draw_texture_rect_region(c[0], c[1], c[2], c[4])
+	_add_ci.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
 func _draw_ground() -> void:

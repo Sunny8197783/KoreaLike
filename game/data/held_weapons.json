@@ -1,0 +1,22 @@
+{
+  "_doc": "손에 든 무기(design/19 §6). 렌더 전용 — 판정·시뮬과 무관. 무구 id → 손 그림·쥐는 점·휘두르기 방식. 없는 무구는 손 무기 없이 지금처럼 동작한다.",
+  "_fields": {
+    "hand": "main(주손: 붉은 근접·투척) | off(보조손: 흰 악기·활) | both(두 손: 작두)",
+    "sprite": "game/assets/sprites/held/held_atlas.json sprites 키",
+    "grip": "그림 안 쥐는 점(px, 18×18 칸 기준)",
+    "axis_deg": "그림에서 칼끝(활은 쏘는 쪽)이 향한 화면 각도(도, y 아래). 0 = 동쪽",
+    "anim": "swing | spin | thrust | slam | throw_return | bow | scatter | shake | strike | plant | scroll_back | none",
+    "weight": "heavy | mid | light (design/19 §5.0 J 단계)",
+    "rest_deg": "쉴 때 각도(조준 방향 기준, 위쪽 = 음수). 서쪽을 보면 좌우 반전",
+    "reach": "손에서 쥐는 점까지 앞으로 내미는 거리(px)",
+    "back": "등에 멜 수 있는 긴 무기"
+  },
+  "atlas": "res://assets/sprites/held/held_atlas.png",
+  "atlas_meta": "res://assets/sprites/held/held_atlas.json",
+  "weapons": {
+    "wpn_sinkal": {"hand": "main", "sprite": "sinkal", "grip": [3, 13], "axis_deg": -45, "anim": "throw_return", "weight": "light", "rest_deg": 35, "reach": 1, "back": false},
+    "wpn_jakdu": {"hand": "both", "sprite": "jakdu", "grip": [2, 14], "axis_deg": -45, "anim": "slam", "weight": "heavy", "rest_deg": 40, "reach": 2, "back": false},
+    "wpn_bangul": {"hand": "off", "sprite": "bangul", "grip": [3, 13], "axis_deg": -50, "anim": "shake", "weight": "light", "rest_deg": -60, "reach": 0, "back": false},
+    "wpn_gakgung": {"hand": "off", "sprite": "gakgung", "grip": [9, 9], "axis_deg": -135, "anim": "bow", "weight": "light", "rest_deg": 0, "reach": 11, "back": false}
+  }
+}

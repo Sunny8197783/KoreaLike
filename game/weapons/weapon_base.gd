@@ -624,6 +624,43 @@ func windup_prog() -> float:
 	return clampf((Game.anim_time() - wu_anim_t0) / wu_len, 0.0, 1.0)
 
 
+## 손 무기 동작 단계(design/19 §6.1, 렌더 전용). phase: idle | windup | hit | recover, t: 그 단계 진행 0..1.
+## 선딜 진행값은 draw_windup_hand 가 쓰는 windup_prog() 그대로다. 타격 틱 = Events.weapon_fired.
+func held_phase() -> Dictionary:
+	var wp: float = windup_prog()
+	if wp >= 0.0:
+		return {"phase": &"windup", "t": wp}
+	if fire_anim_tick < 0:
+		return {"phase": &"idle", "t": 0.0}
+	var sf: float = since_fire()
+	var h: float = maxf(hold_s(), 0.05)
+	if sf < h:
+		return {"phase": &"hit", "t": sf / h}
+	var r: float = maxf(recovery_s(), 0.05)
+	if sf < h + r:
+		return {"phase": &"recover", "t": (sf - h) / r}
+	return {"phase": &"idle", "t": 0.0}
+
+
+## 던진 무구가 아직 손에 돌아오지 않았는가(신칼 등 귀환형: 손 무기를 숨긴다). 기본 false.
+func held_out() -> bool:
+	return false
+
+
+## 군중(화면 일반 잡귀 ≥40, 숫자 군중 모드 이력 — design/19 §5.1): 잔상·원판 끔, 고리 1px. 첫 프레임은 남긴다.
+static func fx_crowd() -> bool:
+	if Juice.number_crowd:
+		return true
+	var v: VfxPlayer = Game.vfx as VfxPlayer
+	return v != null and v.atmosphere != null and v.atmosphere.crowd_n >= 40
+
+
+## 새 타격 멈춤(J2: 작두 첫 적중·다중 처치, design/19 §5.0)을 쓰는가. 디버그 빌드의 --no-new-hitstop 은 전후 캡처를
+## 같은 시뮬로 맞출 때만 쓴다(히트스톱은 프레임↔틱 묶음을 바꿔 봇 입력 시점이 달라진다).
+static func new_hitstop_on() -> bool:
+	return not (OS.is_debug_build() and DebugTools.arg("no-new-hitstop") != "")
+
+
 ## 하위 원형이 상시형(발사 없이 tick 만)일 때 false.
 func uses_fire() -> bool:
 	return true
@@ -722,10 +759,66 @@ func draw_sheet(ci: CanvasItem, fx_id: StringName, pos: Vector2, t: float, d4: i
 		sx = -1.0
 	elif d4 == 3:
 		ang = -PI * 0.5
+	# 가산 지정(art_vfx_list add) 시트도 본체는 일반 블렌드로 그린다 — 붉은 시트의 먹 테두리가 무리 위에서 선을 지켜 준다(11-26 전후 비교).
+	# 대신 첫 1~2f 를 add_overlay 로 가산 층(_add_ci)에 한 번 더 얹어 '강한 첫 프레임'을 낸다(design/19 §5.0 ②).
 	ci.draw_set_transform(K.rndv(pos), ang, Vector2(sx, 1.0))
 	ci.draw_texture_rect_region(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r, tint)
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	return true
+
+
+## 첫 프레임 겹침(design/19 §5.0 ② '강한 한 장'): 시트의 frame 번째 그림을 한지 단색 가산으로 한 번 더(배율 정수).
+## 본 층(_draw) 안에서만 부른다. alpha 0.6 기본. 붉은 시트는 어두워서(평균 L≈0.1) 한지 쪽으로 1.3배 물들여 더한다.
+func add_overlay(fx_id: StringName, pos: Vector2, frame: int = 0, d4: int = 0, alpha: float = 0.6, scl: int = 1, hole: Rect2 = Rect2()) -> void:
+	var wm: WeaponManager = mgr as WeaponManager
+	if wm == null or fx_id == &"":
+		return
+	var fx: Dictionary = VfxLib.get_fx(fx_id)
+	if bool(fx.get("placeholder", true)):
+		return
+	var regions: Array = fx["regions"]
+	if regions.is_empty():
+		return
+	var r: Rect2 = regions[clampi(frame, 0, regions.size() - 1)]
+	if hole.has_area() and d4 == 0 and scl == 1:
+		# 무당 몸 상자(design/19 §5.1: 내 VFX 채움 α ≤0.15)를 비우고 위·아래·좌·우 네 조각으로 나눠 더한다
+		var dst: Rect2 = Rect2(K.rndv(pos) - K.rndv(fx["pivot"]), r.size)
+		var hc: Rect2 = dst.intersection(hole)
+		if hc.has_area():
+			var parts: Array[Rect2] = [
+				Rect2(dst.position, Vector2(dst.size.x, hc.position.y - dst.position.y)),
+				Rect2(Vector2(dst.position.x, hc.end.y), Vector2(dst.size.x, dst.end.y - hc.end.y)),
+				Rect2(Vector2(dst.position.x, hc.position.y), Vector2(hc.position.x - dst.position.x, hc.size.y)),
+				Rect2(Vector2(hc.end.x, hc.position.y), Vector2(dst.end.x - hc.end.x, hc.size.y))]
+			for pr: Rect2 in parts:
+				if pr.size.x >= 1.0 and pr.size.y >= 1.0:
+					wm.push_add(fx["texture"], pr, Rect2(r.position + (pr.position - dst.position), pr.size),
+						Transform2D.IDENTITY, Color(1.3, 1.2, 1.0, alpha))
+			return
+	var ang: float = 0.0
+	var sx: float = float(scl)
+	if d4 == 1:
+		ang = PI * 0.5
+	elif d4 == 2:
+		sx = -sx
+	elif d4 == 3:
+		ang = -PI * 0.5
+	wm.push_add(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r,
+		Transform2D(ang, Vector2(sx, float(scl)), 0.0, K.rndv(pos)), Color(1.3, 1.2, 1.0, alpha))
+
+
+## 시트 한 프레임을 정수 배율로(꽂힘 1f scale 2 등). 일반 블렌드.
+func draw_sheet_frame(ci: CanvasItem, fx_id: StringName, pos: Vector2, frame: int, scl: int = 1, tint: Color = Color.WHITE) -> void:
+	var fx: Dictionary = VfxLib.get_fx(fx_id)
+	if bool(fx.get("placeholder", true)):
+		return
+	var regions: Array = fx["regions"]
+	if regions.is_empty():
+		return
+	var r: Rect2 = regions[clampi(frame, 0, regions.size() - 1)]
+	ci.draw_set_transform(K.rndv(pos), 0.0, Vector2(scl, scl))
+	ci.draw_texture_rect_region(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r, tint)
+	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## 시트 길이(초). 시트 없으면 0.

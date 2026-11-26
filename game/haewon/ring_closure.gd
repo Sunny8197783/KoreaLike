@@ -494,7 +494,7 @@ func _evaluate(a: int, b: int) -> bool:
 		_haewon_rings += 1
 	if hs != null and _haewon_rings > 1 and (haewon_n >= 3 or (_cl_big and haewon_n > 0)):   # 작은 고리는 ui 가 중심에 '길닦음' 표지만(글자 겹침 방지)
 		# 붓글씨 배너: 무엇을 해냈는지 한눈에(처음 하는 사람용) — 이벤트 시에만 문자열 생성
-		hs.slam(("큰 길닦음 ×%d" if _cl_big else "길닦음 ×%d") % haewon_n,
+		hs.slam("한꺼번에 풀림 ×%d" % haewon_n,
 			24 if haewon_n < 5 else (30 if haewon_n < 12 else 38), 0.9 if haewon_n < 12 else 1.2, false, true)
 	_in_closed = true
 	Events.ring_closed.emit(area, haewon_n, center)
@@ -706,25 +706,27 @@ func _draw() -> void:
 				var ang: float = TAU * float(j) / 16.0 + t * 0.8
 				draw_rect(Rect2((to + Vector2(cos(ang), sin(ang)) * sr).round(), Vector2(1, 1)), Color(K.COL_BAEK, 0.7))
 			_draw_fx_frame(self, _fx_knot, 0, to, Color(1, 1, 1, 0.55 + 0.45 * pulse), 1)
-	# ② 닫힘 둘레 섬광
+	# ② 닫힘 둘레: 빛 머리 하나가 매듭에서 흰 길을 따라 0.25초에 한 바퀴 달린다(한지 2px, 꼬리 6px — design/19 §5.2 G).
+	#    지나간 길은 백으로 남았다가 계단 감쇠. 다 돌면 안쪽 원 마스크 섬광(한지 α0.25, 1f).
 	if _cl_t >= 0.0 and _cl_poly_n >= 2:
 		var total: float = _cl_len[_cl_poly_n - 1]
-		var run: float = clampf(_cl_t / 0.18, 0.0, 1.0) * total * 0.5   # 매듭에서 양쪽으로 달려 반대편에서 만남
+		var lap: float = 0.25
+		var run: float = clampf(_cl_t / lap, 0.0, 1.0) * total
 		var fade_a: float = 1.0
 		if _cl_t > 0.5:
 			fade_a = 0.6 if _cl_t < 0.75 else (0.3 if _cl_t < 1.0 else 0.0)
 		if fade_a > 0.0:
-			var core: bool = _cl_t < 0.1
+			var core: bool = _cl_t >= lap and _cl_t < lap + 0.05
 			var col: Color = Color(K.COL_BAEK_FLASH if core else K.COL_BAEK, fade_a)
-			var w: float = 3.0 if core else 2.0
+			var w: float = 1.0 if WeaponBase.fx_crowd() else 2.0
 			for i in range(1, _cl_poly_n):
-				var l0: float = _cl_len[i - 1]
-				if l0 > run and total - _cl_len[i] > run:
-					continue
+				if _cl_len[i - 1] > run:
+					break
 				draw_line(_cl_poly[i - 1].round(), _cl_poly[i].round(), col, w)
-			if run < total * 0.5:
-				_draw_runner(run)
-				_draw_runner(total - run)
+			if run < total:
+				_draw_head(run)
+		if _cl_t >= lap and _cl_t < lap + 2.5 / K.TICK_HZ:
+			draw_circle(_cl_center.round(), roundf(_cl_radius * 0.9), Color(K.COL_HANJI, 0.25))
 		# 매듭 임팩트: 8갈래 섬광(0.12초, 히트스톱 동안 그대로 멈춰 임팩트 프레임이 된다)
 		if _cl_t < 0.12:
 			var r0: float = 5.0 if _cl_t < 0.05 else 9.0
@@ -743,6 +745,24 @@ func _draw() -> void:
 			for j2 in 40:
 				var ang2: float = TAU * float(j2) / 40.0
 				draw_rect(Rect2((cp + Vector2(cos(ang2), sin(ang2)) * wr).round(), Vector2(2, 2)), Color(K.COL_BAEK, wa))
+
+
+## 빛 머리(한지 3px + 백 심 1px) + 뒤로 6px 꼬리(한지 2px).
+func _draw_head(dist: float) -> void:
+	var hp: Vector2 = _point_at(dist).round()
+	var tp: Vector2 = _point_at(maxf(0.0, dist - 6.0)).round()
+	draw_line(tp, hp, K.COL_HANJI, 2.0)
+	draw_rect(Rect2(hp - Vector2(2, 2), Vector2(5, 5)), Color(K.COL_HANJI, 0.7))
+	draw_rect(Rect2(hp - Vector2(1, 1), Vector2(3, 3)), K.COL_HANJI)
+	draw_rect(Rect2(hp, Vector2.ONE), K.COL_BAEK_FLASH)
+
+
+func _point_at(dist: float) -> Vector2:
+	for i in range(1, _cl_poly_n):
+		if _cl_len[i] >= dist:
+			var seg: float = maxf(_cl_len[i] - _cl_len[i - 1], 0.001)
+			return _cl_poly[i - 1].lerp(_cl_poly[i], (dist - _cl_len[i - 1]) / seg)
+	return _cl_poly[_cl_poly_n - 1]
 
 
 func _draw_runner(dist: float) -> void:

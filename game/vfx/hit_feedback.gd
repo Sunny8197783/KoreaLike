@@ -76,8 +76,15 @@ const PEND_CAP: int = 256
 var _pend_t: PackedInt32Array = PackedInt32Array()
 var _pend_x: PackedFloat32Array = PackedFloat32Array()
 var _pend_y: PackedFloat32Array = PackedFloat32Array()
-var _pend_f: PackedByteArray = PackedByteArray()
+var _pend_f: PackedByteArray = PackedByteArray()       # bit0-1 반전 · bit2 큰 파열(정예·치명 scale 2) · bit3 시트 없음(예산 초과)
+var _pend_h: PackedInt32Array = PackedInt32Array()      # 적 핸들(넋 빠짐 경로 해시)
 var _pend_head: int = 0
+# 처치 연출(design/19 §5.2 I): 한지 십자·조각·넋 빠짐 층 + 다중 처치 J2(0.25초 창 ≥5, 전역 0.6초 쿨다운) + '모음' 소리
+var kfx: KillFx = null
+var _mk_t0: int = -1000
+var _mk_n: int = 0
+var _mk_last: int = -100000
+var stat_multi_j2: int = 0
 var _burst_delay: int = 6
 # 가이드(처음 하는 사람이 두 결말을 읽게): 런 처음 LABEL_FIRST 번의 퇴치·해원에는 글자 표식을 띄운다. 이후는 정예 이상·고리만.
 const LABEL_FIRST: int = 6
@@ -131,6 +138,7 @@ func _ready() -> void:
 	_pend_x.resize(PEND_CAP)
 	_pend_y.resize(PEND_CAP)
 	_pend_f.resize(PEND_CAP)
+	_pend_h.resize(PEND_CAP)
 	var ts: Variant = Data.get_value("combat_core", "feel.toechi_seq_ticks", [2, 4, 3])
 	if ts is Array and ts.size() >= 2:
 		_burst_delay = int(ts[0]) + int(ts[1])
@@ -149,10 +157,22 @@ func _process(delta: float) -> void:
 		else:
 			vfx.stop(_oreum_fx)
 			_oreum_fx = -1
+	if kfx == null:
+		kfx = KillFx.new()
+		kfx.name = "KillFx"
+		vfx.add_child(kfx)
 	var now: int = Game.anim_tick_cur
+	var crowd: bool = Juice.number_crowd or (vfx.atmosphere != null and vfx.atmosphere.crowd_n >= HW_CROWD_N)
 	for k in PEND_CAP:
 		if _pend_t[k] >= 0 and now >= _pend_t[k]:
-			vfx.play_flip(&"vfx_toechi_burst", Vector2(_pend_x[k], _pend_y[k]), int(_pend_f[k]))
+			var pf: int = int(_pend_f[k])
+			var bp: Vector2 = Vector2(_pend_x[k], _pend_y[k])
+			if (pf & 8) == 0:
+				if (pf & 4) != 0:
+					vfx.play(&"vfx_toechi_burst", bp, 0.0, 2.0, {"flip": pf & 3})   # 정예·치명: scale 2
+				else:
+					vfx.play_flip(&"vfx_toechi_burst", bp, pf & 3)
+			kfx.burst(bp, (pf & 4) != 0, _pend_h[k], crowd)
 			_pend_t[k] = -1
 	_flush_light_agg()
 	_update_crowd_mode(delta)
@@ -403,12 +423,15 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 			atmo.burst(pos, true, ash)
 	else:
 		# 퇴치 파열은 적 스프라이트의 번쩍(hj 2 → jk 4틱) 뒤 틱 6에(GAME_FEEL 4.4). 4변형 반전, 회전 없음
-		if sheet_ok:
-			_pend_t[_pend_head] = Game.game_tick + _burst_delay
-			_pend_x[_pend_head] = pos.x
-			_pend_y[_pend_head] = pos.y
-			_pend_f[_pend_head] = Rng.int_s(&"fx", 0, 3)
-			_pend_head = (_pend_head + 1) % PEND_CAP
+		# 시트 예산을 넘긴 처치도 십자·넋 빠짐은 KillFx 자기 예산(군중 4/3)으로 낸다(bit3 = 시트 없음)
+		var big: bool = elite or cause == &"gyeoldan"
+		_pend_t[_pend_head] = Game.game_tick + _burst_delay
+		_pend_x[_pend_head] = pos.x
+		_pend_y[_pend_head] = pos.y
+		_pend_f[_pend_head] = (Rng.int_s(&"fx", 0, 3) if sheet_ok else 0) | (4 if big else 0) | (0 if sheet_ok else 8)
+		_pend_h[_pend_head] = _h
+		_pend_head = (_pend_head + 1) % PEND_CAP
+		_multi_kill(away)
 		if atmo != null:
 			atmo.burst(pos, false, 4 if elite else (2 if sheet_ok else 1))
 		if cause == &"gyeoldan" and vfx != null:
@@ -435,6 +458,23 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 		Juice.feedback_event("mboss_result", away)
 	elif elite:
 		Juice.feedback_event("elite_result", away)
+
+
+## 다중 처치(design/19 §5.0 J2): 0.25초 창에 처치 5 이상 → 16ms + 킥 1px(전역 0.6초 쿨다운) + '모음' 소리 1번.
+func _multi_kill(away: Vector2) -> void:
+	var t: int = Game.game_tick
+	if t - _mk_t0 >= 15:
+		_mk_t0 = t
+		_mk_n = 0
+	_mk_n += 1
+	if _mk_n == 5 and t - _mk_last >= 36 and WeaponBase.new_hitstop_on():
+		_mk_last = t
+		stat_multi_j2 += 1
+		Juice.hitstop(16, 2)
+		Juice.kick(away, 1)
+		var d: int = Audio.def_of(&"sfx_sys_hanpa")
+		if d >= 0:
+			Audio.play_def(d, 2.0, 1.1225)          # +2반음 +2dB
 
 
 func _on_pullil(h: int, _sp: StringName, pos: Vector2) -> void:
