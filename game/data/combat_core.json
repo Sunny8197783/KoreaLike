@@ -378,7 +378,7 @@
     },
     "flash": {
       "alpha_cap": 0.3,
-      "min_gap_s": 0.33,
+      "min_gap_s": 0.6,
       "crowd_ratio": 0.4
     },
     "dmg_num": {

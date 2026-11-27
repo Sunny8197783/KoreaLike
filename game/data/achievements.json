@@ -5,9 +5,11 @@
   "canon": "v1.2 기준 (2026-11-21 반영)",
   "canon_v1_2_log": ["캐논 v1.2 / 16 C·D 반영 (2026-11-22): ach_clear_guksadang·ach_clear_jindo 표시 문구 '선바위 굿당'·'남도 갯마을 씻김굿판'"],
   "note": "보상은 기준가(econ_price_scale 적용 전).",
+  "goal_v1_doc": "design/19 §7: v1 은 업적을 신당 '목표' 목록 표시로만 연결한다. goal_v1 = {counter(프로필 counters), gte, ko(쉬운 말)} 가 있는 것만 보이고, 판정은 기존 counters 로 한다(보상 지급 없음).",
   "achievements": [
     {
       "id": "ach_first_haewon",
+      "goal_v1": {"counter": "cnt_haewon_total", "gte": 1, "ko": "귀신 하나를 풀어 주기"},
       "name_ko": "첫 해원",
       "category": "입문",
       "condition_ko": "첫 해원 1회",
@@ -21,6 +23,7 @@
     },
     {
       "id": "ach_first_toechi",
+      "goal_v1": {"counter": "cnt_toechi_total", "gte": 1, "ko": "귀신 하나를 처치하기"},
       "name_ko": "첫 퇴치",
       "category": "입문",
       "condition_ko": "첫 퇴치 1회",
@@ -34,6 +37,7 @@
     },
     {
       "id": "ach_first_gildakkeum",
+      "goal_v1": {"counter": "cnt_gildakkeum", "gte": 1, "ko": "흰 길로 한 바퀴 감싸 한꺼번에 풀기"},
       "name_ko": "길을 닦다",
       "category": "입문",
       "condition_ko": "길닦음 1회 성립",
@@ -99,6 +103,7 @@
     },
     {
       "id": "ach_first_wongwi",
+      "goal_v1": {"counter": "cnt_wongwi_return", "gte": 1, "ko": "성난 귀신을 한 번 만나기"},
       "name_ko": "돌아온 것들",
       "category": "입문",
       "condition_ko": "원귀 회귀 1회 겪기",
@@ -112,6 +117,7 @@
     },
     {
       "id": "ach_first_clear",
+      "goal_v1": {"counter": "cnt_clears", "gte": 1, "ko": "20:00 역려까지 굿을 마치기"},
       "name_ko": "한 판을 마치다",
       "category": "입문",
       "condition_ko": "표준 굿판 클리어 1회",
@@ -125,6 +131,7 @@
     },
     {
       "id": "ach_haewon_1000",
+      "goal_v1": {"counter": "cnt_haewon_total", "gte": 1000, "ko": "모두 합쳐 1,000 풀어 주기"},
       "name_ko": "천 번의 배웅",
       "category": "해원",
       "condition_ko": "해원 누적 1,000",
@@ -138,6 +145,7 @@
     },
     {
       "id": "ach_haewon_10000",
+      "goal_v1": {"counter": "cnt_haewon_total", "gte": 10000, "ko": "모두 합쳐 10,000 풀어 주기"},
       "name_ko": "만 번의 배웅",
       "category": "해원",
       "condition_ko": "해원 누적 10,000",
@@ -151,6 +159,7 @@
     },
     {
       "id": "ach_haewon_100000",
+      "goal_v1": {"counter": "cnt_haewon_total", "gte": 100000, "ko": "모두 합쳐 100,000 풀어 주기"},
       "name_ko": "넋길잡이",
       "category": "해원",
       "condition_ko": "해원 누적 100,000",
@@ -229,6 +238,7 @@
     },
     {
       "id": "ach_toechi_1000",
+      "goal_v1": {"counter": "cnt_toechi_total", "gte": 1000, "ko": "모두 합쳐 1,000 처치하기"},
       "name_ko": "천 번의 벽사",
       "category": "퇴치",
       "condition_ko": "퇴치 누적 1,000",
@@ -242,6 +252,7 @@
     },
     {
       "id": "ach_toechi_10000",
+      "goal_v1": {"counter": "cnt_toechi_total", "gte": 10000, "ko": "모두 합쳐 10,000 처치하기"},
       "name_ko": "만 번의 벽사",
       "category": "퇴치",
       "condition_ko": "퇴치 누적 10,000",
@@ -255,6 +266,7 @@
     },
     {
       "id": "ach_toechi_100000",
+      "goal_v1": {"counter": "cnt_toechi_total", "gte": 100000, "ko": "모두 합쳐 100,000 처치하기"},
       "name_ko": "벽사 무당",
       "category": "퇴치",
       "condition_ko": "퇴치 누적 100,000",

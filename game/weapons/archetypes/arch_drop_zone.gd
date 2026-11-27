@@ -293,6 +293,7 @@ func _trail_damage() -> void:
 
 const FLAG_FX: Array[StringName] = [&"vfx_obanggi_flag_cheong", &"vfx_obanggi_flag_jeok", &"vfx_obanggi_flag_hwang", &"vfx_obanggi_flag_baek", &"vfx_obanggi_flag_heuk"]
 const OBANG_OFFS: Array[Vector2] = [Vector2(1, 0), Vector2(0, 1), Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1)]   # 청 동 · 적 남 · 황 중앙 · 백 서 · 흑 북
+const PILLAR_EAST_TINT: Color = Color(0.62, 1.0, 0.7, 1.0)   # 청 기둥 × 이 값 → 청록(#3f8f86 계열)
 const PILLAR_FX: Array[StringName] = [&"vfx_obangjin_pillar_cheong", &"vfx_obangjin_pillar_jeok", &"vfx_obangjin_pillar_hwang", &"vfx_obangjin_pillar_baek", &"vfx_obangjin_pillar_heuk"]
 
 
@@ -318,9 +319,14 @@ func draw_ground(ci: CanvasItem) -> void:
 			continue
 		var age: float = float(now - ztick[z]) / K.TICK_HZ
 		var c: Vector2 = Vector2(zx[z], zy[z]) + (rp if place == "follow" else Vector2.ZERO)
-		var fading: bool = zlife[z] < 0.5 and (now / 3) % 2 == 0
+		# 소멸 예고(design/19 §5.2 C): 사라지기 0.3초 전부터 2f 간격 깜박
+		var fading: bool = zlife[z] < 0.3 and (now / 2) % 2 == 0
 		if fading and place != "line":
 			continue
+		# 생성 1f(0.1초): 바깥 테 2px 한지 실선 → 그 뒤 점선
+		var born: bool = age < 0.1 and place != "line"
+		if born:
+			draw_ring(ci, c, zr[z], K.COL_HANJI, 2.0)   # ② 첫 프레임은 군중이어도 2px(design/19 §5.1, 검토 11-26 '무리 감쇠가 새 연출을 지운다')
 		match place:
 			"line":
 				if z == full_a or z == full_b:
@@ -329,7 +335,8 @@ func draw_ground(ci: CanvasItem) -> void:
 					_draw_dots(ci, c, Vector2(zdx[z], zdy[z]), 0.0, zr[z], K.COL_HANJI_DK)
 			"flag", "obangjin":
 				draw_sheet(ci, fx_name("fx_zone"), c, at, 0, Color.WHITE, true)
-				draw_dotted_ring(ci, c, zr[z], K.COL_HANJI_DK, 2, at * 0.5)
+				if not born:
+					draw_dotted_ring(ci, c, zr[z], K.COL_HANJI_DK, 2, at * 0.5)
 			"dense":
 				var fx: StringName = fx_name("fx_zone")
 				var tint: Color = Color.WHITE
@@ -340,7 +347,8 @@ func draw_ground(ci: CanvasItem) -> void:
 					if zkind[z] == 2:
 						tint = Color(3.6, 0.89, 0.2)   # #2f8c86 → #a97c1b, #55b8aa → 황 밝음
 				draw_sheet(ci, fx, c, at + float(z) * 0.1, 0, tint, true)
-				draw_dotted_ring(ci, c, zr[z], K.COL_HANJI_DK, 3, at)
+				if not born:
+					draw_dotted_ring(ci, c, zr[z], K.COL_HANJI_DK, 3, at)
 			_:
 				if age < 0.5:
 					draw_sheet(ci, fx_name("fx_cast"), c, age)
@@ -458,14 +466,24 @@ func draw(ci: CanvasItem) -> void:
 		if zlife[z] <= 0.0 or zland[z] > 0.0:
 			continue
 		var c: Vector2 = Vector2(zx[z], zy[z])
-		if zlife[z] < 0.5 and (now / 3) % 2 == 0:
+		if zlife[z] < 0.3 and (now / 2) % 2 == 0:
 			continue
 		if place == "flag":
 			if not draw_sheet(ci, FLAG_FX[zkind[z]], c, at + float(z) * 0.15, 0, Color.WHITE, true):
 				draw_sheet(ci, fx_name("fx_prop"), c, at, 0, Color.WHITE, true)
 		elif place == "obangjin":
 			var age: float = float(now - ztick[z]) / K.TICK_HZ
+			# 진이 무당 발밑에 서면(검토 11-26): 가운데 황 기둥은 무당 몸 한가운데를 세로로 가려 그리지 않고,
+			# 남쪽 적 기둥은 무당 바로 아래 붉은 세로 막대('피 기둥')로 읽혀 첫 0.1초 뒤 α0.5 로 낮춘다.
+			var on_pl: bool = c.distance_squared_to(render_origin()) < 24.0 * 24.0
 			for k in 5:
+				if k == 2 and on_pl:
+					continue
 				var pp: Vector2 = c + OBANG_OFFS[k] * zr[z]
 				var t2: float = minf(age, sheet_len(PILLAR_FX[k]) - 0.01) if age < 1.0 else sheet_len(PILLAR_FX[k]) - 0.01
-				draw_sheet(ci, PILLAR_FX[k], pp, maxf(t2, 0.0))
+				var tn: Color = Color.WHITE
+				if k == 0:
+					tn = PILLAR_EAST_TINT          # 청은 적 탄 전용 — 용왕 청록 쪽으로(design/19 §5.2 F 와 같은 규칙)
+				elif k == 1 and on_pl and age > 0.1:
+					tn = Color(1, 1, 1, 0.5)
+				draw_sheet(ci, PILLAR_FX[k], pp, maxf(t2, 0.0), 0, tn)

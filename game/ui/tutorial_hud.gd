@@ -29,14 +29,15 @@ const GEORI_CARD_SEC: float = 3.8  # 카드 3.2초 + 여유
 const SEAL_GLYPH: String = "巫"    # 타이틀 로고·인트로 인장과 같은 글자(印 은 '도장'이란 뜻뿐이라 바꿈)
 const END_BTNS: Array[String] = ["굿판 열기(실전)", "다시 연습", "타이틀로"]
 const END_NEXT: Array[StringName] = [&"real", &"again", &"title"]
-const END_LINES: Array[String] = ["◆ 붉은 무구로 깎고, ○ 흰 무구로 푼다", "흰 길로 고리를 닫으면 한꺼번에 풀린다", "시련은 ◆ 꺾어 위엄, ○ 모셔 가호"]
-const ANN_JEOMJI: Array[String] = ["◆ 붉은 = 깎아 퇴치 · ○ 흰 = 풀어 해원 — 하나를 고르세요",
-	"카드 맨 아래 '짝'을 함께 키우면 무구가 진화합니다"]   # 첫 점지에 Lv8·정예 상자까지는 많다(리뷰 11-25) — 자세한 건 안내서 7쪽
-const ANN_BINGUI: Array[String] = ["빙의! 신령의 권능을 하나 고르세요"]
+const END_LINES: Array[String] = ["◆ 붉은 무기로 베고, ○ 흰 무기로 풀어 준다", "흰 길로 한 바퀴 감싸면 한꺼번에 풀린다", "신령의 시험은 ◆ 싸워 이기거나 ○ 모셔 드리거나"]
+const ANN_JEOMJI: Array[String] = ["◆ 붉은 = 베어 처치 · ○ 흰 = 풀어 줌 — 하나를 고르세요",
+	"카드 맨 아래 '진화 짝'을 함께 키우면 무기가 진화합니다"]   # 첫 점지에 Lv8·정예 상자까지는 많다(리뷰 11-25) — 자세한 건 안내서 7쪽
+const ANN_BINGUI: Array[String] = ["신령의 힘을 하나 고르세요 — 이번 판 끝까지 갑니다"]
 
 var _view: Control
 var _f_body: Font
 var _f_bold: Font
+var _f_big: Font
 var _f_small: Font
 var _f_tiny: Font
 var _f_brush: Font
@@ -104,6 +105,7 @@ func _ready() -> void:
 	UiKit.setup_fonts()
 	_f_body = UiKit.body()
 	_f_bold = UiKit.bold()
+	_f_big = UiKit.big()
 	_f_small = UiKit.small()
 	_f_tiny = UiKit.tiny()
 	_f_brush = UiKit.brush()
@@ -490,7 +492,7 @@ func _draw_banner(ci: Control, cx: float, w: float, h: float) -> void:
 	# 거리 제목 카드(waves wave_presenter, y≈128~165)와 겹치지 않게 무당 발밑 아래(y 204~244)에 둔다
 	ci.draw_rect(Rect2(0, 206, w, 40), Color(UiKit.MEOK, 0.55 * a))
 	var bw: float = UiKit.text_outline(ci, _f_brush, 40, Vector2(cx, 238), "연습 굿판", Color(UiKit.HANJI_UI, a), 1, 2)
-	UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(roundf(cx + bw * 0.5 + 8.0), 236), "練習", Color(UiKit.HWANG_HI, a))
+	UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(roundf(cx + bw * 0.5 + 8.0), 236), "실패 없음", Color(UiKit.HWANG_HI, a))
 
 
 ## 시련 안내판(deities, 위 y 82~)이 떠 있는 동안 이름표는 아래 목표 띠 자리에 단다(무당 발밑을 덮지 않게).
@@ -621,15 +623,16 @@ func _draw_tags(ci: Control) -> void:
 		var a: float = clampf(tt / 0.1, 0.0, 1.0) * clampf((TAG_LIFE - tt) / 0.3, 0.0, 1.0)
 		var p: Vector2 = (xf * _tag_pos[i]).round() - Vector2(0, 22.0 + roundf(tt * 8.0))
 		var txt: String = _tag_text[i]
-		var col: Color = UiKit.BAEK if (txt.contains("해원") or txt.contains("한꺼번에")) else UiKit.HANJI_UI
-		# 가시성: '퇴치'·'해원' 은 타격 연출(hit_feedback → Juice.label)이 같은 자리에 이미 한글로 쓴다.
-		# 글자가 두 겹으로 쌓이지 않게 한자 뜻풀이만 그 위에 단다(글자 표식을 끈 설정이면 한글도 그린다).
-		if (txt == "퇴치" or txt == "해원") and _tag_hj[i] != "" and Juice.damage_number_mode != 2:
+		var col: Color = UiKit.BAEK if (txt.contains("풀어 줌") or txt.contains("한꺼번에")) else UiKit.HANJI_UI
+		# 가시성: 처치·풀어 줌은 타격 연출(hit_feedback → Juice.label)이 같은 자리에 이미 한글로 쓴다.
+		# 글자가 두 겹으로 쌓이지 않게 무속 이름(작은 보조)만 그 위에 단다(글자 표식을 끈 설정이면 한글도 그린다).
+		if (txt == "처치" or txt == "풀어 줌") and _tag_hj[i] != "" and Juice.damage_number_mode != 2:
 			UiKit.text_outline(ci, _f_small, UiKit.SZ_SMALL, Vector2(p.x, p.y - 34.0), _tag_hj[i], Color(UiKit.HWANG_HI, a), 1, 1)
 			continue
 		if _tag_hj[i] != "":
-			UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(p.x, p.y - 16.0), _tag_hj[i], Color(UiKit.HWANG_HI, a), 1)
-		UiKit.text_outline(ci, _f_brush, 16, p, txt, Color(col, a), 1, 2)
+			UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(p.x, p.y - 17.0), _tag_hj[i], Color(UiKit.HWANG_HI, a), 1)
+		# 월드 이름표 = T2(Galmuri14 15, 외곽선 1) — 32 미만 붓 금지(design/19 §4.1)
+		UiKit.text_outline(ci, _f_big, UiKit.SZ_BIG, p, txt, Color(col, a), 1, 1)
 
 
 func _draw_ann(ci: Control, cx: float) -> void:

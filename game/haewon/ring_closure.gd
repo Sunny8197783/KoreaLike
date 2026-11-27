@@ -123,6 +123,21 @@ var _fx_petal: Dictionary = {}
 var _fx_md: Dictionary = {}
 var _add: Node2D = null
 var _top: Node2D = null
+# 닫힘 섬광 바닥층(design/19 §5.2 G 고침, 검토 11-26): 원 마스크가 실제 고리보다 커서 기와집·적까지 베이지 원판으로 덮었다
+#   → 고리 다각형(Geometry2D.triangulate_polygon 성공 시, 실패면 볼록 껍질, 그것도 안 되면 원)으로 바닥층(절대 z −2: 지면 위·소품/적 아래)에 칠한다.
+#   큰 고리(넓이 ≥ FLASH_BIG_AREA 또는 만다라)는 α FLASH_A_BIG, 작은 고리는 FLASH_A.
+const FLASH_POLY_CAP: int = 96
+const FLASH_A: float = 0.25
+const FLASH_A_BIG: float = 0.12
+const FLASH_BIG_AREA: int = 40
+var _floor: Node2D = null
+var _cl_fpoly: PackedVector2Array = PackedVector2Array()   # 섬광 다각형(닫힘 순간 1회 할당)
+var _cl_fmode: int = 0                                      # 0 다각형 / 1 볼록 껍질 / 2 원
+var _cl_area: int = 0
+var _cl_crowd: bool = false
+var stat_flash_poly: int = 0
+var stat_flash_hull: int = 0
+var stat_flash_circle: int = 0
 
 
 func _ready() -> void:
@@ -184,6 +199,11 @@ func _ready() -> void:
 	_top.z_index = 4
 	_top.draw.connect(_draw_top)
 	add_child(_top)
+	_floor = Node2D.new()
+	_floor.z_as_relative = false
+	_floor.z_index = -2
+	_floor.draw.connect(_draw_floor)
+	add_child(_floor)
 
 
 func _snap_r() -> float:
@@ -492,7 +512,7 @@ func _evaluate(a: int, b: int) -> bool:
 	var center: Vector2 = (_minp + _maxp) * 0.5
 	if haewon_n > 0:
 		_haewon_rings += 1
-	if hs != null and _haewon_rings > 1 and (haewon_n >= 3 or (_cl_big and haewon_n > 0)):   # 작은 고리는 ui 가 중심에 '길닦음' 표지만(글자 겹침 방지)
+	if hs != null and (haewon_n >= 3 or (_cl_big and haewon_n > 0)):   # 작은 고리는 ui 가 중심에 '한꺼번에 풀림' 표지만. 큰 고리는 첫 고리도 가장자리 붓(design/19 §5.2 G — 월드 글이 무리를 덮지 않게)
 		# 붓글씨 배너: 무엇을 해냈는지 한눈에(처음 하는 사람용) — 이벤트 시에만 문자열 생성
 		hs.slam("한꺼번에 풀림 ×%d" % haewon_n,
 			24 if haewon_n < 5 else (30 if haewon_n < 12 else 38), 0.9 if haewon_n < 12 else 1.2, false, true)
@@ -601,6 +621,9 @@ func _snapshot_fx(a: int, b: int) -> void:
 	_cl_len[_cl_poly_n] = acc
 	_cl_poly_n += 1
 	_cl_cells_n = _collect_cells(_cl_cells, true)
+	_cl_area = last_area
+	_cl_crowd = WeaponBase.fx_crowd()
+	_build_flash_poly()
 	# 연출은 다음 박에 스냅(≤250ms), 판정은 즉시
 	var to_beat: float = (1.0 - Beat.beat_phase()) * Beat.beat_len_sec()
 	_cl_fill_delay = to_beat if to_beat <= _fx_max_delay else 0.0
@@ -613,7 +636,8 @@ func _snapshot_fx(a: int, b: int) -> void:
 	Juice.light_pulse(_cl_center, _cl_radius * 1.5 + 24.0, 0.9 if _cl_big else 0.7, 1, 1.1 if _cl_big else 0.8)
 	# 꽃잎: 둘레를 따라 고르게(최대 40장), 바깥·위로 흩날림
 	var center: Vector2 = (_minp + _maxp) * 0.5
-	var np: int = clampi(_cl_poly_n / 3, 12, 40)
+	# 군중(design/19 §5.1): 꽃잎 절반·꽃비 절반 — 적 탄·무당이 꽃잎 밑에 묻히지 않게
+	var np: int = clampi(_cl_poly_n / 3, 8, 20) if _cl_crowd else clampi(_cl_poly_n / 3, 12, 40)
 	for j in np:
 		var idx: int = int(float(j) / float(np) * float(_cl_poly_n - 1))
 		var p2: Vector2 = _cl_poly[idx]
@@ -621,8 +645,9 @@ func _snapshot_fx(a: int, b: int) -> void:
 		var v: Vector2 = out * Rng.range_s(&"fx", 14.0, 30.0) + Vector2(Rng.range_s(&"fx", -6, 6), Rng.range_s(&"fx", -48.0, -26.0))
 		_add_particle(p2, v, Rng.range_s(&"fx", 1.0, 1.6), 0)
 	if _cl_big:
-		for j2 in 16:   # 큰 고리: 중심에서 꽃비
-			var ang: float = TAU * float(j2) / 16.0
+		var nrain: int = 8 if _cl_crowd else 16
+		for j2 in nrain:   # 큰 고리: 중심에서 꽃비
+			var ang: float = TAU * float(j2) / float(nrain)
 			_add_particle(center, Vector2(cos(ang), sin(ang) * 0.6 - 0.9) * 46.0, 1.8, 0)
 
 
@@ -669,6 +694,7 @@ func _process(_delta: float) -> void:
 		queue_redraw()
 		_add.queue_redraw()
 		_top.queue_redraw()
+		_floor.queue_redraw()
 	_was_busy = busy
 
 
@@ -725,8 +751,7 @@ func _draw() -> void:
 				draw_line(_cl_poly[i - 1].round(), _cl_poly[i].round(), col, w)
 			if run < total:
 				_draw_head(run)
-		if _cl_t >= lap and _cl_t < lap + 2.5 / K.TICK_HZ:
-			draw_circle(_cl_center.round(), roundf(_cl_radius * 0.9), Color(K.COL_HANJI, 0.25))
+		# (다 돈 뒤 안쪽 섬광은 _draw_floor — 바닥층 고리 다각형)
 		# 매듭 임팩트: 8갈래 섬광(0.12초, 히트스톱 동안 그대로 멈춰 임팩트 프레임이 된다)
 		if _cl_t < 0.12:
 			var r0: float = 5.0 if _cl_t < 0.05 else 9.0
@@ -742,19 +767,23 @@ func _draw() -> void:
 			var wr: float = _cl_radius * (0.25 + 0.95 * (1.0 - (1.0 - wu) * (1.0 - wu)))
 			var wa: float = 0.9 if wu < 0.4 else (0.55 if wu < 0.7 else 0.25)
 			var cp: Vector2 = _cl_center
-			for j2 in 40:
-				var ang2: float = TAU * float(j2) / 40.0
+			var nd: int = 24 if _cl_crowd else 40
+			for j2 in nd:
+				var ang2: float = TAU * float(j2) / float(nd)
 				draw_rect(Rect2((cp + Vector2(cos(ang2), sin(ang2)) * wr).round(), Vector2(2, 2)), Color(K.COL_BAEK, wa))
 
 
-## 빛 머리(한지 3px + 백 심 1px) + 뒤로 6px 꼬리(한지 2px).
+## 빛 머리(한지 7px 번짐 + 한지 5px + 백 심 3px) + 뒤로 10px 꼬리(한지 2px → 1px).
+## 작은 고리(둘레 짧음)에서도 머리가 보이게 최소 크기를 키웠다(견본 검토: 작은 고리에서 머리가 점 하나로 보였다).
 func _draw_head(dist: float) -> void:
 	var hp: Vector2 = _point_at(dist).round()
-	var tp: Vector2 = _point_at(maxf(0.0, dist - 6.0)).round()
+	var tp: Vector2 = _point_at(maxf(0.0, dist - 5.0)).round()
+	var tp2: Vector2 = _point_at(maxf(0.0, dist - 10.0)).round()
+	draw_line(tp2, tp, Color(K.COL_HANJI, 0.6), 1.0)
 	draw_line(tp, hp, K.COL_HANJI, 2.0)
-	draw_rect(Rect2(hp - Vector2(2, 2), Vector2(5, 5)), Color(K.COL_HANJI, 0.7))
-	draw_rect(Rect2(hp - Vector2(1, 1), Vector2(3, 3)), K.COL_HANJI)
-	draw_rect(Rect2(hp, Vector2.ONE), K.COL_BAEK_FLASH)
+	draw_rect(Rect2(hp - Vector2(3, 3), Vector2(7, 7)), Color(K.COL_HANJI, 0.35))
+	draw_rect(Rect2(hp - Vector2(2, 2), Vector2(5, 5)), Color(K.COL_HANJI, 0.8))
+	draw_rect(Rect2(hp - Vector2(1, 1), Vector2(3, 3)), K.COL_BAEK_FLASH)
 
 
 func _point_at(dist: float) -> Vector2:
@@ -773,6 +802,51 @@ func _draw_runner(dist: float) -> void:
 			draw_rect(Rect2(p - Vector2(2, 2), Vector2(5, 5)), Color(K.COL_BAEK, 0.6))
 			draw_rect(Rect2(p - Vector2(1, 1), Vector2(3, 3)), K.COL_BAEK_FLASH)
 			return
+
+
+## 닫힘 섬광 다각형을 만든다(닫힘 순간 1회). 둘레 점을 FLASH_POLY_CAP 개 이하로 솎고 → 삼각분할 → 실패면 볼록 껍질 → 원.
+func _build_flash_poly() -> void:
+	_cl_fpoly = PackedVector2Array()
+	var n: int = _cl_poly_n - 1          # 마지막 점 = 매듭(첫 점과 같음)
+	if n >= 3:
+		var stride: int = maxi(1, int(ceil(float(n) / float(FLASH_POLY_CAP))))
+		var k: int = 0
+		while k < n:
+			var q: Vector2 = _cl_poly[k].round()
+			if _cl_fpoly.is_empty() or q.distance_squared_to(_cl_fpoly[_cl_fpoly.size() - 1]) >= 4.0:
+				_cl_fpoly.append(q)
+			k += stride
+	if _cl_fpoly.size() >= 3 and not Geometry2D.triangulate_polygon(_cl_fpoly).is_empty():
+		_cl_fmode = 0
+		stat_flash_poly += 1
+		return
+	if _cl_fpoly.size() >= 3:
+		var hull: PackedVector2Array = Geometry2D.convex_hull(_cl_fpoly)
+		if hull.size() >= 4:
+			hull.resize(hull.size() - 1)      # 껍질은 첫 점을 끝에 한 번 더 넣는다
+			_cl_fpoly = hull
+			_cl_fmode = 1
+			stat_flash_hull += 1
+			return
+	_cl_fmode = 2
+	stat_flash_circle += 1
+
+
+## 바닥층(절대 z −2): 빛 머리가 다 돈 순간 고리 안쪽 섬광 1f(2.5틱). 적·소품·적 탄은 이 위에 그대로 보인다.
+func _draw_floor() -> void:
+	if _cl_t < 0.0:
+		return
+	var lap: float = 0.25
+	if _cl_t < lap or _cl_t >= lap + 2.5 / K.TICK_HZ:
+		return
+	var big: bool = _cl_big or _cl_area >= FLASH_BIG_AREA
+	var col: Color = Color(K.COL_HANJI, FLASH_A_BIG if big else FLASH_A)
+	if _cl_fmode < 2 and _cl_fpoly.size() >= 3:
+		_floor.draw_colored_polygon(_cl_fpoly, col)
+	else:
+		# 원 폴백: 고리 상자 안쪽에 들도록 반지름을 짧은 변의 절반으로
+		var r: float = minf(_maxp.x - _minp.x, _maxp.y - _minp.y) * 0.5
+		_floor.draw_circle(_cl_center.round(), roundf(maxf(8.0, r)), col)
 
 
 ## 가산 레이어: 만다라 채움(칸마다 매듭에서 번져 감) + 오방 만다라 도량.
@@ -841,10 +915,17 @@ func _draw_add() -> void:
 ## 위 레이어: 꽃잎·정화 티끌(적 위로 흩날림).
 func _draw_top() -> void:
 	var regions: Array = _fx_petal.get("regions", [])
+	# 무당 몸 상자(±16, −40~+4) 안에는 꽃잎·티끌을 그리지 않는다(이 층은 무당 위 — 몸 상자 안 순백 0, design/19 §5.1)
+	var body: Rect2 = Rect2(0, 0, 0, 0)
+	var pl: Player = Game.player as Player
+	if pl != null:
+		body = Rect2(pl.render_pos.x - 20.0, pl.render_pos.y - 44.0, 40.0, 52.0)
 	for k in p_n:
 		var u: float = p_t[k] / maxf(p_life[k], 0.01)
 		var a: float = 1.0 if u < 0.7 else (0.6 if u < 0.85 else 0.3)
 		var p: Vector2 = Vector2(p_x[k] + sin(p_t[k] * 9.0 + float(k)) * 2.0, p_y[k]).round()
+		if body.has_point(p):
+			continue
 		if p_kind[k] == 1:
 			_top.draw_rect(Rect2(p, Vector2(1, 1 if u > 0.5 else 2)), Color(K.COL_BAEK, a))
 			continue

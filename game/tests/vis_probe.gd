@@ -15,6 +15,9 @@ extends Node
 ##   top = 위 띠/레인·시련 안내판, center = 가운데 큰 글(거리 카드·시련 큰 글자·거리 슬램·레벨업·가운데 붓), edge = 가장자리 레인·붓·힌트,
 ##   world = 월드 이름표(화신 원 카드는 world 이지만 예전과 비교하려고 center_n 에 1로 센다).
 ##   safe_n = 플레이어 안전 상자(플레이어 화면 좌표 x±72, y−72~+16) 와 겹치는 화면 공간 글 수(world 제외).
+##   goal(목표 줄, design/19 §1.3)은 위치와 무관하게 top:goal 로 센다(가운데 슬롯 아님). goal_on = 이번 프레임 목표 줄이 그려졌는가.
+## design/19 §8.2 지표(그림 수치는 tools/vis_measure.py): held_n = 손에 든 무기 수(HeldWeapon 이 이번 프레임 그린 것),
+##   pl_hidden = 무적 점멸 숨김 틱(몸 대신 실루엣 — 최소값 계산에서 뺀다), streak = Juice.kill_streak, fx_crowd = Juice.fx_crowd.
 
 const EM_ALIVE: int = 1
 const EM_PULLIL: int = 2
@@ -256,6 +259,7 @@ func _stats() -> Dictionary:
 	var safe_box: Rect2 = Rect2(ps.x - 72.0, ps.y - 72.0, 144.0, 88.0)
 	var ctr_box: Rect2 = Rect2(vs.x * 0.25, vs.y * 0.2, vs.x * 0.5, vs.y * 0.55)
 	var cards: int = 0
+	var goal_on: bool = false
 	var owners: Array = [["res://ui/hud.gd", "hud"], ["res://haewon/haewon_system.gd", "hs"], ["res://ui/guide.gd", "guide"],
 		["res://waves/wave_presenter.gd", "waves"], ["res://deities/trial_hud.gd", "trial"]]
 	var fr: int = Engine.get_process_frames()
@@ -272,6 +276,9 @@ func _stats() -> Dictionary:
 			var key: String = String(k)
 			var cls: String = key.get_slice(":", 0)
 			var nm: String = key.get_slice(":", 1)
+			if nm == "goal":
+				cls = "top"
+				goal_on = true
 			if cls == "pos":
 				var c2: Vector2 = r.get_center()
 				if ctr_box.has_point(c2):
@@ -327,6 +334,16 @@ func _stats() -> Dictionary:
 		texts.append("center:levelup")
 		center += 1
 	d["safe_n"] = safe
+	d["goal_on"] = goal_on
+	# 손 무기·무적 점멸·연속 처치(design/19 §8.1 ④)
+	var plr: Node = Game.player
+	var held: Node = _g(plr, "held", null)
+	var dw: Variant = _g(held, "_draw_w", [])
+	d["held_n"] = (dw as Array).size() if dw is Array else 0
+	var spr: Variant = _g(plr, "sprite", null)
+	d["pl_hidden"] = spr is CanvasItem and not (spr as CanvasItem).visible
+	d["streak"] = int(Juice.get(&"kill_streak")) if Juice.get(&"kill_streak") != null else -1
+	d["fx_crowd"] = bool(Juice.get(&"fx_crowd")) if Juice.get(&"fx_crowd") != null else false
 	d["center_owner"] = String(Juice.call(&"center_current")) if Juice.has_method(&"center_current") else ""
 	d["draw_calls"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
 	# 앞 장 이후 프레임들(캡처 프레임 제외)의 평균·최대 프레임 시간과 스크립트 _process 평균 — PNG 저장 정지가 섞이지 않은 fps

@@ -210,6 +210,7 @@ func _swing(code: int, dir: Vector2, mult: float) -> void:
 		else:
 			deal(i, _dmg(), kd, kb, mult)
 		hits += 1
+	batch_feedback(hits, dir)
 	_spin_n += 1
 	_record(code, origin, dir, r, spin and (_spin_n % 2 == 0))
 	if code != C_SWING:
@@ -262,6 +263,7 @@ func _line_hit(dir: Vector2, ln: float, width: float, mult: float, mark: bool) -
 	var origin: Vector2 = player_pos()
 	var n: int = em.query_circle(origin + dir * ln * 0.5, ln * 0.5 + width, _q)
 	var wm: WeaponManager = mgr as WeaponManager
+	var hits: int = 0
 	for k in n:
 		var i: int = _q[k]
 		if (em.flags[i] & EnemyManager.F_DYING) != 0:
@@ -273,10 +275,12 @@ func _line_hit(dir: Vector2, ln: float, width: float, mult: float, mark: bool) -
 		if not can_hit(i, 0.0):
 			continue
 		deal(i, _dmg(), dir, s("kb", 0.0), mult)
+		hits += 1
 		if mark and (em.flags[i] & EnemyManager.F_ELITE_PLUS) != 0 and s("mark", 0.0) > 0.0:
 			if not wm.is_marked(i):
 				play_fx(fx_name("fx_mark"), em.pos_of(i) + Vector2(0, -float(em.body_h_of(i)) - 4.0))
 			wm.set_mark(i, 5.0 * dur_mult(), s("mark", 0.15))
+	batch_feedback(hits, dir)
 	_record(C_THRUST, origin, dir, ln, false)
 
 
@@ -342,10 +346,11 @@ func _pull_cluster() -> void:
 
 ## 보조탄(tag 1): 만월도 반달 검기(시트) / 파진창 창기 잔상(절차적 창날).
 func proj_visual(tag: int) -> Dictionary:
+	# 검기·창기(design/19 §5.3 만월도·파진창): 한지 심 + 잔상 2(내 탄 60개·군중이면 끔은 풀이 본다)
 	if tag == 1 and fx_name("fx_wave") != &"":
-		return {"fx": fx_name("fx_wave"), "orient": &"dir4"}
+		return {"fx": fx_name("fx_wave"), "orient": &"dir4", "core_len": 10, "ghosts": 2, "ghost_col": K.COL_JEOK_HI}
 	if tag == 1:
-		return {"orient": &"dir4"}
+		return {"orient": &"dir4", "core_len": 12, "ghosts": 2, "ghost_col": K.COL_JEOK_HI}
 	return super.proj_visual(tag)
 
 
@@ -408,21 +413,35 @@ func _draw_swing(ci: CanvasItem, body: Vector2, d: Vector2, r: float, age: float
 		if not draw_sheet(ci, fx, body, age, 2 if flip else 0):
 			if age < hold + recovery_s():
 				draw_ring(ci, body, r, col_main(), 2.0)
-		# 판정 원: 타격 홀드 동안 정수 1px 테(실제 반경)
+		# 판정 원: 타격 홀드 동안 2px 테(바깥 jk-hi + 안 한지, 먹 받침 — design/19 §5.2 A ③). 군중이면 1px.
 		if age < hold:
-			draw_ring(ci, body + Vector2(0, 14), r, col_hi())
+			_judge_arc(ci, body + Vector2(0, 14), r, 0.0, TAU, 48)
 		return
 	if not draw_sheet(ci, fx, body + K.rndv(K.dir8(d) * 6.0), age, d4):
 		if age < hold + recovery_s():
 			var half: float = deg_to_rad(s("angle", 90.0)) * 0.5
 			var a: float = d.angle()
 			ci.draw_arc(K.rndv(body), roundf(r), a - half, a + half, 18, col_main(), 3.0)
-	# 정수 스미어(타격 1f): 실제 판정 호
-	if age < 0.05 and not back:
+	# 판정 호(design/19 §5.2 A ②③): 타격 1f 는 한지 2px, 그 뒤 홀드 동안 2px(바깥 jk-hi + 안 한지) + 먹 1px 받침
+	if age < maxf(hold, 0.05) and not back:
 		var half2: float = deg_to_rad(s("angle", 90.0)) * 0.5
 		var a2: float = d.angle()
-		ci.draw_arc(K.rndv(body), roundf(r * 0.85), a2 - half2, a2 + half2, 18, col_hi(), 1.0)
-		ci.draw_arc(K.rndv(body), roundf(r), a2 - half2, a2 + half2, 18, K.COL_HANJI if is_red() else K.COL_HANJI_DK, 1.0)
+		if age < 0.034:
+			ci.draw_arc(K.rndv(body), roundf(r) + 1.5, a2 - half2, a2 + half2, 24, COL_RING_INK, 1.0)
+			ci.draw_arc(K.rndv(body), roundf(r) + 0.5, a2 - half2, a2 + half2, 24, K.COL_HANJI, 2.0)   # ② 첫 프레임 군중도 2px
+		else:
+			_judge_arc(ci, body, r, a2 - half2, a2 + half2, 24)
+
+
+## 판정 호 2px: 먹 받침(바깥 1px) → jk-hi(바깥) → 한지(안). 군중이면 먹 받침만 뺀다(2색 2px 는 그대로).
+func _judge_arc(ci: CanvasItem, c: Vector2, r: float, a0: float, a1: float, seg: int) -> void:
+	var cc: Vector2 = K.rndv(c)
+	var rr: float = roundf(r)
+	# 군중: 먹 받침만 뺀다(2색 호는 남김 — 가는 1px 한지로 줄이면 후반 무리 속에서 내 공격이 사라졌다, 검토 11-26)
+	if not fx_crowd():
+		ci.draw_arc(cc, rr + 1.0, a0, a1, seg, COL_RING_INK, 1.0)
+	ci.draw_arc(cc, rr, a0, a1, seg, K.COL_JEOK_HI if is_red() else K.COL_HANJI_DK, 1.0)
+	ci.draw_arc(cc, rr - 1.0, a0, a1, seg, K.COL_HANJI, 1.0)
 
 
 func _draw_thrust(ci: CanvasItem, org: Vector2, d: Vector2, ln: float, age: float) -> void:

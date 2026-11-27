@@ -8,9 +8,29 @@ extends Control
 
 signal closed
 
-const PAGE_IDS: Array[String] = ["gb_controls", "gb_flow", "gb_weapons", "gb_haewon", "gb_trial", "gb_sal", "gb_growth", "gb_meta"]
-const TITLES: Array[String] = ["조작", "목표와 한 판 흐름", "붉은 무구 · 흰 무구 · 매듭", "해원 · 영가 · 고리",
-	"시련과 빙의", "살과 원귀", "성장 — 점지 · 진화 · 결합", "정산과 신당"]
+## design/19 §2: 화면 말은 쉬운 말. 무속 이름은 8쪽 '낱말 풀이'에 작은 보조로만 둔다(쪽 수 8 유지 — 성장·신당을 한 쪽으로 합침).
+const PAGE_IDS: Array[String] = ["gb_controls", "gb_flow", "gb_weapons", "gb_haewon", "gb_trial", "gb_sal", "gb_growth", "gb_words"]
+const TITLES: Array[String] = ["조작", "목표와 한 판 흐름", "붉은 무기 · 흰 무기", "풀어 주기 · 넋 동무 · 흰 길",
+	"신령의 시험", "원한과 성난 귀신", "성장과 신당", "낱말 풀이"]
+## 낱말 풀이: [쉬운 말, 무속 이름(보조), 뜻 한 줄]
+const WORDS: Array = [
+	["처치", "퇴치", "붉은 무기로 베어 없앰"],
+	["풀어 줌", "해원", "흰 무기로 한을 풀어 보냄"],
+	["흰 테두리", "풀릴 기색", "이제 풀어 줄 수 있는 귀신"],
+	["넋 동무", "영가", "풀린 넋. 뒤따르며 지켜 줌"],
+	["넋 동무가 떠남", "천도", "때가 되면 저승길로 감"],
+	["흰 길", "길베", "걸은 자리에 잠시 남는 길"],
+	["한꺼번에 풀림", "길닦음", "흰 길로 한 바퀴 감쌈"],
+	["원한", "살", "처치한 자리에 남는 검은 기운"],
+	["성난 귀신", "원귀", "원한이 쌓여 돌아온 귀신"],
+	["새 힘 고르기", "점지", "구슬이 차면 카드 한 장"],
+	["신령의 시험", "시련", "3:00부터 네 번 온다"],
+	["싸움 · 모심", "위엄 · 가호", "시험을 넘는 두 길"],
+	["신령의 힘", "빙의", "시험을 넘으면 받는 힘"],
+	["신령 모두 내림", "합일", "18:00, 모신 신령이 함께"],
+	["역병 귀신 역려", "역려", "20:00에 오는 마지막 귀신"],
+	["공덕 · 엽전", "복전", "신당에서 쓰는 것"],
+]
 const TEXT_W: float = 330.0
 const TEST_STEP: float = 1.2
 
@@ -75,50 +95,46 @@ func _build_text() -> void:
 		["걷기: **WASD · 방향키** / 패드 **왼쪽 스틱 · D-패드**",
 			"공격은 모두 저절로. 하는 일은 **어디로 걷느냐** 하나",
 			"쉼: **Esc · P** / 패드 **Start**",
-			"점지 고르기: **1 · 2 · 3** 또는 **← →** + **Enter** / 패드 **D-패드 + A**",
+			"새 힘 고르기: **1 · 2 · 3** 또는 **← →** + **Enter** / 패드 **D-패드 + A**",
 			"전체 화면: **Alt+Enter · F11**"],
 		# 2 흐름
-		["**%d분 굿 한 판**을 끝까지 치르면 된다" % minutes,
-			"신령의 **시련**이 네 번 온다(%s)" % " · ".join(trial_s),
-			"%s 중간보스, %s 모신 신령들이 **합일**한다" % [_mmss(mboss), _mmss(hapil)],
-			"%s **마지막 손님**(보스)을 보내면 **저승사자**가 정산한다" % _mmss(boss),
-			"장단은 **진양조**에서 **단모리**로 점점 빨라진다"],
-		# 3 무구
-		["◆ 붉은 무구는 한(恨)을 깎아 **퇴치**한다. 원혼 구슬이 온전히 모인다",
-			"한이 %d%% 아래면 흰 테두리 — **풀릴 기색**" % int(roundf(giseak * 100.0)),
-			"기색 귀신에게 붉은 무구는 마지막 매듭을 끊지 못한다(**매듭 잠금**)",
-			"○ 흰 무구는 기색 귀신을 **해원**한다",
-			"드물게 치명타(**결단타**)는 기색도 단칼에 끊는다"],
-		# 4 해원·영가·고리
-		["해원한 사람의 넋은 **영가**가 되어 뒤를 따른다(%d초, 곁의 귀신을 달램)" % int(sumyeong),
-			"때가 되면 저승길로 떠난다 — **천도**. 행렬이 길면 대신 맞고 먼저 떠난다",
-			"걸은 자리에 흰 길(**길베**)이 %d초 남는다" % int(gilbe),
-			"흰 길로 한 바퀴 감싸 닫으면 **길닦음**: 안의 기색 귀신과 한이 절반 아래인 귀신이 한꺼번에 풀린다",
-			"닫을 수 있으면 점선과 매듭 표지가 뜬다"],
-		# 5 시련
-		["시련 때 신령 둘이 원으로 내려온다. **들어가는 원이 곧 선택**",
-			"예고 때 무당 아래 놓이는 작은 원(**산통**)에 잠시 서면 신령을 다시 묻는다",
-			"◆ 무구로 화신을 치면 **위엄**(꺾기), ○ 안내판의 의례를 하면 **가호**(모시기) — 먼저 찬 쪽",
-			"이기면 **빙의**: 신령의 권능 하나를 고른다",
-			"%s 모신 신령들이 **합일**한다" % _mmss(hapil)],
-		# 6 살
-		["퇴치한 자리에 **살 알갱이**가 남고 **살기**가 오른다",
-			"살기 %s에서 알갱이가 뭉쳐 **원귀**로 돌아온다" % " · ".join(sal_s),
-			"알갱이를 밟아 거두면 벽사 기세가 차고, 고리·소금으로 씻을 수 있다",
-			"위 **굿판의 기운** 바: 풀어 보낸 만큼 한지빛, 퇴치한 만큼 먹빛. %s 손님의 얼굴이 여기서 정해진다" % _mmss(boss),
-			"어느 쪽도 끝까지 갈 수 있다"],
-		# 7 성장
-		["원혼 구슬이 차면 **점지**: 카드 하나를 고른다(◆ 붉은 띠 / ○ 흰 띠)",
-			"무구 6칸, 패시브 6칸",
-			"**진화**: 무구 Lv8 + 짝 패시브 → 정예가 남긴 상자(길흉 상자 · 넋함)를 열 때",
-			"**결합**: 붉은 진화와 흰 진화가 만나면 양면 무구",
-			"카드 맨 아래 줄이 진화 · 결합 조건을 알려 준다"],
-		# 8 정산
-		["마지막 손님을 보내면 **저승사자**가 굿판을 거둔다",
-			"넋이 많으면 **사자의 읍**, 살이 많으면 **살 거둠**(원귀를 막으며 버틴다)",
-			"쓰러져도 판은 정산된다",
-			"넋 → **공덕**, 엽전 → **복전**",
-			"신당에서 무구를 봉헌·제작하고, **내림굿**으로 새 무당을 모신다"],
+		["목표: **%s까지 버티고, 마지막에 오는 역병 귀신 역려를 보낸다**" % _mmss(boss),
+			"**신령의 시험**이 네 번 온다(%s)" % " · ".join(trial_s),
+			"%s **큰 귀신**, %s 모신 신령이 **모두 내려온다**" % [_mmss(mboss), _mmss(hapil)],
+			"%s **역려**를 보내면 굿이 끝나고, 얻은 것으로 **신당**을 키운다" % _mmss(boss),
+			"시간이 갈수록 귀신이 많아지고 빨라진다"],
+		# 3 무기
+		["◆ **붉은 무기**는 귀신을 베어 **처치**한다. 구슬이 많이 나온다",
+			"약해진 귀신(남은 힘 %d%% 아래)에는 **흰 테두리**가 생긴다" % int(roundf(giseak * 100.0)),
+			"흰 테두리 귀신은 붉은 칼로 **못 없앤다** — 칼날이 튕긴다",
+			"○ **흰 무기**를 가까이 대면 흰 테두리 귀신이 **풀린다**",
+			"드물게 치명타는 흰 테두리도 단칼에 끊는다"],
+		# 4 풀어 주기·넋 동무·흰 길
+		["풀린 넋은 **넋 동무**가 되어 뒤를 따른다(%d초, 곁의 귀신을 막음)" % int(sumyeong),
+			"때가 되면 저승길로 **떠난다**. 넋 동무가 많으면 대신 맞아 주기도 한다",
+			"걸은 자리에 **흰 길**이 %d초 남는다" % int(gilbe),
+			"흰 길로 한 바퀴 감싸면 **한꺼번에 풀림**: 안쪽 흰 테두리 귀신과 반쯤 약해진 귀신이 함께 풀린다",
+			"감쌀 수 있으면 점선과 매듭 표시가 뜬다"],
+		# 5 신령의 시험
+		["신령 둘이 원으로 내려온다. **들어가는 원이 곧 선택**",
+			"◆ **싸움**: 큰 신령 곁에서 무기로 친다 / ○ **모심**: 안내판의 과제를 한다",
+			"먼저 찬 쪽으로 넘는다. 흰 줄 밖에 있으면 절반만 찬다",
+			"넘으면 **신령의 힘**을 하나 고른다. 받은 힘은 그 판 끝까지 간다",
+			"%s 모신 신령이 **모두 내려와** 함께 싸운다" % _mmss(hapil)],
+		# 6 원한
+		["처치한 자리에 검은 **원한 알갱이**가 남는다",
+			"원한이 %s만큼 쌓이면 알갱이가 뭉쳐 **성난 귀신**으로 돌아온다" % " · ".join(sal_s),
+			"알갱이를 밟아 거두거나, 흰 길·소금으로 씻을 수 있다",
+			"위 **풀어 줌 · 처치** 바: 풀어 준 만큼 한지빛, 벤 만큼 먹빛. %s 역려의 얼굴이 여기서 정해진다" % _mmss(boss),
+			"어느 쪽으로 가도 끝까지 갈 수 있다"],
+		# 7 성장과 신당
+		["구슬이 차면 **새 힘 고르기**: 카드 하나(◆ 붉은 띠 / ○ 흰 띠 / 아이템)",
+			"무기 6칸, 아이템 6칸",
+			"**진화**: 무기 Lv8 + 진화 짝 아이템 → 강한 귀신이 남긴 상자를 열 때",
+			"판이 끝나면(쓰러져도) 풀어 준 넋은 **공덕**, 모은 엽전은 **엽전**으로 남는다",
+			"**신당**에서 힘을 키우고 새 무기·새 무당을 열어 다음 굿을 연다"],
+		# 8 낱말 풀이(표로 그린다 — 글머리 없음)
+		[],
 	]
 	_bodies.clear()
 	for pg: Variant in src:
@@ -126,18 +142,18 @@ func _build_text() -> void:
 		for s: Variant in (pg as Array):
 			bl.append(TutDraw.rich_wrap(_f_body, UiKit.SZ_BODY, String(s), TEXT_W - 14.0, 4))
 		_bodies.append(bl)
-	_cap = PackedStringArray(["걷기만으로 싸운다", "%d분 · 거리마다 장단이 바뀐다" % minutes, "깎고(◆) 푼다(○)",
-		"영가 행렬 · 길닦음 매듭", "시련 %s" % " · ".join(trial_s), "살 알갱이 → 원귀",
-		"신칼 → 신장칼(진화)", "저승사자 · 신당"])
+	_cap = PackedStringArray(["걷기만으로 싸운다", "%d분 굿 한 판" % minutes, "베고(◆) 풀어 준다(○)",
+		"넋 동무 · 한 바퀴 감싸기", "시험 %s" % " · ".join(trial_s), "원한 알갱이 → 성난 귀신",
+		"신칼 → 신장칼(진화)", ""])
 	# 2쪽 띠(시각 순)
-	_timeline = [{"t": 0.0, "label": "개막(진양조)", "kind": 0}]
+	_timeline = [{"t": 0.0, "label": "시작", "kind": 0}]
 	for v: Variant in trials:
-		_timeline.append({"t": float(v), "label": "시련", "kind": 1})
-	_timeline.append({"t": mboss, "label": "중간보스", "kind": 2})
-	_timeline.append({"t": hapil, "label": "합일", "kind": 1})
-	_timeline.append({"t": jakdu, "label": "작두 강림", "kind": 2})
-	_timeline.append({"t": dwit, "label": "뒷전(대해원)", "kind": 0})
-	_timeline.append({"t": boss, "label": "마지막 손님", "kind": 3})
+		_timeline.append({"t": float(v), "label": "신령의 시험", "kind": 1})
+	_timeline.append({"t": mboss, "label": "큰 귀신", "kind": 2})
+	_timeline.append({"t": hapil, "label": "신령 모두 내림", "kind": 1})
+	_timeline.append({"t": jakdu, "label": "작두", "kind": 2})
+	_timeline.append({"t": dwit, "label": "배웅", "kind": 0})
+	_timeline.append({"t": boss, "label": "역병 귀신 역려", "kind": 3})
 	_timeline.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["t"]) < float(b["t"]))
 
 
@@ -331,6 +347,34 @@ func _draw() -> void:
 	draw_rect(cr, UiKit.HANJI_4, false, 1.0)
 	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(cr.get_center().x, cr.position.y + 12), "×", UiKit.HANJI, 1, false)
 	UiKit.draw_dancheong(self, Rect2(p.position.x + 14, p.position.y + 40, p.size.x - 28, 3))
+	if PAGE_IDS[page] == "gb_words":
+		_draw_words(p, off, ca)
+	else:
+		_draw_page_body(p, off, ca)
+	_draw_footer(p)
+
+
+## 낱말 풀이(8쪽): 쉬운 말(굵게) · 무속 이름(작은 보조) · 뜻 — 두 단
+func _draw_words(p: Rect2, off: float, ca: float) -> void:
+	var ink: Color = UiKit.INK
+	var x0: float = p.position.x + 22.0 + off
+	var y0: float = p.position.y + 62.0
+	var colw: float = (p.size.x - 44.0) * 0.5
+	var rows: int = int(ceilf(float(WORDS.size()) * 0.5))
+	for i in WORDS.size():
+		var w: Array = WORDS[i]
+		var cx0: float = x0 + (colw if i >= rows else 0.0)
+		var y: float = y0 + float(i % rows) * 26.0
+		UiKit.draw_diamond(self, Vector2(cx0 + 3, y - 4), 2.0, Color(UiKit.JEOK_DK, ca))
+		UiKit.text(self, _f_bold, UiKit.SZ_BODY, Vector2(cx0 + 10, y), String(w[0]), Color(ink, ca), 0, false)
+		var bw: float = _f_bold.get_string_size(String(w[0]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
+		UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(cx0 + 16 + bw, y), String(w[1]), Color(UiKit.HANJI_5, ca), 0, false)
+		UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(cx0 + 10, y + 12), String(w[2]), Color(UiKit.HANJI_5, ca), 0, false)
+	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(p.get_center().x, p.end.y - 48), "굵은 글씨 = 게임 화면의 말 · 옅은 글씨 = 무속에서 부르는 이름", Color(UiKit.HANJI_5, ca), 1, false)
+
+
+func _draw_page_body(p: Rect2, off: float, ca: float) -> void:
+	var ink: Color = UiKit.INK
 	# 그림 칸
 	var ir: Rect2 = _img_rect()
 	ir.position.x += off
@@ -353,6 +397,9 @@ func _draw() -> void:
 			TutDraw.rich_line(self, _f_body, _f_bold, UiKit.SZ_BODY, Vector2(x0 + 10, y), ln, Color(ink, ca), Color(UiKit.JEOK_DK, ca))
 			y += 15.0
 		y += 6.0
+
+
+func _draw_footer(p: Rect2) -> void:
 	# 아래: ◀ 쪽 점 ▶ + 조작 안내(키보드 · 패드)
 	var lc: Color = UiKit.INK if page > 0 else UiKit.HANJI_3
 	var rc: Color = UiKit.INK if page < PAGE_IDS.size() - 1 else UiKit.HANJI_3
@@ -416,8 +463,8 @@ func _draw_image(id: String, r: Rect2, a: float) -> void:
 			var y0: float = r.position.y + 34.0
 			var tl: Texture2D = _img.get("wpn_sinkal")
 			var tr: Texture2D = _img.get("wpn_bangul")
-			_icon_box(Vector2(r.position.x + 56, y0), tl, false, "퇴치", a)
-			_icon_box(Vector2(r.end.x - 56, y0), tr, true, "해원", a)
+			_icon_box(Vector2(r.position.x + 56, y0), tl, false, "베기", a)
+			_icon_box(Vector2(r.end.x - 56, y0), tr, true, "풀기", a)
 			# 달걀귀신(맺힘) → 흰 테두리(풀릴 기색) + 매듭
 			var yy: float = r.position.y + 128.0
 			_blit(_img.get("dalgyal"), Vector2(r.position.x + 56, yy), 2, a)
@@ -427,15 +474,15 @@ func _draw_image(id: String, r: Rect2, a: float) -> void:
 			if kr.size.x > 0.0:
 				# 이름 없는 회색 X 는 '닫기·오류'로 읽혔다(리뷰 11-25) — 매듭이라고 단다
 				UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(kr.get_center().x, kr.end.y + 9.0), "매듭", lab, 1)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 56, r.end.y - 14), "맺힘", lab, 1)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 60, r.end.y - 14), "풀릴 기색", Color(UiKit.BAEK, a), 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 56, r.end.y - 14), "귀신", lab, 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 60, r.end.y - 14), "흰 테두리", Color(UiKit.BAEK, a), 1)
 		"gb_haewon":
 			# 영가 행렬 3명(걷기) + 길닦음 매듭
 			var yb: float = r.position.y + 70.0
 			var fr: Array[Texture2D] = [_anim("yg_f", 6.0), _anim("yg_m", 6.0), _anim("yg_f", 5.0)]
 			for i in 3:
 				_blit(fr[i], Vector2(r.position.x + 52 + i * 58, yb + float(i % 2) * 4.0), 2, a * (1.0 - float(i) * 0.18))
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, yb + 46), "영가 행렬", Color(UiKit.BAEK, a), 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, yb + 46), "넋 동무", Color(UiKit.BAEK, a), 1)
 			# 흰 고리(코드) + 매듭
 			var rc: Vector2 = Vector2(c.x, r.end.y - 52)
 			for i in 28:
@@ -443,20 +490,20 @@ func _draw_image(id: String, r: Rect2, a: float) -> void:
 				var pt: Vector2 = rc + Vector2(cos(ang) * 46.0, sin(ang) * 22.0)
 				draw_rect(Rect2(pt.round(), Vector2(2, 2)), Color(UiKit.BAEK, a * (0.4 + 0.6 * float(i % 2))))
 			_blit(_img.get("gil_knot"), rc + Vector2(46, 0), 2, a)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(rc.x, rc.y + 4), "길닦음", Color(UiKit.HWANG_HI, a), 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(rc.x, rc.y + 4), "한꺼번에", Color(UiKit.HWANG_HI, a), 1)
 		"gb_trial":
 			_blit(_img.get("ring"), c + Vector2(0, 36), 3, a * 0.9)
 			_blit(_anim("sansin", 6.0), c + Vector2(0, -8), 1, a)
 			UiKit.draw_kind_mark(self, Vector2(r.position.x + 24, r.end.y - 18), 3.0, false)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 32, r.end.y - 14), "꺾기 = 위엄", Color(UiKit.JEOK_HI, a))
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 32, r.end.y - 14), "싸움", Color(UiKit.JEOK_HI, a))
 			UiKit.draw_kind_mark(self, Vector2(r.end.x - 86, r.end.y - 18), 3.0, true)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 78, r.end.y - 14), "모시기 = 가호", Color(UiKit.HANJI_UI, a))
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 78, r.end.y - 14), "모심", Color(UiKit.HANJI_UI, a))
 		"gb_sal":
 			_blit(_img.get("wongwi"), c + Vector2(20, -34), 2, a)
 			_blit(_img.get("sal"), Vector2(r.position.x + 34, r.position.y + 108), 3, a)
 			_blit(_img.get("sal"), Vector2(r.position.x + 62, r.position.y + 128), 2, a)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 46, r.position.y + 150), "살 알갱이", Color(UiKit.MEOK, a), 1, false)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 30, r.position.y + 70), "원귀", Color(UiKit.JEOK_DDK, a), 1, false)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.position.x + 46, r.position.y + 150), "원한 알갱이", Color(UiKit.MEOK, a), 1, false)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 40, r.position.y + 70), "성난 귀신", Color(UiKit.JEOK_DDK, a), 1, false)
 			# 굿판의 기운 바(한지빛 / 먹빛)
 			var gb: Rect2 = Rect2(r.position.x + 20, r.end.y - 30, r.size.x - 40, 7)
 			var k: float = 0.55 + 0.1 * sin(_t * 0.8)
@@ -465,7 +512,7 @@ func _draw_image(id: String, r: Rect2, a: float) -> void:
 			draw_rect(Rect2(gb.position + Vector2(roundf(gb.size.x * k), 0), Vector2(gb.size.x - roundf(gb.size.x * k), gb.size.y)), Color(UiKit.MEOK_3, a))
 			for q: float in [0.25, 0.5, 0.75]:
 				draw_rect(Rect2(gb.position.x + roundf(gb.size.x * q), gb.position.y - 2, 1, gb.size.y + 4), Color(UiKit.JEOK_DK, a))
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, gb.position.y - 6), "굿판의 기운", Color(UiKit.HANJI_UI, a), 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, gb.position.y - 6), "풀어 줌 · 처치", Color(UiKit.HANJI_UI, a), 1)
 		"gb_growth":
 			var yi: float = r.position.y + 54.0
 			_icon_box(Vector2(r.position.x + 48, yi), _img.get("wpn_sinkal"), false, "Lv8", a)
@@ -477,7 +524,7 @@ func _draw_image(id: String, r: Rect2, a: float) -> void:
 			draw_rect(er.grow(4.0), Color(UiKit.HWANG_DK, a * 0.8), false, 1.0)
 			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(r.end.x - 48, yi - 30), "진화", Color(UiKit.HWANG, a), 1)
 			_blit(_img.get("box"), Vector2(c.x, r.end.y - 78), 2, a)
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, r.end.y - 10), "정예 상자를 열 때 진화", lab, 1)
+			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(c.x, r.end.y - 10), "강한 귀신 상자를 열면 진화", lab, 1)
 		"gb_meta":
 			var sd: Texture2D = _img.get("sindang")
 			if sd != null:
@@ -552,4 +599,4 @@ func _draw_timeline(r: Rect2, a: float) -> void:
 			draw_texture_rect(jing, Rect2(Vector2(band.end.x + 52, ly - 10), Vector2(12, 12)), false, Color(1, 1, 1, a))
 		UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(band.end.x + 68, ly), String(e2["label"]), Color(col, a))
 	var ly2: float = r.position.y + 14.0 + float(n) * row
-	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(band.end.x + 16, minf(ly2, r.end.y - 4)), "→ 저승사자 정산", Color(UiKit.HANJI_3, a))
+	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(band.end.x + 16, minf(ly2, r.end.y - 4)), "→ 굿 끝 · 얻은 것", Color(UiKit.HANJI_3, a))

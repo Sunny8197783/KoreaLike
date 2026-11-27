@@ -103,7 +103,9 @@ fi
 if [ "${1:-}" = "--full" ]; then
   # 20:00 보스 → 저승사자 정산 → Events.stage_finished → 정산 화면까지(강제 사자 23:00 + 살 거둠). quit-at 은 안전망.
   echo "== 3b) autotest bot, full run to stage_finished at x10" | tee -a "$LOG"
-  run "$GODOT" --headless --path "$PROJ" --fixed-fps 60 --quit-after 30000 -- --autotest --seed=2 --bot-pick=pair --quit-at=1560 --speed=10
+  # CHECK_PROFILE=<이름> 이면 그 새 프로필로(같은 프로필 재사용 시 시뮬이 갈린다)
+  # shellcheck disable=SC2086
+  run "$GODOT" --headless --path "$PROJ" --fixed-fps 60 --quit-after 30000 -- --autotest --seed=2 --bot-pick=pair --quit-at=1560 --speed=10 ${CHECK_PROFILE:+--profile=$CHECK_PROFILE}
   grep -E "^\[autotest\] build " "$LOG" | tail -1
 fi
 if [ "${1:-}" = "--movie" ]; then
@@ -114,6 +116,17 @@ if [ "${1:-}" = "--movie" ]; then
   run "$GODOT" --path "$PROJ" --resolution 1280x720 --write-movie "$OUT/frame.png" --fixed-fps 60 --quit-after 100000 -- --autotest --seed=1 --speed=10 --quit-at="$MOVIE_AT" $MOVIE_ARGS
   for f in "$OUT"/frame*.png; do n=$(basename "$f" .png); n=${n#frame}; n=$((10#$n)); [ $((n % 50)) -eq 0 ] || rm -f "$f"; done
   ls "$OUT"/frame*.png 2>/dev/null | tee -a "$LOG"
+fi
+
+# 화면 글 검사(design/19 §4.1): 8px 한글·격자 밖 크기·한자 노출·금지어('손님' 등). 경고만 — 실패로 치지 않는다(로그 오류 집계에도 넣지 않는다).
+echo "== 5) text lint (warnings only)"
+PY="$(command -v python || command -v python3 || true)"
+if [ -n "$PY" ]; then
+  "$PY" "$ROOT/tools/text_lint.py" "$PROJ" > "$OUT/text_lint.txt" 2>&1 || true
+  grep -E "^\[text_lint\] 경고" "$OUT/text_lint.txt" | head -12
+  grep -E "^\[text_lint\] 요약" "$OUT/text_lint.txt" || true
+else
+  echo "[text_lint] python 없음 — 건너뜀"
 fi
 
 ERRS=$(grep -E "SCRIPT ERROR|Parse Error|ERROR:|Failed to load|Invalid call|Cannot call|Attempt to call|Nonexistent function|Identifier .* not declared" "$LOG" | grep -v "^+ " | sort | uniq -c | sort -rn)

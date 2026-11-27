@@ -6,7 +6,7 @@ extends Control
 ##  - 첫 런 길잡이 순서(사용자 지시 2026-11-22):
 ##      이동 → 풀릴 기색 화살표 '흰 무구로 풀어주세요' → 첫 해원 '영가가 따라옵니다'
 ##      → 고리 준비 시 '흰 길을 이어 고리를 닫으세요' + 예상선(점선) + 닫힘 원 → 첫 시련 → 첫 원귀 회귀
-##  - 힌트 줄(하단 y=H−84, 동시 1·대기 1) · 이름표(B 채널: 解冤 해원, 길닦음)
+##  - 힌트 줄(왼쪽 아래, 동시 1·대기 3) · 이름표(B 채널: '풀어 줌', '한꺼번에 풀림' — 판 안에는 한자 없음, design/19 §2)
 ## 백(#f2ece0)은 월드 해원 표지(풀릴 기색 화살표·길베 예상선·해원 이름표)에만 쓴다.
 ## 매 프레임 할당 없음: 버퍼는 _ready 에서 만든다.
 
@@ -16,7 +16,6 @@ const MAX_OFF: int = 6
 
 var _f_body: Font
 var _f_small: Font
-var _f_tiny: Font
 var _f_big: Font
 var _f_brush: Font
 
@@ -44,6 +43,12 @@ var _hint_prio: int = 0
 var _hint_lines: PackedStringArray = PackedStringArray()   # 힌트 줄을 폭 260 안에 2줄로 접은 것
 var _busy: bool = false            # 화면이 바쁨(가운데 슬롯·숫자 군중·잡귀 60↑·합일) — prio<3 미룸, prio 3 은 1.5초만
 const HINT_W: float = 260.0
+
+
+## 힌트 줄 폭: 글자 크게(15px)면 넓힌다(2줄 안에 들게).
+func _hint_w() -> float:
+	return HINT_W if not UiKit.text_large else 300.0
+
 ## 가시성 측정(tests/vis_probe.gd): 이번 프레임에 그린 화면 글 사각형. 키 → [Rect2(640×360 기준), 그린 프레임].
 var vis_rects: Dictionary = {}
 # 대기열(최대 3, 우선순위 높은 것 먼저 · 같은 순위는 들어온 순). 이벤트 때만 바뀐다.
@@ -110,7 +115,6 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_f_body = UiKit.body()
 	_f_small = UiKit.small()
-	_f_tiny = UiKit.tiny()
 	_f_big = UiKit.big()
 	_f_brush = UiKit.brush()
 	_arc_l = _make_arc(105.0, 255.0)
@@ -172,19 +176,6 @@ func _yeongga() -> Node:
 	return r.yeongga if r != null else null
 
 
-## 아직 안 들어온 시작 흰 무구 이름(characters.json start_weapons 의 at_s > 0). 없으면 '흰 무구'.
-func _next_white_name() -> String:
-	var def: Dictionary = Data.character(String(Game.char_id))
-	var sw: Variant = def.get("start_weapons", [])
-	if sw is Array:
-		for e: Variant in sw:
-			if e is Dictionary:
-				var wid: String = String((e as Dictionary).get("wpn", ""))
-				if UiKit.weapon_color(wid) == "white":
-					return UiKit.weapon_name(wid)
-	return "점지에서 ○"
-
-
 func _has_white() -> bool:
 	var wm: WeaponManager = Game.weapons as WeaponManager
 	if wm == null:
@@ -238,7 +229,7 @@ func _enqueue(id: String, text: String, dur: float, prio: int) -> void:
 ## 대기 중에 이미 지나간 단계의 문장(예: 첫 해원 뒤의 '풀어주세요')은 버린다
 func _stale(id: String) -> bool:
 	match id:
-		"pullil", "pullil_wait":
+		"pullil":
 			return _first_haewon
 		"move":
 			return _step_move == 2
@@ -277,7 +268,8 @@ func _show_now(id: String, text: String, dur: float, prio: int) -> void:
 		print("[ui] hint t=%.1f id=%s" % [Game.time_sec(), id])
 	_hint_id = id
 	_hint_text = text
-	_hint_lines = UiKit.wrap(_f_body, UiKit.SZ_BODY, text, HINT_W - 24.0, 2) if _f_body != null else PackedStringArray([text])
+	var hs: int = UiKit.sz(&"body")
+	_hint_lines = UiKit.wrap(UiKit.font_sz(hs), hs, text, _hint_w() - 24.0, 2)
 	_hint_t = dur
 	_hint_in = 0.0
 	_hint_prio = prio
@@ -316,7 +308,7 @@ func _on_wave_event(id: StringName, p: Dictionary) -> void:
 			if _mb_h >= 0:
 				_track_off(_mb_h, true)
 		"evt_pullil_demo":
-			if String(p.get("title_ko", "x")) != "" and Game.time_sec() < 30.0:
+			if String(p.get("title_ko", "x")) != "" and Game.time_sec() < 45.0:
 				_quiet = maxf(_quiet, 3.8)
 		"ring_guide_dotted_circle":
 			_quiet = maxf(_quiet, 5.2)
@@ -349,7 +341,7 @@ func _on_yg_cheondo(_c: int, r: StringName) -> void:
 			_hint("daesin", UiCopy.HINT["daesin"], 3.5, 3)
 			var p: Player = Game.player as Player
 			if p != null:
-				_tag("천도", p.global_position)
+				_tag("대신 맞음", p.global_position)
 
 
 func _set_yg(c: int) -> void:
@@ -364,7 +356,7 @@ func _set_yg(c: int) -> void:
 	_yg_last_mark = mark
 	_yg_full_said = full_now
 	if show:
-		_yg_label = "%d/%d" % [mini(c, _yg_cap), _yg_cap]
+		_yg_label = "넋 동무 %d" % c     # 정원 표기 없음(design/19 §3) · 한글이라 10px(8px 한글 금지)
 		_yg_label_t = 1.5
 
 
@@ -393,9 +385,7 @@ func _on_weapon_added(id: StringName, _slot: int) -> void:
 		_arrows_on = true
 		_arrows_t = 20.0
 		_arrows_keep = 10.0
-	if _white_owned and not had and _arrows_on and not _first_haewon:
-		# 흰 무구가 들어왔다 — 문장을 바꿔 다시 알린다
-		_show_now("pullil", UiCopy.HINT["pullil"], 6.0, 1)
+	# 흰 테두리 설명(pullil)은 흰 무기를 받은 뒤 처음 흰 테두리 귀신이 보일 때(_on_pullil) 한 번 — 받는 순간 띠와 겹치지 않게
 
 
 func _is_start_white(wid: String) -> bool:
@@ -448,14 +438,12 @@ func _on_pullil(h: int, _sp: StringName, _pos: Vector2) -> void:
 		_hint("midboss_pullil", UiCopy.HINT["midboss_pullil"], 4.0, 3)
 	if not guide_on or _seen.has("pullil") or _first_haewon:
 		return
+	# 흰 무기가 없으면 아직 말하지 않는다(design/19 §3: 'pullil_wait' 삭제 — 처음 두 판은 흰 무기 전에는 흰 테두리 자체가 없다)
+	if not _white_owned:
+		return
 	_arrows_on = true
 	_arrows_t = 0.0
-	if _white_owned:
-		_hint("pullil", UiCopy.HINT["pullil"], 7.0, 1)
-	else:
-		_seen.erase("pullil_wait")
-		_hint("pullil_wait", String(UiCopy.HINT["pullil_wait"]) % _next_white_name(), 7.0, 1)
-		_seen["pullil"] = true
+	_hint("pullil", UiCopy.HINT["pullil"], 7.0, 1)
 
 
 func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause: StringName, _tier: StringName) -> void:
@@ -467,28 +455,28 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 	if _arrows_keep <= 0.0:
 		_arrows_on = false
 	_dismiss("pullil")
-	_dismiss("pullil_wait")
 	if guide_on and not _seen.has("first_haewon"):
-		_tag("解冤", pos)
+		_tag("풀어 줌", pos)
 		if cause == &"ring":
 			# 고리로 처음 풀었다: 같은 틱의 ring_closed 문장이 영가까지 함께 말한다(두 줄 연달아 금지)
 			_seen["first_haewon"] = true
 			_first_by_ring = true
 		else:
 			_hint("first_haewon", UiCopy.HINT["first_haewon"], 4.5, 1)
-	if _ring_step == 0:
-		_ring_step = 1
-		_ring_wait = 0.0
+	# 흰 길 감싸기 안내는 1:30 부터(design/19 §3) — 첫 풀어 줌이 일러도 앞당기지 않는다(_guide_steps)
 
 
 func _on_ring_closed(_area: int, n: int, centroid: Vector2) -> void:
 	_rings_closed += 1
+	# 빈 고리(안에 흰 테두리 없음)를 안내 전에 우연히 닫았다 — 배운 것으로 치지 않는다(흰 길 안내는 1:30 에 그대로)
+	if n <= 0 and _ring_step < 2:
+		return
 	if _ring_step < 3:
 		_ring_step = 3
 		_dismiss("ring")
 		_dismiss("ring_ready")
-		if guide_on and not _seen.has("ring_done"):
-			_tag("길닦음", centroid, true)
+		if guide_on and not _seen.has("ring_done") and n < 3:   # 3명 이상은 haewon 가장자리 붓 '한꺼번에 풀림 ×N' 이 말한다(무리 위 월드 글 금지)
+			_tag("한꺼번에 풀림", centroid, true)
 			# 고리가 첫 해원이 되는 경우(ring_closed 가 같은 틱 enemy_killed 보다 먼저 올 수도 있다): 영가 문장을 합친다
 			if n > 0 and not _seen.has("first_haewon"):
 				_seen["first_haewon"] = true
@@ -600,7 +588,7 @@ func _guide_steps(delta: float) -> void:
 		if _arrows_t > 30.0 or (_first_haewon and _arrows_keep <= 0.0):
 			_arrows_on = false
 		_collect_arrows(p)
-	# 4) 고리: 첫 해원 뒤(또는 90초) 대기 → gilbe_ready(닫을 후보, haewon 이 예상선을 그림) 시 '흰 길을 이어 고리를 닫으세요'
+	# 4) 고리: 1:30 부터 대기 → gilbe_ready(닫을 후보, haewon 이 예상선을 그림) 시 '흰 길을 이어 고리를 닫으세요'
 	#    후보가 10초 안에 안 생기면 '동그랗게 걸어 보세요' + 걸어 볼 원(풀릴 기색 둘레). 첫 고리 닫힘까지.
 	if _ring_step == 0 and t >= 90.0 and not _seen.has("ring"):
 		_ring_step = 1
@@ -626,8 +614,8 @@ func _guide_steps(delta: float) -> void:
 		if _ring_hint_again <= 0.0 and _hint_t <= 0.0 and not _trial_busy:
 			_ring_hint_again = 9999.0
 			_show_now("ring", UiCopy.HINT["ring_retry"], 6.0, 1)
-	# 살기 경고(원귀 전)
-	if not _sal_hint and Game.salgi >= 15.0:
+	# 원한 경고(성난 귀신 전): 첫 문턱(25)의 90%(design/19 §3)
+	if not _sal_hint and Game.salgi >= 22.5:
 		_sal_hint = true
 		if not _seen.has("sal"):
 			_hint("sal", UiCopy.HINT["sal"], 4.5, 1)
@@ -791,9 +779,11 @@ func _draw_feet(p: Player) -> void:
 			var lp: Vector2 = foot + Vector2(16, 10)   # 몸 밖(발 오른쪽 아래) — 무당 몸을 덮지 않는다
 			var la: float = clampf(_yg_label_t, 0.0, 1.0)
 			# 숫자 뒤 먹 받침: 바로 뒤를 따르는 영가 행렬(흰 몸) 위에서 읽히게
-			var lw: float = roundf(_f_tiny.get_string_size(_yg_label, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_TINY).x)
-			draw_rect(Rect2(lp.x - 2.0, lp.y - float(UiKit.SZ_TINY) + 1.0, lw + 4.0, float(UiKit.SZ_TINY) + 2.0), Color(UiKit.MEOK, 0.6 * la))
-			UiKit.text(self, _f_tiny, UiKit.SZ_TINY, lp, _yg_label, Color(yc, la))
+			var lsz: int = UiKit.sz(&"small")
+			var lf: Font = UiKit.font_sz(lsz)
+			var lw: float = roundf(lf.get_string_size(_yg_label, HORIZONTAL_ALIGNMENT_LEFT, -1, lsz).x)
+			draw_rect(Rect2(lp.x - 2.0, lp.y - float(lsz) + 1.0, lw + 4.0, float(lsz) + 2.0), Color(UiKit.MEOK, 0.6 * la))
+			UiKit.text(self, lf, lsz, lp, _yg_label, Color(yc, la))
 	# 정기 바(발 아래 24×3)
 	var hk: float = Game.hp / maxf(Game.hp_max, 1.0)
 	var br: Rect2 = Rect2(foot.x - 12, foot.y + 4, 24, 3)
@@ -938,11 +928,14 @@ func _draw_hint() -> void:
 	# 왼쪽 아래 가장자리(x 8, y h−58, 폭 ≤260, 2줄): 화면 가운데·무당 안전 상자·연속 굿 칩을 비운다(design/18 §2.1)
 	var rise: float = roundf((1.0 - clampf(_hint_in / 0.15, 0.0, 1.0)) * 4.0)
 	var lines: PackedStringArray = _hint_lines if not _hint_lines.is_empty() else PackedStringArray([_hint_text])
+	var hs: int = UiKit.sz(&"body")
+	var hf: Font = UiKit.font_sz(hs)
+	var lh: float = float(hs) + 1.0
 	var tw: float = 0.0
 	for ln: String in lines:
-		tw = maxf(tw, _f_body.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x)
-	var y: float = size.y - 58.0 + rise
-	var r: Rect2 = Rect2(8.0, y - 2.0, minf(HINT_W, tw + 24.0), 5.0 + 13.0 * float(lines.size()))
+		tw = maxf(tw, hf.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, hs).x)
+	var y: float = size.y - 58.0 + rise - (lh - 13.0) * float(lines.size())
+	var r: Rect2 = Rect2(8.0, y - 2.0, minf(_hint_w(), tw + 24.0), 5.0 + lh * float(lines.size()))
 	vis_rects["pos:hint"] = [r, Engine.get_process_frames()]
 	draw_rect(r, Color(UiKit.MEOK, 0.72 * a))
 	draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 1), Color(UiKit.HANJI_4, a))
@@ -950,4 +943,4 @@ func _draw_hint() -> void:
 	# 왼쪽 표지: 붓 점(황) — 길잡이 문장 표시
 	UiKit.draw_diamond(self, Vector2(r.position.x + 7.0, r.position.y + 8.0), 2.0, Color(UiKit.HWANG, a))
 	for li in lines.size():
-		UiKit.text(self, _f_body, UiKit.SZ_BODY, Vector2(r.position.x + 16.0, y + 11.0 + 13.0 * float(li)), lines[li], Color(UiKit.HANJI_UI, a), 0)
+		UiKit.text(self, hf, hs, Vector2(r.position.x + 16.0, y + float(hs) - 1.0 + lh * float(li)), lines[li], Color(UiKit.TXT_ON_DARK, a), 0)

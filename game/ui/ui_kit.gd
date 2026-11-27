@@ -50,6 +50,18 @@ const OUTLINE: Color = Color("1a1a1a")
 const INK: Color = Color("3a2f2a")             # pal_ink_text: 한지 패널 위 본문 글자
 const DC_COLS: Array[Color] = [JEOK_DK, HWANG, CHEONG_DC, CHEONGNOK_DK]
 
+# 글 대비 토큰(design/19 §4.2). 글 색으로 HANJI_4·HWANG_DK·MEOK_4·JEOK 을 바로 쓰지 않는다.
+const TXT_ON_DARK: Color = HANJI_UI          # 어두운 바탕 본문 ≥10:1
+const TXT_ON_DARK_2: Color = HANJI_2         # 어두운 바탕 본문(조금 낮춤)
+const TXT_DIM_DARK: Color = HANJI_3          # 어두운 바탕 보조(최저 6.9:1)
+const TXT_ON_PAPER: Color = INK              # 한지 바탕 본문 9.5:1
+const TXT_DIM_PAPER: Color = HANJI_5         # 한지 바탕 보조 6.3:1
+const WARN_ON_DARK: Color = JEOK_HI          # 경고(어두운 바탕) 5.3:1
+const WARN_ON_PAPER: Color = JEOK_DK         # 경고(한지 바탕) 6.6:1
+
+## 글자 크기 설정(ui.text_size: 0 기본 / 1 크게). UiSettings.apply() 가 채운다. 크게면 단계마다 한 칸(8→10, 10→12, 12→15).
+static var text_large: bool = false
+
 
 ## 폰트 래스터 설정을 픽셀용으로 고정(임포트 설정이 바뀌어도 안전). 여러 번 불러도 된다.
 static func setup_fonts() -> void:
@@ -99,6 +111,63 @@ static func big() -> Font:
 
 static func brush() -> Font:
 	return font(F_BRUSH)
+
+
+## 글 단계 크기(design/19 §4.1). name: &"tiny"(T5 8) &"small"(T4 10) &"body"(T3 12) &"bold"(T2 12) &"big"(15).
+## 설정 '글자 크기 크게'면 한 칸 올린다(8→10, 10→12, 12→15). 붓 크기는 바꾸지 않는다.
+static func sz(name: StringName) -> int:
+	var base: int = SZ_BODY
+	match name:
+		&"tiny":
+			base = SZ_TINY
+		&"small":
+			base = SZ_SMALL
+		&"big":
+			base = SZ_BIG
+	if not text_large:
+		return base
+	match base:
+		SZ_TINY:
+			return SZ_SMALL
+		SZ_SMALL:
+			return SZ_BODY
+		SZ_BODY:
+			return SZ_BIG
+	return base
+
+
+## 글 단계에 맞는 글꼴(격자 크기와 짝: 8 Galmuri7 · 10 Galmuri9 · 12 Galmuri11(굵게면 Bold) · 15 Galmuri14).
+static func font_sz(size: int, bold_face: bool = false) -> Font:
+	if size >= SZ_BIG:
+		return big()
+	if size >= SZ_BODY:
+		return bold() if bold_face else body()
+	if size >= SZ_SMALL:
+		return small()
+	return tiny()
+
+
+## 쉬운 말(design/19 §2): 내부 용어·id → 화면 말. 표에 없으면 그대로 돌려준다.
+static func word(id: String) -> String:
+	return String(UiCopy.WORDS.get(id, id))
+
+
+## 스탯 화면 이름(design/19 §2.4): stats.json name_ui → UiCopy.STATS → name_ko → id.
+static func stat_name(id: String) -> String:
+	var arr: Variant = Data.get_value("stats", "stats", [])
+	if arr is Array:
+		for e: Variant in arr:
+			if e is Dictionary and String((e as Dictionary).get("id", "")) == id:
+				var nu: String = String((e as Dictionary).get("name_ui", ""))
+				if nu != "":
+					return nu
+				return String(UiCopy.STATS.get(id, (e as Dictionary).get("name_ko", id)))
+	return String(UiCopy.STATS.get(id, id))
+
+
+## 화면에서 부호를 뒤집어 읽는 스탯인가('장단 −10%' → '공격 속도 +10%').
+static func stat_invert(id: String) -> bool:
+	return UiCopy.STAT_INVERT.has(id)
 
 
 static func skin(name: String) -> Texture2D:

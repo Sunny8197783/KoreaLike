@@ -641,7 +641,7 @@ func _give_bangul(show: bool) -> void:
 		wm.add_or_level(&"wpn_bangul")
 	if show:
 		if not guide_lane and run.hud != null and run.hud.has_method("push_lane"):
-			run.hud.call("push_lane", "몸주 신령이 방울을 내리셨다", true, 2.5)
+			run.hud.call("push_lane", "내 신령이 방울을 내렸다", true, 2.5)
 		Audio.play_sfx(&"sfx_ui_unlock", &"UI")
 
 
@@ -663,28 +663,28 @@ func _on_enemy_killed(handle: int, _sp: StringName, pos: Vector2, kind: StringNa
 			if kind == &"toechi":
 				_c["kills"] = int(_c.get("kills", 0)) + 1
 				if int(_c["kills"]) == 1:
-					_tag("퇴치", "退治", pos)
+					_tag("처치", "퇴치", pos)
 					_c["second_at"] = Game.time_sec() + 0.5
 				_progress(int(_c["kills"]), int(_c.get("need", 5)))
 		&"white":
 			if kind == &"haewon" and cause == &"white":
 				_c["white"] = int(_c.get("white", 0)) + 1
 				if int(_c["white"]) == 1:
-					_tag("해원", "解冤", pos)
+					_tag("풀어 줌", "해원", pos)
 				_progress(int(_c["white"]), int(_c.get("need", 4)))
 		&"sal":
 			if not bool(_c.get("b", false)):
 				if kind == &"toechi":
 					_c["k"] = int(_c.get("k", 0)) + 1
 					if int(_c["k"]) == 1:
-						_tag("살", "煞", pos)
+						_tag("원한", "살", pos)
 					_progress(int(_c["k"]), 6)
 			else:
 				var wg: Dictionary = _c.get("wg", {})
 				if wg.has(handle):
 					wg.erase(handle)
 					_c["wg_done"] = int(_c.get("wg_done", 0)) + 1
-					_tag("퇴치" if kind == &"toechi" else "해원", "退治" if kind == &"toechi" else "解冤", pos)
+					_tag("처치" if kind == &"toechi" else "풀어 줌", "퇴치" if kind == &"toechi" else "해원", pos)
 
 
 func _on_pullil_entered(_h: int, _sp: StringName, pos: Vector2) -> void:
@@ -692,7 +692,7 @@ func _on_pullil_entered(_h: int, _sp: StringName, pos: Vector2) -> void:
 		return
 	_c["pullil"] = int(_c.get("pullil", 0)) + 1
 	if int(_c["pullil"]) == 1:
-		_tag("풀릴 기색", "", pos)
+		_tag("흰 테두리", "", pos)
 	_progress(int(_c["pullil"]), int(_c.get("need_p", 3)))
 
 
@@ -701,7 +701,7 @@ func _on_enemy_hit(_h: int, _sp: StringName, pos: Vector2, _d: float, _col: int,
 		return
 	_c["locks"] = int(_c.get("locks", 0)) + 1
 	if int(_c["locks"]) == 1:
-		_tag("매듭", "", pos)
+		_tag("칼로는 못 끊음", "", pos)
 
 
 func _on_ring_closed(area: int, n: int, centroid: Vector2) -> void:
@@ -711,7 +711,7 @@ func _on_ring_closed(area: int, n: int, centroid: Vector2) -> void:
 	print("[tutorial] ring area=%d haewon=%d" % [area, n])
 	var ok: bool = n >= 3 or (_help >= 3 and (n >= 1 or area >= 9))
 	if n > 0:
-		_tag("한꺼번에 ×%d" % n, "", centroid)
+		_tag("한꺼번에 풀림 ×%d" % n, "", centroid)
 	if ok:
 		_met_now(1.0)       # 고리 연출(만다라·'덩')이 끝난 뒤 이름표
 	elif marks != null:
@@ -787,7 +787,7 @@ func _on_enemy_spawned(h: int, _sp: StringName, _tier: StringName) -> void:
 	_c["wg"] = wg
 	_c["wg_seen"] = int(_c.get("wg_seen", 0)) + 1
 	if int(_c["wg_seen"]) == 1:
-		_tag("원귀", "冤鬼", em.pos_of(s))
+		_tag("성난 귀신", "원귀", em.pos_of(s))
 
 
 func _on_cheondo(_count: int, reason: StringName) -> void:
@@ -798,7 +798,7 @@ func _on_cheondo(_count: int, reason: StringName) -> void:
 	var p: Vector2 = _ppos()
 	if yt != null and yt.count > 0:
 		p = Vector2(yt.m_x[yt.count - 1], yt.m_y[yt.count - 1])
-	_tag("천도", "薦度", p)
+	_tag("떠남", "천도", p)
 
 
 func _on_yeongga_joined(count: int, _sp: StringName) -> void:
@@ -907,7 +907,7 @@ func _enter_ring() -> void:
 	_orig_auto_knot = run.ring.auto_knot
 	run.ring.auto_knot = true
 	var f: Vector2 = _fwd()
-	_tag("길베", "", _ppos() - f * 1.0 * U)
+	_tag("흰 길", "", _ppos() - f * 1.0 * U)
 	ring_center = _ppos() + f * 5.0 * U
 	_spawn_ring_crowd(6)
 	_later(0.6, &"_force_pullil")
@@ -1219,7 +1219,7 @@ func _tick_sal(_dt: float) -> void:
 					wg[hh] = true
 					_c["wg_seen"] = int(_c.get("wg_seen", 0)) + 1
 					if int(_c["wg_seen"]) == 1:
-						_tag("원귀", "冤鬼", em.pos_of(i))
+						_tag("성난 귀신", "원귀", em.pos_of(i))
 	if int(_c.get("wg_seen", 0)) == 0 and now - float(_c["b_t"]) >= 1.6 and not bool(_c.get("fallback", false)):
 		_c["fallback"] = true
 		var h: int = _spawn(SP_GAEK, _ppos() + _fwd() * 6.0 * U, -1.0,
@@ -1230,7 +1230,7 @@ func _tick_sal(_dt: float) -> void:
 			if Game.vfx != null:
 				(Game.vfx as VfxPlayer).play(&"vfx_wongwi_form", em.pos_of(em.slot_of(h)))
 			Audio.play_sfx(&"sfx_sys_wongwi_rise", &"SFX")
-			_tag("원귀", "冤鬼", em.pos_of(em.slot_of(h)))
+			_tag("성난 귀신", "원귀", em.pos_of(em.slot_of(h)))
 	# 사라진(맵 밖·소멸) 핸들 정리
 	for h2: int in wg.keys():
 		if em.slot_of(h2) < 0:

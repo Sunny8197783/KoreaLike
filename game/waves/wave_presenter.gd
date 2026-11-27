@@ -2,7 +2,7 @@ extends Node
 ## WavePresenter — 굿판 타임라인 연출(L3). 소유: waves. SpawnDirector 의 자식으로 _ready 에서 만들어진다.
 ## 구독만 한다: Events.wave_warn / wave_event / geori_changed / settlement_started. 디렉터 상태는 읽기만 한다.
 ##  · 예고 띠(낙관 인장 + 제목 + 처음 하는 사람용 한 줄 힌트 + 남은 시간 막대)         — UI 층(CanvasLayer 11)
-##  · 거리 전환 제목 카드(붓글씨 거리명 + 장단)                                         — UI 층
+##  · 00:01 이야기 카드 + 거리(막) 카드(붓 막 이름 + 할 일 + 작은 무속 이름, 장단·BPM 없음 — design/19 §4.5) — UI 층
 ##  · 화면 가장자리 위협 표지(떼·창귀 진입 방향, 정예·중간보스·살 덩어리 방향)         — UI 층
 ##  · 월드 예고: 떼 진로 띠·갈매기 표, 에워싸기 원과 금빛 틈, 고리 가이드 점선 원,
 ##    작두 충격파 범위, 뒷전 공물상·효과 반경·묶음 안내선, 금줄 굿청, 살 덩어리, 저승사자 — 월드 층(지면 z-2 / 위 z6)
@@ -67,6 +67,7 @@ var _banners: Array[Dictionary] = []      # {title, hint, glyph, accent, t0, dur
 # ── 거리 카드
 var _card: Dictionary = {}
 var _card_pending: StringName = &""
+var _story_done: bool = false             # 00:01 이야기 카드를 띄웠나(실전만)
 # ── 월드 예고/표지
 var _warns: Array[Dictionary] = []        # {id, kind, t0, fire_at, geo, ang}
 var _paths: Array[Dictionary] = []        # 발동 후 떼 진로 {origin, geo, t0, dur}
@@ -168,8 +169,12 @@ func _accent(id: String) -> Color:
 func _push_banner(id: String, title: String, hint: String, dur: float, fire_at: float = -1.0, front: bool = false) -> void:
 	if title == "":
 		return
+	# 흰 무기가 없는 판엔 '흰 무기 곁으로'가 맞지 않는다 — 고르면 풀 수 있다고 알린다(telegraph.events[id].hint_nowhite_ko)
+	var nw: String = String(((_tele.get("events", {}) as Dictionary).get(id, {}) as Dictionary).get("hint_nowhite_ko", ""))
+	if nw != "" and not _owns_white():
+		hint = nw
 	var tw: float = _f_big.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x if _f_big != null else 120.0
-	var hw: float = _f_small.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x if _f_small != null and hint != "" else 0.0
+	var hw: float = _f_body.get_string_size(hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x if _f_body != null and hint != "" else 0.0
 	var w: float = clampf(maxf(tw + 28.0, hw) + 40.0, 160.0, _pf("banner_max_w", 560.0))
 	var b: Dictionary = {"title": title, "hint": hint, "glyph": String(_glyphs.get(id, "")), "accent": _accent(id),
 		"t0": -1.0, "dur": dur, "fire_at": fire_at, "w": int(w)}
@@ -209,7 +214,7 @@ func _on_event(id: StringName, p: Dictionary) -> void:
 			_rings.append({"center": p.get("origin", Vector2.ZERO), "geo": p, "t0": t,
 				"dur": (R - float(p.get("stop_px", 96.0))) / v + 0.5})
 		"evt_pullil_demo":
-			if t < 30.0:
+			if t < 45.0:
 				_push_banner(sid, String(p.get("title_ko", "")), String(p.get("hint_ko", "")), 3.6)
 		"evt_sangcharim":
 			_push_banner(sid, String(p.get("title_ko", "")), String(p.get("hint_ko", "")), 5.0, -1.0, true)
@@ -267,7 +272,7 @@ func _on_settlement(r: StringName, p: Dictionary) -> void:
 	_push_banner(String(r), title, hint, 4.0, -1.0, true)
 
 
-func _on_geori(geori_id: StringName, bpm: float, _j: StringName) -> void:
+func _on_geori(geori_id: StringName, _bpm: float, _j: StringName) -> void:
 	# 시련 안내판(강림·고르기·시련 중)이 화면 위쪽을 쓰는 동안에는 큰 거리 카드를 띄우지 않는다(겹침 방지, core 통합).
 	# 거리 이름은 HUD 시계 아래 줄·음악 전환으로 전달된다.
 	var rr: Node = Game.run_root
@@ -279,14 +284,23 @@ func _on_geori(geori_id: StringName, bpm: float, _j: StringName) -> void:
 	if td != null and td.ph >= TrialDirector.Ph.HAPIL_OMEN:
 		_card = {}
 		return
-	for g: Variant in Data.get_value("waves_stage1", "geori", []):
+	var gl: Variant = Data.get_value("waves_stage1", "geori", [])
+	if not (gl is Array):
+		return
+	for gi in (gl as Array).size():
+		var g: Variant = (gl as Array)[gi]
 		if g is Dictionary and String(g.get("id", "")) == String(geori_id):
 			var gd: Dictionary = g
-			var sub: String = String(gd.get("jangdan_ko", ""))
-			if bpm > 0.0:
-				sub = "%s · %d" % [sub, int(bpm)]
-			_card = {"title": String(gd.get("name_ko", "")), "sub": sub, "line": String(gd.get("subtitle_ko", "")), "t0": -1.0,
-				"dur": _pf("card_sec", 3.2)}
+			if gi == 0:
+				return          # 00:00 거리는 00:01 이야기 카드가 대신한다(design/19 §3)
+			if Save.runs_done() < 2 and gi > 2:
+				return          # 처음 두 판은 1·2번째 전환(03:00·06:00)만 — 새 이름을 줄인다
+			var title: String = String(gd.get("title_easy_ko", gd.get("name_ko", "")))
+			var todo: String = String(gd.get("todo_ko", gd.get("subtitle_ko", "")))
+			var small: String = String(gd.get("name_ko", ""))
+			if small == title:
+				small = ""
+			_card = {"title": title, "sub": todo, "line": small, "t0": -1.0, "dur": _pf("card_sec", 3.2)}
 			return
 
 
@@ -306,6 +320,10 @@ func _process(_delta: float) -> void:
 	if director == null or Game.player == null:
 		return
 	var t: float = _now()
+	if not _story_done and t >= 1.0:
+		_story_done = true
+		if not Game.tutorial_mode and t < 6.0:
+			_card = _story_card()
 	# 만료 정리
 	if not _banners.is_empty():
 		var b: Dictionary = _banners[0]
@@ -316,7 +334,7 @@ func _process(_delta: float) -> void:
 			if not _banners.is_empty():
 				_banners[0]["t0"] = t
 	if not _card.is_empty():
-		if float(_card["t0"]) < 0.0 and t >= float(Data.num("waves_stage1", "runtime.geori_card_min_time_sec", 3.0)):
+		if float(_card["t0"]) < 0.0 and t >= float(_card.get("min_t", Data.num("waves_stage1", "runtime.geori_card_min_time_sec", 3.0))):
 			# 예고 띠(y 84~118)와 거리 카드(y ~104~161)가 겹치지 않게: 띠가 떠 있으면 카드는 띠가 걷힌 뒤(최대 card_wait_max_sec)
 			if not _card.has("q"):
 				_card["q"] = t
@@ -362,6 +380,26 @@ func _process(_delta: float) -> void:
 
 ## 가시성 측정(tests/vis_probe.gd): 이번 프레임에 그린 화면 글 사각형. 키 → [Rect2(640×360 기준), 그린 프레임].
 var vis_rects: Dictionary = {}
+
+
+## 00:01 이야기 카드(design/19 §1.1·§3): '어머니를 보내는 굿' + 할 일 + 의뢰 한 줄(분할 E Save.current_request_line, 있으면).
+func _story_card() -> Dictionary:
+	# 둘째 줄은 할 일(버티기). 의뢰 한 줄은 제목과 같은 뜻일 때가 많아 셋째 줄(작게)로 둔다.
+	var rq: String = ""
+	if Save.has_method(&"current_request_line"):
+		rq = String(Save.call(&"current_request_line"))
+	return {"title": UiCopy.STORY_TITLE, "sub": UiCopy.STORY_LINE, "line": rq, "t0": -1.0, "dur": 2.4, "min_t": 1.0}
+
+
+func _owns_white() -> bool:
+	var wm: WeaponManager = Game.weapons as WeaponManager
+	if wm == null:
+		return false
+	for i in wm.slot_count():
+		var w: WeaponBase = wm.weapon_at(i)
+		if w != null and w.is_white():
+			return true
+	return false
 
 
 ## 거리 카드가 지금 그려지는가(HUD 공수 레인이 같은 위 구역에 겹쳐 그리지 않게).
@@ -847,10 +885,10 @@ func _draw_banner(b: Dictionary, t: float, vs: Vector2) -> void:
 		_ui.draw_string(_f_big, Vector2(tx + 1, y + 17), b["title"], HORIZONTAL_ALIGNMENT_LEFT, -1, 15, sh)
 		_ui.draw_string(_f_big, Vector2(tx, y + 16), b["title"], HORIZONTAL_ALIGNMENT_LEFT, -1, 15, title_col)
 	var hint: String = b["hint"]
-	if hint != "" and _f_small != null:
+	if hint != "" and _f_body != null:
 		var hc: Color = HJ2
 		hc.a = alpha
-		_ui.draw_string(_f_small, Vector2(tx, y + 29), hint, HORIZONTAL_ALIGNMENT_LEFT, w - (tx - x) - 6, 10, hc)
+		_ui.draw_string(_f_body, Vector2(tx, y + 30), hint, HORIZONTAL_ALIGNMENT_LEFT, w - (tx - x) - 6, 12, hc)
 	# 남은 시간 막대(예고일 때): 띠 아래 2px, 발동 순간 0
 	var fa: float = float(b["fire_at"])
 	if fa > 0.0:
@@ -874,7 +912,7 @@ func _draw_card(t: float, vs: Vector2) -> void:
 	var tw: int = int(_f_brush.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 32).x)
 	var sub: String = _card["sub"]
 	var line: String = _card["line"]
-	var sw: int = int(_f_body.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x) if _f_body != null else 0
+	var sw: int = int(_f_bold.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x) if _f_bold != null else 0
 	var lw: int = int(_f_small.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x) if (line != "" and _f_small != null) else 0
 	# 먹 띠(α0.55) + 위아래 단청 1px(적·청·황 6px 마디)
 	var bw: int = maxi(maxi(tw, sw + 52), lw) + 40
@@ -902,15 +940,15 @@ func _draw_card(t: float, vs: Vector2) -> void:
 	# (톤 리뷰 11-25: '진양조 · 45' 가 붓 제목 아래 끝에 겹쳐 찍혔다, tutorial/final2/practice/01_move_z_name)
 	_brush_str(Vector2(cx - tw / 2 + 2, y - 8), title, sh)
 	_brush_str(Vector2(cx - tw / 2, y - 10), title, col)
-	if _f_body != null:
+	if _f_bold != null and sub != "":
 		var rc: Color = JK
 		rc.a = a
 		_ui.draw_rect(Rect2(cx - sw / 2 - 26, y + 12, 18, 1), rc)
 		_ui.draw_rect(Rect2(cx + sw / 2 + 8, y + 12, 18, 1), rc)
-		var sc: Color = HJ2
+		var sc: Color = HJ_UI
 		sc.a = a
-		_ui.draw_string(_f_body, Vector2(cx - sw / 2 + 1, y + 17), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sh)
-		_ui.draw_string(_f_body, Vector2(cx - sw / 2, y + 16), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sc)
+		_ui.draw_string(_f_bold, Vector2(cx - sw / 2 + 1, y + 17), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sh)
+		_ui.draw_string(_f_bold, Vector2(cx - sw / 2, y + 16), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, sc)
 	if lw > 0:
 		var lc: Color = HJ3
 		lc.a = a

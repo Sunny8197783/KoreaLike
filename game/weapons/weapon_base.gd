@@ -647,12 +647,49 @@ func held_out() -> bool:
 	return false
 
 
-## 군중(화면 일반 잡귀 ≥40, 숫자 군중 모드 이력 — design/19 §5.1): 잔상·원판 끔, 고리 1px. 첫 프레임은 남긴다.
+## 군중(화면 일반 잡귀 ≥40, 이력 40/30 — design/19 §5.1): 잔상·원판 끔, 고리 1px. 첫 프레임은 남긴다.
+## Juice.fx_crowd(hud 분할이 만든 이력 판정)가 있으면 그것을, 없으면 숫자 군중·분위기 수로 대신한다.
 static func fx_crowd() -> bool:
+	var jc: Variant = Juice.get(&"fx_crowd")
+	if jc is bool:
+		return jc as bool
 	if Juice.number_crowd:
 		return true
 	var v: VfxPlayer = Game.vfx as VfxPlayer
 	return v != null and v.atmosphere != null and v.atmosphere.crowd_n >= 40
+
+
+## 설정 '내 무기 효과'(a11y.my_fx 100/70/40%) 배율: ③궤적·④여운·원판 채움 α 에 곱한다(손 무기·②첫 프레임 제외).
+static func fx_alpha() -> float:
+	var v: Variant = Juice.get(&"my_fx_alpha")
+	return clampf(float(v), 0.0, 1.0) if (v is float or v is int) else 1.0
+
+
+## 손 무기 무게(design/19 §5.0 J 단계): heavy | mid | light. 표에 없으면 light.
+func held_weight() -> String:
+	return String(HeldWeapon.def_for(self).get("weight", "light"))
+
+
+var _j_tick: int = -100000
+
+
+## 묶음 타격감(design/19 §5.0 J 단계): 한 번에 hits 마리 이상(기본 3)을 맞혔을 때 무게대로 — heavy J2(16ms + 킥 1px),
+## mid J1(킥 1px), light J0(없음). 무구당 0.5초 쿨다운. 개별 타격(hits < 3)은 늘 J0(군중 P6 유지).
+func batch_feedback(hits: int, dir: Vector2, min_hits: int = 3) -> void:
+	if hits < min_hits or Game.game_tick - _j_tick < 30:
+		return
+	var wt: String = held_weight()
+	if wt == "light":
+		return
+	_j_tick = Game.game_tick
+	var kd: Vector2 = K.dir8(dir) if dir.length_squared() > 0.01 else Vector2.DOWN
+	if wt == "heavy":
+		if new_hitstop_on():
+			Juice.hitstop(16, 2)
+		# 무거운 무기 J2 소리: 작두 계열 저음 레이어 1개(design/19 §5.0 소리 문법)
+		if Audio.get(&"bank") != null and Audio.has_method(&"play_def"):
+			_sfx_layer(&"sfx_wpn_jakdu_hit", -11.0, pow(2.0, -2.0 / 12.0))
+	Juice.kick(kd, 1)
 
 
 ## 새 타격 멈춤(J2: 작두 첫 적중·다중 처치, design/19 §5.0)을 쓰는가. 디버그 빌드의 --no-new-hitstop 은 전후 캡처를
@@ -699,6 +736,51 @@ func sim_step(dt: float) -> void:
 
 func _fire_sfx() -> void:
 	Audio.play_sfx(StringName("sfx_wpn_" + stem), &"SFX", -5.0, 0.05)
+	_fire_sfx_layers()
+
+
+## 소리 문법(design/19 §5.0): 진화 = 원래 무기 적중음을 −3반음 +2dB 짧은 레이어로 덧댐, 결합 = 짝 무기 발동음을 −6dB 로 겹침.
+## 같은 sfx 0.1초 3개 상한은 SfxBank.gate 가 본다(넘치면 −6dB 하나만). 렌더·소리 전용(시뮬 무관).
+func _fire_sfx_layers() -> void:
+	if kind == KIND_WEAPON or Audio.get(&"bank") == null or not Audio.has_method(&"play_def"):
+		return
+	if kind == KIND_EVO:
+		_sfx_layer(StringName("sfx_wpn_%s_hit" % stem), -9.0 + 2.0, pow(2.0, -3.0 / 12.0))
+	elif kind == KIND_UNION:
+		var partner: String = _union_partner_stem()
+		if partner != "":
+			_sfx_layer(StringName("sfx_wpn_" + partner), -5.0 - 6.0, 1.0)
+
+
+func _sfx_layer(id: StringName, vol: float, pitch: float) -> void:
+	var bank: Object = Audio.get(&"bank")
+	var d: int = int(Audio.call(&"def_of", id))
+	if d < 0:
+		return
+	var adj: float = 0.0
+	if bank.has_method(&"gate"):
+		adj = float(bank.call(&"gate", d, Game.anim_time()))
+		if adj < -60.0:
+			return
+	Audio.call(&"play_def", d, vol + adj, pitch)
+
+
+var _partner_stem: String = "?"
+
+
+## 결합 무구의 짝(둘째 재료 진화의 원무구) stem. 없으면 "".
+func _union_partner_stem() -> String:
+	if _partner_stem != "?":
+		return _partner_stem
+	_partner_stem = ""
+	var evs: Variant = (def.get("recipe", {}) as Dictionary).get("evolutions", []) if def.get("recipe", {}) is Dictionary else []
+	if evs is Array:
+		for e: Variant in evs:
+			var w: String = String((Data.evolution(String(e)).get("recipe", {}) as Dictionary).get("weapon", ""))
+			if w != "" and w != String(base_id):
+				_partner_stem = w.trim_prefix("wpn_")
+				break
+	return _partner_stem
 
 
 func _windup_start() -> void:
@@ -759,16 +841,106 @@ func draw_sheet(ci: CanvasItem, fx_id: StringName, pos: Vector2, t: float, d4: i
 		sx = -1.0
 	elif d4 == 3:
 		ang = -PI * 0.5
+	var one_shot: bool = not (bool(fx["loop"]) or force_loop)
+	# 진화·결합(design/19 §5.2 H): 원샷 시트는 scale 2(정수 배율). 단 32px 넘는 시트는 1 그대로 + 첫 프레임 겹침 2f —
+	# 64px 시트를 ×2(128px)로 키우면 무당 몸을 덮고 판정 원보다 커 보였다(final_held setD 캡처).
+	var big_side: float = maxf(r.size.x, r.size.y)
+	var scl: int = 2 if (one_shot and kind != KIND_WEAPON and big_side <= 32.0) else 1
+	# 64px 넘는 원샷 시트 동시 4장(군중 3) — 넘치면 이번 프레임은 그리지 않는다(재생은 계속: true).
+	var wm: WeaponManager = mgr as WeaponManager
+	if one_shot and wm != null and big_side * float(scl) > 64.0:
+		if wm.big_sheets >= (3 if fx_crowd() else 4):
+			return true
+		wm.big_sheets += 1
 	# 가산 지정(art_vfx_list add) 시트도 본체는 일반 블렌드로 그린다 — 붉은 시트의 먹 테두리가 무리 위에서 선을 지켜 준다(11-26 전후 비교).
-	# 대신 첫 1~2f 를 add_overlay 로 가산 층(_add_ci)에 한 번 더 얹어 '강한 첫 프레임'을 낸다(design/19 §5.0 ②).
-	ci.draw_set_transform(K.rndv(pos), ang, Vector2(sx, 1.0))
-	ci.draw_texture_rect_region(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r, tint)
-	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	# 대신 첫 1~2f 를 가산 층(_add_ci)에 한 번 더 얹어 '강한 첫 프레임'을 낸다(design/19 §5.0 ②) — 붉은 무구·진화·결합 원샷 시트 공통.
+	# 무당 발밑에 놓이는 큰 시트(오라 맥동·공명·결합 고리, 작두 충격파): 몸 상자를 비우고 네 조각으로 — 고리가 무당 몸·홍철릭을
+	# 덮지 않게(design/19 §5.1 '몸 상자 안 손 무기만 불투명', 검토 11-26 p_red 최소 162→25).
+	var xf0: Transform2D = Transform2D(ang, Vector2(sx * float(scl), float(scl)), 0.0, K.rndv(pos))
+	var dst0: Rect2 = Rect2(-K.rndv(fx["pivot"]), r.size)
+	if big_side * float(scl) > 32.0 and pos.distance_squared_to(render_origin()) < 400.0:
+		_draw_holed(ci, fx["texture"], dst0, r, xf0, tint, body_hole())
+	else:
+		ci.draw_set_transform_matrix(xf0)
+		ci.draw_texture_rect_region(fx["texture"], dst0, r, tint)
+		ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	if one_shot and (is_red() or kind != KIND_WEAPON):
+		var two_f: bool = kind != KIND_WEAPON and big_side > 32.0
+		if fi <= (1 if two_f else 0) and _first_frame_ok(fx_id, t):
+			add_overlay(fx_id, pos, fi, d4, 0.6, scl, body_hole())
 	return true
 
 
-## 첫 프레임 겹침(design/19 §5.0 ② '강한 한 장'): 시트의 frame 번째 그림을 한지 단색 가산으로 한 번 더(배율 정수).
-## 본 층(_draw) 안에서만 부른다. alpha 0.6 기본. 붉은 시트는 어두워서(평균 L≈0.1) 한지 쪽으로 1.3배 물들여 더한다.
+# ─── 첫 프레임 겹침 예산(design/19 §5.1): 무구당 0.25초 1회 · 전체 0.25초 창 6회(군중 4). 렌더 전용 ───────
+static var _ffw_tick: int = -100000      # 전체 창 시작(anim tick)
+static var _ffw_n: int = 0
+var _ff_t0: float = -100.0               # 이 무구가 마지막으로 받은 재생의 시작 시각(anim time)
+var _ff_fx: StringName = &""
+
+
+## 지금 그리는 재생(fx_id, 재생 시각 t)이 첫 프레임 겹침을 받는가. 같은 재생이면 첫 프레임 동안 계속 true.
+func _first_frame_ok(fx_id: StringName, t: float) -> bool:
+	var now_t: float = Game.anim_time()
+	var t0: float = now_t - maxf(t, 0.0)
+	if fx_id == _ff_fx and absf(t0 - _ff_t0) < 0.02:
+		return true
+	if now_t - _ff_t0 < 0.25:
+		return false
+	var nowk: int = Game.anim_tick_cur
+	if nowk - _ffw_tick >= 15:
+		_ffw_tick = nowk
+		_ffw_n = 0
+	if _ffw_n >= 6:   # 첫 프레임 겹침은 군중에서도 줄이지 않는다(design/19 §5.1 ②, 검토 11-26) — 예산은 여운(④) 쪽에서 맞춘다
+		return false
+	_ffw_n += 1
+	_ff_t0 = t0
+	_ff_fx = fx_id
+	return true
+
+
+## 무당 몸 상자(design/19 §5.1: ±14, −40~+4) — 내 VFX 가산 채움을 비우는 구멍(월드 좌표).
+func body_hole() -> Rect2:
+	var ro: Vector2 = K.rndv(render_origin())
+	return Rect2(ro + Vector2(-14, -40), Vector2(28, 44))
+
+
+## 첫 프레임 가산 물들임: 붉은 무구 = 한지(1.3배, 어두운 시트를 한지 쪽으로), 진화 = 황 어둠, 결합 = 적/한지 2f 번갈아.
+## 진화·결합은 채널 ≤1.0 — 1을 넘는 황(1.25, 0.98, 0.32)은 한지 시트에 더해지면 무당 금 #f5d66b ±12 로 떠
+## 무당 금 테와 섞였다(design/18 '금 = 무당 전용', 검토 11-26 몸 밖 금 1→144).
+func overlay_tint(alpha: float) -> Color:
+	if kind == KIND_EVO:
+		return Color(169.0 / 255.0, 124.0 / 255.0, 27.0 / 255.0, alpha)   # 황 어둠 #a97c1b
+	if kind == KIND_UNION and (Game.anim_tick_cur / 3) % 2 == 1:
+		return Color(K.COL_JEOK_HI, alpha)
+	if kind == KIND_UNION:
+		return Color(K.COL_HANJI_DK, alpha)
+	return Color(1.3, 1.2, 1.0, alpha)
+
+
+## 시트 한 장을 hole(월드 사각형) 안만 비우고 네 조각으로 그린다(일반 블렌드). 회전·반전·배율은 xf 로.
+func _draw_holed(ci: CanvasItem, tex: Texture2D, dst: Rect2, r: Rect2, xf: Transform2D, tint: Color, hole: Rect2) -> void:
+	ci.draw_set_transform_matrix(xf)
+	var hc: Rect2 = dst.intersection(xf.affine_inverse() * hole)
+	if not hc.has_area():
+		ci.draw_texture_rect_region(tex, dst, r, tint)
+		ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		return
+	var parts: Array[Rect2] = [
+		Rect2(dst.position, Vector2(dst.size.x, hc.position.y - dst.position.y)),
+		Rect2(Vector2(dst.position.x, hc.end.y), Vector2(dst.size.x, dst.end.y - hc.end.y)),
+		Rect2(Vector2(dst.position.x, hc.position.y), Vector2(hc.position.x - dst.position.x, hc.size.y)),
+		Rect2(Vector2(hc.end.x, hc.position.y), Vector2(dst.end.x - hc.end.x, hc.size.y))]
+	for pr: Rect2 in parts:
+		var p0: Vector2 = pr.position.round()
+		var ps: Vector2 = pr.end.round() - p0
+		if ps.x >= 1.0 and ps.y >= 1.0:
+			ci.draw_texture_rect_region(tex, Rect2(p0, ps), Rect2(r.position + (p0 - dst.position), ps), tint)
+	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+## 첫 프레임 겹침(design/19 §5.0 ② '강한 한 장'): 시트의 frame 번째 그림을 단색 가산으로 한 번 더(배율 정수).
+## 본 층(_draw) 안에서만 부른다. alpha 0.6 기본. hole(월드 사각형)이 있으면 그 안은 비운다(회전·반전·배율 모두 —
+## 구멍을 시트 로컬 좌표로 되돌려 위·아래·좌·우 네 조각으로 나눈다).
 func add_overlay(fx_id: StringName, pos: Vector2, frame: int = 0, d4: int = 0, alpha: float = 0.6, scl: int = 1, hole: Rect2 = Rect2()) -> void:
 	var wm: WeaponManager = mgr as WeaponManager
 	if wm == null or fx_id == &"":
@@ -780,21 +952,6 @@ func add_overlay(fx_id: StringName, pos: Vector2, frame: int = 0, d4: int = 0, a
 	if regions.is_empty():
 		return
 	var r: Rect2 = regions[clampi(frame, 0, regions.size() - 1)]
-	if hole.has_area() and d4 == 0 and scl == 1:
-		# 무당 몸 상자(design/19 §5.1: 내 VFX 채움 α ≤0.15)를 비우고 위·아래·좌·우 네 조각으로 나눠 더한다
-		var dst: Rect2 = Rect2(K.rndv(pos) - K.rndv(fx["pivot"]), r.size)
-		var hc: Rect2 = dst.intersection(hole)
-		if hc.has_area():
-			var parts: Array[Rect2] = [
-				Rect2(dst.position, Vector2(dst.size.x, hc.position.y - dst.position.y)),
-				Rect2(Vector2(dst.position.x, hc.end.y), Vector2(dst.size.x, dst.end.y - hc.end.y)),
-				Rect2(Vector2(dst.position.x, hc.position.y), Vector2(hc.position.x - dst.position.x, hc.size.y)),
-				Rect2(Vector2(hc.end.x, hc.position.y), Vector2(dst.end.x - hc.end.x, hc.size.y))]
-			for pr: Rect2 in parts:
-				if pr.size.x >= 1.0 and pr.size.y >= 1.0:
-					wm.push_add(fx["texture"], pr, Rect2(r.position + (pr.position - dst.position), pr.size),
-						Transform2D.IDENTITY, Color(1.3, 1.2, 1.0, alpha))
-			return
 	var ang: float = 0.0
 	var sx: float = float(scl)
 	if d4 == 1:
@@ -803,8 +960,26 @@ func add_overlay(fx_id: StringName, pos: Vector2, frame: int = 0, d4: int = 0, a
 		sx = -sx
 	elif d4 == 3:
 		ang = -PI * 0.5
-	wm.push_add(fx["texture"], Rect2(-K.rndv(fx["pivot"]), r.size), r,
-		Transform2D(ang, Vector2(sx, float(scl)), 0.0, K.rndv(pos)), Color(1.3, 1.2, 1.0, alpha))
+	var xf: Transform2D = Transform2D(ang, Vector2(sx, float(scl)), 0.0, K.rndv(pos))
+	var dst: Rect2 = Rect2(-K.rndv(fx["pivot"]), r.size)
+	var col: Color = overlay_tint(alpha)
+	if hole.has_area():
+		var hl: Rect2 = xf.affine_inverse() * hole
+		var hc: Rect2 = dst.intersection(hl)
+		if hc.has_area():
+			var parts: Array[Rect2] = [
+				Rect2(dst.position, Vector2(dst.size.x, hc.position.y - dst.position.y)),
+				Rect2(Vector2(dst.position.x, hc.end.y), Vector2(dst.size.x, dst.end.y - hc.end.y)),
+				Rect2(Vector2(dst.position.x, hc.position.y), Vector2(hc.position.x - dst.position.x, hc.size.y)),
+				Rect2(Vector2(hc.end.x, hc.position.y), Vector2(dst.end.x - hc.end.x, hc.size.y))]
+			for pr: Rect2 in parts:
+				if pr.size.x >= 1.0 and pr.size.y >= 1.0:
+					var p0: Vector2 = pr.position.round()
+					var ps: Vector2 = (pr.end.round() - p0)
+					if ps.x >= 1.0 and ps.y >= 1.0:
+						wm.push_add(fx["texture"], Rect2(p0, ps), Rect2(r.position + (p0 - dst.position), ps), xf, col)
+			return
+	wm.push_add(fx["texture"], dst, r, xf, col)
 
 
 ## 시트 한 프레임을 정수 배율로(꽂힘 1f scale 2 등). 일반 블렌드.
@@ -862,6 +1037,9 @@ func draw_windup_hand(ci: CanvasItem, dir: Vector2) -> void:
 	var wp: float = windup_prog()
 	if wp < 0.0:
 		return
+	var hd: Dictionary = HeldWeapon.def_for(self)
+	if not hd.is_empty() and String(hd.get("hand", "main")) != "none":
+		return                        # 손 무기가 선딜 자세(젖힘·들어 올림)를 직접 보여 준다(design/19 §6)
 	var hp: Vector2 = hand_point(dir, 6.0 + roundf(wp * 3.0))
 	var c: Color = K.COL_HWANG if wp > 0.5 else col_hi()
 	ci.draw_rect(Rect2(hp - Vector2(1, 1), Vector2(3, 3)), c)

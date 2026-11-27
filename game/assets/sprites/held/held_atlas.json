@@ -1,40 +1,308 @@
 {
- "_doc": "손에 든 무기 아틀라스(design/19 §6.5). 기존 ui/icons/wpn_*_16.png 를 잘라 테두리 제거 + 먹 1px 외곽선. 칸 18x18, 좌표는 아틀라스 px. 그립·축은 data/held_weapons.json.",
- "cell": [
-  18,
-  18
- ],
+ "_doc": "손에 든 무기 아틀라스(design/19 §6.5). build_held_atlas.py 가 기존 ui/icons/wpn_*(16·41px)·icons_sheet_2 마름쇠를 잘라 틀 제거 + 한지 1px 하이라이트 + 먹 1px 외곽선. *_evo = 황 외곽선. 편곤 자루·바가지·장구채는 코드 그림. 쥐는 점·축은 data/held_weapons.json.",
  "sprites": {
-  "sinkal": {
+  "bagaji": {
+   "rect": [
+    48,
+    81,
+    13,
+    7
+   ]
+  },
+  "bagaji_evo": {
+   "rect": [
+    62,
+    81,
+    13,
+    7
+   ]
+  },
+  "bangul": {
+   "rect": [
+    60,
+    34,
+    15,
+    18
+   ]
+  },
+  "bangul_evo": {
+   "rect": [
+    76,
+    34,
+    15,
+    18
+   ]
+  },
+  "buchae": {
    "rect": [
     0,
-    0,
+    63,
+    17,
+    17
+   ]
+  },
+  "buchae_evo": {
+   "rect": [
     18,
+    63,
+    17,
+    17
+   ]
+  },
+  "gakgung": {
+   "rect": [
+    92,
+    34,
+    16,
+    18
+   ]
+  },
+  "gakgung_evo": {
+   "rect": [
+    109,
+    34,
+    16,
+    18
+   ]
+  },
+  "hojakdo": {
+   "rect": [
+    126,
+    34,
+    14,
+    18
+   ]
+  },
+  "hojakdo_evo": {
+   "rect": [
+    141,
+    34,
+    14,
     18
    ]
   },
   "jakdu": {
    "rect": [
-    18,
     0,
-    18,
-    18
+    34,
+    29,
+    28
    ]
   },
-  "bangul": {
+  "jakdu_evo": {
+   "rect": [
+    30,
+    34,
+    29,
+    28
+   ]
+  },
+  "jangchang": {
+   "rect": [
+    66,
+    0,
+    28,
+    31
+   ]
+  },
+  "jangchang_evo": {
+   "rect": [
+    95,
+    0,
+    28,
+    31
+   ]
+  },
+  "janggu": {
    "rect": [
     36,
+    63,
+    13,
+    17
+   ]
+  },
+  "janggu_chae": {
+   "rect": [
+    112,
+    81,
+    14,
+    4
+   ]
+  },
+  "janggu_chae_evo": {
+   "rect": [
+    127,
+    81,
+    14,
+    4
+   ]
+  },
+  "janggu_evo": {
+   "rect": [
+    50,
+    63,
+    13,
+    17
+   ]
+  },
+  "jijeon": {
+   "rect": [
+    26,
+    81,
+    10,
+    10
+   ]
+  },
+  "jijeon_evo": {
+   "rect": [
+    37,
+    81,
+    10,
+    10
+   ]
+  },
+  "maleumsoe": {
+   "rect": [
     0,
-    18,
+    81,
+    12,
+    12
+   ]
+  },
+  "maleumsoe_evo": {
+   "rect": [
+    13,
+    81,
+    12,
+    12
+   ]
+  },
+  "myeongdu": {
+   "rect": [
+    64,
+    63,
+    15,
+    17
+   ]
+  },
+  "myeongdu_evo": {
+   "rect": [
+    80,
+    63,
+    15,
+    17
+   ]
+  },
+  "neokjeon": {
+   "rect": [
+    130,
+    63,
+    12,
+    16
+   ]
+  },
+  "neokjeon_evo": {
+   "rect": [
+    143,
+    63,
+    12,
+    16
+   ]
+  },
+  "obanggi": {
+   "rect": [
+    96,
+    63,
+    16,
+    17
+   ]
+  },
+  "obanggi_evo": {
+   "rect": [
+    113,
+    63,
+    16,
+    17
+   ]
+  },
+  "pyeongon": {
+   "rect": [
+    76,
+    81,
+    17,
+    5
+   ]
+  },
+  "pyeongon_evo": {
+   "rect": [
+    94,
+    81,
+    17,
+    5
+   ]
+  },
+  "sainsageom": {
+   "rect": [
+    156,
+    34,
+    17,
     18
    ]
   },
-  "gakgung": {
+  "sainsageom_evo": {
    "rect": [
-    54,
-    0,
-    18,
+    174,
+    34,
+    17,
     18
+   ]
+  },
+  "samjichang": {
+   "rect": [
+    124,
+    0,
+    30,
+    31
+   ]
+  },
+  "samjichang_evo": {
+   "rect": [
+    155,
+    0,
+    30,
+    31
+   ]
+  },
+  "sinkal": {
+   "rect": [
+    156,
+    63,
+    16,
+    16
+   ]
+  },
+  "sinkal_evo": {
+   "rect": [
+    173,
+    63,
+    16,
+    16
+   ]
+  },
+  "woldo": {
+   "rect": [
+    0,
+    0,
+    32,
+    33
+   ]
+  },
+  "woldo_evo": {
+   "rect": [
+    33,
+    0,
+    32,
+    33
    ]
   }
  }

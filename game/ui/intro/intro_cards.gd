@@ -20,19 +20,21 @@ const T_TEXT: float = 0.6          # 글자 드러남 길이
 const TEST_STEP: float = 1.5
 
 ## layout: full(화면 가득·표류) | wide(가로 688 잘라 쓰기·흐름) | framed(344 폭 1배, 한지 테)
+## design/19 §7: 장 수(6)·그림은 그대로, 말과 순서만 — 1 목표 / 2 벤다 / 3 흰 테두리를 푼다 / 4 넋 동무 / 5 흰 길 감싸기 / 6 끝(역려·신당).
+## 한자·괄호 용어를 쓰지 않는다. 귀신의 표시는 '흰 테두리'로 통일.
 const CARDS: Array[Dictionary] = [
-	{"id": "intro_gutpan", "img": KEY_ART, "layout": "full", "title": "밤의 굿판이 열린다",
-		"text": "한 맺힌 넋들이 굿판으로 몰려든다. 당신은 무당이다."},
-	{"id": "intro_twist", "img": ART_DIR + "intro_core_twist.png", "layout": "framed", "title": "깎고, 푼다",
-		"text": "붉은 무구로 한(恨)을 깎는다. 흰 테두리가 보이면 흰 무구로 마지막 매듭을 푼다."},
+	{"id": "intro_gutpan", "img": KEY_ART, "layout": "full", "title": "은실 만신의 진오기굿",
+		"text": "동짓날 밤, 길 잃은 넋들이 귀신이 되어 굿판으로 몰려든다. 20분을 버티면 넋길이 열린다."},
+	{"id": "intro_sal", "img": ART_DIR + "intro_wongwi.png", "layout": "framed", "title": "붉은 칼로 귀신을 벤다",
+		"text": "걷기만 하면 무기는 저절로 친다. 붉은 무기는 귀신을 베어 처치한다."},
+	{"id": "intro_twist", "img": ART_DIR + "intro_core_twist.png", "layout": "framed", "title": "흰 테두리가 생기면 풀어 준다",
+		"text": "약해진 귀신에게 흰 테두리가 생긴다. 흰 무기 곁에 두면 한이 풀려 사람으로 돌아간다."},
 	{"id": "intro_yeongga", "img": ART_DIR + "intro_procession.png", "layout": "wide", "crop": Rect2(0, 128, 688, 232),
-		"title": "풀린 넋은 길동무가 된다", "text": "풀려난 넋은 흰 영가가 되어 뒤를 따른다. 함께 걷다 저승길로 떠난다."},
-	{"id": "intro_gildakkeum", "img": ART_DIR + "intro_gildakkeum.png", "layout": "framed", "title": "흰 길로 고리를 닫으면",
-		"text": "걸어온 흰 길로 한 바퀴 감싸면, 안의 넋이 한꺼번에 풀린다. 길닦음."},
-	{"id": "intro_sal", "img": ART_DIR + "intro_wongwi.png", "layout": "framed", "title": "한은 사라지지 않는다",
-		"text": "퇴치는 빠르고 정당하다. 다만 깨진 자리에 살(煞)이 남아, 쌓이면 원귀로 돌아온다."},
-	{"id": "intro_road", "img": ART_DIR + "intro_jeoseunggil.png", "layout": "framed", "title": "저승길까지",
-		"text": "20분, 굿 한 판. 신령의 시련을 넘고, 끝에는 저승사자가 굿판을 거두러 온다."},
+		"title": "풀린 넋이 뒤따르며 지켜 준다", "text": "풀린 넋은 넋 동무가 되어 뒤를 따르고, 곁의 귀신을 막아 준다."},
+	{"id": "intro_gildakkeum", "img": ART_DIR + "intro_gildakkeum.png", "layout": "framed", "title": "흰 길로 한 바퀴 감싸면",
+		"text": "걸어온 자리에 흰 길이 남는다. 한 바퀴 감싸면 안쪽 귀신이 한꺼번에 풀린다."},
+	{"id": "intro_road", "img": ART_DIR + "intro_jeoseunggil.png", "layout": "framed", "title": "끝에는 역려가 온다",
+		"text": "20:00, 역병 귀신 역려를 보내면 굿이 끝난다. 얻은 것으로 신당을 키워 다음 굿을 연다."},
 ]
 const TAGLINE: String = "깎아 부수거나, 풀어 보내거나."
 
@@ -273,7 +275,7 @@ func _update_fx() -> void:
 		"intro_sal":
 			if _fx_done == 0 and _t >= 0.45:
 				_fx_done = 1
-				UiSettings.ui_sfx(&"sfx_sys_wongwi_rise")
+				UiSettings.ui_sfx(&"sfx_sys_hanpa")
 		"intro_road":
 			if _fx_done == 0 and _t >= _tag_at():
 				_fx_done = 1
@@ -455,11 +457,11 @@ func _draw_card_fx(id: String, cx: float) -> void:
 			if _t >= 1.6:
 				var a4: float = clampf(1.0 - (_t - 1.6) / 0.5, 0.25, 1.0)
 				_fg.draw_rect(Rect2(ip + Vector2(cw * 3.0, 0), Vector2(cw, 128)).grow(-1.0), Color(UiKit.BAEK, a4), false, 1.0)
-			# 아래 작은 글씨: ◆ 붉은 = 퇴치 · ○ 흰 = 해원
+			# 아래 작은 글씨: ◆ 붉은 = 베어 처치 · ○ 흰 = 풀어 줌
 			var ca: float = clampf((_t - 0.5) / 0.3, 0.0, 1.0)
 			var y: float = 220.0
-			var s1: String = "붉은 = 퇴치"
-			var s2: String = "흰 = 해원"
+			var s1: String = "붉은 = 베어 처치"
+			var s2: String = "흰 = 풀어 줌"
 			var w1: float = _f_small.get_string_size(s1, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL).x
 			var w2: float = _f_small.get_string_size(s2, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL).x
 			var tot: float = 9.0 + w1 + 22.0 + 9.0 + w2

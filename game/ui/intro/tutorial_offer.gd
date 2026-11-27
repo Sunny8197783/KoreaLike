@@ -30,7 +30,7 @@ func _ready() -> void:
 	_f_small = UiKit.small()
 	_f_brush = UiKit.brush()
 	_paper = UiKit.skin("tile_hanji_paper.png")
-	_body = UiKit.wrap(_f_body, UiKit.SZ_BODY, "약 5분. 걷기만으로 귀신을 깎고 푸는 법을 배웁니다. 실패는 없습니다.", PANEL.x - 40.0, 2)
+	_body = UiKit.wrap(_f_body, UiKit.SZ_BODY, "약 5분. 걷기만으로 귀신을 베고 풀어 주는 법을 배웁니다. 실패는 없습니다.", PANEL.x - 40.0, 2)
 
 
 func open(auto_close: float = -1.0) -> void:

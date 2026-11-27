@@ -65,6 +65,7 @@ var fx_dy: PackedFloat32Array = PackedFloat32Array()
 var fx_r: PackedFloat32Array = PackedFloat32Array()
 var fx_t0: PackedFloat32Array = PackedFloat32Array()
 var fx_col: PackedInt32Array = PackedInt32Array()   # K.DmgColor
+var fx_deity: Array[StringName] = []                 # 권능 주인 신령(view 가 첫 1f 오방색·발밑 표지에 쓴다, design/19 §5.2 F). &"" = 모름
 var _fx_head: int = 0
 
 
@@ -79,6 +80,8 @@ func _init() -> void:
 	fx_t0.resize(FX_CAP)
 	fx_col.resize(FX_CAP)
 	fx_t0.fill(-100.0)
+	fx_deity.resize(FX_CAP)
+	fx_deity.fill(&"")
 	pool_x.resize(POOL_CAP)
 	pool_y.resize(POOL_CAP)
 	pool_r.resize(POOL_CAP)
@@ -88,7 +91,7 @@ func _init() -> void:
 	_rng = Rng.stream(&"trial")
 
 
-func _fx(kind: int, p: Vector2, d: Vector2, r: float, col: int) -> void:
+func _fx(kind: int, p: Vector2, d: Vector2, r: float, col: int, deity: StringName = &"") -> void:
 	var i: int = _fx_head
 	_fx_head = (_fx_head + 1) % FX_CAP
 	fx_kind[i] = kind
@@ -99,6 +102,7 @@ func _fx(kind: int, p: Vector2, d: Vector2, r: float, col: int) -> void:
 	fx_r[i] = r
 	fx_t0[i] = Game.time_sec()
 	fx_col[i] = col
+	fx_deity[i] = deity
 
 
 # ─── 스탯 ──────────────────────────────────────────────────────────────
@@ -456,7 +460,7 @@ func sim_step(dt: float, now: float) -> void:
 		for k in 7:
 			var p: Vector2 = c + Vector2.from_angle(TAU * float(k) / 7.0) * (1.6 if k > 0 else 0.0) * K.UNIT_PX
 			strike_circle(p, 1.0 * K.UNIT_PX, base_max(false) * 1.2 * mult, K.DmgColor.RED, 0.3, 12)
-			_fx(Fx.STAR_FALL, p, Vector2.ZERO, 1.0 * K.UNIT_PX, K.DmgColor.RED)
+			_fx(Fx.STAR_FALL, p, Vector2.ZERO, 1.0 * K.UNIT_PX, K.DmgColor.RED, &"deity_chilseong")
 	for id: Variant in powers:      # Dictionary 직접 순회(keys() 사본 할당 없음)
 		var sid: String = String(id)
 		match sid:
@@ -464,26 +468,26 @@ func sim_step(dt: float, now: float) -> void:
 				if _ready_cd(sid, _gv(sid, "cooldown_s", 12.0), now):
 					var r: float = _gv(sid, "radius", 3.0) * K.UNIT_PX
 					strike_circle(pp, r, 1.0, K.DmgColor.WHITE, 1.5)
-					_fx(Fx.PULSE, pp, Vector2.ZERO, r, K.DmgColor.NONE)
+					_fx(Fx.PULSE, pp, Vector2.ZERO, r, K.DmgColor.NONE, &"deity_sansin")
 			"pwr_sansin_maengho":
 				if _ready_cd(sid, _gv(sid, "cooldown_s", 20.0), now):
 					var dv2: Vector2 = _dense_dir(pp, 8.0 * K.UNIT_PX)
 					var o: Vector2 = pp - dv2 * 2.0 * K.UNIT_PX
 					strike_rect(o, dv2, 12.0 * K.UNIT_PX, 1.6 * K.UNIT_PX, base_max(false) * _gv(sid, "dmg_x_base_red", 4.0), K.DmgColor.RED, 1.0)
-					_fx(Fx.TIGER_DASH, o, dv2, 12.0 * K.UNIT_PX, K.DmgColor.RED)
+					_fx(Fx.TIGER_DASH, o, dv2, 12.0 * K.UNIT_PX, K.DmgColor.RED, &"deity_sansin")
 					Juice.kick(dv2, 1)
 			"pwr_yongwang_haeil":
 				if _ready_cd(sid, _gv(sid, "cooldown_s", 18.0), now):
 					var dv3: Vector2 = _dense_dir(pp, 8.0 * K.UNIT_PX)
 					strike_rect(pp, dv3, 10.0 * K.UNIT_PX, 6.0 * K.UNIT_PX, base_max(false) * _gv(sid, "dmg_x_base_red", 3.0), K.DmgColor.RED, 3.0)
-					_fx(Fx.WAVE, pp, dv3, 10.0 * K.UNIT_PX, K.DmgColor.RED)
+					_fx(Fx.WAVE, pp, dv3, 10.0 * K.UNIT_PX, K.DmgColor.RED, &"deity_yongwang")
 			"pwr_chilseong_bukdu_byeolbit":
 				if _ready_cd(sid, 7.0, now):
 					var dm: float = base_max(_face_color(&"deity_chilseong") == K.DmgColor.WHITE) * _gv(sid, "dmg_x_face_base", 0.8)
 					for k in 7:
 						var p2: Vector2 = pp + Vector2.from_angle(TAU * float(k) / 7.0 + orbit_t) * 3.0 * K.UNIT_PX
 						strike_circle(p2, 0.9 * K.UNIT_PX, dm, _face_color(&"deity_chilseong"), 0.3, 6)
-						_fx(Fx.STAR_FALL, p2, Vector2.ZERO, 0.9 * K.UNIT_PX, _face_color(&"deity_chilseong"))
+						_fx(Fx.STAR_FALL, p2, Vector2.ZERO, 0.9 * K.UNIT_PX, _face_color(&"deity_chilseong"), &"deity_chilseong")
 			"pwr_chilseong_yeonmyeong":
 				# 정기 0 직전 연명: 런당 1(Lv3 2)회. 사망 훅 대신 정기 10% 이하에서 발동(TODO(deities): 사망 직전 훅 요청)
 				var uses: int = 2 if int(powers[sid].get("level", 1)) >= 3 else 1
@@ -493,7 +497,7 @@ func sim_step(dt: float, now: float) -> void:
 					if pl2 != null:
 						pl2.hit.heal(Game.hp_max * _gv(sid, "heal_pct", 30.0) * 0.01)
 						pl2.hit.iframe_left = maxf(pl2.hit.iframe_left, 2.0)
-					_fx(Fx.PULSE, pp, Vector2.ZERO, 2.0 * K.UNIT_PX, K.DmgColor.NONE)
+					_fx(Fx.PULSE, pp, Vector2.ZERO, 2.0 * K.UNIT_PX, K.DmgColor.NONE, &"deity_chilseong")
 			"pwr_janggun_jingun":
 				var pl3: Player = Game.player as Player
 				if pl3 != null:
@@ -529,11 +533,11 @@ func _tick_face_procs(now: float, pp: Vector2) -> void:
 			var dv: Vector2 = _dense_dir(pp, 7.0 * K.UNIT_PX)
 			var o: Vector2 = pp - dv * 1.0 * K.UNIT_PX + Vector2(-dv.y, dv.x) * 0.6 * K.UNIT_PX
 			strike_rect(o, dv, 6.0 * K.UNIT_PX, 1.4 * K.UNIT_PX, base_max(true) * 1.2, K.DmgColor.WHITE, 1.5)
-			_fx(Fx.TIGER_DASH, o, dv, 6.0 * K.UNIT_PX, K.DmgColor.WHITE)
+			_fx(Fx.TIGER_DASH, o, dv, 6.0 * K.UNIT_PX, K.DmgColor.WHITE, &"deity_sansin")
 	# 용왕 위엄: 물결 — 1초마다 무당 둘레 1.5유닛 밀침 + 약한 적 피해
 	if faces.get(&"deity_yongwang", &"") == &"wieom" and _ready_cd("mulgyeol", 1.0, now):
 		strike_circle(pp, 1.5 * K.UNIT_PX, base_max(false) * 0.25, K.DmgColor.RED, 0.6, 16)
-		_fx(Fx.SPLASH, pp, Vector2.ZERO, 1.5 * K.UNIT_PX, K.DmgColor.RED)
+		_fx(Fx.SPLASH, pp, Vector2.ZERO, 1.5 * K.UNIT_PX, K.DmgColor.RED, &"deity_yongwang")
 	# 용왕 가호: 맑은 물 장판(해원 자리) 틱
 	for i in POOL_CAP:
 		var age: float = now - pool_t0[i]
@@ -555,7 +559,7 @@ func _tick_face_procs(now: float, pp: Vector2) -> void:
 					continue
 				var tp: Vector2 = em.pos_of(sl)
 				em.queue_hit(sl, base_max(true) * 0.8, K.DmgColor.WHITE, false, (tp - pp).normalized(), 0.3)
-				_fx(Fx.LINE, pp + Vector2(0, -14), tp - pp, 0.0, K.DmgColor.WHITE)
+				_fx(Fx.LINE, pp + Vector2(0, -14), tp - pp, 0.0, K.DmgColor.WHITE, &"deity_barigongju")
 				shot += 1
 	# 제석·대감 가호: 금줄 결계(10초, 금줄 권능 시 interval_s)마다 3초간 반경 안 잡귀 밀침
 	if faces.get(&"deity_jeseok_daegam", &"") == &"gaho":
@@ -597,7 +601,7 @@ func _orb_gift(pos: Vector2, n_orbs: int) -> void:
 	var v: float = maxf(2.0, Game.xp_next * 0.03)
 	for k in n_orbs:
 		pm.call("spawn_orb", pos + Vector2.from_angle(TAU * float(k) / float(n_orbs)) * 10.0, v)
-	_fx(Fx.ORB_GIFT, pos, Vector2.ZERO, 14.0, K.DmgColor.NONE)
+	_fx(Fx.ORB_GIFT, pos, Vector2.ZERO, 14.0, K.DmgColor.NONE, &"deity_jeseok_daegam")
 
 
 ## 무구 적중(Events.enemy_hit, 화신 아님). 같은 틱 발동 2회 상한(연쇄 방지).
@@ -616,17 +620,17 @@ func on_enemy_hit(pos: Vector2, dmg: float, color: int) -> void:
 		_proc_n += 1
 		var pp: Vector2 = Game.player.global_position if Game.player != null else pos
 		strike_circle(pp, 3.5 * K.UNIT_PX, base_max(false) * 0.5, K.DmgColor.RED, 1.2)
-		_fx(Fx.PULSE, pp, Vector2.ZERO, 3.5 * K.UNIT_PX, K.DmgColor.RED)
+		_fx(Fx.PULSE, pp, Vector2.ZERO, 3.5 * K.UNIT_PX, K.DmgColor.RED, &"deity_sansin")
 	if powers.has("pwr_sansin_beom_baltop") and color != K.DmgColor.WHITE:
 		if _rng.randf() * 100.0 < _gv("pwr_sansin_beom_baltop", "proc_chance_pct", 12.0):
 			_proc_n += 1
 			strike_circle(pos, 0.9 * K.UNIT_PX, dmg * 0.5, _face_color(&"deity_sansin"), 0.2, 3)
-			_fx(Fx.CLAW, pos, Vector2.ZERO, 12.0, _face_color(&"deity_sansin"))
+			_fx(Fx.CLAW, pos, Vector2.ZERO, 12.0, _face_color(&"deity_sansin"), &"deity_sansin")
 	if powers.has("pwr_yongwang_mulbora"):
 		if _rng.randf() * 100.0 < _gv("pwr_yongwang_mulbora", "proc_chance_pct", 10.0):
 			_proc_n += 1
 			strike_circle(pos, 1.2 * K.UNIT_PX, dmg * 0.3, color, 0.4, 8)
-			_fx(Fx.SPLASH, pos, Vector2.ZERO, 1.2 * K.UNIT_PX, color)
+			_fx(Fx.SPLASH, pos, Vector2.ZERO, 1.2 * K.UNIT_PX, color, &"deity_yongwang")
 
 
 func on_weapon_fired(w: WeaponBase) -> void:
@@ -640,7 +644,7 @@ func on_weapon_fired(w: WeaponBase) -> void:
 		var pp: Vector2 = Game.player.global_position
 		var r: float = _gv("pwr_janggun_geommu", "radius", 2.5) * K.UNIT_PX
 		strike_circle(pp, r, base_max(false) * _gv("pwr_janggun_geommu", "dmg_x_base_red", 1.5), K.DmgColor.RED, 0.8)
-		_fx(Fx.SPIN, pp, Vector2.ZERO, r, K.DmgColor.RED)
+		_fx(Fx.SPIN, pp, Vector2.ZERO, r, K.DmgColor.RED, &"deity_janggun")
 
 
 func on_enemy_killed(kind: StringName, pos: Vector2 = Vector2.ZERO, tier: StringName = &"") -> void:
@@ -658,7 +662,7 @@ func on_enemy_killed(kind: StringName, pos: Vector2 = Vector2.ZERO, tier: String
 			_orb_gift(pos, 3)
 		if powers.has("pwr_jeseok_daegam_siru"):
 			(Game.player as Player).hit.heal(Game.hp_max * _gv("pwr_jeseok_daegam_siru", "offering_heal_pct", 25.0) * 0.002)
-			_fx(Fx.PULSE, Game.player.global_position, Vector2.ZERO, 1.5 * K.UNIT_PX, K.DmgColor.NONE)
+			_fx(Fx.PULSE, Game.player.global_position, Vector2.ZERO, 1.5 * K.UNIT_PX, K.DmgColor.NONE, &"deity_jeseok_daegam")
 	if kind == K.KIND_TOECHI:
 		# 바리 위엄 무장승: 퇴치 → 넋 구슬 전환(면 20% + 권능, 상한 50%)
 		var conv: float = 0.0
@@ -712,7 +716,7 @@ func on_ring_closed(centroid: Vector2, area: int) -> void:
 	if powers.has("pwr_jeseok_daegam_yeomju"):
 		var rr0: float = sqrt(float(area)) * K.UNIT_PX * 0.55
 		strike_circle(centroid, rr0, base_max(true) * (1.0 + _gv("pwr_jeseok_daegam_yeomju", "ring_dmg_pct", 20.0) * 0.01), K.DmgColor.WHITE, 0.5, 60)
-		_fx(Fx.PULSE, centroid, Vector2.ZERO, rr0, K.DmgColor.WHITE)
+		_fx(Fx.PULSE, centroid, Vector2.ZERO, rr0, K.DmgColor.WHITE, &"deity_jeseok_daegam")
 	var stars: int = 0
 	var col: int = K.DmgColor.WHITE
 	if faces.get(&"deity_chilseong", &"") == &"gaho":
@@ -726,7 +730,7 @@ func on_ring_closed(centroid: Vector2, area: int) -> void:
 	for k in stars:
 		var p: Vector2 = centroid + Vector2.from_angle(TAU * float(k) / float(stars)) * rr
 		strike_circle(p, 0.9 * K.UNIT_PX, base_max(col == K.DmgColor.WHITE) * 0.5, col, 0.2, 8)
-		_fx(Fx.STAR_FALL, p, Vector2.ZERO, 0.9 * K.UNIT_PX, col)
+		_fx(Fx.STAR_FALL, p, Vector2.ZERO, 0.9 * K.UNIT_PX, col, &"deity_chilseong")
 
 
 ## 무당 피격(Events.player_damaged): 오방 호위 무적 연장 · 명 잇기 회복.
@@ -738,7 +742,7 @@ func on_player_damaged(amount: float) -> void:
 		pl.hit.iframe_left += _gv("pwr_janggun_obang_howi", "iframe_add_s", 0.5)
 	if powers.has("pwr_chilseong_myeong_itgi") and _rng.randf() * 100.0 < _gv("pwr_chilseong_myeong_itgi", "survive_chance_pct", 10.0):
 		pl.hit.heal(amount)
-		_fx(Fx.STAR_FALL, pl.global_position, Vector2.ZERO, 1.0 * K.UNIT_PX, K.DmgColor.WHITE)
+		_fx(Fx.STAR_FALL, pl.global_position, Vector2.ZERO, 1.0 * K.UNIT_PX, K.DmgColor.WHITE, &"deity_chilseong")
 
 
 ## 풀릴 기색 진입(Events.pullil_entered): 삼색꽃 표식 → 즉시 백 피해(기준×2).
@@ -754,7 +758,7 @@ func on_pullil(handle: int, pos: Vector2) -> void:
 	if sl < 0 or not em.is_alive(sl):
 		return
 	em.queue_hit(sl, base_max(true) * 2.0, K.DmgColor.WHITE)
-	_fx(Fx.FLOWER, pos, Vector2.ZERO, 8.0, K.DmgColor.WHITE)
+	_fx(Fx.FLOWER, pos, Vector2.ZERO, 8.0, K.DmgColor.WHITE, &"deity_barigongju")
 
 
 func on_cheondo() -> void:
@@ -763,7 +767,7 @@ func on_cheondo() -> void:
 	var pp: Vector2 = Game.player.global_position
 	var r: float = _gv("pwr_barigongju_jeoseunggil", "radius", 2.0) * K.UNIT_PX
 	strike_circle(pp, r, base_max(true) * 0.6, _face_color(&"deity_barigongju"), 0.5, 16)
-	_fx(Fx.PULSE, pp, Vector2.ZERO, r, _face_color(&"deity_barigongju"))
+	_fx(Fx.PULSE, pp, Vector2.ZERO, r, _face_color(&"deity_barigongju"), &"deity_barigongju")
 
 
 # ─── 합일 ──────────────────────────────────────────────────────────────

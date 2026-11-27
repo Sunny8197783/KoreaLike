@@ -423,7 +423,7 @@
       "speaker": "deity_sansin",
       "face": "common",
       "trigger": "gs_boss_enter",
-      "ko": "큰 손님이 오셨네. 산처럼 버티게.",
+      "ko": "역려가 오셨네. 산처럼 버티게.",
       "en": "A great guest arrives. Stand like a mountain."
     },
     {
@@ -1063,7 +1063,7 @@
       "speaker": "deity_jeseok_daegam",
       "face": "common",
       "trigger": "gs_boss_enter",
-      "ko": "큰손님이다! 상다리 부러지게 차려라!",
+      "ko": "역려다! 상다리 부러지게 차려라!",
       "en": "A grand guest! Set the table till it groans!"
     },
     {
@@ -1159,7 +1159,7 @@
       "speaker": "deity_jeseok_daegam",
       "face": "common",
       "trigger": "gs_wongwi_return",
-      "ko": "에구머니, 쫓아낸 손님이 또 왔네!",
+      "ko": "에구머니, 쫓아낸 귀신이 또 왔네!",
       "en": "Oh my, the guests we shooed are back!"
     },
     {
@@ -1217,7 +1217,7 @@
       "speaker": "npc_eunsil",
       "face": "common",
       "trigger": "tutorial",
-      "ko": "돌아온 것도 손님이다. 다시 보내면 돼.",
+      "ko": "돌아온 것도 넋이다. 다시 보내면 돼.",
       "en": "What returns is a guest, too. Send it off again."
     },
     {
@@ -1382,7 +1382,7 @@
       "speaker": "npc_eunsil",
       "face": "common",
       "trigger": "gs_boss_enter",
-      "ko": "손님 맞듯 해라. 무서워 말고.",
+      "ko": "잔치 맞듯 해라. 무서워 말고.",
       "en": "Greet it like a guest. Don't be afraid."
     },
     {
@@ -1390,7 +1390,7 @@
       "speaker": "npc_eunsil",
       "face": "common",
       "trigger": "gs_boss_enter",
-      "ko": "저 손님도 누가 배웅해 줬어야 했다.",
+      "ko": "저 역려도 누가 배웅해 줬어야 했다.",
       "en": "Someone should have seen that guest off."
     },
     {
@@ -1443,7 +1443,7 @@
       "key": "bark.char_dangol.run_start.1",
       "speaker": "char_dangol",
       "trigger": "bark_run_start",
-      "ko": "어디 보자, 오늘 손님 몇이나 되당가."
+      "ko": "어디 보자, 오늘 넋이 몇이나 되당가."
     },
     {
       "key": "bark.char_myeongdu.run_start.1",
@@ -1503,7 +1503,7 @@
       "key": "bark.char_dangol.wongwi.1",
       "speaker": "char_dangol",
       "trigger": "bark_wongwi",
-      "ko": "덜 씻긴 손님이 또 왔구먼."
+      "ko": "덜 씻긴 귀신이 또 왔구먼."
     },
     {
       "key": "bark.char_myeongdu.wongwi.1",
@@ -1515,13 +1515,13 @@
       "key": "bark.char_simbang.wongwi.1",
       "speaker": "char_simbang",
       "trigger": "bark_wongwi",
-      "ko": "돌아온 손님도 손님이지요."
+      "ko": "돌아온 넋도 넋이지요."
     },
     {
       "key": "bark.char_mansin.boss_enter.1",
       "speaker": "char_mansin",
       "trigger": "bark_boss_enter",
-      "ko": "손님, 오래 기다리셨죠."
+      "ko": "역려여, 오래 기다리셨죠."
     },
     {
       "key": "bark.char_baksu.boss_enter.1",
@@ -1533,7 +1533,7 @@
       "key": "bark.char_dangol.boss_enter.1",
       "speaker": "char_dangol",
       "trigger": "bark_boss_enter",
-      "ko": "큰손님 오셨네잉. 장구 단단히 메라."
+      "ko": "역려 오셨네잉. 장구 단단히 메라."
     },
     {
       "key": "bark.char_myeongdu.boss_enter.1",
@@ -1545,7 +1545,7 @@
       "key": "bark.char_simbang.boss_enter.1",
       "speaker": "char_simbang",
       "trigger": "bark_boss_enter",
-      "ko": "큰손님입니다. 잘 놀려서 보냅시다."
+      "ko": "역려입니다. 잘 놀려서 보냅시다."
     },
     {
       "key": "bark.char_mansin.death.1",

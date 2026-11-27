@@ -11,6 +11,13 @@
   p_gold  플레이어 둘레 상자(발 기준 가로 ±16, 위 46 ~ 아래 10px) 안 무당 금(#f5d66b ±12 + 조명 받은 같은 금) 픽셀 수 — 금 테·발밑 표지(design/18 ①)
   white_sat 놀이 영역 순백(#ffffff) 픽셀 수 — '백 = 해원' 한 뜻인지(②)
   hj_area 놀이 영역 한지(#e9dcc0 ±14) 픽셀 수 — 흰 무구 스파크·피격 외곽선 면적(②)
+  held_px 무당 상자(발 기준 가로 ±20, 위 46 ~ 아래 6px) 안 손 무기 아틀라스 색(무당 그림에 없는 색, ±6) 픽셀 수(design/19 §8.2)
+  myatk_px 무당 64px 반경 안 jk-hi(#e4604f ±14) + 한지(#e9dcc0 ±14) 픽셀 수 — 내 공격의 첫 프레임·여운(§5.4)
+  myatk_lit 같은 색을 조명 배율(×0.8~1.4, 255 에서 잘림)까지 허용하고 반경 96px(무당 몸 상자 ±16·−46~+10 제외)에서 센 수.
+           무당 개인 광원(4.5u)·해원 광원 때문에 무당 곁 한지는 (255,252,207)처럼 떠 myatk_px 에 잡히지 않는다(검토 11-27).
+  goal_on 목표 줄이 그려진 장 비율(게임 수치 goal_on, %)
+최소값(avg/min) 계산에서 빼는 장: 레벨업 화면이 가운데를 차지한 장(center_owner=level_up 또는 center:levelup)과
+  무적 점멸 숨김 틱(pl_hidden — 몸 대신 실루엣이라 p_red·p_gold 가 0 에 가깝게 나온다). 평균에는 넣는다. 뺀 장 수는 ex 열.
 """
 import json
 import sys
@@ -21,6 +28,33 @@ import numpy as np
 from PIL import Image
 
 HUD_TOP = 46
+ROOT = Path(__file__).resolve().parent.parent
+_HELD_PAL = None
+
+
+def held_palette():
+    """손 무기 아틀라스 색 집합(무당 그림 색·어두운 테 제외). 처음 한 번만 만든다."""
+    global _HELD_PAL
+    if _HELD_PAL is not None:
+        return _HELD_PAL
+    pal = np.zeros((0, 3), np.int16)
+    atlas = ROOT / "game/assets/sprites/held/held_atlas.png"
+    if atlas.exists():
+        a = np.asarray(Image.open(atlas).convert("RGBA"))
+        cols = {tuple(int(c) for c in px[:3]) for px in a.reshape(-1, 4) if px[3] > 128}
+        body = set()
+        for d in (ROOT / "game/assets/sprites").glob("char_*"):
+            for f in list(d.glob("*.png"))[:400]:
+                try:
+                    b = np.asarray(Image.open(f).convert("RGBA")).reshape(-1, 4)
+                except OSError:
+                    continue
+                body.update(tuple(int(c) for c in px[:3]) for px in b[b[:, 3] > 128])
+        keep = [c for c in cols if c not in body and (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) >= 50]
+        if keep:
+            pal = np.array(keep, np.int16)
+    _HELD_PAL = pal
+    return pal
 
 
 def hsv(a):
@@ -82,13 +116,45 @@ def measure(png, st):
     white_sat = int(np.all(a[play] == 255, axis=-1).sum())
     hj = np.all(np.abs(ai - np.array([0xE9, 0xDC, 0xC0], np.int16)) <= 14, axis=-1)
     hj_area = int(hj[play].sum())
+    # 손 무기(무당 상자 ±20, −46~+6)
+    hx0, hx1, hy0, hy1 = max(0, px - 20), min(W, px + 21), max(0, py - 46), min(H, py + 7)
+    held_px = 0
+    pal = held_palette()
+    if pal.size and hx1 > hx0 and hy1 > hy0:
+        sub = ai[hy0:hy1, hx0:hx1].reshape(-1, 1, 3)
+        held_px = int((np.abs(sub - pal[None, :, :]).max(-1) <= 6).any(-1).sum())
+    # 내 공격(무당 64px 반경): jk-hi + 한지
+    yy, xx = np.mgrid[0:H, 0:W]
+    near = ((xx - px) ** 2 + (yy - (py - 16)) ** 2) <= 64 * 64
+    near[:HUD_TOP] = False
+    jk = np.all(np.abs(ai - np.array([0xE4, 0x60, 0x4F], np.int16)) <= 14, axis=-1)
+    myatk_px = int(((jk | hj) & near).sum())
+    # 조명 허용판(myatk_lit): p ≈ min(255, k·c), k = 0.8~1.4
+    near96 = ((xx - px) ** 2 + (yy - (py - 16)) ** 2) <= 96 * 96
+    near96[:HUD_TOP] = False
+    near96[max(0, py - 46):py + 11, max(0, px - 16):px + 17] = False
+    af = a.astype(np.float32)
+    lit = np.zeros((H, W), bool)
+    for c in ((0xE4, 0x60, 0x4F), (0xE9, 0xDC, 0xC0)):
+        cv = np.array(c, np.float32)
+        k = (af * cv).sum(-1) / float((cv * cv).sum())
+        pred = np.minimum(255.0, k[..., None] * cv)
+        lit |= (k >= 0.8) & (k <= 1.4) & (np.abs(af - pred).max(-1) <= 12)
+    myatk_lit = int((lit & near96).sum())
     return {"p_red": p_red, "p_con": p_con, "white%": white_p, "red%": red_p, "busy": busy,
-            "p_gold": p_gold, "white_sat": white_sat, "hj_area": hj_area}
+            "p_gold": p_gold, "white_sat": white_sat, "hj_area": hj_area, "held_px": held_px, "myatk_px": myatk_px, "myatk_lit": myatk_lit,
+            "goal_on": 100.0 if st.get("goal_on") else 0.0}
 
 
 KEYS_G = ["en_screen", "near32", "near64", "wongwi", "eproj", "pproj", "vfx", "particles", "dmgnum", "dmglabel", "yeongga", "texts_n", "center_n"]
-KEYS_I = ["p_red", "p_con", "white%", "red%", "busy", "p_gold", "white_sat", "hj_area"]
+KEYS_I = ["p_red", "p_con", "white%", "red%", "busy", "p_gold", "white_sat", "hj_area", "held_px", "myatk_px", "myatk_lit", "goal_on"]
 KEYS_MIN = ("p_red", "p_con", "p_gold")
+
+
+def excluded(r):
+    if r.get("center_owner") == "level_up" or "center:levelup" in r.get("texts", []):
+        return True
+    return bool(r.get("pl_hidden"))
 
 
 def run(folder):
@@ -99,13 +165,15 @@ def run(folder):
         r.update(measure(folder / r["file"], r))
         by[r["at"]].append(r)
     print(f"\n## {folder}")
-    hdr = ["at", "n", "lv"] + [f"{k}(avg/max)" for k in KEYS_G] + [f"{k}(avg/min)" if k in KEYS_MIN else f"{k}(avg)" for k in KEYS_I]
+    hdr = ["at", "n", "ex", "lv"] + [f"{k}(avg/max)" for k in KEYS_G] + [f"{k}(avg/min)" if k in KEYS_MIN else f"{k}(avg)" for k in KEYS_I]
     print("| " + " | ".join(hdr) + " |")
     print("|" + "---|" * len(hdr))
     out = {}
     for at in sorted(by):
         rs = by[at]
-        cells = [at[:2] + ":" + at[2:], str(len(rs)), str(rs[-1].get("lv", ""))]
+        # 최소값 제외: 레벨업 화면이 가운데를 차지한 장·무적 점멸 숨김 틱
+        ok = [r for r in rs if not excluded(r)]
+        cells = [at[:2] + ":" + at[2:], str(len(rs)), str(len(rs) - len(ok)), str(rs[-1].get("lv", ""))]
         agg = {}
         for k in KEYS_G:
             vals = [float(r.get(k, 0)) for r in rs]
@@ -113,10 +181,11 @@ def run(folder):
             cells.append(f"{agg[k][0]:.1f}/{agg[k][1]:.0f}")
         for k in KEYS_I:
             vals = [float(r[k]) for r in rs]
-            agg[k] = (sum(vals) / len(vals), min(vals))
+            mvals = [float(r[k]) for r in ok] or vals
+            agg[k] = (sum(vals) / len(vals), min(mvals))
             if k in KEYS_MIN:
                 cells.append(f"{agg[k][0]:.1f}/{agg[k][1]:.0f}")
-            elif k in ("white_sat", "hj_area"):
+            elif k in ("white_sat", "hj_area", "held_px", "myatk_px", "myatk_lit", "goal_on"):
                 cells.append(f"{agg[k][0]:.0f}")
             else:
                 cells.append(f"{agg[k][0]:.2f}")

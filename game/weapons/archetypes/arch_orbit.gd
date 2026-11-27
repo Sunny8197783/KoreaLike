@@ -88,14 +88,27 @@ func draw(ci: CanvasItem) -> void:
 	var rise: float = clampf(1.0 - age / maxf(0.05, hold_s()), 0.0, 1.0)      # 생성: 6px 아래에서 떠오름
 	var vanish: float = clampf(-_active_t / maxf(0.05, recovery_s()), 0.0, 1.0) if _active_t <= 0.0 else 0.0
 	var rp: Vector2 = render_origin() - player_pos()
+	var tail_ok: bool = not fx_crowd()
+	var fxa: float = fx_alpha()
+	var lag: float = deg_to_rad(s("omega", 180.0)) * 0.06   # 꼬리: 0.06초 전 자리
 	for k in n:
-		var p: Vector2 = K.rndv(_orbit_pos(k, n) + rp + Vector2(0, -12.0 + 6.0 * rise - 8.0 * vanish))
+		var lift: Vector2 = Vector2(0, -12.0 + 6.0 * rise - 8.0 * vanish)
+		var p: Vector2 = K.rndv(_orbit_pos(k, n) + rp + lift)
 		if vanish > 0.0 and (now / 2) % 2 == 0:
 			continue
+		# 꼬리 1장(design/19 §5.2 D): 직전 자리에 같은 그림 α0.4 — 군중이면 끔
+		if tail_ok and fx_name("fx_prop") != &"":
+			var r0: float = s("area", 1.6) * K.UNIT_PX * area_mult()
+			var tp: Vector2 = K.rndv(player_pos() + Vector2.from_angle(_phase - lag + TAU * float(k) / float(n)) * r0 + rp + lift)
+			draw_sheet(ci, fx_name("fx_prop"), tp, Game.anim_time() + float(k) * 0.13, 0, Color(1, 1, 1, 0.4 * fxa), true)
 		if not draw_sheet(ci, fx_name("fx_prop"), p, Game.anim_time() + float(k) * 0.13, 0, Color.WHITE, true):
 			var r: Rect2 = Rect2(p - Vector2(3, 5), Vector2(6, 10))
 			ci.draw_rect(r, K.COL_HANJI)
 			ci.draw_rect(r, K.COL_HEUK, false, 1.0)
+		# 한지 심 1px(종이 인형 가운데 세로선) — 무리 위에서도 공전체가 밝게 읽힌다
+		ci.draw_rect(Rect2(p + Vector2(0, -3), Vector2(1, 5)), K.COL_HANJI)
 		if now - _contact_tick[k] < 3:
+			# 적중 1f 번쩍: 같은 그림 한지 가산 + 십자
+			add_overlay(fx_name("fx_prop"), p, 0, 0, 0.6)
 			ci.draw_rect(Rect2(p + Vector2(-4, 0), Vector2(9, 1)), K.COL_HANJI)
 			ci.draw_rect(Rect2(p + Vector2(0, -4), Vector2(1, 9)), K.COL_HANJI)

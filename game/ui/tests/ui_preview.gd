@@ -132,7 +132,7 @@ func _tut_step() -> void:
 				var card: Dictionary = {"pages": [
 					{"title": "저승사자 — 굿판을 거두는 이", "lines": ["20분이 다하면 마지막 손님을 보내고, 저승사자가 굿판을 거두러 옵니다.",
 						"넋이 많으면 사자가 읍하고, 살이 많으면 함께 살을 거둡니다. 어느 쪽도 굿의 끝입니다."], "image": "sprite:chaser_jeoseung_saja"},
-					{"title": "신당", "lines": ["풀어 보낸 넋은 공덕, 모은 엽전은 복전이 됩니다.",
+					{"title": "신당", "lines": ["풀어 준 넋은 공덕으로, 모은 엽전은 그대로 신당에 남습니다.",
 						"신당에서 새 무구와 무당을 모시고 다음 굿판을 엽니다."], "image": "res://ui/art/intro/intro_sindang.png"}],
 					"confirm": "Enter / A 다음"}
 				Events.emit_signal(&"tutorial_card", &"settle", card)

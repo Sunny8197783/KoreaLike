@@ -45,6 +45,13 @@ var d_t: PackedFloat32Array = PackedFloat32Array()
 var d_delay: PackedFloat32Array = PackedFloat32Array()
 var d_kind: PackedByteArray = PackedByteArray()
 var d_body: PackedByteArray = PackedByteArray()
+var d_soft: PackedByteArray = PackedByteArray()      # 1 = 한꺼번에 많이 떠날 때 넘친 것(흐리게·시트 없음, design/19 §5.1 군중 예산)
+# 천도 빛 예산(design/19 §5.2 G·§5.1): 0.25초 창에 승천 시트 4장(군중 2), 떠나는 넋 동무 밝은 그림 6(군중 3).
+#   고리 하나에 30명이 한꺼번에 떠나면 흰 기둥 30개가 무당 둘레를 덮었다(검토 11-26, 19:30). 넘친 것은 α0.45 로 짧게.
+const ASC_WIN: float = 0.25
+var _asc_t0: float = -10.0
+var _asc_n: int = 0
+var _asc_full: int = 0
 var d_alive: PackedByteArray = PackedByteArray()
 var d_n: int = 0
 
@@ -107,7 +114,7 @@ func _ready() -> void:
 		var arr3: PackedFloat32Array = PackedFloat32Array()
 		arr3.resize(DEP_CAP)
 		set(a3, arr3)
-	for b4: String in ["d_kind", "d_body", "d_alive"]:
+	for b4: String in ["d_kind", "d_body", "d_alive", "d_soft"]:
 		var arr4: PackedByteArray = PackedByteArray()
 		arr4.resize(DEP_CAP)
 		arr4.fill(0)
@@ -496,6 +503,17 @@ func _dep_start_fx(i: int) -> void:
 		return
 	if d_kind[i] == Dep.SUBSTITUTE:
 		return   # 돌진 후 찢김(_draw 에서)
+	var now: float = Game.anim_time()
+	if now - _asc_t0 >= ASC_WIN:
+		_asc_t0 = now
+		_asc_n = 0
+		_asc_full = 0
+	var crowd: bool = bool(Juice.get(&"fx_crowd"))
+	_asc_full += 1
+	d_soft[i] = 1 if _asc_full > (3 if crowd else 6) else 0
+	if _asc_n >= (2 if crowd else 4):
+		return
+	_asc_n += 1
 	vfx.play(&"vfx_cheondo_ascend", Vector2(d_x[i], d_y[i]), 0.0, 1.0, {"additive": true})
 
 
@@ -559,6 +577,8 @@ func _draw() -> void:
 		var tex2: Texture2D = fr2[mini(fi2, fr2.size() - 1)]
 		var sz2: Vector2 = tex2.get_size()
 		var a2: float = 0.95 if fi2 < 6 else 0.5
+		if d_soft[i] != 0:
+			a2 *= 0.45
 		draw_texture(tex2, pos2.round() - Vector2(roundf(sz2.x * 0.5), sz2.y - 9.0), Color(1, 1, 1, a2))
 
 

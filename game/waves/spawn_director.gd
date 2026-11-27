@@ -164,7 +164,14 @@ var assist: bool = false                     # 읽기 전용: 이번 런에 보�
 var assist_no_wongwi: bool = false           # 읽기 전용: haewon 원귀 회귀를 끄라는 뜻(haewon 이 본다)
 var _assist_until: float = 0.0
 var _assist_mult: float = 1.0
+var _assist_ramp_until: float = 0.0          # until_sec 이후 이 시각까지 _assist_mult → 1.0 선형 회복(첫 판 끝 절벽 방지)
 var _first_run: bool = false
+# 단계별 해금(design/19 §3, 처음 두 판 = 보조 판): 흰 무기(방울)를 받기 전엔 흰 테두리(풀릴 기색)를 내지 않고, 새 힘 고르기는 0:40 부터
+var _pullil_after_white: bool = false
+var _pullil_hold: bool = false               # 지금 기색 문턱을 꺼 두었나
+var _pullil_saved: float = 0.35
+var _pullil_fallback_sec: float = 240.0      # 흰 무기를 끝내 못 받아도 이 시각엔 되돌린다
+var _jeomji_gate_until: float = -1.0
 var _giun_hint_t: float = -1.0               # 이 시각 이후 hint_requested(&"giun") 한 번(ui 길잡이가 중복을 거른다)
 
 
@@ -175,6 +182,7 @@ func _ready() -> void:
 	if OS.is_debug_build():
 		_lint_banned_words()
 	Events.geori_changed.connect(_on_geori)
+	Events.weapon_added.connect(_on_weapon_added_unlock)
 	Events.trial_warn.connect(func(_s: int, _d: StringName, _in: float) -> void: _set_trial(TrialSt.WARN))
 	Events.trial_start.connect(func(_s: int, _d: StringName) -> void: _set_trial(TrialSt.ACTIVE))
 	Events.trial_end.connect(func(_s: int, _d: StringName, _w: StringName) -> void: _set_trial(TrialSt.POST))
@@ -356,8 +364,60 @@ func _init_assist() -> void:
 	assist_no_wongwi = on and bool(A.get("no_wongwi_return", true))
 	_assist_until = float(A.get("until_sec", 180.0)) if on else 0.0
 	_assist_mult = float(A.get("spawn_budget_mult", 0.8)) if on else 1.0
+	_assist_ramp_until = maxf(_assist_until, float(A.get("ramp_until_sec", 0.0))) if on else 0.0
+	_pullil_after_white = on and bool(A.get("pullil_after_white", false))
+	_pullil_fallback_sec = float(A.get("pullil_fallback_sec", 240.0))
+	_jeomji_gate_until = float(A.get("jeomji_gate_until_sec", -1.0)) if on else -1.0
 	# 기운 안내: 첫 판은 기운 바가 열린 뒤(10:52), 이후 판은 120초(onboarding hint_giun)
 	_giun_hint_t = Data.num("waves_stage1", "giun_hint.first_run_sec", 652.0) if _first_run 		else Data.num("waves_stage1", "giun_hint.later_sec", 120.0)
+
+
+## 단계별 해금 시작(design/19 §3): 기색 문턱 끔(흰 무기 받을 때까지) · 새 힘 고르기 문 닫기(0:40 까지). 연습 굿판은 손대지 않는다.
+func _assist_unlock_begin(t: float) -> void:
+	if Game.tutorial_mode:
+		_jeomji_gate_until = -1.0
+		return
+	if _pullil_after_white and not _owns_white() and t < _pullil_fallback_sec:
+		_pullil_saved = Game.pullil_threshold
+		Game.pullil_threshold = 0.0001      # 사실상 끔(0 이나 음수는 한을 문턱으로 깎는 곳에서 0 아래로 내린다)
+		_pullil_hold = true
+		_log("pullil hold until white")
+	if _jeomji_gate_until > t:
+		_set_jeomji_gate(false)
+	else:
+		_jeomji_gate_until = -1.0
+
+
+func _owns_white() -> bool:
+	var wm: WeaponManager = Game.weapons as WeaponManager
+	if wm == null:
+		return false
+	for i in wm.slot_count():
+		var w: WeaponBase = wm.weapon_at(i)
+		if w != null and w.is_white():
+			return true
+	return false
+
+
+func _on_weapon_added_unlock(id: StringName, _slot: int) -> void:
+	if _pullil_hold and UiKit.weapon_color(String(id)) == "white":
+		_pullil_release("white")
+
+
+func _pullil_release(why: String) -> void:
+	if not _pullil_hold:
+		return
+	_pullil_hold = false
+	if Game.pullil_threshold <= 0.001:
+		Game.pullil_threshold = _pullil_saved
+	_log("pullil release (%s) t=%.1f" % [why, Game.time_sec()])
+
+
+func _set_jeomji_gate(open: bool) -> void:
+	var rr: Node = Game.run_root
+	if rr != null and "jeomji_gate" in rr:
+		rr.set("jeomji_gate", open)
+		_log("jeomji_gate %s t=%.1f" % ["open" if open else "closed", Game.time_sec()])
 
 
 ## 보조 중 정예 대체(어둑시니 → 거구귀): 처음 하는 사람에게 시야 가림 정예를 늦춘다.
@@ -516,7 +576,13 @@ func sim_step(dt: float) -> void:
 		if assist:
 			Events.wave_event.emit(&"first_run_assist", {"until_sec": _assist_until, "spawn_mult": _assist_mult,
 				"no_wongwi_return": assist_no_wongwi})
-			_log("first_run_assist on until=%.0f mult=%.2f" % [_assist_until, _assist_mult])
+			_log("first_run_assist on until=%.0f ramp=%.0f mult=%.2f" % [_assist_until, _assist_ramp_until, _assist_mult])
+			_assist_unlock_begin(t)
+	if _pullil_hold and t >= _pullil_fallback_sec:
+		_pullil_release("fallback")
+	if _jeomji_gate_until >= 0.0 and t >= _jeomji_gate_until:
+		_jeomji_gate_until = -1.0
+		_set_jeomji_gate(true)
 	if _giun_hint_t >= 0.0 and t >= _giun_hint_t and phase == Phase.RUN and _trial_st != TrialSt.ACTIVE 			and _trial_st != TrialSt.WARN and _mb_state != 2:
 		_giun_hint_t = -1.0
 		Events.hint_requested.emit(&"giun")
@@ -658,6 +724,8 @@ func _window_mult(t: float) -> float:
 		m = minf(m, _mb_post_mult)
 	if assist and t < _assist_until:
 		m *= _assist_mult
+	elif assist and t < _assist_ramp_until:
+		m *= lerpf(_assist_mult, 1.0, (t - _assist_until) / maxf(0.01, _assist_ramp_until - _assist_until))
 	return m
 
 

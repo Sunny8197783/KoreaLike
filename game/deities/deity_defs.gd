@@ -49,8 +49,9 @@ static func face_color(face: StringName) -> Color:
 	return K.COL_JEOK_HI if face == FACE_WIEOM else K.COL_HANJI
 
 
+## 화면 이름(쉬운 말, design/19 §2.3): 위엄 → 싸움 / 가호 → 모심
 static func face_name(face: StringName) -> String:
-	return "위엄" if face == FACE_WIEOM else "가호"
+	return "싸움" if face == FACE_WIEOM else "모심"
 
 
 static func name_ko(deity_id: StringName) -> String:
@@ -106,56 +107,71 @@ static func gongsu(deity_id: StringName, trigger: String, face: StringName = &""
 	return ""
 
 
-## 위엄 면 한 줄 요약(원 위 표시).
+## 받은 힘 한 줄(쉬운 말, design/19 §2·§4.6). 결과 화면 '힘을 받았다 — …'에 쓴다. 숫자는 플레이어 쪽 방향으로.
+const FACE_PLAIN: Dictionary = {
+	"deity_sansin:wieom": "가까이 치는 무기 피해↑ · 8번마다 호랑이 울음(주변 귀신 겁줌)",
+	"deity_sansin:gaho": "호랑이가 함께 달려요 · 넋 동무가 오래 따라요",
+	"deity_yongwang:wieom": "범위·지속 시간 +25%",
+	"deity_yongwang:gaho": "풀어 준 자리에 맑은 물이 고인다",
+	"deity_chilseong:wieom": "별이 떨어진다 · 부활 +1",
+	"deity_chilseong:gaho": "부활 +1 · 흰 길 감싸기에 별빛",
+	"deity_janggun:wieom": "공격 속도 +10% · 치명타↑",
+	"deity_janggun:gaho": "호위 장수 넷 · 방어 +3",
+	"deity_barigongju:wieom": "벤 귀신이 구슬을 더 남겨요 · 줍기 범위 +30%",
+	"deity_barigongju:gaho": "넋 동무 +12 · 넋 동무가 쏜다",
+	"deity_jeseok_daegam:wieom": "엽전 +50%",
+	"deity_jeseok_daegam:gaho": "회복 +2 · 둘레에 울타리",
+}
+## 원 카드용 아주 짧은 줄(12자 안팎): '◆ 싸워 이기면: …' / '○ 모셔 드리면: …'
+const FACE_SHORT: Dictionary = {
+	"deity_sansin:wieom": "가까이 치는 무기↑ · 호랑이 울음",
+	"deity_sansin:gaho": "호랑이 동무 · 넋 동무 오래",
+	"deity_yongwang:wieom": "범위·지속 +25%",
+	"deity_yongwang:gaho": "풀린 자리에 맑은 물",
+	"deity_chilseong:wieom": "별이 떨어짐 · 부활 +1",
+	"deity_chilseong:gaho": "부활 +1 · 별빛 고리",
+	"deity_janggun:wieom": "공격 속도 +10%",
+	"deity_janggun:gaho": "호위 장수 넷 · 방어 +3",
+	"deity_barigongju:wieom": "벤 귀신이 구슬을 더 남김",
+	"deity_barigongju:gaho": "넋 동무 +12",
+	"deity_jeseok_daegam:wieom": "엽전 +50%",
+	"deity_jeseok_daegam:gaho": "회복 +2 · 울타리",
+}
+
+
+static func face_plain(deity_id: StringName, face: StringName) -> String:
+	return String(FACE_PLAIN.get(String(deity_id) + ":" + String(face), face_title(deity_id, face)))
+
+
+static func face_short(deity_id: StringName, face: StringName) -> String:
+	return String(FACE_SHORT.get(String(deity_id) + ":" + String(face), face_plain(deity_id, face)))
+
+
+## 한 줄 요약(옛 이름 — 지금은 쉬운 말 face_plain 과 같다).
 static func face_summary(deity_id: StringName, face: StringName) -> String:
-	match String(deity_id) + ":" + String(face):
-		"deity_sansin:wieom":
-			return "근접 신빨↑ · 8타마다 포효"
-		"deity_sansin:gaho":
-			return "영수 범 · 넋 수명↑"
-		"deity_yongwang:wieom":
-			return "도량·영험 +25%"
-		"deity_yongwang:gaho":
-			return "해원 자리에 맑은 물"
-		"deity_chilseong:wieom":
-			return "북두 별 낙하 · 명줄 +1"
-		"deity_chilseong:gaho":
-			return "명줄 +1 · 고리에 별빛"
-		"deity_janggun:wieom":
-			return "장단 −10% · 결단↑"
-		"deity_janggun:gaho":
-			return "호위 신장 4 · 신복 +3"
-		"deity_barigongju:wieom":
-			return "초혼 +30%"
-		"deity_barigongju:gaho":
-			return "행렬 +12 · 영가 사격"
-		"deity_jeseok_daegam:wieom":
-			return "시주 +50%"
-		"deity_jeseok_daegam:gaho":
-			return "생기 +2 · 금줄 결계"
-	return face_title(deity_id, face)
+	return face_plain(deity_id, face)
 
 
-## 가호 과제 한 줄 안내(처음 하는 사람용).
+## 모심(가호) 과제 한 줄 안내(처음 하는 사람용, 쉬운 말).
 static func task_hint(deity_id: StringName) -> String:
 	match String(deity_id):
 		"deity_sansin":
-			return "쉼터 원 안에 서서 길 잃은 영가를 지켜라"
+			return "쉼터 원 안에 서서 길 잃은 넋을 지키세요"
 		"deity_yongwang":
-			return "물에 든 넋을 건져 가운데 용왕상으로 데려가라"
+			return "물에 든 넋을 건져 가운데 용왕상으로 데려가세요"
 		"deity_chilseong":
-			return "빛나는 별을 번호 순서대로 밟아 칠성을 이어라"
+			return "빛나는 별을 번호 순서대로 밟으세요"
 		"deity_janggun":
-			return "오방기 자리 다섯 곳에 잠시 서서 깃발을 세워라"
+			return "깃발 자리 다섯 곳에 잠깐씩 서세요"
 		"deity_barigongju":
-			return "원혼 떼를 뒤에서 몰아 저승 문으로 들여보내라"
+			return "작은 넋들을 뒤에서 몰아 저승 문으로 들여보내세요"
 		"deity_jeseok_daegam":
-			return "굿상 곁을 지키고 길베 고리를 닫아 공양을 채워라"
-	return "의례 과제를 수행하라"
+			return "굿상 곁을 지키며 흰 길로 감싸세요"
+	return "과제를 하세요"
 
 
 static func wieom_hint() -> String:
-	return "화신 곁에 붙어 무구로 친다 (숨 고를 때 ×1.5)"
+	return "큰 신령 곁에 붙어 무기로 치세요 (숨 고를 때 1.5배)"
 
 
 ## 의례물(가호 과제) 이름 — HUD 가호 게이지 옆 표식.
@@ -187,7 +203,7 @@ static func call_word(deity_id: StringName) -> String:
 	return name_ko(deity_id) + "—"
 
 
-## 시련 순번 한자(第一 …).
+## 시련 순번(첫째·둘째 …).
 static func ordinal(n: int) -> String:
 	var t: PackedStringArray = ["", "첫째", "둘째", "셋째", "넷째", "다섯째"]
 	return t[clampi(n, 0, t.size() - 1)]

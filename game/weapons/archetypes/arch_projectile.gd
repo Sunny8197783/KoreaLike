@@ -147,8 +147,9 @@ func on_projectile_hit(enemy_slot: int, dmg: float, dir: Vector2, tag: int = 0, 
 			_near_tick = Game.game_tick
 			_near_from = hand_point(dir)
 			_near_to = K.rndv(ep + Vector2(0, -roundf(bh * 0.5)) - dir * 3.0)
-	if proj_index >= 0 and not bool(params.get("return", false)) and fx_name("fx_hit") != &"":
-		play_fx(fx_name("fx_hit"), em.pos_of(enemy_slot) + Vector2(0, -8))
+	if proj_index >= 0 and not bool(params.get("return", false)):
+		if fx_name("fx_hit") != &"":
+			play_fx(fx_name("fx_hit"), em.pos_of(enemy_slot) + Vector2(0, -8))
 		# 꽂힘(design/19 §5.2 B③): hit_spark 첫 프레임 scale 2 를 1f — 관통 탄은 마지막 대상(관통 1 = 첫 대상)만
 		_hs_pos[_hs_head] = em.pos_of(enemy_slot) + Vector2(0, -roundf(em.body_h_of(enemy_slot) * 0.5))
 		_hs_tick[_hs_head] = Game.game_tick
@@ -252,13 +253,24 @@ func proj_visual(tag: int) -> Dictionary:
 	var out: Dictionary = super.proj_visual(tag)
 	if bool(params.get("blade", false)) and not out.has("fx"):
 		out["orient"] = &"dir4"
-	# 날아감(design/19 §5.2 B②): 몸통 한지 심(진행 방향 선) + 잔상 2장(붉은 = jk-hi, 흰 = 한지). 신칼 10px · 각궁 화살 몸통.
-	var hd: Dictionary = HeldWeapon.def_for(self)
-	if not hd.is_empty() and tag == TAG_MAIN:
-		out["core_len"] = 10 if stem == "sinkal" else 9
-		out["ghosts"] = 2
-		out["ghost_col"] = K.COL_JEOK_HI if is_red() else K.COL_HANJI
+	# 날아감(design/19 §5.2 B②): 몸통 한지 심(진행 방향 선) + 잔상 2장(붉은·결합 = jk-hi, 흰 = 한지) — 날리는 무구 전부.
+	#   신칼 10px · 각궁 화살 몸통 · 검기 12px · 지전 6px. 진화·결합 탄은 scale 2 기본(32px 이하 시트·절차 그림).
+	out["core_len"] = int(CORE_LEN.get(stem, 8))
+	out["ghosts"] = 2
+	out["ghost_col"] = K.COL_HANJI if is_white() else K.COL_JEOK_HI
+	if kind != KIND_WEAPON and not out.has("scale"):
+		var fxd: Dictionary = VfxLib.get_fx(StringName(out["fx"])) if out.has("fx") else {}
+		var big: bool = false
+		if not fxd.is_empty() and not bool(fxd.get("placeholder", true)):
+			for rr: Rect2 in fxd["regions"]:
+				big = big or maxf(rr.size.x, rr.size.y) > 16.0   # 32px 회전 칼 시트 ×2 는 무당 몸을 덮는 큰 덩어리가 됐다(setD)
+		if not big:
+			out["scale"] = 2
+			out["core_len"] = int(out["core_len"]) * 2
 	return out
+
+
+const CORE_LEN: Dictionary = {"sinkal": 10, "gakgung": 9, "sainsageom": 12, "jijeon": 6}
 
 
 func projectile_texture() -> Texture2D:
@@ -322,7 +334,7 @@ func draw(ci: CanvasItem) -> void:
 	# 꽂힘 1f: hit_spark 첫 프레임 scale 2(24~32px)
 	for k5 in HS_CAP:
 		if Game.anim_tick_cur - _hs_tick[k5] >= 0 and Game.anim_tick_cur - _hs_tick[k5] < 2:
-			draw_sheet_frame(ci, &"vfx_hit_spark_red", _hs_pos[k5], 0, 2)
+			draw_sheet_frame(ci, &"vfx_hit_spark_white" if is_white() else &"vfx_hit_spark_red", _hs_pos[k5], 0, 2)
 	if fx_name("fx_cast") != &"" and sf < 0.6 and not bool(params.get("catch", false)):
 		draw_sheet(ci, fx_name("fx_cast"), hand_point(fire_dir, 4.0), sf, dir4_of(fire_dir))
 	# 신장칼 귀환 참격

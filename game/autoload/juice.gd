@@ -15,6 +15,8 @@ extends Node
 ##   light_pulse(pos, r_px, i, tone, s) / light_add / light_move / light_remove   오컬트 조명 광원(screen_fx 가 읽는다).
 ##   light_frame(pos, r_px, i, tone)     이번 프레임만 유효한 광원(매 프레임 다시 넣는 쪽: 소품·영가 등).
 ##   crowd_dim                           밀도 감광 계수 d(0..1, design/13 §2.10.6) — 적 셰이더 유니폼 crowd_dim 으로 공급.
+##   note_kill(haewon) / reset_streak() / clock()   연속 처치 칩 수(kill_streak·kill_pop_t, design/19 §5.2 I — 칩은 hud 가 그림).
+##   my_fx_alpha · fx_crowd(이력 40/30)          내 무기 효과 설정 배율·이펙트 군중 예산(design/19 §5.1).
 ## 접근성(GAME_FEEL 7, 설정 화면이 직접 씀): shake_scale, flash_scale, reduce_motion, enemy_flash_mode, damage_number_mode,
 ##   Game.hitstop_scale.
 
@@ -61,6 +63,36 @@ var _flash_alpha_cap: float = 0.30
 var _flash_min_gap: float = 0.33
 var _flash_last: float = -10.0
 var _flash_prio: int = 0               # 지금(또는 간격 안) 차지한 플래시의 우선순위. 1 피격 / 2 길닦음·대해원 / 3 빙의·신명·보스
+
+# ─── 쉽고 화려하게(design/19 §5.0·§5.1·§5.2 I, kill_ability_fx) ───
+## 설정 '내 무기 효과'(a11y.my_fx 100/70/40%): ③궤적·④여운·원판 채움 α 에 곱한다. 손 무기·②첫 프레임에는 곱하지 않는다.
+var my_fx_alpha: float = 1.0
+## 연속 처치 칩(hud 가 그림 — 여기서는 수만 센다). 끊김: STREAK_GAP_S 동안 처치 없음 또는 무당 피격(Events.player_damaged).
+##   kill_streak = 퇴치 연속, haewon_streak = 해원 연속. *_pop_t = 마지막으로 늘어난 Juice 시계(clock(), 초) — 칩 팝 0.15초.
+##   kill_milestone = 마지막으로 넘은 단계(25·50·100, 0 없음), kill_milestone_t = 그 시각(Juice 시계).
+const STREAK_GAP_S: float = 2.0
+const STREAK_STEPS: PackedInt32Array = [25, 50, 100]
+var kill_streak: int = 0
+var kill_pop_t: float = -10.0
+var haewon_streak: int = 0
+var haewon_pop_t: float = -10.0
+var kill_streak_best: int = 0
+var kill_milestone: int = 0
+var kill_milestone_t: float = -10.0
+var _streak_k_last: float = -100.0     # 게임 초(배속·히트스톱과 같이 간다)
+var _streak_h_last: float = -100.0
+## 이펙트 군중 이력(design/19 §5.1): 화면 일반 잡귀 ≥ FX_CROWD_ON 이 0.5초면 켜고 < FX_CROWD_OFF 가 1초면 끈다(HitFeedback 이 채움).
+##   number_crowd(숫자 군중)는 숫자 수·합일·보스도 본다 — 이펙트 예산은 fx_crowd 를 쓴다.
+const FX_CROWD_ON: int = 40
+const FX_CROWD_OFF: int = 30
+var fx_crowd: bool = false
+## 히트스톱 전역 상한(design/19 §5.0 J 표 아래): 초당 2회, 1초 합 120ms. 티어 3 이상(빙의·합일·보스 J4·큰 고리 J3)은 늘 통과하지만 합에는 든다.
+var _hs_per_sec: int = 2
+var _hs_ms_per_sec: int = 120
+var _hs_t: PackedInt32Array = PackedInt32Array([-100000, -100000, -100000, -100000, -100000, -100000, -100000, -100000])   # Game.beat_tick(시뮬 시계 — fps 와 무관해야 시뮬이 안 갈린다)
+var _hs_v: PackedInt32Array = PackedInt32Array([0, 0, 0, 0, 0, 0, 0, 0])
+var _hs_head: int = 0
+var stat_hitstop_capped: int = 0
 
 var damage_numbers: Node = null       # vfx/damage_numbers.gd (run 이 등록)
 ## 군중 모드(리뷰 vfx: 18:00 합일·작두 화면이 숫자 소음에 묻힘). HitFeedback 이 매 프레임 정한다.
@@ -193,6 +225,8 @@ func _load_params() -> void:
 	_flash_min_gap = Data.num("combat_core", "feel.flash.min_gap_s", 0.33)
 	var t: Variant = Data.get_value("combat_core", "feedback_tiers", {})
 	_tiers = t if t is Dictionary else {}
+	_hs_per_sec = int(Data.num("feedback_matrix", "j_levels.global_caps.hitstop_per_sec", 2))
+	_hs_ms_per_sec = int(Data.num("feedback_matrix", "j_levels.global_caps.hitstop_ms_per_sec", 120))
 
 
 ## 실시간(히트스톱 중에도 진행 → 정지 화면이 떨려 타격이 팔린다, GAME_FEEL 5.1).
@@ -292,7 +326,27 @@ func shake_offset() -> Vector2:
 func hitstop(ms: int, tier: int = 0) -> int:
 	if ms <= 0:
 		return 0
+	# 전역 상한(J 표): 티어 ≤2 묶음 정지는 1초 창에 2회·합 120ms. --no-new-hitstop(전후 같은 시뮬 비교)에서는 예전 규칙 그대로.
+	var gate: bool = not (OS.is_debug_build() and DebugTools.arg("no-new-hitstop") != "")
+	if gate:
+		var n: int = 0
+		var used: int = 0
+		for i in _hs_t.size():
+			if Game.beat_tick - _hs_t[i] < K.TICK_HZ:
+				n += 1
+				used += _hs_v[i]
+		if tier > 0 and tier <= 2:
+			if n >= _hs_per_sec or used >= _hs_ms_per_sec:
+				stat_hitstop_req += 1
+				stat_hitstop_denied += 1
+				stat_hitstop_capped += 1
+				return 0
+			ms = mini(ms, _hs_ms_per_sec - used)
 	var got: int = Game.request_hitstop(ms, tier)
+	if got > 0 and gate:
+		_hs_t[_hs_head] = Game.beat_tick
+		_hs_v[_hs_head] = got
+		_hs_head = (_hs_head + 1) % _hs_t.size()
 	stat_hitstop_req += 1
 	if got > 0:
 		stat_hitstop_ms += got
@@ -467,6 +521,52 @@ func label(pos: Vector2, text: String, kind: StringName = &"haewon") -> void:
 		damage_numbers.call("spawn_label", pos, text, kind)
 
 
+# ─── 연속 처치(칩은 hud) ───────────────────────────────────────────────
+
+## Juice 시계(실시간 초, 히트스톱 중에도 간다). kill_pop_t 등과 비교할 때 쓴다.
+func clock() -> float:
+	return _t
+
+
+## 처치 한 건(HitFeedback 이 Events.enemy_killed 에서 부른다). haewon = 해원(풀어 줌), 아니면 퇴치.
+func note_kill(haewon: bool) -> void:
+	var gt: float = Game.time_sec()
+	if haewon:
+		if gt - _streak_h_last > STREAK_GAP_S:
+			haewon_streak = 0
+		_streak_h_last = gt
+		haewon_streak += 1
+		haewon_pop_t = _t
+		return
+	if gt - _streak_k_last > STREAK_GAP_S:
+		kill_streak = 0
+	_streak_k_last = gt
+	kill_streak += 1
+	kill_pop_t = _t
+	kill_streak_best = maxi(kill_streak_best, kill_streak)
+	for st in STREAK_STEPS:
+		if kill_streak == st:
+			kill_milestone = st
+			kill_milestone_t = _t
+
+
+## 연속 끊기(무당 피격·런 시작). 칩은 다음 처치부터 1로 다시 센다.
+func reset_streak() -> void:
+	kill_streak = 0
+	haewon_streak = 0
+	_streak_k_last = -100.0
+	_streak_h_last = -100.0
+
+
+## 시간으로 끊긴 연속도 0 으로 보이게(hud 가 매 프레임 읽기 전에 불러도 되고, 필드만 읽어도 된다 — HitFeedback 이 매 프레임 부른다).
+func streak_tick() -> void:
+	var gt: float = Game.time_sec()
+	if kill_streak > 0 and gt - _streak_k_last > STREAK_GAP_S:
+		kill_streak = 0
+	if haewon_streak > 0 and gt - _streak_h_last > STREAK_GAP_S:
+		haewon_streak = 0
+
+
 # ─── 조명 광원 ────────────────────────────────────────────────────────
 
 ## 수명 광원(해원 빛기둥 1.0 → 0 등). 강도는 수명 동안 계단으로 줄어든다. 가득 차면 가장 오래된 수명 광원을 덮는다.
@@ -553,11 +653,17 @@ func _on_run_started(_char_id: StringName) -> void:
 	stat_shake_frac = 0
 	stat_kicks = 0
 	stat_events.clear()
+	stat_hitstop_capped = 0
+	_hs_t.fill(-100000)
+	reset_streak()
+	kill_streak_best = 0
+	kill_milestone = 0
+	fx_crowd = false
 
 
 ## 검증 로그 한 줄(봇 리포트 시각·종료 시 HitFeedback 이 찍는다).
 func stats_line() -> String:
-	return "hitstop req=%d applied_ms=%d (T2 %d) denied=%d | flash ok=%d denied=%d alpha_max=%.2f | shake max_px=%d frac_frames=%d kicks=%d | crowd_dim=%.2f" % [
-		stat_hitstop_req, stat_hitstop_ms, stat_hitstop_t2_ms, stat_hitstop_denied, stat_flash_ok, stat_flash_denied,
+	return "hitstop req=%d applied_ms=%d (T2 %d) denied=%d capped=%d | streak best=%d | flash ok=%d denied=%d alpha_max=%.2f | shake max_px=%d frac_frames=%d kicks=%d | crowd_dim=%.2f" % [
+		stat_hitstop_req, stat_hitstop_ms, stat_hitstop_t2_ms, stat_hitstop_denied, stat_hitstop_capped, kill_streak_best, stat_flash_ok, stat_flash_denied,
 		stat_flash_alpha_max, int(stat_shake_max_px), stat_shake_frac, stat_kicks, crowd_dim]
 

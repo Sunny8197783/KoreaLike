@@ -938,5 +938,29 @@
       "accessibility_alt": "",
       "note": "v0.10, 13.0 점진 개방"
     }
-  ]
+  ],
+  "j_levels": {
+    "_doc": "design/19 §5.0 타격감 단계(J). 소비: autoload/juice.gd(global_caps), vfx/hit_feedback.gd(다중 처치 J2·고리 J3), weapons(무게 단계, held_weapon_attack_fx). 설정 '흔들림 %'·'타격 멈춤 %'가 그대로 곱해진다. 개별 타격은 J0(18 §P6), 묶음만 J2.",
+    "J0": {"hitstop_ms": 0, "kick_px": 0, "trauma": 0, "flash_alpha": 0, "use": "일상 개별 타격(군중 P6 그대로)"},
+    "J1": {"hitstop_ms": 0, "kick_px": 1, "trauma": 0, "flash_alpha": 0, "use": "보통 무기 한 번에 3마리 이상, 치명(쿨다운 0.4초)"},
+    "J2": {"hitstop_ms": [16, 33], "kick_px": 1, "trauma": 0, "flash_alpha": 0, "use": "무거운 무기 한 번에 3마리 이상(무기당 0.5초 쿨다운), 0.25초 창 처치 5 이상(전역 0.6초 쿨다운) + '모음' 소리"},
+    "J3": {"hitstop_ms": 50, "kick_px": 1, "trauma": 0.25, "flash_alpha": 0.25, "use": "작두 내리찍기 3마리 이상, 대작두 2파, 고리 넓이 ≥40 또는 한꺼번에 15 이상(gildakkeum_large)"},
+    "J4": {"hitstop_ms": [80, 150], "kick_px": 2, "trauma": "기존", "flash_alpha": 0.3, "use": "빙의·합일 순간(trial_director 기존 그대로), 보스 결과·회생"},
+    "global_caps": {
+      "_doc": "티어 ≤2 묶음 정지에만 막음을 건다(티어 3 이상은 늘 통과, 합에는 든다). --no-new-hitstop(전후 같은 시뮬 비교)에서는 꺼짐.",
+      "hitstop_per_sec": 2,
+      "hitstop_ms_per_sec": 120,
+      "shake_cap_px": 3,
+      "flash_alpha_cap": 0.30,
+      "flash_min_gap_s": 0.6
+    },
+    "kill": {
+      "_doc": "design/19 §5.2 I·§5.1 처치 연출 예산(vfx/kill_fx.gd·hit_feedback.gd 상수와 같은 값 — 문서용)",
+      "cross_ticks": 2, "burst_cap": 8, "burst_cap_crowd": 4, "shard_life_s": 0.22,
+      "soul_life_s": 0.35, "soul_window_cap": 6, "soul_window_cap_crowd": 3, "window_s": 0.25,
+      "first_frame_overlay": "정예·다중 처치·치명: vfx_toechi_burst 첫 1f 가산 α0.55(창 4장)",
+      "crit_cut": "vfx_gyeoldanta_cut 2틱 scale 2, 전역 0.15초 간격",
+      "streak_gap_s": 2.0, "streak_break_on_player_hit": true
+    }
+  }
 }

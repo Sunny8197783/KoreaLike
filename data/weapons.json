@@ -281,6 +281,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "투척-회수(부메랑)",
+      "plain_ko": "칼을 던졌다 되받는다",
       "tags": [
         "projectile",
         "metal",
@@ -318,6 +319,7 @@
           "kb": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 19.6,
           "est_dps_crowd": 39.2
         },
@@ -333,6 +335,7 @@
           "kb": 0.5,
           "lv": 2,
           "change": "칼 +1 (±12° 산개)",
+          "plain_ko": "칼 1자루 더",
           "est_dps_boss": 39.2,
           "est_dps_crowd": 78.4
         },
@@ -348,6 +351,7 @@
           "kb": 0.5,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 50.4,
           "est_dps_crowd": 100.8
         },
@@ -363,6 +367,7 @@
           "kb": 0.5,
           "lv": 4,
           "change": "관통 +2",
+          "plain_ko": "2마리 더 꿰뚫는다",
           "est_dps_boss": 50.4,
           "est_dps_crowd": 105.9
         },
@@ -378,6 +383,7 @@
           "kb": 0.5,
           "lv": 5,
           "change": "사거리 +1.0, 쿨 −0.15",
+          "plain_ko": "더 멀리 날아간다 · 공격 속도 +10%",
           "est_dps_boss": 56.0,
           "est_dps_crowd": 141.1
         },
@@ -393,6 +399,7 @@
           "kb": 0.5,
           "lv": 6,
           "change": "칼 +1",
+          "plain_ko": "칼 1자루 더",
           "est_dps_boss": 83.9,
           "est_dps_crowd": 211.7
         },
@@ -408,6 +415,7 @@
           "kb": 0.5,
           "lv": 7,
           "change": "피해 +4",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 107.3,
           "est_dps_crowd": 270.5
         },
@@ -423,6 +431,7 @@
           "kb": 0.5,
           "lv": 8,
           "change": "관통 +2, 쿨 −0.15",
+          "plain_ko": "2마리 더 꿰뚫는다 · 공격 속도 +15%",
           "est_dps_boss": 120.8,
           "est_dps_crowd": 304.2
         }
@@ -444,6 +453,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "근접 360° 회전 베기",
+      "plain_ko": "몸 둘레를 한 바퀴 크게 벤다",
       "tags": [
         "melee",
         "aoe_self",
@@ -470,6 +480,7 @@
           "spin_time": 0.4,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 8.4,
           "est_dps_crowd": 22.8
         },
@@ -482,6 +493,7 @@
           "spin_time": 0.4,
           "lv": 2,
           "change": "피해 +4",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 9.5,
           "est_dps_crowd": 25.7
         },
@@ -494,6 +506,7 @@
           "spin_time": 0.4,
           "lv": 3,
           "change": "반경 +0.3",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 9.5,
           "est_dps_crowd": 36.1
         },
@@ -506,6 +519,7 @@
           "spin_time": 0.4,
           "lv": 4,
           "change": "쿨 −0.25",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 10.8,
           "est_dps_crowd": 41.2
         },
@@ -518,6 +532,7 @@
           "spin_time": 0.4,
           "lv": 5,
           "change": "2회전(역방향, 0.15초 간격)",
+          "plain_ko": "두 바퀴 벤다",
           "est_dps_boss": 21.6,
           "est_dps_crowd": 82.5
         },
@@ -530,6 +545,7 @@
           "spin_time": 0.4,
           "lv": 6,
           "change": "피해 +5",
+          "plain_ko": "피해 +20%",
           "est_dps_boss": 26.4,
           "est_dps_crowd": 100.8
         },
@@ -542,6 +558,7 @@
           "spin_time": 0.4,
           "lv": 7,
           "change": "반경 +0.3, 넉백 +0.3",
+          "plain_ko": "범위 +15% · 더 멀리 밀친다",
           "est_dps_boss": 26.4,
           "est_dps_crowd": 134.4
         },
@@ -554,6 +571,7 @@
           "spin_time": 0.4,
           "lv": 8,
           "change": "피해 +6, 쿨 −0.25",
+          "plain_ko": "피해 +25% · 공격 속도 +15%",
           "est_dps_boss": 37.8,
           "est_dps_crowd": 192.4
         }
@@ -575,6 +593,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "3갈래 관통 찌르기 + 정예 표식",
+      "plain_ko": "앞으로 세 갈래 창을 찌른다",
       "tags": [
         "melee",
         "line",
@@ -603,6 +622,7 @@
           "amt": 1,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 15.1,
           "est_dps_crowd": 22.7
         },
@@ -617,6 +637,7 @@
           "amt": 1,
           "lv": 2,
           "change": "길이 +0.5",
+          "plain_ko": "더 길게 닿는다",
           "est_dps_boss": 15.1,
           "est_dps_crowd": 26.0
         },
@@ -631,6 +652,7 @@
           "amt": 1,
           "lv": 3,
           "change": "피해 +4",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 21.1,
           "est_dps_crowd": 36.4
         },
@@ -645,6 +667,7 @@
           "amt": 1,
           "lv": 4,
           "change": "쿨 −0.2",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 24.1,
           "est_dps_crowd": 41.6
         },
@@ -659,6 +682,7 @@
           "amt": 1,
           "lv": 5,
           "change": "2연속 찌르기(0.2초 간격)",
+          "plain_ko": "두 번 연달아 찌른다",
           "est_dps_boss": 48.3,
           "est_dps_crowd": 83.2
         },
@@ -673,6 +697,7 @@
           "amt": 1,
           "lv": 6,
           "change": "피해 +5",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 65.5,
           "est_dps_crowd": 112.9
         },
@@ -687,6 +712,7 @@
           "amt": 1,
           "lv": 7,
           "change": "길이 +0.5, 표식 증폭 +10%p",
+          "plain_ko": "창이 길어지고 표시한 귀신이 더 아프다",
           "est_dps_boss": 71.2,
           "est_dps_crowd": 127.0
         },
@@ -701,6 +727,7 @@
           "amt": 1,
           "lv": 8,
           "change": "피해 +6, 쿨 −0.2",
+          "plain_ko": "피해 +30% · 공격 속도 +15%",
           "est_dps_boss": 109.4,
           "est_dps_crowd": 194.9
         }
@@ -724,6 +751,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "발밑 설치 + 무적 + 지면 충격파(저정기 역보정)",
+      "plain_ko": "작두를 내리찍어 땅을 울린다",
       "tags": [
         "aoe_self",
         "invuln",
@@ -752,6 +780,7 @@
           "kb": 1,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 7.9,
           "est_dps_crowd": 46.4
         },
@@ -765,6 +794,7 @@
           "kb": 1,
           "lv": 2,
           "change": "피해 +8",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 10.0,
           "est_dps_crowd": 58.8
         },
@@ -778,6 +808,7 @@
           "kb": 1,
           "lv": 3,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 10.0,
           "est_dps_crowd": 79.1
         },
@@ -791,6 +822,7 @@
           "kb": 1,
           "lv": 4,
           "change": "쿨 −0.5",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 11.4,
           "est_dps_crowd": 90.4
         },
@@ -804,6 +836,7 @@
           "kb": 1,
           "lv": 5,
           "change": "저정기 계수 1.5→2.0",
+          "plain_ko": "체력이 낮을수록 더 세다",
           "est_dps_boss": 11.4,
           "est_dps_crowd": 90.4
         },
@@ -817,6 +850,7 @@
           "kb": 1,
           "lv": 6,
           "change": "피해 +10",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 14.4,
           "est_dps_crowd": 114.1
         },
@@ -830,6 +864,7 @@
           "kb": 1,
           "lv": 7,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 14.4,
           "est_dps_crowd": 147.8
         },
@@ -843,6 +878,7 @@
           "kb": 1,
           "lv": 8,
           "change": "피해 +12, 쿨 −0.5",
+          "plain_ko": "피해 +25% · 공격 속도 +15%",
           "est_dps_boss": 21.0,
           "est_dps_crowd": 215.5
         }
@@ -866,6 +902,7 @@
       "origin": "武",
       "scope": "v1",
       "archetype": "직선 관통 검기(정예·보스 추가 피해)",
+      "plain_ko": "곧은 검기가 줄지어 꿰뚫는다",
       "tags": [
         "projectile",
         "line",
@@ -896,6 +933,7 @@
           "pierce": -1,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 12.9,
           "est_dps_crowd": 28.9
         },
@@ -910,6 +948,7 @@
           "pierce": -1,
           "lv": 2,
           "change": "피해 +6",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 17.2,
           "est_dps_crowd": 38.5
         },
@@ -924,6 +963,7 @@
           "pierce": -1,
           "lv": 3,
           "change": "폭 +0.2",
+          "plain_ko": "더 굵게 닿는다",
           "est_dps_boss": 17.2,
           "est_dps_crowd": 44.0
         },
@@ -938,6 +978,7 @@
           "pierce": -1,
           "lv": 4,
           "change": "검기 +1(20° 부채꼴)",
+          "plain_ko": "검기 1줄기 더",
           "est_dps_boss": 34.4,
           "est_dps_crowd": 88.0
         },
@@ -952,6 +993,7 @@
           "pierce": -1,
           "lv": 5,
           "change": "쿨 −0.3",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 39.8,
           "est_dps_crowd": 101.9
         },
@@ -966,6 +1008,7 @@
           "pierce": -1,
           "lv": 6,
           "change": "정예+ 배율 ×1.5→×1.8",
+          "plain_ko": "강한 귀신에게 더 세다",
           "est_dps_boss": 47.7,
           "est_dps_crowd": 101.9
         },
@@ -980,6 +1023,7 @@
           "pierce": -1,
           "lv": 7,
           "change": "피해 +8",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 63.7,
           "est_dps_crowd": 135.8
         },
@@ -994,6 +1038,7 @@
           "pierce": -1,
           "lv": 8,
           "change": "검기 +1, 쿨 −0.3",
+          "plain_ko": "검기 1줄기 더 · 공격 속도 +20%",
           "est_dps_boss": 113.4,
           "est_dps_crowd": 241.9
         }
@@ -1015,6 +1060,7 @@
       "origin": "武",
       "scope": "v1",
       "archetype": "최근접 자동 정밀 사격",
+      "plain_ko": "가장 가까운 귀신을 쏜다",
       "tags": [
         "projectile",
         "metal",
@@ -1043,6 +1089,7 @@
           "crit": 0,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 15.2,
           "est_dps_crowd": 15.2
         },
@@ -1056,6 +1103,7 @@
           "crit": 0,
           "lv": 2,
           "change": "화살 +1",
+          "plain_ko": "화살 1발 더",
           "est_dps_boss": 30.3,
           "est_dps_crowd": 30.3
         },
@@ -1069,6 +1117,7 @@
           "crit": 0,
           "lv": 3,
           "change": "피해 +3",
+          "plain_ko": "피해 +15%",
           "est_dps_boss": 35.0,
           "est_dps_crowd": 35.0
         },
@@ -1082,6 +1131,7 @@
           "crit": 0,
           "lv": 4,
           "change": "관통 +1",
+          "plain_ko": "1마리 더 꿰뚫는다",
           "est_dps_boss": 35.0,
           "est_dps_crowd": 70.0
         },
@@ -1095,6 +1145,7 @@
           "crit": 0,
           "lv": 5,
           "change": "쿨 −0.15",
+          "plain_ko": "공격 속도 +20%",
           "est_dps_boss": 42.0,
           "est_dps_crowd": 84.0
         },
@@ -1108,6 +1159,7 @@
           "crit": 0,
           "lv": 6,
           "change": "화살 +1",
+          "plain_ko": "화살 1발 더",
           "est_dps_boss": 63.0,
           "est_dps_crowd": 126.0
         },
@@ -1121,6 +1173,7 @@
           "crit": 0,
           "lv": 7,
           "change": "피해 +4",
+          "plain_ko": "피해 +20%",
           "est_dps_boss": 75.6,
           "est_dps_crowd": 151.2
         },
@@ -1134,6 +1187,7 @@
           "crit": 0.05,
           "lv": 8,
           "change": "관통 +1, 결단 +5%p",
+          "plain_ko": "1마리 더 꿰뚫고 치명타 +5%",
           "est_dps_boss": 79.2,
           "est_dps_crowd": 237.6
         }
@@ -1157,6 +1211,7 @@
       "origin": "武",
       "scope": "v1",
       "archetype": "이동 방향 고속 직선 연타",
+      "plain_ko": "가는 쪽으로 빠르게 찌른다",
       "tags": [
         "melee",
         "line",
@@ -1185,6 +1240,7 @@
           "thrust_iv": 0.1,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 18.9,
           "est_dps_crowd": 22.7
         },
@@ -1198,6 +1254,7 @@
           "thrust_iv": 0.1,
           "lv": 2,
           "change": "연타 +1",
+          "plain_ko": "1번 더 찌른다",
           "est_dps_boss": 25.2,
           "est_dps_crowd": 30.2
         },
@@ -1211,6 +1268,7 @@
           "thrust_iv": 0.1,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 33.6,
           "est_dps_crowd": 40.3
         },
@@ -1224,6 +1282,7 @@
           "thrust_iv": 0.1,
           "lv": 4,
           "change": "길이 +1.0",
+          "plain_ko": "더 길게 닿는다",
           "est_dps_boss": 33.6,
           "est_dps_crowd": 50.4
         },
@@ -1237,6 +1296,7 @@
           "thrust_iv": 0.1,
           "lv": 5,
           "change": "쿨 −0.15",
+          "plain_ko": "공격 속도 +20%",
           "est_dps_boss": 39.5,
           "est_dps_crowd": 59.3
         },
@@ -1250,6 +1310,7 @@
           "thrust_iv": 0.1,
           "lv": 6,
           "change": "연타 +1",
+          "plain_ko": "1번 더 찌른다",
           "est_dps_boss": 49.4,
           "est_dps_crowd": 74.1
         },
@@ -1263,6 +1324,7 @@
           "thrust_iv": 0.1,
           "lv": 7,
           "change": "피해 +3",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 67.9,
           "est_dps_crowd": 101.9
         },
@@ -1276,6 +1338,7 @@
           "thrust_iv": 0.1,
           "lv": 8,
           "change": "폭 +0.2, 쿨 −0.15",
+          "plain_ko": "더 굵게 닿는다 · 공격 속도 +20%",
           "est_dps_boss": 82.5,
           "est_dps_crowd": 148.5
         }
@@ -1298,6 +1361,7 @@
       "origin": "武",
       "scope": "v1",
       "archetype": "넓은 부채꼴 강타 + 넉백",
+      "plain_ko": "앞을 넓게 후려쳐 밀어낸다",
       "tags": [
         "melee",
         "cone",
@@ -1326,6 +1390,7 @@
           "windup": 0.15,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 11.8,
           "est_dps_crowd": 25.1
         },
@@ -1339,6 +1404,7 @@
           "windup": 0.15,
           "lv": 2,
           "change": "피해 +6",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 15.8,
           "est_dps_crowd": 33.4
         },
@@ -1352,6 +1418,7 @@
           "windup": 0.15,
           "lv": 3,
           "change": "각도 +30°",
+          "plain_ko": "범위 +25%",
           "est_dps_boss": 15.8,
           "est_dps_crowd": 41.8
         },
@@ -1365,6 +1432,7 @@
           "windup": 0.15,
           "lv": 4,
           "change": "쿨 −0.2",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 18.0,
           "est_dps_crowd": 47.8
         },
@@ -1378,6 +1446,7 @@
           "windup": 0.15,
           "lv": 5,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 18.0,
           "est_dps_crowd": 63.6
         },
@@ -1391,6 +1460,7 @@
           "windup": 0.15,
           "lv": 6,
           "change": "피해 +7",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 23.3,
           "est_dps_crowd": 82.2
         },
@@ -1404,6 +1474,7 @@
           "windup": 0.15,
           "lv": 7,
           "change": "역타(반대 방향 70% 피해)",
+          "plain_ko": "뒤쪽도 함께 후려친다",
           "est_dps_boss": 23.3,
           "est_dps_crowd": 139.7
         },
@@ -1417,6 +1488,7 @@
           "windup": 0.15,
           "lv": 8,
           "change": "피해 +8, 넉백 +0.4",
+          "plain_ko": "피해 +25% · 더 멀리 밀친다",
           "est_dps_boss": 29.3,
           "est_dps_crowd": 175.7
         }
@@ -1438,6 +1510,7 @@
       "origin": "武",
       "scope": "v1",
       "archetype": "이동 경로 마름쇠 살포(봉박)",
+      "plain_ko": "지나간 길에 가시를 뿌린다",
       "tags": [
         "trap",
         "metal",
@@ -1467,6 +1540,7 @@
           "hitbox": 0.35,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 10.5,
           "est_dps_crowd": 28.4
         },
@@ -1481,6 +1555,7 @@
           "hitbox": 0.35,
           "lv": 2,
           "change": "마름쇠 +2",
+          "plain_ko": "가시 2개 더",
           "est_dps_boss": 10.5,
           "est_dps_crowd": 42.5
         },
@@ -1495,6 +1570,7 @@
           "hitbox": 0.35,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 14.0,
           "est_dps_crowd": 56.7
         },
@@ -1509,6 +1585,7 @@
           "hitbox": 0.35,
           "lv": 4,
           "change": "지속 +2초",
+          "plain_ko": "2초 더 오래 남는다",
           "est_dps_boss": 14.0,
           "est_dps_crowd": 56.7
         },
@@ -1523,6 +1600,7 @@
           "hitbox": 0.35,
           "lv": 5,
           "change": "내구 +2",
+          "plain_ko": "가시가 더 오래 버틴다",
           "est_dps_boss": 14.0,
           "est_dps_crowd": 94.5
         },
@@ -1537,6 +1615,7 @@
           "hitbox": 0.35,
           "lv": 6,
           "change": "봉박 +0.3초",
+          "plain_ko": "귀신을 더 오래 붙잡는다",
           "est_dps_boss": 14.0,
           "est_dps_crowd": 94.5
         },
@@ -1551,6 +1630,7 @@
           "hitbox": 0.35,
           "lv": 7,
           "change": "피해 +3",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 19.3,
           "est_dps_crowd": 129.9
         },
@@ -1565,6 +1645,7 @@
           "hitbox": 0.35,
           "lv": 8,
           "change": "마름쇠 +2, 동시 상한 60",
+          "plain_ko": "가시 2개 더 · 한 번에 더 많이",
           "est_dps_boss": 19.3,
           "est_dps_crowd": 173.2
         }
@@ -1586,6 +1667,7 @@
       "origin": "畵",
       "scope": "v1",
       "archetype": "등 뒤 세화(까치호랑이 그림) 경악 파동(공포·경직)",
+      "plain_ko": "범 그림이 귀신을 겁준다",
       "tags": [
         "aoe_self",
         "fear",
@@ -1613,6 +1695,7 @@
           "stagger": 0.3,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 1.4,
           "est_dps_crowd": 17.8
         },
@@ -1625,6 +1708,7 @@
           "stagger": 0.3,
           "lv": 2,
           "change": "반경 +0.5",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 1.4,
           "est_dps_crowd": 24.2
         },
@@ -1637,6 +1721,7 @@
           "stagger": 0.3,
           "lv": 3,
           "change": "피해 +3",
+          "plain_ko": "피해 +75%",
           "est_dps_boss": 2.5,
           "est_dps_crowd": 42.4
         },
@@ -1649,6 +1734,7 @@
           "stagger": 0.3,
           "lv": 4,
           "change": "공포 +0.5초",
+          "plain_ko": "겁먹는 시간 +0.5초",
           "est_dps_boss": 2.5,
           "est_dps_crowd": 42.4
         },
@@ -1661,6 +1747,7 @@
           "stagger": 0.3,
           "lv": 5,
           "change": "쿨 −0.4",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 2.8,
           "est_dps_crowd": 49.0
         },
@@ -1673,6 +1760,7 @@
           "stagger": 0.3,
           "lv": 6,
           "change": "반경 +0.5",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 2.8,
           "est_dps_crowd": 63.9
         },
@@ -1685,6 +1773,7 @@
           "stagger": 0.3,
           "lv": 7,
           "change": "공포 대상 받는 피해 +10%",
+          "plain_ko": "겁먹은 귀신이 더 아프다",
           "est_dps_boss": 2.8,
           "est_dps_crowd": 63.9
         },
@@ -1697,6 +1786,7 @@
           "stagger": 0.3,
           "lv": 8,
           "change": "피해 +4, 쿨 −0.4",
+          "plain_ko": "피해 +55% · 공격 속도 +20%",
           "est_dps_boss": 5.2,
           "est_dps_crowd": 118.8
         }
@@ -1719,6 +1809,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "주변 지속 음파 오라(맥동)",
+      "plain_ko": "방울 소리가 둘레를 풀어 준다",
       "tags": [
         "aura",
         "sound",
@@ -1752,6 +1843,7 @@
           "pull_slow": 0,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 5.0,
           "est_dps_crowd": 29.5
         },
@@ -1762,6 +1854,7 @@
           "pull_slow": 0,
           "lv": 2,
           "change": "반경 +0.3",
+          "plain_ko": "범위 +10%",
           "est_dps_boss": 5.0,
           "est_dps_crowd": 36.9
         },
@@ -1772,6 +1865,7 @@
           "pull_slow": 0,
           "lv": 3,
           "change": "피해 +1",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 6.7,
           "est_dps_crowd": 49.3
         },
@@ -1782,6 +1876,7 @@
           "pull_slow": 0,
           "lv": 4,
           "change": "간격 −0.08",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 7.7,
           "est_dps_crowd": 56.8
         },
@@ -1792,6 +1887,7 @@
           "pull_slow": 0,
           "lv": 5,
           "change": "반경 +0.3",
+          "plain_ko": "범위 +10%",
           "est_dps_boss": 7.7,
           "est_dps_crowd": 69.7
         },
@@ -1802,6 +1898,7 @@
           "pull_slow": 0,
           "lv": 6,
           "change": "피해 +1",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 9.6,
           "est_dps_crowd": 87.1
         },
@@ -1812,6 +1909,7 @@
           "pull_slow": 0.2,
           "lv": 7,
           "change": "범위 내 풀릴 기색 이속 추가 −20%",
+          "plain_ko": "흰 테두리 귀신이 더 느려진다",
           "est_dps_boss": 9.6,
           "est_dps_crowd": 87.1
         },
@@ -1822,6 +1920,7 @@
           "pull_slow": 0.2,
           "lv": 8,
           "change": "피해 +2, 반경 +0.3",
+          "plain_ko": "피해 +40% · 범위 +10%",
           "est_dps_boss": 13.5,
           "est_dps_crowd": 146.7
         }
@@ -1843,6 +1942,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "전방 부채꼴 돌풍(넉백, 풀릴 기색은 끌어옴)",
+      "plain_ko": "앞으로 바람을 부친다",
       "tags": [
         "cone",
         "knockback",
@@ -1879,6 +1979,7 @@
           "kb": 1.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 4.3,
           "est_dps_crowd": 12.4
         },
@@ -1891,6 +1992,7 @@
           "kb": 1.5,
           "lv": 2,
           "change": "피해 +2",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 5.7,
           "est_dps_crowd": 16.5
         },
@@ -1903,6 +2005,7 @@
           "kb": 1.5,
           "lv": 3,
           "change": "각도 +20°",
+          "plain_ko": "범위 +20%",
           "est_dps_boss": 5.7,
           "est_dps_crowd": 20.2
         },
@@ -1915,6 +2018,7 @@
           "kb": 1.5,
           "lv": 4,
           "change": "쿨 −0.2",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 6.7,
           "est_dps_crowd": 23.5
         },
@@ -1927,6 +2031,7 @@
           "kb": 1.5,
           "lv": 5,
           "change": "반경 +0.5",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 6.7,
           "est_dps_crowd": 30.7
         },
@@ -1939,6 +2044,7 @@
           "kb": 1.5,
           "lv": 6,
           "change": "피해 +2",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 8.3,
           "est_dps_crowd": 38.4
         },
@@ -1951,6 +2057,7 @@
           "kb": 1.5,
           "lv": 7,
           "change": "2연 돌풍(0.25초 간격)",
+          "plain_ko": "바람을 두 번 부친다",
           "est_dps_boss": 16.7,
           "est_dps_crowd": 76.8
         },
@@ -1963,6 +2070,7 @@
           "kb": 1.5,
           "lv": 8,
           "change": "피해 +3, 각도 +20°",
+          "plain_ko": "피해 +30% · 범위 +20%",
           "est_dps_boss": 21.7,
           "est_dps_crowd": 118.0
         }
@@ -1984,6 +2092,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "종이 넋 인형 공전",
+      "plain_ko": "종이 인형이 몸 둘레를 돈다",
       "tags": [
         "orbit",
         "paper",
@@ -2020,6 +2129,7 @@
           "hit_iv": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 3.8,
           "est_dps_crowd": 15.6
         },
@@ -2033,6 +2143,7 @@
           "hit_iv": 0.5,
           "lv": 2,
           "change": "넋전 +1",
+          "plain_ko": "종이 인형 1장 더",
           "est_dps_boss": 5.6,
           "est_dps_crowd": 23.3
         },
@@ -2046,6 +2157,7 @@
           "hit_iv": 0.5,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 7.9,
           "est_dps_crowd": 32.7
         },
@@ -2059,6 +2171,7 @@
           "hit_iv": 0.5,
           "lv": 4,
           "change": "지속 +1.0",
+          "plain_ko": "1초 더 오래 남는다",
           "est_dps_boss": 10.5,
           "est_dps_crowd": 43.5
         },
@@ -2072,6 +2185,7 @@
           "hit_iv": 0.5,
           "lv": 5,
           "change": "공전 반경 +0.4, 각속도 +20%",
+          "plain_ko": "더 넓고 빠르게 돈다",
           "est_dps_boss": 12.6,
           "est_dps_crowd": 62.7
         },
@@ -2085,6 +2199,7 @@
           "hit_iv": 0.5,
           "lv": 6,
           "change": "넋전 +1",
+          "plain_ko": "종이 인형 1장 더",
           "est_dps_boss": 16.8,
           "est_dps_crowd": 83.6
         },
@@ -2098,6 +2213,7 @@
           "hit_iv": 0.5,
           "lv": 7,
           "change": "피해 +2",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 21.6,
           "est_dps_crowd": 107.5
         },
@@ -2111,6 +2227,7 @@
           "hit_iv": 0.5,
           "lv": 8,
           "change": "지속 +1.0, 넋전 +1",
+          "plain_ko": "1초 더 오래 남는다 · 종이 인형 1장 더",
           "est_dps_boss": 27.0,
           "est_dps_crowd": 134.4
         }
@@ -2132,6 +2249,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "종이돈 산탄 투척",
+      "plain_ko": "종이돈을 흩뿌린다",
       "tags": [
         "projectile",
         "paper",
@@ -2169,6 +2287,7 @@
           "spd": 9,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 19.2,
           "est_dps_crowd": 19.2
         },
@@ -2182,6 +2301,7 @@
           "spd": 9,
           "lv": 2,
           "change": "지전 +2",
+          "plain_ko": "종이돈 2장 더",
           "est_dps_boss": 26.9,
           "est_dps_crowd": 26.9
         },
@@ -2195,6 +2315,7 @@
           "spd": 9,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 37.7,
           "est_dps_crowd": 37.7
         },
@@ -2208,6 +2329,7 @@
           "spd": 9,
           "lv": 4,
           "change": "관통 +1",
+          "plain_ko": "1마리 더 꿰뚫는다",
           "est_dps_boss": 37.7,
           "est_dps_crowd": 42.3
         },
@@ -2221,6 +2343,7 @@
           "spd": 9,
           "lv": 5,
           "change": "쿨 −0.2",
+          "plain_ko": "공격 속도 +20%",
           "est_dps_boss": 44.5,
           "est_dps_crowd": 50.0
         },
@@ -2234,6 +2357,7 @@
           "spd": 9,
           "lv": 6,
           "change": "지전 +2, 산개 +10°",
+          "plain_ko": "종이돈 2장 더 · 더 넓게",
           "est_dps_boss": 57.3,
           "est_dps_crowd": 62.5
         },
@@ -2247,6 +2371,7 @@
           "spd": 9,
           "lv": 7,
           "change": "피해 +2",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 73.6,
           "est_dps_crowd": 80.3
         },
@@ -2260,6 +2385,7 @@
           "spd": 9,
           "lv": 8,
           "change": "사거리 +1.5, 관통 +1",
+          "plain_ko": "더 멀리 날아간다 · 1마리 더 꿰뚫는다",
           "est_dps_boss": 73.6,
           "est_dps_crowd": 122.1
         }
@@ -2283,6 +2409,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "이동 방향 흰 천 직선 장판",
+      "plain_ko": "가는 길에 흰 천을 깐다",
       "tags": [
         "zone",
         "line",
@@ -2321,6 +2448,7 @@
           "tick": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 4.0,
           "est_dps_crowd": 9.6
         },
@@ -2335,6 +2463,7 @@
           "tick": 0.5,
           "lv": 2,
           "change": "길이 +1.5",
+          "plain_ko": "더 길게 닿는다",
           "est_dps_boss": 4.0,
           "est_dps_crowd": 12.5
         },
@@ -2349,6 +2478,7 @@
           "tick": 0.5,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +50%",
           "est_dps_boss": 6.0,
           "est_dps_crowd": 18.7
         },
@@ -2363,6 +2493,7 @@
           "tick": 0.5,
           "lv": 4,
           "change": "지속 +1.0",
+          "plain_ko": "1초 더 오래 남는다",
           "est_dps_boss": 9.0,
           "est_dps_crowd": 28.1
         },
@@ -2377,6 +2508,7 @@
           "tick": 0.5,
           "lv": 5,
           "change": "반대 방향 천 +1",
+          "plain_ko": "뒤쪽에도 천을 깐다",
           "est_dps_boss": 9.0,
           "est_dps_crowd": 56.2
         },
@@ -2391,6 +2523,7 @@
           "tick": 0.5,
           "lv": 6,
           "change": "폭 +0.4",
+          "plain_ko": "더 굵게 닿는다",
           "est_dps_boss": 9.0,
           "est_dps_crowd": 70.2
         },
@@ -2405,6 +2538,7 @@
           "tick": 0.5,
           "lv": 7,
           "change": "천 위 적 이속 −25%",
+          "plain_ko": "천 위 귀신이 느려진다",
           "est_dps_boss": 9.0,
           "est_dps_crowd": 70.2
         },
@@ -2419,6 +2553,7 @@
           "tick": 0.5,
           "lv": 8,
           "change": "피해 +3, 쿨 −0.4",
+          "plain_ko": "피해 +50% · 공격 속도 +25%",
           "est_dps_boss": 16.9,
           "est_dps_crowd": 131.6
         }
@@ -2440,6 +2575,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "정화수 투척 장판(지속 백 피해)",
+      "plain_ko": "물을 끼얹어 바닥을 적신다",
       "tags": [
         "zone",
         "water",
@@ -2476,6 +2612,7 @@
           "tick": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 6.9,
           "est_dps_crowd": 16.5
         },
@@ -2489,6 +2626,7 @@
           "tick": 0.5,
           "lv": 2,
           "change": "바가지 +1",
+          "plain_ko": "바가지 1개 더",
           "est_dps_boss": 6.9,
           "est_dps_crowd": 23.2
         },
@@ -2502,6 +2640,7 @@
           "tick": 0.5,
           "lv": 3,
           "change": "피해 +1",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 8.6,
           "est_dps_crowd": 29.0
         },
@@ -2515,6 +2654,7 @@
           "tick": 0.5,
           "lv": 4,
           "change": "반경 +0.3",
+          "plain_ko": "범위 +20%",
           "est_dps_boss": 8.6,
           "est_dps_crowd": 40.8
         },
@@ -2528,6 +2668,7 @@
           "tick": 0.5,
           "lv": 5,
           "change": "지속 +1.0",
+          "plain_ko": "1초 더 오래 남는다",
           "est_dps_boss": 10.0,
           "est_dps_crowd": 54.4
         },
@@ -2541,6 +2682,7 @@
           "tick": 0.5,
           "lv": 6,
           "change": "피해 +1",
+          "plain_ko": "피해 +20%",
           "est_dps_boss": 12.0,
           "est_dps_crowd": 65.3
         },
@@ -2554,6 +2696,7 @@
           "tick": 0.5,
           "lv": 7,
           "change": "바가지 +1",
+          "plain_ko": "바가지 1개 더",
           "est_dps_boss": 12.0,
           "est_dps_crowd": 98.0
         },
@@ -2567,6 +2710,7 @@
           "tick": 0.5,
           "lv": 8,
           "change": "쿨 −0.5, 반경 +0.2",
+          "plain_ko": "공격 속도 +15% · 범위 +10%",
           "est_dps_boss": 12.0,
           "est_dps_crowd": 139.7
         }
@@ -2588,6 +2732,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "원형 소금 결계(밀어내기) + 살 알갱이 정화",
+      "plain_ko": "소금으로 둥근 울타리를 친다",
       "tags": [
         "barrier",
         "purify",
@@ -2625,6 +2770,7 @@
           "tick": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 3.0,
           "est_dps_crowd": 13.9
         },
@@ -2639,6 +2785,7 @@
           "tick": 0.5,
           "lv": 2,
           "change": "반경 +0.3",
+          "plain_ko": "범위 +15%",
           "est_dps_boss": 3.0,
           "est_dps_crowd": 15.8
         },
@@ -2653,6 +2800,7 @@
           "tick": 0.5,
           "lv": 3,
           "change": "피해 +2",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 4.2,
           "est_dps_crowd": 22.2
         },
@@ -2667,6 +2815,7 @@
           "tick": 0.5,
           "lv": 4,
           "change": "지속 +1.0",
+          "plain_ko": "1초 더 오래 남는다",
           "est_dps_boss": 5.6,
           "est_dps_crowd": 29.6
         },
@@ -2681,6 +2830,7 @@
           "tick": 0.5,
           "lv": 5,
           "change": "쿨 −0.8",
+          "plain_ko": "공격 속도 +20%",
           "est_dps_boss": 6.7,
           "est_dps_crowd": 35.2
         },
@@ -2695,6 +2845,7 @@
           "tick": 0.5,
           "lv": 6,
           "change": "살 알갱이 정화 반경 ×1.5",
+          "plain_ko": "원한 알갱이를 더 넓게 씻는다",
           "est_dps_boss": 6.7,
           "est_dps_crowd": 35.2
         },
@@ -2709,6 +2860,7 @@
           "tick": 0.5,
           "lv": 7,
           "change": "피해 +3",
+          "plain_ko": "피해 +45%",
           "est_dps_boss": 9.5,
           "est_dps_crowd": 50.3
         },
@@ -2723,6 +2875,7 @@
           "tick": 0.5,
           "lv": 8,
           "change": "반경 +0.4, 쿨 −0.7",
+          "plain_ko": "범위 +15% · 공격 속도 +20%",
           "est_dps_boss": 10.0,
           "est_dps_crowd": 70.0
         }
@@ -2744,6 +2897,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "공전 거울 + 광명 빛줄기(어둑시니 특효)",
+      "plain_ko": "거울이 돌며 빛을 쏜다",
       "tags": [
         "orbit",
         "beam",
@@ -2783,6 +2937,7 @@
           "orbit_r": 2.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 10.0,
           "est_dps_crowd": 23.1
         },
@@ -2797,6 +2952,7 @@
           "orbit_r": 2.5,
           "lv": 2,
           "change": "피해 +3",
+          "plain_ko": "피해 +40%",
           "est_dps_boss": 13.8,
           "est_dps_crowd": 31.8
         },
@@ -2811,6 +2967,7 @@
           "orbit_r": 2.5,
           "lv": 3,
           "change": "빛줄기 길이 +1.5",
+          "plain_ko": "빛줄기가 길어진다",
           "est_dps_boss": 13.8,
           "est_dps_crowd": 38.6
         },
@@ -2825,6 +2982,7 @@
           "orbit_r": 2.5,
           "lv": 4,
           "change": "쿨 −0.2",
+          "plain_ko": "공격 속도 +15%",
           "est_dps_boss": 15.7,
           "est_dps_crowd": 44.1
         },
@@ -2839,6 +2997,7 @@
           "orbit_r": 2.5,
           "lv": 5,
           "change": "반사 1회(4u 내 다음 적)",
+          "plain_ko": "빛이 다음 귀신으로 튕긴다",
           "est_dps_boss": 15.7,
           "est_dps_crowd": 58.2
         },
@@ -2853,6 +3012,7 @@
           "orbit_r": 2.5,
           "lv": 6,
           "change": "폭 +0.2",
+          "plain_ko": "더 굵게 닿는다",
           "est_dps_boss": 15.7,
           "est_dps_crowd": 66.2
         },
@@ -2867,6 +3027,7 @@
           "orbit_r": 2.5,
           "lv": 7,
           "change": "피해 +4",
+          "plain_ko": "피해 +35%",
           "est_dps_boss": 21.4,
           "est_dps_crowd": 90.3
         },
@@ -2881,6 +3042,7 @@
           "orbit_r": 2.5,
           "lv": 8,
           "change": "쿨 −0.2, 어둑시니 축소 −4%→−6%",
+          "plain_ko": "공격 속도 +15% · 어둠 귀신에 더 세다",
           "est_dps_boss": 25.0,
           "est_dps_crowd": 105.4
         }
@@ -2903,6 +3065,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "주기적 전방위 음파 충격파 \"덩\"(박 머리 고정)",
+      "plain_ko": "장구 소리가 사방으로 퍼진다",
       "tags": [
         "aoe_self",
         "sound",
@@ -2939,6 +3102,7 @@
           "expand": 0.35,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 2.9,
           "est_dps_crowd": 27.6
         },
@@ -2951,6 +3115,7 @@
           "expand": 0.35,
           "lv": 2,
           "change": "피해 +2",
+          "plain_ko": "피해 +25%",
           "est_dps_boss": 3.6,
           "est_dps_crowd": 34.5
         },
@@ -2963,6 +3128,7 @@
           "expand": 0.35,
           "lv": 3,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +10%",
           "est_dps_boss": 3.6,
           "est_dps_crowd": 43.6
         },
@@ -2975,6 +3141,7 @@
           "expand": 0.35,
           "lv": 4,
           "change": "쿨 −0.3",
+          "plain_ko": "공격 속도 +10%",
           "est_dps_boss": 4.0,
           "est_dps_crowd": 48.9
         },
@@ -2987,6 +3154,7 @@
           "expand": 0.35,
           "lv": 5,
           "change": "후속 \"쿵\"(반박 뒤, 50% 피해)",
+          "plain_ko": "'쿵' 한 번 더 울린다",
           "est_dps_boss": 6.0,
           "est_dps_crowd": 73.3
         },
@@ -2999,6 +3167,7 @@
           "expand": 0.35,
           "lv": 6,
           "change": "피해 +3",
+          "plain_ko": "피해 +30%",
           "est_dps_boss": 7.8,
           "est_dps_crowd": 95.3
         },
@@ -3011,6 +3180,7 @@
           "expand": 0.35,
           "lv": 7,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +10%",
           "est_dps_boss": 7.8,
           "est_dps_crowd": 117.6
         },
@@ -3023,6 +3193,7 @@
           "expand": 0.35,
           "lv": 8,
           "change": "피해 +4, 쿨 −0.3",
+          "plain_ko": "피해 +30% · 공격 속도 +15%",
           "est_dps_boss": 11.6,
           "est_dps_crowd": 174.8
         }
@@ -3044,6 +3215,7 @@
       "origin": "巫",
       "scope": "v1",
       "archetype": "오색 버프 장판(아군 버프 + 약한 백 피해)",
+      "plain_ko": "깃발 자리에서 힘이 난다",
       "tags": [
         "zone",
         "buff",
@@ -3080,6 +3252,7 @@
           "tick": 0.5,
           "lv": 1,
           "change": "기본",
+          "plain_ko": "새 무기",
           "est_dps_boss": 1.7,
           "est_dps_crowd": 12.6
         },
@@ -3093,6 +3266,7 @@
           "tick": 0.5,
           "lv": 2,
           "change": "반경 +0.4",
+          "plain_ko": "범위 +20%",
           "est_dps_boss": 1.7,
           "est_dps_crowd": 18.1
         },
@@ -3106,6 +3280,7 @@
           "tick": 0.5,
           "lv": 3,
           "change": "지속 +1.5",
+          "plain_ko": "1.5초 더 오래 남는다",
           "est_dps_boss": 2.0,
           "est_dps_crowd": 23.5
         },
@@ -3119,6 +3294,7 @@
           "tick": 0.5,
           "lv": 4,
           "change": "깃발 +1",
+          "plain_ko": "깃발 1개 더",
           "est_dps_boss": 2.0,
           "est_dps_crowd": 32.9
         },
@@ -3132,6 +3308,7 @@
           "tick": 0.5,
           "lv": 5,
           "change": "버프 효과 ×1.25",
+          "plain_ko": "깃발 힘이 더 세진다",
           "est_dps_boss": 2.0,
           "est_dps_crowd": 32.9
         },
@@ -3145,6 +3322,7 @@
           "tick": 0.5,
           "lv": 6,
           "change": "피해 +1",
+          "plain_ko": "피해 +50%",
           "est_dps_boss": 3.0,
           "est_dps_crowd": 49.4
         },
@@ -3158,6 +3336,7 @@
           "tick": 0.5,
           "lv": 7,
           "change": "쿨 −1.0",
+          "plain_ko": "공격 속도 +20%",
           "est_dps_boss": 3.0,
           "est_dps_crowd": 59.3
         },
@@ -3171,6 +3350,7 @@
           "tick": 0.5,
           "lv": 8,
           "change": "깃발 +1, 반경 +0.4",
+          "plain_ko": "깃발 1개 더 · 범위 +15%",
           "est_dps_boss": 3.0,
           "est_dps_crowd": 121.0
         }

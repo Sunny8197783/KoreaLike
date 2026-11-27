@@ -1,7 +1,7 @@
 extends Control
 ## 런 HUD(640×360 기준, 앵커는 크기 따라감). 소유: ui.
 ## 레이아웃: data/ui_hud_layout.json · design/11 §5 (v0.10 '상단 띠 + 발밑' 2 시선 지점).
-##  상단: 원혼 구슬 바(+Lv) / 좌: 신통 인장·무구 6칸·정기 바 / 가운데: 시계·거리·시련 칩·의례 슬롯(굿판의 기운 ↔ 시련 게이지 ↔ 보스 한)
+##  상단: 원혼 구슬 바(+Lv) / 좌: 신통 인장·무구 6칸·정기 바 / 가운데: 시계 'mm:ss / 20:00'·진행 줄·목표 줄(UiCopy.GOAL)·의례 슬롯(기운 ↔ 시험 게이지 ↔ 보스 한)
 ##        / 우: 강신 4칸 / 공수 레인(y64) / 아래: 연속 굿 칩·추임새 슬램.
 ##  발밑 호(신명·영가)·정기 바·풀릴 기색 화살표·고리 예상선·힌트 줄은 자식 Guide(ui/guide.gd)가 그린다.
 ## 갱신: 신호로 상태 갱신, 그리기만 매 프레임(문자열은 값이 바뀔 때만 만든다 — 매 프레임 할당 없음).
@@ -53,18 +53,26 @@ var _end_s: String = " / 20:00"     # 시계 뒤 끝 시각(design/19 §1.3)
 var _goal_s: String = ""
 var _goal_icon: int = 0             # 0 없음 1 사자 2 ! 3 신령 점 4 ◆ 5 ○
 var _goal_id: String = ""
+var _danger_t0: float = -1.0         # '위험' 목표 줄이 켜진 시각(이어지면 danger_long)
 var _goal_flash: float = 0.0
 var _goal_poll: float = 0.0
 var _has_white: bool = false
 var _white_name: String = "흰 무기"
 var _first_ring: bool = false
+var _settle: bool = false            # 저승사자 정산(읍·살 거둠) 중
+var _boss_form: StringName = &""
+var _box_goal_until: float = -1.0    # 첫 강한 귀신 상자(게임 시각까지 목표 줄)
+var _box_goal_said: bool = false
+var _first_run: bool = false         # Save.runs_done() == 0(첫 판: 5:00 전 공수 인용 끔)
+var _bonus_s: String = ""            # Save.run_start_bonus_lines()(분할 E) — 있을 때만
+var _next_goal_s: String = ""        # Save.next_goal_line()(분할 E) — 있을 때만
+var _sal_checked: bool = false
+var _sal_on: bool = true             # 원한 줄: 원귀가 켜진 판에서만(처음 두 판 보조 중엔 살기 20↑부터)
 # 박
 var _beat_k: float = 0.0
 var _beat_down: bool = false
 # 거리
 var _geori_name: String = ""
-var _geori_jd: String = ""
-var _geori_line: String = ""
 var _geori_t: float = 99.0          # 전환 뒤 실시간 경과
 var _geori_first: bool = true
 # 시련
@@ -150,8 +158,6 @@ var _slam_text: String = ""
 var _slam_t: float = 0.0
 var _slam_col: Color = UiKit.HANJI
 var _slam_last: float = -100.0
-# 거리 슬램
-var _gslam_t: float = 0.0
 # 신명 오름
 var _oreum: bool = false
 var _oreum_t: float = 0.0
@@ -176,8 +182,10 @@ func _ready() -> void:
 	_f_tiny = UiKit.tiny()
 	_f_brush = UiKit.brush()
 	_paper = UiKit.skin("tile_hanji_paper.png")
-	var hj: String = UiKit.char_hanja(String(Game.char_id))
-	_seal_glyph = hj.left(1) if hj != "" else UiKit.char_name(String(Game.char_id)).left(1)
+	# 신통 인장: 한글 첫 글자(판 안 HUD 에 한자 없음, design/19 §4.4)
+	_seal_glyph = UiKit.char_name(String(Game.char_id)).left(1)
+	_first_run = Save.runs_done() == 0
+	_read_meta_lines()
 	for i in 6:
 		var b: Block = Block.new()
 		b.draw_cb = _draw_block
@@ -195,7 +203,7 @@ func _ready() -> void:
 	add_child(ledger)
 	_boss_time = Data.num("waves_stage1", "boss_time_sec", 1200.0)
 	_end_s = " / " + K.fmt_time(_boss_time)
-	Events.ring_closed.connect(func(_a: int, _h: int, _c: Vector2) -> void: _first_ring = true)
+	Events.ring_closed.connect(func(_a: int, h: int, _c: Vector2) -> void: _first_ring = _first_ring or h > 0)
 	_trial_dur = Data.num("deities", "constants.trial_duration_s", 30.0)
 	var tr: Variant = Data.get_value("waves_stage1", "trials", [])
 	if tr is Array:
@@ -222,6 +230,7 @@ func _ready() -> void:
 	Events.boss_spawned.connect(_on_boss_spawned)
 	Events.boss_resolved.connect(func(_h: int, _k: StringName, _n: float) -> void: _boss_handle = -1)
 	Events.wave_event.connect(_on_wave_event)
+	Events.settlement_started.connect(func(_r: StringName, _p: Dictionary) -> void: _settle = true)
 	_on_geori(Beat.geori_id, Beat.bpm, Beat.jangdan)
 	_lv_s = "Lv %d" % maxi(1, Game.level)
 	# 실전: 기운 바(넋 ↔ 살)는 첫 판에도 처음부터 보인다(2026-11-26 사용자 피드백 — 첫 판 2분 숨김이 '빠진 UI'로 보였다).
@@ -242,15 +251,28 @@ func _on_level_up(l: int) -> void:
 		Juice.call(&"claim_center", &"level_up", 3, 0.6)
 
 
-func _on_geori(id: StringName, _bpm: float, jangdan: StringName) -> void:
+func _on_geori(id: StringName, _bpm: float, _jangdan: StringName) -> void:
 	var g: Dictionary = UiKit.geori_def(id)
 	_geori_name = String(g.get("name_ko", String(id).trim_prefix("geori_")))
-	_geori_jd = String(g.get("jangdan_ko", String(jangdan)))
-	_geori_line = "%s · %s" % [_geori_name, _geori_jd]
 	_geori_t = 0.0
-	# 큰 거리 제목 카드는 waves(wave_presenter)가 그린다 — HUD 는 시계 아래 작은 줄만(중복 금지)
-	_gslam_t = 0.0
+	# 거리(막) 카드는 waves(wave_presenter)가 그린다 — HUD 는 거리 줄·장단을 그리지 않는다(design/19 §4.4)
 	_geori_first = false
+
+
+## '신당의 힘'(Save.run_start_bonus_lines)·'이번 판 목표'(Save.next_goal_line) 한 줄. 없으면 빈 문자열.
+func _read_meta_lines() -> void:
+	_bonus_s = ""
+	_next_goal_s = ""
+	if Game.tutorial_mode:
+		return
+	# 신당의 힘: 앞 2개만(목표 줄 한 줄에 맞게), 나머지는 '외 N'
+	var bl: PackedStringArray = Save.run_start_bonus_lines()
+	if not bl.is_empty():
+		var shown: PackedStringArray = bl.slice(0, 2)
+		_bonus_s = " · ".join(shown) + ((" 외 %d" % (bl.size() - shown.size())) if bl.size() > shown.size() else "")
+	# 기록이 없는 첫 판은 건너뛴다 — 첫 13초에 목표가 세 번 바뀌어 보였다(2:40 '곧 신령의 시험' 줄이 같은 말을 한다)
+	if Save.runs_done() > 0:
+		_next_goal_s = Save.next_goal_line()
 
 
 func _on_beat(_idx: int, down: bool) -> void:
@@ -266,7 +288,7 @@ func _on_trial_start(slot: int, deity: StringName) -> void:
 	_trial_active = true
 	_trial_slot = slot
 	_trial_name = UiKit.deity_name(String(deity))
-	_trial_head = "시련 %d · %s" % [slot, _trial_name]
+	_trial_head = "%s의 시험" % _trial_name
 	_trial_t0 = Game.time_sec()
 	_wieom = 0.0
 	_gaho = 0.0
@@ -281,13 +303,13 @@ func _on_trial_gauge(_slot: int, w: float, g: float) -> void:
 func _on_trial_end(slot: int, deity: StringName, winner: StringName) -> void:
 	_trial_active = false
 	if winner == &"wieom":
-		_trial_msg = "%s · 위엄으로 실렸다" % UiKit.deity_name(String(deity))
+		_trial_msg = "%s · 싸워 이겼다" % UiKit.deity_name(String(deity))
 		_set_gangsin(slot, deity, 1, true)
 	elif winner == &"gaho":
-		_trial_msg = "%s · 가호로 실렸다" % UiKit.deity_name(String(deity))
+		_trial_msg = "%s · 모셔 드렸다" % UiKit.deity_name(String(deity))
 		_set_gangsin(slot, deity, 2, true)
 	else:
-		_trial_msg = "시련이 지나갔다"
+		_trial_msg = "시험이 지나갔다"
 	_trial_msg_t = 2.5
 
 
@@ -297,10 +319,8 @@ func _on_trial_resolved(slot: int, deity: StringName, face: StringName, complete
 
 func _set_gangsin(slot: int, deity: StringName, face: int, complete: bool) -> void:
 	var k: int = clampi(slot - 1, 0, 3)
-	var d: Dictionary = Data.deity(String(deity))
-	var hj: String = String(d.get("hanja", ""))
-	var glyph: String = hj.left(1) if hj != "" else UiKit.deity_name(String(deity)).left(1)
-	_gs_glyph[k] = glyph
+	# 신령 인장: 한글 첫 글자(장·제·산·용). 한자는 쉼 메뉴·도감에만(design/19 §4.4)
+	_gs_glyph[k] = UiKit.deity_name(String(deity)).left(1)
 	_gs_face[k] = face
 	_gs_half[k] = 0 if complete else 1
 	_gs_pop[k] = 0.6
@@ -318,9 +338,12 @@ func _on_oreum(on: bool) -> void:
 	_oreum_t = 0.0
 
 
-func _on_killed(_h: int, _sp: StringName, _pos: Vector2, kind: StringName, _cause: StringName, _tier: StringName) -> void:
+func _on_killed(_h: int, _sp: StringName, _pos: Vector2, kind: StringName, _cause: StringName, tier: StringName) -> void:
 	var k: int = 0 if kind == K.KIND_HAEWON else 1
 	var now: float = Game.time_sec()
+	if not _box_goal_said and _first_run and String(tier) == "elite" and not Game.tutorial_mode:
+		_box_goal_said = true
+		_box_goal_until = now + 5.0
 	if now - _streak_last[k] <= 2.0:
 		_streak[k] += 1
 	else:
@@ -367,6 +390,9 @@ func _on_gongsu(deity: StringName, trigger: StringName, s: String) -> void:
 	# 합일 호명 말은 trial_hud 큰 글자가 이미 말한다 — 위 레인에 되풀이하지 않는다(design/18 §2.3)
 	if trigger == &"gs_hapil_word":
 		return
+	# 첫 판 5:00 전에는 공수 인용을 띄우지 않는다(새 이름을 줄인다, design/19 §3·§4.7-8)
+	if _first_run and Game.time_sec() < 300.0:
+		return
 	# 신령 공수는 trial_director 의 prio 를 읽는다. 신령 없는 공수(손님 행차·씨름 등 '할 일')는 위 레인.
 	var prio: int = 2
 	if deity != &"":
@@ -399,15 +425,28 @@ func _card_on() -> bool:
 	return pr != null and pr.has_method(&"card_on") and bool(pr.call(&"card_on"))
 
 
+## 가장자리 레인 공개 입구(패시브 발동 알림 등 다른 모듈용).
+func push_edge(s: String, gold: bool = false) -> void:
+	if Game.tutorial_mode:
+		return
+	_push_edge(s, gold)
+
+
 ## 가장자리 레인에 한 줄(최대 2줄로 접음). 떠 있으면 다음 1개만 기다린다.
 func _push_edge(s: String, gold: bool) -> void:
 	if _edge_t > 0.0:
 		_edge_next = s
 		_edge_next_gold = gold
 		return
-	_edge_text = UiKit.wrap(_f_small, UiKit.SZ_SMALL, s, EDGE_W - 8.0, 2) if _f_small != null else PackedStringArray([s])
+	var es: int = UiKit.sz(&"body")
+	_edge_text = UiKit.wrap(UiKit.font_sz(es), es, s, _edge_w() - 8.0, 2)
 	_edge_gold = gold
 	_edge_t = EDGE_SEC
+
+
+## 가장자리 레인 폭: 글자 크게면 넓힌다.
+func _edge_w() -> float:
+	return EDGE_W if not UiKit.text_large else 220.0
 
 
 ## 길흉 상자 결과 이름: 패시브는 name_ko(원시 ID 'psv_…' 를 찍지 않는다), 무구는 무구 이름.
@@ -442,7 +481,7 @@ func _on_box_opened(_box: StringName, grade: int, results: Array, _bonus: float,
 	var parts: PackedStringArray = PackedStringArray()
 	for i in names.size():
 		parts.append(names[i] if counts[i] <= 1 else "%s ×%d" % [names[i], counts[i]])
-	var s: String = "길흉 상자 · %s" % gname
+	var s: String = "상자 · %s" % gname
 	if not parts.is_empty():
 		s += " — " + " · ".join(parts)
 	# 맛보기 글 → 왼쪽 위 가장자리 레인(design/18 §2.1)
@@ -495,8 +534,9 @@ func _on_wave_event(id: StringName, p: Dictionary) -> void:
 	_mb_name = UiKit.enemy_name(String(p.get("species", "")))
 
 
-func _on_boss_spawned(handle: int, species: StringName, _form: StringName) -> void:
+func _on_boss_spawned(handle: int, species: StringName, form: StringName) -> void:
 	_boss_handle = handle
+	_boss_form = form
 	_boss_name = UiKit.enemy_name(String(species))
 	_on_boss_bar_shown()
 
@@ -547,7 +587,6 @@ func _process(delta: float) -> void:
 	_beat_k = maxf(0.0, _beat_k - delta * 6.0)
 	_lv_pop = maxf(0.0, _lv_pop - delta)
 	_geori_t += delta
-	_gslam_t = maxf(0.0, _gslam_t - delta)
 	_giun_flash = maxf(0.0, _giun_flash - delta)
 	_hp_hit = maxf(0.0, _hp_hit - delta)
 	_trial_msg_t = maxf(0.0, _trial_msg_t - delta)
@@ -588,8 +627,17 @@ func _process(delta: float) -> void:
 		var em2: EnemyManager = Game.enemies as EnemyManager
 		if em2 == null or not em2.is_alive(em2.slot_of(_mb_handle)):
 			_mb_handle = -1
-	# 굿판의 기운 드러내기(첫 판)
+	# 굿판의 기운 드러내기(연습 굿판은 디렉터가 연다)
 	_giun_vis = move_toward(_giun_vis, 1.0 if _giun_on else 0.0, delta / 0.6)
+	# 원한 줄: 원귀가 켜진 판(보조 아님)이거나, 살기가 20 을 넘었거나, 이미 성난 귀신이 왔으면
+	if not _sal_checked:
+		var rr0: Node = Game.run_root
+		var sd0: Node = rr0.get("spawn") as Node if rr0 != null else null
+		if sd0 != null:
+			_sal_checked = true
+			_sal_on = not bool(sd0.get("assist_no_wongwi"))
+	if not _sal_on:
+		_sal_on = Game.salgi >= 20.0 or _knot_crossed[0] != 0 or _sal_big > 0.0
 	_sal_big = maxf(0.0, _sal_big - delta)
 	# 진화 준비 칸(1초마다): Lv8 + 짝 패시브 = 정예 상자에서 열린다
 	_evo_poll -= delta
@@ -600,6 +648,20 @@ func _process(delta: float) -> void:
 			var w: WeaponBase = wm.weapon_at(i) if wm != null and i < wm.slot_count() else null
 			_slot_evo[i] = 1 if (w != null and wm.can_evolve(w.id)) else 0
 	var now: float = Game.time_sec()
+	# 연속 수는 Juice 가 정본(0 = 풀어 줌 haewon_streak, 1 = 처치 kill_streak) — 2초 무처치·무당 피격에 끊긴다
+	var jst: PackedInt32Array = PackedInt32Array([Juice.haewon_streak, Juice.kill_streak])
+	for k1 in 2:
+		var jn: int = jst[k1]
+		if jn == _streak[k1]:
+			continue
+		if jn <= 0:
+			_streak[k1] = 0
+			_streak_stage[k1] = 0
+			_streak_last[k1] = -10.0
+		else:
+			_streak[k1] = jn
+			if jn >= 5:
+				_streak_s[k1] = ("풀어 줌 ×%d" if k1 == 0 else "처치 ×%d") % jn
 	for k in 2:
 		var live: bool = _streak[k] >= 5 and now - _streak_last[k] <= 2.0
 		_streak_vis[k] = 1.0 if live else maxf(0.0, _streak_vis[k] - delta * 2.0)
@@ -609,92 +671,141 @@ func _process(delta: float) -> void:
 		if _debug_tick % 15 == 0:
 			var em: EnemyManager = Game.enemies as EnemyManager
 			var run: Node = Game.run_root
-			_debug_s = "fps %d  적 %d  틱 %.2fms  ×%d%s" % [Engine.get_frames_per_second(), em.active_count if em != null else 0,
-				float(run.get("tick_ms_avg")) if run != null else 0.0, Game.sim_speed, "  무적" if Game.debug_invuln else ""]
+			_debug_s = "fps %d  n %d  tick %.2fms  x%d%s" % [Engine.get_frames_per_second(), em.active_count if em != null else 0,
+				float(run.get("tick_ms_avg")) if run != null else 0.0, Game.sim_speed, "  inv" if Game.debug_invuln else ""]
 	for b: Control in _blocks:
 		b.queue_redraw()
 
 
-## 목표 줄 문구(design/19 §1.3 GOAL — 위에서부터 먼저 맞는 것 하나). 0.25초마다, 바뀔 때만 문자열을 만든다.
-## 견본 범위: 판 목표 · 위험 · 시련 임박 · 시간대 기본. 시련·보스·중간보스 중에는 그 제목 줄이 이 자리를 쓴다(그리지 않음).
+## 목표 줄(design/19 §1.3 — UiCopy.GOAL, 위에서부터 먼저 맞는 것 하나). 0.25초마다, 바뀔 때만 문자열을 만든다.
+## 시련·보스·중간보스·정산 중에도 이 자리에 그 한 줄을 쓴다(목표 공백 0). 연습 굿판은 그리지 않는다.
 func _update_goal() -> void:
 	if Game.tutorial_mode:
 		_goal_s = ""
 		return
 	var t: float = Game.time_sec()
-	var id: String = ""
-	var icon: int = 0
+	var pick: Array = _pick_goal(t)
+	var id: String = String(pick[0])
+	var txt: String = String(pick[1])
+	var icon: int = int(pick[2])
+	if txt == _goal_s:
+		_goal_id = id
+		return
+	var first: bool = _goal_s == ""
+	# 시험 안 문장끼리(싸움 ↔ 모심)·같은 id 의 숫자 변화는 깜박·소리 없이 바꾼다
+	var quiet: bool = id == _goal_id or (id.begins_with("trial_") and _goal_id.begins_with("trial_") and id != "trial_soon" and _goal_id != "trial_soon")
+	_goal_id = id
+	_goal_s = txt
+	_goal_icon = icon
+	if not first and not quiet:
+		_goal_flash = 0.3
+		Audio.play_sfx(&"sfx_ui_card_hover", &"UI", -8.0)
+	if Game.autotest:
+		print("[ui] goal t=%.1f id=%s" % [t, id])
+
+
+## 우선순위 표(design/19 §1.3) → [id, 문장, 아이콘(0 없음 1 사자 2 ! 3 신령 점 4 ◆ 5 ○)].
+func _pick_goal(t: float) -> Array:
+	var G: Dictionary = UiCopy.GOAL
+	var bt: String = K.fmt_time(_boss_time)
+	var hp_k: float = Game.hp / maxf(Game.hp_max, 1.0)
+	# 1) 판 목표(00:00~00:04)
+	if t < 4.0:
+		return ["goal", String(G["goal"]) % bt, 1]
+	# 2) 위험(이력: 30% 아래 켜짐 · 40% 위 꺼짐 — 언저리에서 깜박·틱을 되풀이하지 않게)
+	var low: bool = Game.hp_max > 0.0 and hp_k < (0.4 if (_goal_id == "danger" or _goal_id == "danger_long" or _goal_id == "trial_low") else 0.3)
+	if low and not _trial_active:
+		if _danger_t0 < 0.0:
+			_danger_t0 = t
+		# 20초 넘게 이어지면 같은 말 대신 버티는 수단을 알린다(검토 11-26: 첫 판 4~5분대에 '빠져나가세요'만 1분 넘게 보였다)
+		if t - _danger_t0 > 20.0:
+			return ["danger_long", String(G["danger_long"]), 2]
+		return ["danger", String(G["danger"]), 2]
+	_danger_t0 = -1.0
+	# 정산(읍·살 거둠)
+	if _settle:
+		return ["settle", String(G["settle"]), 1]
+	# 보스(역려): 한형 = 흰 매듭(남은 구간), 살형 = 베기
+	if _boss_handle >= 0:
+		var em: EnemyManager = Game.enemies as EnemyManager
+		var gp: Vector3 = em.boss_gopuri() if em != null and em.has_method(&"boss_gopuri") else Vector3(-1.0, 0.0, 0.0)
+		if gp.x >= 0.0:
+			var left: int = int(gp.z)
+			if left > 0 and left <= 7:
+				return ["boss_han", String(G["boss_han_n"]) % [7 - left, 7], 5]
+			return ["boss_han", String(G["boss_han"]), 5]
+		if _boss_form == &"han":
+			return ["boss_han", String(G["boss_han"]), 5]
+		return ["boss_sal", String(G["boss_sal"]), 4]
+	# 3·4) 시험 중
+	if _trial_active:
+		if low:
+			return ["trial_low", String(G["trial_low"]), 2]
+		if _wieom > _gaho + 0.05:
+			return ["trial_fight", String(G["trial_fight"]), 4]
+		if _gaho > _wieom + 0.05:
+			return ["trial_serve", String(G["trial_serve"]), 5]
+		if _goal_id == "trial_fight" or _goal_id == "trial_serve":
+			return [_goal_id, String(G[_goal_id]), 4 if _goal_id == "trial_fight" else 5]
+		return ["trial_any", String(G["trial_any"]), 3]
+	# 7) 큰 귀신
+	if _mb_handle >= 0:
+		return ["midboss", String(G["midboss"]) % ("큰 귀신 " + _mb_name), 2]
+	# 1b) 판 목표 둘째 줄(역려 풀이) · 신당의 힘 · 이번 판 목표(분할 E 가 줄을 주면)
+	if t < 7.0:
+		return ["goal2", String(G["goal2"]), 1]
+	if t < 10.0 and _bonus_s != "":
+		return ["bonus", String(G["bonus"]) % _bonus_s, 3]
+	if t < 13.0 and _next_goal_s != "":
+		return ["next_goal", String(G["next_goal"]) % _next_goal_s, 3]
+	# 5) 시험 임박(20초 안)
 	var next_tr: float = -1.0
 	for tt: float in _trial_times:
 		if tt > t:
 			next_tr = tt
 			break
-	if t < 4.0:
-		id = "goal"
-		icon = 1
-	elif Game.hp_max > 0.0 and Game.hp / Game.hp_max < (0.4 if _goal_id == "danger" else 0.3) and t > 1.0:
-		# 이력(30% 아래 켜짐 · 40% 위 꺼짐): 30% 언저리에서 목표 줄이 깜박·틱 소리를 되풀이하지 않게(검토 11-26)
-		id = "danger"
-		icon = 2
-	elif next_tr > 0.0 and next_tr - t <= 20.0:
-		id = "trial_soon"
-		icon = 3
-	elif t < 180.0:
+	if (next_tr > 0.0 and next_tr - t <= 20.0) or _trial_pre_on():
+		return ["trial_soon", String(G["trial_soon"]), 3]
+	# 6) 원한이 다음 문턱 90% 이상(원한 줄이 보이는 판)
+	if _sal_on:
+		for i in 3:
+			var thr: float = 25.0 * float(i + 1)
+			if _knot_crossed[i] == 0 and Game.salgi >= thr * 0.9 and Game.salgi < thr:
+				return ["sal_near", String(G["sal_near"]), 4]
+	# 첫 강한 귀신 상자(첫 판, 5초)
+	if t < _box_goal_until:
+		return ["box_first", String(G["box_first"]), 4]
+	# 9) 시간대 기본
+	if t >= 1180.0:
+		return ["boss_soon", String(G["boss_soon"]) % bt, 1]
+	if t >= 1155.0:
+		return ["gongmul", String(G["gongmul"]), 5]
+	if t >= 1080.0:
+		return ["hapil", String(G["hapil"]), 3] if _possessed_n() > 0 else ["hapil_solo", String(G["hapil_solo"]), 0]
+	if t >= 720.0:
+		return ["to_hapil", String(G["to_hapil"]), 3] if _possessed_n() > 0 else ["to_hapil_solo", String(G["to_hapil_solo"]), 0]
+	if t >= 360.0 and t < 600.0:
+		return ["elite", String(G["elite"]), 4]
+	if t < 180.0:
 		if not _has_white:
-			id = "walk"
-		elif Game.kills_haewon <= 0:
-			id = "white"
-			icon = 5
-		elif t < 90.0:
-			id = "yeongga"
-			icon = 5
-		elif not _first_ring:
-			id = "ring"
-			icon = 5
-		else:
-			id = "grow"
-	elif t >= 1180.0:
-		id = "boss_soon"
-		icon = 1
-	elif t >= 1155.0:
-		id = "gongmul"
-		icon = 5
-	elif t >= 1080.0:
-		id = "hapil"
-		icon = 3
-	elif t >= 720.0:
-		id = "to_hapil"
-		icon = 3
-	elif t >= 360.0 and t < 600.0:
-		id = "elite"
-		icon = 4
-	else:
-		id = "next_trial"
-	if (id == "hapil" or id == "to_hapil") and _possessed_n() == 0:
-		# 모신 신령이 없는 판(시련을 다 놓친 처음 하는 사람)에게 '신령과 함께'라고 말하지 않는다(검토 11-26)
-		id += "_solo"
-		icon = 0
-	if id == _goal_id and id != "next_trial":
-		return
-	var txt: String = String(GOAL.get(id, ""))
-	if id == "white":
-		txt = txt % ("방울이" if _white_name == "방울" else "흰 무기가")
-	elif id == "goal" or id == "boss_soon":
-		txt = txt % K.fmt_time(_boss_time)
-	elif id == "next_trial":
-		txt = (txt % K.fmt_time(next_tr)) if next_tr > 0.0 else String(GOAL["last_stand"]) % K.fmt_time(_boss_time)
-	if txt == _goal_s:
-		_goal_id = id
-		return
-	var first: bool = _goal_s == ""
-	_goal_id = id
-	_goal_s = txt
-	_goal_icon = icon
-	if not first:
-		_goal_flash = 0.3
-		Audio.play_sfx(&"sfx_ui_card_hover", &"UI", -8.0)
-	if Game.autotest:
-		print("[ui] goal t=%.1f id=%s" % [t, id])
+			return ["walk", String(G["walk"]), 0]
+		if Game.kills_haewon <= 0:
+			return ["white", String(G["white"]), 5]
+		if t < 90.0:
+			return ["yeongga", String(G["yeongga"]), 5]
+		if not _first_ring:
+			return ["ring", String(G["ring"]), 5]
+		return ["grow", String(G["grow"]), 0]
+	if next_tr > 0.0:
+		return ["next_trial", String(G["next_trial"]) % K.fmt_time(next_tr), 0]
+	return ["last_stand", String(G["last_stand"]) % bt, 0]
+
+
+## 시험 예고~강림~고르기(시험 시작 전) 단계인가 — 예정 시각이 지나도 시작 전이면 '곧 신령의 시험'(다음 시험 시각으로 넘어가지 않게)
+func _trial_pre_on() -> bool:
+	var rr: Node = Game.run_root
+	var td: TrialDirector = (rr.get("trials") as TrialDirector) if rr != null else null
+	return td != null and td.ph >= TrialDirector.Ph.OMEN and td.ph < TrialDirector.Ph.TRIAL
 
 
 ## 지금까지 모신(빙의한) 신령 수 — 합일 목표 줄 분기용(0.25초마다 한 번)
@@ -702,28 +813,6 @@ func _possessed_n() -> int:
 	var rr: Node = Game.run_root
 	var td: TrialDirector = (rr.get("trials") as TrialDirector) if rr != null else null
 	return td.possessed.size() if td != null else 1
-
-
-## 목표 줄 문구(design/19 §1.3 표 — 22자 이내, 행동부터). 분할 A 가 UiCopy.GOAL 로 옮길 자리.
-const GOAL: Dictionary = {
-	"goal": "목표: %s까지 버티고 역려를 보내라",
-	"danger": "위험! 무리에서 빠져나가세요",
-	"trial_soon": "곧 신령의 시험 — 빛나는 원으로",
-	"walk": "걸어 다니며 버티세요 · 무기는 저절로",
-	"white": "흰 테두리 귀신 곁으로 — %s 풀어 준다",
-	"yeongga": "풀어 준 넋이 뒤따르며 지켜 준다",
-	"ring": "흰 길로 한 바퀴 감싸면 한꺼번에 풀린다",
-	"grow": "구슬을 모아 무기를 키우세요",
-	"next_trial": "다음 시험 %s · 버티세요",
-	"last_stand": "버티세요 · %s 역려가 온다",
-	"elite": "강한 귀신을 잡으면 상자 · 10:00 큰 귀신",
-	"to_hapil": "18:00 모신 신령이 모두 내려온다",
-	"hapil": "신령과 함께 마지막 공세를 버티세요",
-	"to_hapil_solo": "18:00 마지막 공세가 온다 · 버티세요",
-	"hapil_solo": "마지막 공세 — 홀로 끝까지 버티세요",
-	"gongmul": "공물상을 흰 길로 감싸 보내세요",
-	"boss_soon": "%s 역병 귀신 역려가 온다",
-}
 
 
 ## 근접 투명화: 플레이어 화면 위치가 블록 사각형 32 lpx 안이면 35%(0.15초)
@@ -930,8 +1019,8 @@ func _draw_tc(ci: Control) -> void:
 	UiKit.draw_diamond(ci, Vector2(cx - half_l, 19), 2.0, Color(bc, ba))
 	UiKit.draw_diamond(ci, Vector2(cx + half_r, 19), 2.0, Color(bc, ba))
 	# 거리 줄(장단·BPM)과 다음 시련 칩은 없앤다(design/19 §4.4) — 그 자리(y31~44)는 '지금 할 일' 목표 줄이 늘 쓴다.
-	# 시련·보스·중간보스 중에는 그 제목 줄이 같은 자리를 쓰므로 목표 줄을 그리지 않는다.
-	if _goal_s != "" and not _trial_active and _boss_handle < 0 and _mb_handle < 0:
+	# 시련·보스·중간보스 중에는 목표 줄이 그 한 줄(할 일)이 된다 — 이름표를 따로 그리지 않는다.
+	if _goal_s != "":
 		_draw_goal(ci, cx)
 	# 의례 슬롯(y=46): 보스 > 시련 > 굿판의 기운
 	if _boss_handle >= 0:
@@ -973,19 +1062,22 @@ func _draw_progress(ci: Control, cx: float, t: float) -> void:
 
 ## 목표 줄: 먹 띠 α0.55(글 폭 + 12, 높이 14, y31~45) + 아이콘 8px + Bold 12 한지. 바뀐 순간 0.3초 황 테 깜박.
 func _draw_goal(ci: Control, cx: float) -> void:
-	var tw: float = _f_bold.get_string_size(_goal_s, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
+	var gs: int = UiKit.sz(&"bold")
+	var gf: Font = UiKit.font_sz(gs, true)
+	var tw: float = gf.get_string_size(_goal_s, HORIZONTAL_ALIGNMENT_LEFT, -1, gs).x
 	var iw: float = 11.0 if _goal_icon != 0 else 0.0
 	var bw: float = tw + iw + 12.0
-	var r: Rect2 = Rect2(roundf(cx - bw * 0.5), 31, roundf(bw), 14)
+	var gy: float = 31.0 if gs <= UiKit.SZ_BODY else 30.0
+	var r: Rect2 = Rect2(roundf(cx - bw * 0.5), gy, roundf(bw), float(gs) + 2.0)
 	vis_rects["top:goal"] = [r, Engine.get_process_frames()]
 	ci.draw_rect(r, Color(UiKit.MEOK, 0.55))
 	if _goal_flash > 0.0 and fposmod(_goal_flash, 0.1) > 0.05:
 		ci.draw_rect(r, UiKit.HWANG_HI, false, 1.0)
 	var ix: float = r.position.x + 6.0
 	if _goal_icon != 0:
-		_draw_goal_icon(ci, Vector2(ix + 4.0, 38.0), _goal_icon)
-	var tc: Color = UiKit.JEOK_HI if _goal_icon == 2 else UiKit.HANJI_UI
-	UiKit.text_outline(ci, _f_bold, UiKit.SZ_BODY, Vector2(ix + iw, 42), _goal_s, tc, 0, 1)
+		_draw_goal_icon(ci, Vector2(ix + 4.0, roundf(r.get_center().y)), _goal_icon)
+	var tc: Color = UiKit.WARN_ON_DARK if _goal_icon == 2 else UiKit.TXT_ON_DARK
+	UiKit.text_outline(ci, gf, gs, Vector2(ix + iw, r.position.y + float(gs) - 1.0), _goal_s, tc, 0, 1)
 
 
 func _draw_goal_icon(ci: Control, c: Vector2, icon: int) -> void:
@@ -1037,7 +1129,13 @@ func _draw_giun(ci: Control, cx: float) -> void:
 	ci.draw_rect(Rect2(x55, r.position.y - 2.0, 1, r.size.y + 2.0), UiKit.HWANG_DK)
 	var fc: Color = UiKit.HWANG_HI if _giun_flash > 0.0 and fposmod(_giun_flash, 0.2) > 0.1 else UiKit.HANJI_5
 	ci.draw_rect(r.grow(1.0), fc, false, 1.0)
-	# 아래: 살기 트랙(3px) — 살기/100, 매듭 25/50/75
+	# 아래: 원한(살기) 트랙(3px) — 살기/100, 매듭 25/50/75. 원귀가 켜진 판에서만(design/19 §3)
+	if _sal_on:
+		_draw_sal_track(ci, cx)
+	_draw_giun_labels(ci, cx)
+
+
+func _draw_sal_track(ci: Control, cx: float) -> void:
 	var sr: Rect2 = Rect2(cx - 60, 56, 120, 4 if _sal_big > 0.0 else 3)
 	ci.draw_rect(sr.grow(1.0), UiKit.MEOK)
 	ci.draw_rect(sr, UiKit.MEOK_2)
@@ -1057,6 +1155,9 @@ func _draw_giun(ci: Control, cx: float) -> void:
 		ci.draw_rect(Rect2(c - Vector2(1, 1), Vector2(3, 3)), UiKit.JEOK_DK if crossed else UiKit.HANJI_4)
 		if near or _knot_flash[i] > 0.0:
 			ci.draw_rect(Rect2(c, Vector2.ONE), UiKit.JEOK_HI)
+
+
+func _draw_giun_labels(ci: Control, cx: float) -> void:
 	# 양 끝 라벨(Galmuri9 10 — 한글 8px 금지, design/19 §4.4): 왼쪽 '풀어 줌 ○ N', 오른쪽 '◆ 처치 N'. 숫자는 2:00 전엔 숨긴다.
 	var show_n: bool = Game.time_sec() >= 120.0
 	var lx: float = cx - 66.0
@@ -1085,7 +1186,6 @@ static func _short_num(n: int) -> String:
 
 
 func _draw_trial(ci: Control, cx: float) -> void:
-	UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx, 37), _trial_head, UiKit.HWANG_HI, 1)
 	# 위엄(적 ◇) | 가호(한지 ○) 각 56×4
 	var wr: Rect2 = Rect2(cx - 60, 46, 56, 5)
 	var gr: Rect2 = Rect2(cx + 4, 46, 56, 5)
@@ -1110,7 +1210,6 @@ func _draw_boss(ci: Control, cx: float) -> void:
 		return
 	var s: int = em.slot_of(_boss_handle)
 	var k: float = em.han[s] / maxf(em.han_max[s], 1.0)
-	_draw_name_plate(ci, cx, _boss_name, UiKit.JEOK_HI)
 	UiKit.draw_bar(ci, Rect2(cx - 100, 46, 200, 6), k, UiKit.JEOK, UiKit.MEOK_1, UiKit.JEOK_DK)
 
 
@@ -1131,7 +1230,6 @@ func _draw_midboss(ci: Control, cx: float) -> void:
 	if s < 0 or not em.is_alive(s):
 		return
 	var k: float = em.han[s] / maxf(em.han_max[s], 1.0)
-	_draw_name_plate(ci, cx, _mb_name, UiKit.HWANG_HI)
 	var br: Rect2 = Rect2(cx - 100, 46, 200, 6)
 	UiKit.draw_bar(ci, br, k, UiKit.JEOK, UiKit.MEOK_1, UiKit.JEOK_DK)
 	# 풀릴 기색 문턱 아래: 바 끝에 백 테 + ○ — '이제 흰 무구로 풀 수 있다'
@@ -1176,22 +1274,8 @@ func _draw_misc(ci: Control) -> void:
 	var w: float = size.x
 	var h: float = size.y
 	var cx: float = roundf(w * 0.5)
-	# 거리 전환 붓 슬램(상단 중앙, ≤1.2초): 단청 띠 + 붓글씨 거리명 + 장단 — 가운데 슬롯 prio 2 를 얻을 때만
-	if _gslam_t > 0.0 and (not Juice.has_method(&"claim_center") or bool(Juice.call(&"claim_center", &"hud_geori", 2, _gslam_t))):
-		var a: float = clampf(_gslam_t / 0.25, 0.0, 1.0) if _gslam_t < 0.25 else 1.0
-		var rise: float = 0.0 if _gslam_t > 0.3 else (0.3 - _gslam_t) * 40.0
-		var y: float = 92.0 - rise
-		var nw: float = _f_brush.get_string_size(_geori_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 40).x
-		var bw: float = maxf(160.0, nw + 40.0)
-		var band: Rect2 = Rect2(cx - bw * 0.5, y - 30.0, bw, 42)
-		vis_rects["center:geori_slam"] = [band, Engine.get_process_frames()]
-		ci.draw_rect(band, Color(UiKit.MEOK, 0.55 * a))
-		UiKit.draw_dancheong(ci, Rect2(band.position.x, band.position.y - 3.0, band.size.x, 3))
-		UiKit.draw_dancheong(ci, Rect2(band.position.x, band.end.y, band.size.x, 3))
-		UiKit.text_outline(ci, _f_brush, 40, Vector2(cx, y), _geori_name, Color(UiKit.HANJI_UI, a), 1, 2)
-		UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(cx, y + 10.0), _geori_jd, Color(UiKit.HWANG_HI, a), 1)
 	# 공수·예고 레인(y=64). 거리 카드(위 구역)가 떠 있으면 그리지 않는다 — 위 구역은 한 번에 1개(design/18 §2.1)
-	if _lane_t > 0.0 and _lane_text != "" and not _card_on():
+	if _lane_t > 0.0 and _lane_text != "" and not _card_on() and not _banner_on() and not Juice.center_busy(3):
 		var a2: float = clampf(_lane_t / 0.3, 0.0, 1.0)
 		var tw: float = _f_body.get_string_size(_lane_text, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
 		var lr: Rect2 = Rect2(cx - tw * 0.5 - 6.0, 64, tw + 12.0, 15)
@@ -1203,16 +1287,19 @@ func _draw_misc(ci: Control) -> void:
 	# 가장자리 레인(왼쪽 위, 무구 칸·정기 바 아래): 작은 글씨, 왼쪽 정렬, 먹 0.5 받침
 	if _edge_t > 0.0 and not _edge_text.is_empty():
 		var a5: float = clampf(_edge_t / 0.3, 0.0, 1.0) * clampf((EDGE_SEC - _edge_t) / 0.12, 0.0, 1.0)
+		var es: int = UiKit.sz(&"body")
+		var ef: Font = UiKit.font_sz(es)
+		var elh: float = float(es) + 1.0
 		var ew: float = 0.0
 		for ln: String in _edge_text:
-			ew = maxf(ew, _f_small.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL).x)
-		var er: Rect2 = Rect2(6, 48, minf(EDGE_W, ew + 8.0), 4.0 + 11.0 * float(_edge_text.size()))
+			ew = maxf(ew, ef.get_string_size(ln, HORIZONTAL_ALIGNMENT_LEFT, -1, es).x)
+		var er: Rect2 = Rect2(6, 48, minf(_edge_w(), ew + 8.0), 4.0 + elh * float(_edge_text.size()))
 		vis_rects["edge:lane"] = [er, Engine.get_process_frames()]
 		ci.draw_rect(er, Color(UiKit.MEOK, 0.5 * a5))
 		ci.draw_rect(Rect2(er.position, Vector2(1, er.size.y)), Color(UiKit.HWANG_DK if _edge_gold else UiKit.HANJI_4, a5))
 		for li in _edge_text.size():
-			UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(10, 57.0 + 11.0 * float(li)), _edge_text[li],
-				Color(UiKit.HWANG_HI if _edge_gold else UiKit.HANJI_2, a5), 0)
+			UiKit.text(ci, ef, es, Vector2(10, 48.0 + float(es) + elh * float(li)), _edge_text[li],
+				Color(UiKit.HWANG_HI if _edge_gold else UiKit.TXT_ON_DARK_2, a5), 0)
 	# 연속 굿 칩(하단 가운데): ○ 해원 | ◆ 퇴치 — 같은 글자 크기·굵기
 	var any: bool = _streak_vis[0] > 0.0 or _streak_vis[1] > 0.0
 	if any:
@@ -1228,7 +1315,10 @@ func _draw_misc(ci: Control) -> void:
 			ci.draw_rect(r, Color(UiKit.MEOK_1, 0.8 * a3))
 			var bc2: Color = UiKit.JEOK_HI if _streak_hot[k] > 0.0 else (UiKit.HANJI_4 if k == 0 else UiKit.JEOK_DK)
 			ci.draw_rect(r, Color(bc2, a3), false, 1.0)
-			UiKit.text(ci, _f_bold, UiKit.SZ_BODY, Vector2(r.get_center().x, r.end.y - 3.0), _streak_s[k],
+			var cs: int = UiKit.sz(&"bold")
+			if cs > UiKit.SZ_BODY:
+				r = r.grow_individual(8.0, 3.0, 8.0, 0.0)
+			UiKit.text(ci, UiKit.font_sz(cs, true), cs, Vector2(r.get_center().x, r.end.y - 3.0), _streak_s[k],
 				Color(UiKit.HANJI if k == 0 else UiKit.JEOK_HI, a3), 1)
 	# 추임새 슬램(붓, 0.9초): 크기 단계 팝(정수 크기만)
 	if _slam_t > 0.0:
@@ -1237,4 +1327,4 @@ func _draw_misc(ci: Control) -> void:
 		var a4: float = clampf(_slam_t / 0.3, 0.0, 1.0)
 		UiKit.text_outline(ci, _f_brush, fs, Vector2(cx, h - 44.0 - el * 10.0), _slam_text, Color(_slam_col, a4), 1, 2)
 	if _debug_on and _debug_s != "":
-		UiKit.text(ci, _f_tiny, UiKit.SZ_TINY, Vector2(4, h - 4), _debug_s, Color(UiKit.HANJI_2, 0.7))
+		UiKit.text(ci, _f_small, UiKit.SZ_SMALL, Vector2(4, h - 4), _debug_s, Color(UiKit.HANJI_2, 0.7))

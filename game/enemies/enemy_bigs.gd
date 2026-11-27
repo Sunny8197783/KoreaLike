@@ -223,7 +223,7 @@ func _try_haengcha(c: Ctl) -> void:
 	em.set_pos(c.slot, start - dir * _u(2.0), true)
 	if not _gongsu_once.has(&"sonnim_haengcha"):
 		_gongsu_once[&"sonnim_haengcha"] = true
-		Events.gongsu_spoken.emit(&"", &"sonnim_haengcha", "손님 행차시다. 공물을 바쳐 대접하라.")
+		Events.gongsu_spoken.emit(&"", &"sonnim_haengcha", "차린 상이 지나간다. 공물을 바쳐 대접하세요.")
 
 
 func detach(i: int) -> void:

@@ -601,6 +601,12 @@ func _print_summary() -> void:
 func _wongwi_return(th: int) -> void:
 	if _toechi_by_species.is_empty() or Game.player == null:
 		return  # skip_if_no_toechi
+	# 처음 두 판 보조(waves_stage1 first_run_assist.no_wongwi_return, design/19 §3 '원한·성난 귀신은 원귀가 켜진 판에서만'):
+	# 문턱은 넘긴 것으로 치되(_crossed) 성난 귀신은 부르지 않는다. 연습 굿판은 제외(자체 단계가 원귀를 가르친다).
+	if not Game.tutorial_mode and Game.run_root != null:
+		var sd: Node = Game.run_root.get("spawn") as Node
+		if sd != null and bool(sd.get("assist_no_wongwi")):
+			return
 	var w: float = grains_weight()
 	wongwi_returns += 1
 	# 신호 먼저: enemies 가 이 신호로 원귀를 직접 세우면(같은 틱 스폰) 그 자리를 모트 목표로 쓰고 여기서는 스폰하지 않는다.

@@ -52,6 +52,8 @@
       "id": "B01",
       "priority": 100,
       "once": true,
+      "lobby_v1": true,
+      "lobby_v1_note": "design/19 §7: 신당(한 화면 로비) 첫 방문에 재생. flag.first_hub_visit 는 신당이 참으로 넘긴다(Save.next_lobby_beat ctx)",
       "kind": "main",
       "location": "hub_sindang",
       "requires": [
@@ -101,6 +103,8 @@
       "id": "B02",
       "priority": 100,
       "once": true,
+      "lobby_v1": true,
+      "lobby_v1_note": "design/19 §7: 화자를 서리·명부 서기로 맞춤(대장간이 v1에 없어 서기가 은실의 기록을 읽어 준다). 원문 쇠메 대사는 summary 그대로",
       "kind": "main",
       "location": "hub_daejanggan",
       "requires": [
@@ -110,9 +114,9 @@
       "summary": "\"쓰러졌다고 굿이 끝나냐.\" 은실도 처음엔 자주 쓰러졌다는 이야기",
       "lines": [
         {
-          "speaker": "npc_soeme",
+          "speaker": "npc_myeongbu_seogi",
           "key": "beat.B02.1",
-          "ko": "쓰러졌냐."
+          "ko": "쓰러지셨소?"
         },
         {
           "speaker": "char_mansin",
@@ -120,14 +124,14 @@
           "ko": "…네."
         },
         {
-          "speaker": "npc_soeme",
+          "speaker": "npc_myeongbu_seogi",
           "key": "beat.B02.3",
-          "ko": "은실이도 처음 십 년은 굿판에서 자주 뻗었다. 그래도 다음 날이면 칼 갈러 왔지."
+          "ko": "기록에 의하면 은실 만신도 처음 십 년은 굿판에서 자주 쓰러졌소. 그래도 다음 날이면 칼을 갈았지."
         },
         {
-          "speaker": "npc_soeme",
+          "speaker": "npc_myeongbu_seogi",
           "key": "beat.B02.4",
-          "ko": "쓰러졌다고 굿이 끝나냐. 칼 줘 봐라. 벼려 놓으마."
+          "ko": "쓰러졌다고 굿이 끝나지 않소. 모은 공덕으로 신당을 손보고 다시 가시오."
         }
       ]
     },

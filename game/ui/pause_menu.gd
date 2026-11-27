@@ -1,6 +1,6 @@
 extends Control
 ## 일시정지(쉼). 소유: ui. design/11 §9.1. Game.push_pause(&"menu") 사용(SceneTree.paused 쓰지 않음).
-## 머리줄: 쉼 시각 · 거리 · 굿판 / 숫자줄: 해원·퇴치·영가·신명·길닦음·Lv(HUD 에서 숨긴 숫자를 여기서 항상 보여 준다)
+## 머리줄: 쉼 시각 · 거리 · 굿판 / 숫자줄: 풀어 줌·처치·넋 동무·신명·한꺼번에 풀림·Lv(HUD 에서 숨긴 숫자를 여기서 항상 보여 준다)
 ## 왼쪽 메뉴: 이어가기 · 굿 안내서 · 설정 · 굿판 거두기(두 번 눌러 확인) / 오른쪽: 무구 빌드 + '굿의 법도' 요약(길잡이)
 ## 연습 굿판(Game.tutorial_mode, design/17 §3.3): 이어가기 · 굿 안내서 · 설정 · 이 단계 건너뛰기 · 연습 그만두기(두 번 눌러 확인)
 ##   건너뛰기 → Events.tutorial_skip_step_requested / 그만두기 → Events.tutorial_exit_requested(&"title")
@@ -23,7 +23,6 @@ var _stats: String = ""
 var _f_body: Font
 var _f_bold: Font
 var _f_small: Font
-var _f_tiny: Font
 var _f_brush: Font
 var _paper: Texture2D
 var _rules: Array[PackedStringArray] = []
@@ -37,7 +36,6 @@ func _ready() -> void:
 	_f_body = UiKit.body()
 	_f_bold = UiKit.bold()
 	_f_small = UiKit.small()
-	_f_tiny = UiKit.tiny()
 	_f_brush = UiKit.brush()
 	_paper = UiKit.skin("tile_hanji_paper.png")
 	_settings = SettingsPanel.new()
@@ -50,14 +48,9 @@ func _ready() -> void:
 	_guidebook.closed.connect(func() -> void: queue_redraw())
 	if DebugTools.arg("pause-test") != "":
 		_pause_test(float(DebugTools.arg("pause-test")))
-	var rules: Array[String] = [
-		"◆ 붉은 무구는 한을 깨 퇴치한다 — 원혼 구슬이 온전히 모인다",
-		"○ 흰 테두리(풀릴 기색)는 흰 무구로 풀어 해원한다 — 영가가 되어 따라온다",
-		"걸어온 흰 길을 다시 밟아 고리를 닫으면 안의 넋이 한꺼번에 풀린다(길닦음)",
-		"퇴치만 하면 살이 쌓여 원귀로 돌아온다 — 기운 바의 매듭을 보라",
-	]
-	for s: String in rules:
-		_rules.append(UiKit.wrap(_f_small, UiKit.SZ_SMALL, s, 404.0, 2))
+	# 규칙 3줄(design/19 §4.7-4) — 용어는 쉬운 말 표(UiCopy.WORDS)와 같다
+	for r: String in UiCopy.PAUSE_RULES:
+		_rules.append(UiKit.wrap(_f_body, UiKit.SZ_BODY, r, 404.0, 2))
 
 
 ## 캡처·검사용(--pause-test=<게임 초>): 그 시각에 쉼 메뉴 → 1.5초 뒤 굿 안내서(3쪽) → 1.5초 뒤 닫고 이어가기.
@@ -106,17 +99,15 @@ func _build_text() -> void:
 	if Game.tutorial_mode:
 		_head = "쉼  ·  연습 굿판  ·  %s" % gname
 	var yg: int = 0
-	var cap: int = 24
 	var r: Run = Game.run_root as Run
 	if r != null and r.yeongga != null:
 		yg = r.yeongga.count
-		cap = r.yeongga.capacity()
 	var rings: int = 0
 	var hud: Node = r.hud if r != null else null
 	if hud != null and hud.get("ledger") != null:
 		rings = int((hud.get("ledger") as Node).get("rings"))
-	_stats = "○ 해원 %d   ◆ 퇴치 %d   영가 %d/%d   신명 %d%%   길닦음 %d   Lv %d" % [
-		Game.kills_haewon, Game.kills_toechi, yg, cap, int(Game.sinmyeong * 100.0), rings, Game.level]
+	_stats = "○ 풀어 줌 %d   ◆ 처치 %d   넋 동무 %d   신명 %d%%   한꺼번에 풀림 %d   Lv %d" % [
+		Game.kills_haewon, Game.kills_toechi, yg, int(Game.sinmyeong * 100.0), rings, Game.level]
 	if Game.tutorial_mode:
 		_stats = "연습 굿판 — 기록은 남지 않습니다"   # 연습은 RunLedger 에 남기지 않아 숫자가 늘 0 으로 보인다
 
@@ -267,10 +258,10 @@ func _draw() -> void:
 	var gp: Rect2 = Rect2(cx - 220, 186, 434, 112)
 	UiKit.draw_meok_panel(self, gp, 0.9 * a, true, UiKit.HWANG_DK)
 	UiKit.text(self, _f_bold, UiKit.SZ_BODY, gp.position + Vector2(10, 16), "굿의 법도", Color(UiKit.HWANG_HI, a))
-	var y: float = gp.position.y + 32.0
+	var y: float = gp.position.y + 36.0
 	for lines: PackedStringArray in _rules:
 		for ln: String in lines:
-			UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(gp.position.x + 14, y), ln, Color(UiKit.HANJI, a))
-			y += 12.0
-		y += 2.0
+			UiKit.text(self, _f_body, UiKit.SZ_BODY, Vector2(gp.position.x + 14, y), ln, Color(UiKit.TXT_ON_DARK, a))
+			y += 15.0
+		y += 6.0
 	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(cx, h - 12), "↑↓ 고르기   Enter 확인   Esc 이어가기", Color(UiKit.HANJI_3, a), 1)

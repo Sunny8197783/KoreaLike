@@ -222,6 +222,7 @@ func _on_player_died() -> void:
 		return
 	if Game.autotest and not _allow_death:
 		Game.hp = Game.hp_max  # 봇 테스트는 죽지 않고 계속(사망 경로는 --autotest-die 로 시험)
+		print("[autotest] bot_revive t=%.1f" % Game.time_sec())   # 검사 지표: 봇이 실제로 죽은 횟수(시뮬 영향 없음)
 		return
 	if _dying or _ended:
 		return

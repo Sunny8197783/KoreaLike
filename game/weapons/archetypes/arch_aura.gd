@@ -334,14 +334,23 @@ func draw_ground(ci: CanvasItem) -> void:
 	var o: Vector2 = render_origin()
 	if bool(params.get("fear", false)):
 		_draw_sehwa(ci, o)
+	# 작두 날 바닥(소품 시트): 바닥 층(z−2)에서 — 무기 층(z4)에 그리면 선딜·후딜 동안 무당 다리·홍철릭 아랫단을 덮었다(design/19 §5.1 그리기 순서)
+	if fx_name("fx_prop") != &"" and not bool(params.get("fear", false)):
+		var wp0: float = windup_prog()
+		if wp0 >= 0.0:
+			draw_sheet(ci, fx_name("fx_prop"), o + Vector2(0, 2), (Game.anim_time() - wu_anim_t0) * 0.5, 0, Color.WHITE, true)
+		elif bool(params.get("jakdu", false)) and since_fire() < hold_s() + recovery_s():
+			draw_sheet(ci, fx_name("fx_prop"), o + Vector2(0, 2), since_fire() + 0.25)
 	if _is_aura():
 		# 상시 오라 테: 1px 점선 한지 α0.35(평시는 낮게 — 박 순간만 밝다, design/19 §5.2 C)
 		var r: float = _radius()
 		# 박 맥동 원판(2f, 한지 α0.14): 바닥 층(z−2)이라 잡귀·무당 아래에서 땅만 밝힌다 — 적 실루엣은 또렷이 남고
 		# 무당 몸 상자 채움은 0(design/19 §5.1 그리기 순서 '−2 장판 채움'). 군중이면 끔.
+		# 견본 리뷰: 반경 전체 원판은 너무 컸다 → 원판은 반경 64px 까지만(그 너머는 고리만), 큰 반경이면 α0.12.
 		var bage: int = Game.anim_tick_cur - fire_anim_tick
 		if bage >= 0 and bage < 2 and not fx_crowd():
-			ci.draw_circle(K.rndv(o), roundf(r), Color(K.COL_HANJI, 0.14))
+			var dr: float = minf(roundf(r), 64.0)
+			ci.draw_circle(K.rndv(o), dr, Color(K.COL_HANJI, (0.12 if r > 64.0 else 0.14) * fx_alpha()))
 		var seg: int = clampi(int(r / 3.0), 16, 64)
 		for k in seg:
 			if k % 2 == 0:
@@ -357,9 +366,6 @@ func draw(ci: CanvasItem) -> void:
 		draw_windup_hand(ci, move_dir())
 		if (now / 2) % 2 == 0 or wp > 0.6:
 			draw_ring(ci, o, _radius(), col_dk())
-		if fx_name("fx_prop") != &"" and not bool(params.get("fear", false)):
-			# 작두 올라섬: 선딜 동안 소품 시트 첫 프레임들(세화는 바닥 층 _draw_sehwa — 괴황지 부적 시트는 쓰지 않는다)
-			draw_sheet(ci, fx_name("fx_prop"), o + Vector2(0, 2), (Game.anim_time() - wu_anim_t0) * 0.5, 0, Color.WHITE, true)
 	var sf: float = since_fire()
 	if _is_aura():
 		if sf < 0.5:
@@ -373,8 +379,6 @@ func draw(ci: CanvasItem) -> void:
 				draw_ring(ci, o, s("res_r", 6.0) * K.UNIT_PX * area_mult() * clampf(rt / 0.25, 0.0, 1.0), K.COL_HANJI_DK)
 		_draw_flowers(ci, Game.anim_tick_cur)
 		return
-	if fx_name("fx_prop") != &"" and sf < hold_s() + recovery_s() and bool(params.get("jakdu", false)):
-		draw_sheet(ci, fx_name("fx_prop"), o + Vector2(0, 2), sf + 0.25)
 	if bool(params.get("jakdu", false)):
 		_draw_slam(ci, o, Game.anim_tick_cur)
 	for p in PULSE_CAP:
@@ -387,31 +391,49 @@ func draw(ci: CanvasItem) -> void:
 		var prog: float = clampf(age / ln, 0.0, 1.0)
 		var r: float = p_r[p] * prog
 		if age <= ln:
-			draw_ring(ci, o, r, col_main(), 2.0)
-			draw_ring(ci, o, maxf(0.0, r - 3.0), col_hi())
+			if age < 0.04:
+				# 첫 프레임(design/19 §5.0 ②): 2px 한지 고리 — 장구는 손 악기에서 시작(손 고리 1f)
+				draw_ring(ci, o, maxf(r, 6.0), K.COL_HANJI, 2.0)   # ② 첫 프레임은 군중이어도 2px(design/19 §5.1 '끄지 않는다')
+				if not bool(params.get("jakdu", false)) and not bool(params.get("fear", false)):
+					var pl: Player = Game.player as Player
+					if pl != null:
+						draw_ring(ci, pl.hand_world(&"off"), 5.0, K.COL_HANJI, 2.0)
+			else:
+				draw_ring(ci, o, r, col_main(), 2.0)
+				draw_ring(ci, o, maxf(0.0, r - 3.0), col_hi())
 		else:
 			# 후딜: 최대 반경 테가 2f 간격으로 점멸하며 사라짐
 			if (now / 3) % 2 == 0:
 				draw_ring(ci, o, p_r[p], col_dk())
 
 
-## 방울 박 맥동 3f(design/19 §5.2 C): 손 악기에서 시작 — 1f 2px 한지 고리 + 손 고리 + 안쪽 원판 한지 α0.14
-## → 2f 1px 한지_dk → 3f 점선(바닥 층). 군중이면 원판 끔·고리 1px. 무당 몸 상자 안 채움 α ≤0.15.
+## 방울 박 맥동 3f(design/19 §5.2 C): 손 악기에서 시작 — 1f 2px 한지 고리 + 손 고리 + 안쪽 원판 한지 α0.14(바닥 층)
+## → 2f 1px 한지 번짐 → 3f 점선 한지_dk. 군중이면 원판만 끔(고리는 그대로). 무당 몸 상자 안 채움 α ≤0.15.
 func _draw_beat_pulse(ci: CanvasItem, o: Vector2, now: int) -> void:
+	# 3단(애니 프레임 ≈ 4~6틱): ① 2px 한지(군중도 그대로) → ② 1px 한지가 3px 바깥으로 번짐 → ③ 점선 한지_dk.
+	# 틱 단위(0.1초)로 끝나면 후반 무리 속에서 거의 보이지 않았다(검토 11-26 weak 18:00 myatk_px 158).
+	# 박 사이(cd 0.5초 = 30틱)를 거의 다 채운다: 0.1초 굵은 고리 → 0.13초 2색 번짐 → 0.23초 2px 점선 여운.
+	# 군중이어도 같다 — 예전 1px·16틱은 후반 무리(18:00 weak) 캡처에서 박 순간이 아니면 아무것도 남지 않았다(myatk_px 158).
+	# 예산은 점선 여운(④)으로 맞춘다: 선 굵기는 2px 그대로, 마디 수만 반.
 	var age: int = now - fire_anim_tick
-	if age < 0 or age >= 6:
+	if age < 0 or age >= 28:
 		return
 	var r: float = _radius()
-	var crowd: bool = fx_crowd()
 	var pl: Player = Game.player as Player
 	var hp: Vector2 = pl.hand_world(&"off") if pl != null else o + Vector2(0, -16)
-	if age < 3:
+	if age < 6:
 		# (안쪽 원판은 바닥 층 draw_ground 에서 — 잡귀 위에 덮으면 무리가 뿌옇게 바랜다)
-		draw_ring(ci, o, r, K.COL_HANJI, 1.0 if crowd else 2.0)
+		draw_ring(ci, o, r, K.COL_HANJI, 2.0)
+		draw_ring(ci, o, r - 4.0, K.COL_HANJI, 1.0)
 		draw_ring(ci, hp, 4.0, K.COL_HANJI, 2.0)
-	else:
-		draw_ring(ci, o, r, K.COL_HANJI_DK, 1.0)
+	elif age < 14:
+		var g: float = floorf(float(age - 6) * 0.5)
+		draw_ring(ci, o, r + g, K.COL_HANJI, 2.0)
 		draw_ring(ci, hp, 7.0, K.COL_HANJI_DK, 1.0)
+	else:
+		var rr: float = r + 4.0
+		draw_dotted_ring(ci, o, rr, K.COL_HANJI if age < 24 else K.COL_HANJI_DK, 2)
+		draw_dotted_ring(ci, o, rr + 1.0, K.COL_HANJI if age < 24 else K.COL_HANJI_DK, 2)
 
 
 ## 풀림 꽃: 흰 무기에 맞은 흰 테두리 귀신 위 3색 꽃잎(적·황·한지 — 청은 적 탄 전용이라 뺀다), 0.3초.
@@ -419,7 +441,7 @@ const FLOWER_COLS: Array[Color] = [Color(0.8941, 0.3765, 0.3098), Color(0.9098, 
 
 
 func _draw_flowers(ci: CanvasItem, now: int) -> void:
-	var cap: int = 3 if fx_crowd() else FLOWER_CAP
+	var cap: int = 6 if fx_crowd() else FLOWER_CAP   # 풀림 꽃(처치·풀림 순간)은 군중에서도 반은 남긴다(검토 11-26)
 	var n: int = 0
 	for k in FLOWER_CAP:
 		var age: int = now - _fl_tick[k]
@@ -443,9 +465,8 @@ func _draw_slam(ci: CanvasItem, o: Vector2, now: int) -> void:
 		return
 	var r: float = _radius()
 	if age < 2:
-		var ro: Vector2 = K.rndv(o)
-		add_overlay(fx_name("fx_cast"), o + Vector2(0, -4), 0, 0, 0.6, 1, Rect2(ro + Vector2(-14, -40), Vector2(28, 44)))
-		draw_ring(ci, o, r * 0.45, K.COL_HANJI, 1.0 if fx_crowd() else 2.0)
+		# 충격파 첫 프레임 한지 겹침은 draw_sheet 공통 경로(붉은 시트 전부, 예산 포함)가 낸다
+		draw_ring(ci, o, r * 0.45, K.COL_HANJI, 2.0)
 		ci.draw_rect(Rect2(K.rndv(o) + Vector2(-5, -1), Vector2(11, 1)), K.COL_HANJI)
 	elif age < 4:
 		draw_ring(ci, o, r * 0.6, K.COL_JEOK_HI, 1.0)

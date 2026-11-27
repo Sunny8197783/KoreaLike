@@ -118,6 +118,11 @@ var gongsu_text: String = ""
 var gongsu_deity: StringName = &""
 var gongsu_t: float = -10.0
 var gongsu_prio: int = 0
+## 쉬운 첫 시험(design/19 §3·§4.6): 처음 두 판(Save.runs_done() < 2)의 첫 시련. 연습 굿판 제외.
+##   화신 위엄 체력 ×EASY_HP_MULT, 화신 피해 ×EASY_DMG_MULT, 공수·다시 고르기(산통) 숨김. 안내 글은 trial_hud 가 이 값을 읽는다.
+const EASY_HP_MULT: float = 0.7
+const EASY_DMG_MULT: float = 0.6
+var easy_trial: bool = false
 
 # 호환 필드(이전 HUD/테스트)
 var active_slot: int = -1
@@ -455,14 +460,24 @@ func _enter_omen(s: int, at: float) -> void:
 	circle[1] = pp + Vector2(circle_off, 0.0)
 	santong_pos = pp + Vector2(0.0, 2.0 * K.UNIT_PX)
 	_pick_candidates(s)
-	santong_on = reroll_left > 0 and _reroll_pool().size() > 0
+	easy_trial = s == 0 and _easy_runs()
+	santong_on = reroll_left > 0 and _reroll_pool().size() > 0 and not easy_trial
 	_set_ph(Ph.OMEN)
 	Audio.play_sfx(&"sfx_trl_omen", &"SFX", 0.0)
 	Audio.play_sfx(&"sfx_trl_sinjangdae", &"SFX", -2.0)
 	Events.trial_warn.emit(s + 1, cand[0], at - Game.time_sec())
 	Events.trial_candidates.emit(s + 1, cand[0], cand[1])
 	_say(cand[_rng.randi_range(0, 1)], &"gs_omen", 1)
-	_log("omen slot=%d cand=%s,%s momju=%s t=%.1f santong=%s reroll_left=%d" % [s + 1, cand[0], cand[1], momju, Game.time_sec(), santong_on, reroll_left])
+	_log("omen slot=%d cand=%s,%s momju=%s t=%.1f santong=%s reroll_left=%d easy=%s" % [s + 1, cand[0], cand[1], momju, Game.time_sec(), santong_on, reroll_left, easy_trial])
+
+
+## 처음 두 판(첫 판 보조와 같은 범위). 연습 굿판·deity-test 는 제외.
+func _easy_runs() -> bool:
+	if Game.tutorial_mode or (OS.is_debug_build() and DebugTools.arg("deity-test", "") != ""):
+		return false
+	if Save.has_method(&"first_run_pending") and bool(Save.call(&"first_run_pending")):
+		return true
+	return Save.has_method(&"runs_done") and int(Save.call(&"runs_done")) < 2
 
 
 func _pool(s: int) -> Array[StringName]:
@@ -675,10 +690,13 @@ func _enter_trial() -> void:
 	var pp: Vector2 = Game.player.global_position if Game.player != null else anchor
 	var start: Vector2 = anchor + (anchor - pp).normalized() * 3.0 * K.UNIT_PX if anchor.distance_squared_to(pp) > 16.0 else anchor + Vector2(0, -3.0 * K.UNIT_PX)
 	avatar.call("setup", active_deity, n, anchor, start, now)
+	if easy_trial and slot == 0:
+		wieom_hp = maxf(100.0, roundf(wieom_hp * EASY_HP_MULT / 10.0) * 10.0)
+		avatar.set("dmg_scale", float(avatar.get("dmg_scale")) * EASY_DMG_MULT)
 	task.call("setup", active_deity, n, anchor, pp, now)
 	Events.trial_start.emit(slot + 1, active_deity)
 	_say(active_deity, &"gs_start", 1)
-	_log("trial_start slot=%d deity=%s hp_wieom=%d (anchor %d, rate %.1f/s) limit=%.0fs" % [slot + 1, active_deity, int(wieom_hp), int(wieom_hp_anchor), wieom_rate, trial_dur_cur])
+	_log("trial_start slot=%d deity=%s hp_wieom=%d (anchor %d, rate %.1f/s) limit=%.0fs easy=%s" % [slot + 1, active_deity, int(wieom_hp), int(wieom_hp_anchor), wieom_rate, trial_dur_cur, easy_trial and slot == 0])
 
 
 func _calc_wieom_hp(now: float, d: StringName) -> float:
@@ -1173,6 +1191,9 @@ func _say(deity: StringName, trigger: StringName, prio: int) -> void:
 		if now - _low_say_t < 5.0:
 			return
 		_low_say_t = now
+	# 쉬운 첫 시험: 공수 인용을 화면에 내지 않는다(글 줄이기, design/19 §4.6). 상태·난수는 위에서 이미 같다.
+	if easy_trial and slot == 0 and ph >= Ph.OMEN and ph <= Ph.AFTERGLOW:
+		return
 	Events.gongsu_spoken.emit(deity, trigger, line)
 	Audio.play_sfx(&"sfx_ui_gongsu_show", &"UI", -8.0)
 

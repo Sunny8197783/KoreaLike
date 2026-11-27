@@ -7,7 +7,7 @@ extends CanvasLayer
 
 const Defs := preload("res://deities/deity_defs.gd")
 
-const CARD_W: float = 132.0
+const CARD_W: float = 140.0
 const CARD_H: float = 176.0
 const CARD_GAP: float = 10.0
 const CARD_Y: float = 96.0
@@ -28,12 +28,16 @@ const C_HWANG: Color = Color(0.91, 0.725, 0.192, 1.0)
 const C_CHEONG: Color = Color(0.165, 0.36, 0.667, 1.0)
 
 const HELD: Array[StringName] = [&"move_left", &"move_right", &"move_up", &"move_down", &"confirm", &"ui_accept", &"choice_1", &"choice_2", &"choice_3"]
-const TYPE_KO: Dictionary = {"ptype_ta": "타(打) · 공격 발동", "ptype_hae": "해(解) · 해원 강화", "ptype_haeng": "행(行) · 영가·고리", "ptype_su": "수(守) · 지킴", "ptype_un": "운(運) · 복"}
+## 등급 표기(쉬운 말): 길·평·대길은 설명 없이 읽히지 않는다(검토 11-26)
+const GRADE_KO: Dictionary = {"평": "보통", "길": "좋음", "대길": "아주 좋음"}
+const TYPE_KO: Dictionary = {"ptype_ta": "공격", "ptype_hae": "풀어 주기", "ptype_haeng": "넋 동무 · 흰 길", "ptype_su": "지킴 · 회복", "ptype_un": "운 · 보상"}
 
 var dir: Node = null
 
 var _c: Control
 var _font: Font
+var _bold: Font
+var _small: Font
 var _brush: Font
 var _open: bool = false
 var _t: float = 0.0
@@ -60,6 +64,9 @@ var _is_face: PackedByteArray = PackedByteArray()
 var _s_title: String = ""
 var _s_sub: String = ""
 var _s_hint: String = ""
+var _s_keep: String = ""      # 첫 빙의 고르기: '받은 힘은 이번 판 끝까지 간다'
+var _detail: PackedStringArray = PackedStringArray()   # 숫자 자세히(작게)
+var _opens: int = 0
 
 
 func _ready() -> void:
@@ -69,10 +76,11 @@ func _ready() -> void:
 	_c.draw.connect(_on_draw)
 	_c.visible = false
 	add_child(_c)
-	_font = ThemeDB.fallback_font
-	var th: Theme = ThemeDB.get_project_theme()
-	if th != null and th.default_font != null:
-		_font = th.default_font
+	# 글꼴: UiKit 단계(T3 12 / T4 10 / 이름 Bold 12)를 직접 쓴다(design/19 §4.1)
+	UiKit.setup_fonts()
+	_font = UiKit.body()
+	_bold = UiKit.bold()
+	_small = UiKit.small()
 	var bf: FontFile = load("res://assets/fonts/nanum_brush/NanumBrushScript-Regular.ttf") as FontFile
 	if bf != null:
 		bf = bf.duplicate() as FontFile
@@ -92,6 +100,7 @@ func open(cards: Array[Dictionary], deity: StringName, face: StringName, complet
 	_dcol = Defs.color(deity)
 	_name.resize(_n)
 	_desc.resize(_n)
+	_detail.resize(_n)
 	_type.resize(_n)
 	_grade.resize(_n)
 	_lvl.resize(_n)
@@ -101,37 +110,42 @@ func open(cards: Array[Dictionary], deity: StringName, face: StringName, complet
 	for i in _n:
 		var c: Dictionary = cards[i]
 		_name[i] = String(c.get("name", ""))
-		_desc[i] = String(c.get("desc", ""))
-		_type[i] = String(TYPE_KO.get(String(c.get("type", "")), "권능"))
-		_grade[i] = String(c.get("grade_name", "평"))
+		# 큰 줄 = deities.json powers[].plain_ko(쉬운 말), 작은 줄 = 숫자 자세히(처음 세 판은 숨김)
+		var plain: String = _power_plain(deity, String(c.get("power_id", "")))
+		_desc[i] = plain if plain != "" else String(c.get("desc", ""))
+		_detail[i] = String(c.get("desc", "")) if plain != "" and not _easy() else ""
+		_type[i] = String(TYPE_KO.get(String(c.get("type", "")), "신령의 힘"))
+		_grade[i] = String(GRADE_KO.get(String(c.get("grade_name", "평")), String(c.get("grade_name", ""))))
 		_gmult[i] = float(c.get("grade_mult", 1.0))
 		var lv: int = int(c.get("level", 1))
-		_lvl[i] = "새 권능" if lv <= 1 else "Lv %d → %d" % [lv - 1, lv]
+		_lvl[i] = "새 힘" if lv <= 1 else "Lv %d→%d" % [lv - 1, lv]
 		var f: String = String(c.get("face", "common"))
 		_is_face[i] = 0 if f == "common" else 1
 		if f == "common":
-			_tag[i] = "두 면 공통"
+			_tag[i] = ""
 		elif f == "wieom":
-			_tag[i] = "◆ 위엄 전용"
+			_tag[i] = "◆ 싸워 이긴 힘"
+			_type[i] = ""      # 면 카드는 꼬리표가 면을 말한다 — 힘 종류('풀어 주기' 등)를 겹쳐 적으면 서로 어긋나 보인다
 		else:
-			_tag[i] = "○ 가호 전용"
-	_s_title = "%s — %s" % [Defs.name_ko(deity), Defs.face_title(deity, face)]
+			_tag[i] = "○ 모셔 받은 힘"
+			_type[i] = ""
+	_s_title = "%s의 힘" % Defs.short_name(deity)
 	if complete:
-		_s_sub = "신령이 실렸다. 권능 넷 가운데 하나를 받아라."
+		_s_sub = "신령의 힘이 실렸다 — 하나를 고르세요"
 	else:
-		_s_sub = "미완 빙의 — 권능 %d장만 내린다. 하나를 받아라." % _n
-	# 시련 수행이 점지 등급을 정한다(trial_director._set_perf) — 잘 모시면 보상이 달라진다는 것을 말로 알린다.
+		_s_sub = "절반 성공 — %d장 중 하나를 고르세요" % _n
+	# 시련 수행이 카드 등급을 정한다(trial_director._set_perf) — 잘 모시면 보상이 달라진다는 것을 말로 알린다.
 	var pt: StringName = StringName(String(dir.get("perf_tier"))) if dir != null else &""
 	match pt:
-		&"clean_bonus":
-			_s_sub = "깔끔하게 모셨다 — 모든 점괘 길(吉) 이상, 대길 기운이 짙다. 하나를 받아라."
-		&"clean":
-			_s_sub = "깔끔하게 모셨다 — 모든 점괘 길(吉) 이상. 하나를 받아라."
+		&"clean_bonus", &"clean":
+			_s_sub = "깔끔하게 이겼다 — 좋은 카드가 나온다. 하나를 고르세요"
 		&"bonus":
-			_s_sub = "정성이 닿았다 — 대길(大吉) 기운이 짙다. 하나를 받아라."
+			_s_sub = "정성이 닿았다 — 아주 좋은 카드가 나오기 쉽다. 하나를 고르세요"
 		&"incomplete":
-			_s_sub = "미완 빙의 — 권능 %d장, 대길은 없다. 하나를 받아라." % _n
-	_s_hint = "1~%d 바로 받기   ·   ← → 고르고 Enter" % _n
+			_s_sub = "절반 성공 — %d장 중 하나를 고르세요" % _n
+	_opens += 1
+	_s_keep = "받은 힘은 이번 판 끝까지 간다" if _opens == 1 else ""
+	_s_hint = "1~%d 바로 고르기   ·   ← → 옮기고 Enter" % _n
 	_open = true
 	_t = 0.0
 	_lock = LOCK_S
@@ -144,6 +158,26 @@ func open(cards: Array[Dictionary], deity: StringName, face: StringName, complet
 	set_process(true)
 	set_process_input(true)
 	Audio.play_sfx(&"sfx_ui_jeomji_open", &"UI")
+
+
+## 권능 쉬운 말(deities.json powers[].plain_ko). 없으면 "".
+func _power_plain(deity: StringName, pid: String) -> String:
+	var pl: Variant = Data.deity(String(deity)).get("powers", [])
+	if pl is Array:
+		for p: Variant in pl:
+			if p is Dictionary and String((p as Dictionary).get("id", "")) == pid:
+				return String((p as Dictionary).get("plain_ko", ""))
+	return ""
+
+
+## 처음 세 판: 숫자 자세히 줄을 숨긴다(점지 카드와 같은 규칙, design/19 §4.3)
+func _easy() -> bool:
+	var force: String = DebugTools.arg("easy-cards", "") if OS.is_debug_build() else ""   # 캡처용(levelup 과 같은 인자)
+	if force != "":
+		return force == "1"
+	if Game.tutorial_mode:
+		return false
+	return Save.has_method(&"runs_done") and int(Save.call(&"runs_done")) < 3
 
 
 func _any_held() -> bool:
@@ -288,20 +322,23 @@ func _on_draw() -> void:
 	var cx: float = roundf(vs.x * 0.5)
 	var k_in: float = clampf(_t / 0.25, 0.0, 1.0)
 	var k_out: float = clampf(_close_t / CLOSE_S, 0.0, 1.0) if _picked >= 0 else 0.0
-	var dim: float = 0.72 * k_in * (1.0 - k_out)
+	var dim: float = 0.86 * k_in * (1.0 - k_out)   # 0.72 → 0.86: 뒤 HUD 목표 줄이 붓 제목과 겹쳐 읽히지 않게
 	_c.draw_rect(Rect2(Vector2.ZERO, vs), Color(C_MEOK, dim))
 	# 위아래 금줄 띠(신령색)
 	_c.draw_rect(Rect2(0, 30, vs.x, 1), Color(_dcol, 0.7 * k_in * (1.0 - k_out)))
 	_c.draw_rect(Rect2(0, vs.y - 31, vs.x, 1), Color(_dcol, 0.7 * k_in * (1.0 - k_out)))
 	var ta: float = k_in * (1.0 - k_out)
 	var fc: Color = C_JEOK_HI if _face == &"wieom" else C_HANJI
-	_text(Vector2(cx - 300, 62), _s_title, 32, Color(fc, ta), HORIZONTAL_ALIGNMENT_CENTER, 600.0, _brush, true)
-	_text(Vector2(cx - 300, 82), _s_sub, 12, Color(C_HANJI, ta), HORIZONTAL_ALIGNMENT_CENTER, 600.0, null, true)
+	var ty0: float = 50.0 if _s_keep != "" else 62.0
+	_text(Vector2(cx - 300, ty0), _s_title, 32, Color(fc, ta), HORIZONTAL_ALIGNMENT_CENTER, 600.0, _brush, true)
+	if _s_keep != "":
+		_text(Vector2(cx - 300, ty0 + 18.0), _s_keep, 12, Color(C_HWANG, ta), HORIZONTAL_ALIGNMENT_CENTER, 600.0, _bold, true)
+	_text(Vector2(cx - 300, ty0 + (33.0 if _s_keep != "" else 20.0)), _s_sub, 12, Color(C_HANJI, ta), HORIZONTAL_ALIGNMENT_CENTER, 600.0, null, true)
 	for i in _n:
 		_draw_card(i, k_out)
 	if _picked < 0:
 		var ha: float = 0.0 if _lock > 0.0 else 0.85
-		_text(Vector2(cx - 300, CARD_Y + CARD_H + 26), _s_hint, 11, Color(C_HANJI_DK, ha), HORIZONTAL_ALIGNMENT_CENTER, 600.0, null, true)
+		_text(Vector2(cx - 300, CARD_Y + CARD_H + 26), _s_hint, 10, Color(C_HANJI_DK.lightened(0.2), ha), HORIZONTAL_ALIGNMENT_CENTER, 600.0, _small, true)
 
 
 func _draw_card(i: int, k_out: float) -> void:
@@ -325,7 +362,6 @@ func _draw_card(i: int, k_out: float) -> void:
 	if a <= 0.0:
 		return
 	r.position.y += oy
-	var ci: RID = _c.get_canvas_item()
 	var is_face: bool = _is_face[i] == 1
 	var band: Color = _dcol
 	# 그림자 · 바탕
@@ -344,25 +380,33 @@ func _draw_card(i: int, k_out: float) -> void:
 		var cyp: float = r.position.y + (r.size.y - 4.0 if q >= 2 else 23.0)
 		_c.draw_rect(Rect2(cxp, cyp, 3, 3), Color(C_JEOK if is_face and _face == &"wieom" else C_CHEONG, 0.8 * a))
 	# 번호 · 등급
-	_text(r.position + Vector2(5, 15), str(i + 1), 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, 20.0)
+	_text(r.position + Vector2(5, 15), str(i + 1), 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, 20.0, _bold)
 	var gcol: Color = C_HANJI_DK
 	if _gmult[i] >= 1.55:
 		gcol = C_HWANG
 	elif _gmult[i] >= 1.25:
 		gcol = C_HANJI
-	_text(r.position + Vector2(r.size.x - 45, 15), _grade[i], 12, Color(gcol, a), HORIZONTAL_ALIGNMENT_RIGHT, 40.0)
+	_text(r.position + Vector2(r.size.x - 61, 15), _grade[i], 12, Color(gcol, a), HORIZONTAL_ALIGNMENT_RIGHT, 56.0, _bold)
 	if _gmult[i] >= 1.55:
-		_c.draw_rect(Rect2(r.position.x + r.size.x - 48, r.position.y + 4, 44, 15), Color(C_HWANG, 0.7 * a), false, 1.0)
-	_text(r.position + Vector2(18, 15), _lvl[i], 11, Color(C_HANJI_DK, a), HORIZONTAL_ALIGNMENT_LEFT, 70.0)
-	# 이름(붓글씨)
-	_text(r.position + Vector2(4, 50), _name[i], 24, Color(C_INK, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0, _brush)
+		_c.draw_rect(Rect2(r.position.x + r.size.x - 62, r.position.y + 4, 58, 15), Color(C_HWANG, 0.7 * a), false, 1.0)
+	_text(r.position + Vector2(18, 15), _lvl[i], 10, Color(C_HANJI_DK.lightened(0.2), a), HORIZONTAL_ALIGNMENT_LEFT, 70.0, _small)
+	# 이름(Bold 12 — 아이템 이름에 붓 금지, design/19 §4.1)
+	_text(r.position + Vector2(4, 42), _name[i], 12, Color(C_INK, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0, _bold)
 	# 면 표식
 	var tcol: Color = C_INK
 	if is_face:
 		tcol = C_JEOK if _face == &"wieom" else Color(0.36, 0.28, 0.2)
-	_text(r.position + Vector2(4, 66), _tag[i], 11, Color(tcol, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0)
-	_c.draw_rect(Rect2(r.position.x + 10, r.position.y + 72, r.size.x - 20, 1), Color(C_INK, 0.35 * a))
-	# 설명(줄바꿈, 최대 6줄)
-	_font.draw_multiline_string(ci, Vector2(roundf(r.position.x + 7), roundf(r.position.y + 87)), _desc[i], HORIZONTAL_ALIGNMENT_LEFT, r.size.x - 14.0, 11, 6, Color(C_INK, a), TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+	_text(r.position + Vector2(4, 57), _tag[i], 10, Color(tcol, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0, _small)
+	_c.draw_rect(Rect2(r.position.x + 10, r.position.y + 63, r.size.x - 20, 1), Color(C_INK, 0.35 * a))
+	# 큰 줄(쉬운 말, T3 12, 최대 4줄) + 숫자 자세히(T4 10, 최대 3줄)
+	var ly: float = r.position.y + 80.0
+	for ln: String in UiKit.wrap(_font, 12, _desc[i], r.size.x - 12.0, 4):
+		_text(Vector2(r.position.x + 4, ly), ln, 12, Color(C_INK, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0)
+		ly += 14.0
+	if _detail[i] != "":
+		var dy: float = maxf(ly + 4.0, r.position.y + 140.0)
+		for ln2: String in UiKit.wrap(_small, 10, _detail[i], r.size.x - 12.0, 2):
+			_text(Vector2(r.position.x + 4, dy), ln2, 10, Color(0.36, 0.28, 0.2, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0, _small)
+			dy += 12.0
 	# 종류
-	_text(r.position + Vector2(4, r.size.y - 7), _type[i], 11, Color(0.36, 0.28, 0.2, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0)
+	_text(r.position + Vector2(4, r.size.y - 7), _type[i], 10, Color(0.36, 0.28, 0.2, a), HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 8.0, _small)

@@ -17,13 +17,17 @@
   "first_run_assist": {
     "enabled": true,
     "runs_done_lt": 2,
-    "until_sec": 180,
+    "until_sec": 225,
+    "ramp_until_sec": 390,
     "spawn_budget_mult": 0.8,
+    "pullil_after_white": true,
+    "pullil_fallback_sec": 240,
+    "jeomji_gate_until_sec": 40,
     "no_wongwi_return": true,
     "replace_elites": {
       "elite_eodukssini": "elite_geogu_gwi"
     },
-    "doc": "onboarding_hints.json rules.first_gutpan_assist 의 값싼 부분(마감 빌드). 조건: Save.first_run_pending() 또는 Save.runs_done() < runs_done_lt. 00:00~until_sec 스폰 목표 ×spawn_budget_mult, 어둑시니 정예 → 거구귀, 원귀 회귀 끔(haewon 이 SpawnDirector.assist_no_wongwi 를 본다). 12분 초굿 모드는 이번 빌드에서 숨김."
+    "doc": "onboarding_hints.json rules.first_gutpan_assist 의 값싼 부분(마감 빌드). 조건: Save.first_run_pending() 또는 Save.runs_done() < runs_done_lt. 00:00~until_sec 스폰 목표 ×spawn_budget_mult, 어둑시니 정예 → 거구귀, 원귀 회귀 끔(haewon 이 SpawnDirector.assist_no_wongwi 를 본다). 12분 초굿 모드는 이번 빌드에서 숨김. design/19 §3(11-26): until_sec 180→225(첫 시험 완화 3:45까지), pullil_after_white = 흰 무기(방울)를 받을 때까지 기색 문턱 끔(못 받으면 pullil_fallback_sec 에 되돌림), jeomji_gate_until_sec = 그전에 쌓인 레벨업은 0:40 부터(Run.jeomji_gate). 검토(11-26): ramp_until_sec = until_sec 뒤 두 번째 시험(6:30)까지 ×spawn_budget_mult → ×1.0 선형 회복(3:45 절벽 방지)."
   },
   "multipliers": {
     "stage_density": 1.0,
@@ -102,6 +106,8 @@
   "geori": [
     {
       "id": "geori_jutang_bujeong",
+      "title_easy_ko": "1막 · 잡귀 쫓기",
+      "todo_ko": "귀신이 몰려와요 — 걸으며 버티세요",
       "start_sec": 0,
       "end_sec": 180,
       "jangdan": "jinyangjo",
@@ -117,6 +123,8 @@
     },
     {
       "id": "geori_gamang_sansin",
+      "title_easy_ko": "2막 · 신령 맞이",
+      "todo_ko": "신령을 청한다 — 곧 신령이 시험하러 온다",
       "start_sec": 180,
       "end_sec": 360,
       "jangdan": "jungmori",
@@ -132,6 +140,8 @@
     },
     {
       "id": "geori_byeolsang_daegam_jeseok",
+      "title_easy_ko": "3막 · 강한 귀신",
+      "todo_ko": "강한 귀신이 나온다 — 잡으면 상자",
       "start_sec": 360,
       "end_sec": 720,
       "jangdan": "jungjungmori",
@@ -143,10 +153,12 @@
       "display_name_key": "geori_byeolsang_daegam_jeseok.name",
       "name_ko": "별상·대감·제석거리",
       "jangdan_ko": "중중모리",
-      "subtitle_ko": "손님이 들고 복을 비는 거리"
+      "subtitle_ko": "복을 비는 거리"
     },
     {
       "id": "geori_janggun_gunung_changbu",
+      "title_easy_ko": "4막 · 거센 밤",
+      "todo_ko": "귀신이 거세져요 — 18:00까지 버티세요",
       "start_sec": 720,
       "end_sec": 1080,
       "jangdan": "jajinmori",
@@ -162,6 +174,8 @@
     },
     {
       "id": "geori_jakdu",
+      "title_easy_ko": "5막 · 작두",
+      "todo_ko": "모신 신령이 모두 내려온다 — 마지막 공세",
       "start_sec": 1080,
       "end_sec": 1155,
       "jangdan": "danmori",
@@ -177,6 +191,8 @@
     },
     {
       "id": "geori_dwitjeon",
+      "title_easy_ko": "6막 · 배웅",
+      "todo_ko": "남은 귀신에게 차린 상을 먹여 보낸다",
       "start_sec": 1155,
       "end_sec": 1200,
       "jangdan": "jinobangjin",
@@ -192,6 +208,8 @@
     },
     {
       "id": "geori_myeongbu",
+      "title_easy_ko": "역병 귀신 역려",
+      "todo_ko": "이 굿판에 엉긴 마지막 한",
       "start_sec": 1200,
       "end_sec": null,
       "jangdan": "boss",
@@ -203,7 +221,7 @@
       "display_name_key": "geori_myeongbu.name",
       "name_ko": "명부 대면",
       "jangdan_ko": "보스 장단",
-      "subtitle_ko": "저승의 큰 손님을 맞는다"
+      "subtitle_ko": "역병 귀신 역려를 맞는다"
     }
   ],
   "tempo_heung_accel_max": 0.08,
@@ -1115,7 +1133,7 @@
   ],
   "events": [
     {
-      "time_sec": 20,
+      "time_sec": 35,
       "id": "evt_pullil_demo",
       "params": {
         "species": "enm_dalgyal_gwisin",
@@ -2013,48 +2031,50 @@
     "events": {
       "evt_ttemolli": {
         "title_ko": "떼몰이",
-        "hint_ko": "한 줄로 몰려오는 떼 — 옆에서 따라 걸으며 고리로 감싸라",
+        "hint_ko": "무리가 와요 — 한쪽으로 빠지세요",
         "warn_sec": 3.5
       },
       "evt_ewossagi": {
         "title_ko": "에워싸기",
-        "hint_ko": "원이 조여 온다 — 금빛 틈으로 빠져나가 바깥에서 통째로 감싸라",
+        "hint_ko": "금빛 틈으로 빠져나가세요 — 원이 조여 와요",
         "warn_sec": 3.5
       },
       "evt_changgwi_haengnyeol": {
         "title_ko": "창귀 행렬",
-        "hint_ko": "범에게 물려 간 넋이 앞줄을 세웠다 — 앞줄을 풀어 뒤의 호식 원혼을 드러내라",
+        "hint_ko": "흰 테두리 무리 — 흰 무기 곁으로 모으세요",
+        "hint_nowhite_ko": "흰 테두리 무리 — 흰 무기를 고르면 풀어 줄 수 있어요",
         "warn_sec": 4.0
       },
       "evt_sangcharim": {
-        "title_ko": "뒷전 · 상차림",
-        "hint_ko": "공물상 셋 이상을 한 고리로 묶어라 — 대해원",
+        "title_ko": "배웅 · 상차림",
+        "hint_ko": "차린 상 셋 이상을 흰 길로 한 번에 감싸세요",
         "warn_sec": 0.0
       },
       "elite": {
-        "title_ko": "정예 출현",
-        "hint_ko": "정예를 풀면 넋함, 부수면 상자",
+        "title_ko": "강한 귀신",
+        "hint_ko": "잡으면 상자 — 베어도 풀어도 된다",
         "warn_sec": 2.0
       },
       "midboss": {
-        "title_ko": "중간보스",
-        "hint_ko": "90초 안에 풀거나 부숴라",
+        "title_ko": "큰 귀신",
+        "hint_ko": "90초 안에 쓰러뜨리거나 풀어 주세요",
         "warn_sec": 3.0
       },
       "boss": {
-        "title_ko": "명부의 큰 손님",
-        "hint_ko": "금줄 안에서 맞으라",
+        "title_ko": "역병 귀신 역려",
+        "hint_ko": "흰 줄 안에서 맞서세요",
         "warn_sec": 2.0
       },
       "evt_pullil_demo": {
-        "title_ko": "풀릴 기색",
-        "hint_ko": "흰 테두리가 생긴 잡귀는 베지 말고, 둘레를 돌아 풀어 보내라",
+        "title_ko": "흰 테두리 귀신",
+        "hint_ko": "칼로는 못 없애요 — 흰 무기 곁으로 가세요",
+        "hint_nowhite_ko": "칼로는 못 없애요 — 흰 무기를 고르면 풀어 줄 수 있어요",
         "warn_sec": 0.0
       }
     },
     "scripted": {
       "hapil": {
-        "title_ko": "신령 합일",
+        "title_ko": "신령 모두 내림",
         "hint_ko": "모신 신령이 모두 내려오신다"
       },
       "sm_jakdu_last_procession": {
@@ -2063,14 +2083,14 @@
       },
       "jakdu_ganglim": {
         "title_ko": "작두 강림",
-        "hint_ko": "작두 위에서 버텨라 — 정기가 낮을수록 충격파가 세진다"
+        "hint_ko": "작두 곁에서 버티세요 — 체력이 낮을수록 충격파가 세져요"
       },
       "pre_clear": {
-        "title_ko": "퇴송",
-        "hint_ko": "풀릴 기색은 풀려 가고, 남은 잡귀는 연기처럼 물러난다"
+        "title_ko": "귀신이 물러난다",
+        "hint_ko": "흰 테두리 귀신은 풀려 가고, 남은 귀신은 연기처럼 물러난다"
       },
       "daehaewon": {
-        "title_ko": "대해원",
+        "title_ko": "한꺼번에 풀림",
         "hint_ko": ""
       },
       "saja_bow": {
@@ -2078,32 +2098,32 @@
         "hint_ko": "수고하셨소. 이 넋들은 내가 모시겠소."
       },
       "sal_geodum": {
-        "title_ko": "살 거둠",
-        "hint_ko": "사자가 살을 거두는 동안 깨어난 원귀를 막아라"
+        "title_ko": "원한 거둠",
+        "hint_ko": "깨어난 성난 귀신을 막으세요 — 사자가 원한을 거둬요"
       },
       "timeout": {
         "title_ko": "굿판이 닫힌다",
         "hint_ko": "저승사자가 내려와 굿을 거둔다"
       },
       "boss_form_han": {
-        "title_ko": "한이 맺힌 손님",
-        "hint_ko": "풀어 보낸 넋이 많아, 굿판의 기운이 한(恨) 쪽으로 기울었다 — 고풀이 매듭을 풀어라"
+        "title_ko": "한이 맺힌 역려",
+        "hint_ko": "흰 매듭을 밟아 풀어 주세요 — 풀어 준 넋이 많아 한의 얼굴로 왔어요"
       },
       "boss_form_sal": {
-        "title_ko": "살이 낀 손님",
-        "hint_ko": "거둔 넋과 쌓인 살기가 많아, 굿판의 기운이 살(煞) 쪽으로 기울었다 — 살을 깎아 내라"
+        "title_ko": "살이 낀 역려",
+        "hint_ko": "베어 쓰러뜨리세요 — 벤 귀신이 많아 살의 얼굴로 왔어요"
       },
       "ring_guide": {
-        "title_ko": "길닦음",
-        "hint_ko": "흰 테두리 잡귀 둘레를 한 바퀴 돌아 길베를 닫아라 — 고리 안이 해원된다"
+        "title_ko": "흰 길 감싸기",
+        "hint_ko": "점선 원을 따라 한 바퀴 걸으세요 — 안쪽이 한꺼번에 풀려요"
       },
       "dwitjeon_bind": {
-        "title_ko": "대해원",
-        "hint_ko": "공물상 {n}개를 묶었다"
+        "title_ko": "한꺼번에 풀림",
+        "hint_ko": "차린 상 {n}개를 감쌌다"
       },
       "boss_resolved_haewon": {
         "title_ko": "역려가 풀렸다",
-        "hint_ko": "이제 됐소. 손님 가시는 길, 우리도 뒤따라 가겠소."
+        "hint_ko": "이제 됐소. 역려 가는 길, 우리도 뒤따라 가겠소."
       },
       "boss_resolved_toechi": {
         "title_ko": "역려를 물렸다",
@@ -2111,11 +2131,11 @@
       },
       "midboss_exit": {
         "title_ko": "다음 굿에서 보세",
-        "hint_ko": "중간보스가 물러났다 — 보상 없음"
+        "hint_ko": "큰 귀신이 물러났다 — 보상 없음"
       },
       "sal_lump": {
-        "title_ko": "살 덩어리",
-        "hint_ko": "깨어난 원귀를 막아라 — 원귀를 풀거나 부수면 덩어리가 빨리 거둬진다"
+        "title_ko": "원한 덩어리",
+        "hint_ko": "성난 귀신을 풀거나 베세요 — 덩어리가 빨리 거둬져요"
       }
     },
     "glyph_ko": {
@@ -2145,7 +2165,7 @@
     },
     "presenter": {
       "_doc": "waves/wave_presenter.gd 연출 수치(px = 640x360 논리 픽셀). 색은 art_palette 마스터 램프만.",
-      "banner_y": 80,
+      "banner_y": 64,
       "banner_h": 34,
       "banner_open_sec": 0.12,
       "banner_close_sec": 0.25,

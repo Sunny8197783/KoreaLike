@@ -556,7 +556,8 @@
           ],
           "grade_axis": "proc_chance_pct",
           "color_rule": "face",
-          "desc_ko": "무구 적중 시 확률로 전방 3갈래 할퀴기(길이 0.8), 피해=그 타격×50%, 대상당 내부쿨 0.15s"
+          "desc_ko": "무구 적중 시 확률로 전방 3갈래 할퀴기(길이 0.8), 피해=그 타격×50%, 대상당 내부쿨 0.15s",
+          "plain_ko": "칠 때 가끔 범 발톱이 세 갈래로 할퀸다"
         },
         {
           "id": "pwr_sansin_horyeong",
@@ -583,7 +584,8 @@
           ],
           "grade_axis": "cooldown_s",
           "color_rule": "none",
-          "desc_ko": "주기적 경악 파동, 공포 1.2s, 공포 적 받는 피해 증가"
+          "desc_ko": "주기적 경악 파동, 공포 1.2s, 공포 적 받는 피해 증가",
+          "plain_ko": "가끔 범이 울어 둘레 귀신을 밀친다"
         },
         {
           "id": "pwr_sansin_sangil",
@@ -607,7 +609,8 @@
           ],
           "grade_axis": "aura_radius_pct",
           "color_rule": "none",
-          "desc_ko": "길베 위 영가 넋두리 오라 반경 증가, 길베 위 무당 도무 증가"
+          "desc_ko": "길베 위 영가 넋두리 오라 반경 증가, 길베 위 무당 도무 증가",
+          "plain_ko": "흰 길 위에서 더 빨리 걷는다"
         },
         {
           "id": "pwr_sansin_maengho",
@@ -631,7 +634,8 @@
           ],
           "grade_axis": "dmg_x_base_red",
           "color_rule": "red",
-          "desc_ko": "영수 범 질주: 반경 8 내 밀집 방향 길이 12 폭 1.6"
+          "desc_ko": "영수 범 질주: 반경 8 내 밀집 방향 길이 12 폭 1.6",
+          "plain_ko": "범이 귀신 떼로 돌진한다"
         },
         {
           "id": "pwr_sansin_sanjigi",
@@ -655,7 +659,8 @@
           ],
           "grade_axis": "neok_sumyeong_add_s",
           "color_rule": "none",
-          "desc_ko": "영수 호랑이 경악 파동 반경 증가, 넋 수명 추가"
+          "desc_ko": "영수 호랑이 경악 파동 반경 증가, 넋 수명 추가",
+          "plain_ko": "넋 동무가 더 오래 따른다"
         }
       ],
       "gongsu": {
@@ -963,7 +968,8 @@
           ],
           "grade_axis": "proc_chance_pct",
           "color_rule": "weapon",
-          "desc_ko": "투사체 적중 시 물보라 반경 1.2, 둔화 25% 1.5s, 피해=원 타격 30%"
+          "desc_ko": "투사체 적중 시 물보라 반경 1.2, 둔화 25% 1.5s, 피해=원 타격 30%",
+          "plain_ko": "맞힐 때 가끔 물보라가 터진다"
         },
         {
           "id": "pwr_yongwang_yonggung_bomul",
@@ -984,7 +990,8 @@
           ],
           "grade_axis": "box_upgrade_pct",
           "color_rule": "none",
-          "desc_ko": "정예 이상 해결 시 상자 등급 +1 확률, 엽전 또는 넋 +1"
+          "desc_ko": "정예 이상 해결 시 상자 등급 +1 확률, 엽전 또는 넋 +1",
+          "plain_ko": "강한 귀신을 잡으면 구슬이 쏟아지기도 한다"
         },
         {
           "id": "pwr_yongwang_mulgil",
@@ -1008,7 +1015,8 @@
           ],
           "grade_axis": "gilbe_add_s",
           "color_rule": "none",
-          "desc_ko": "길베 위 도무 증가, 길베 지속 증가"
+          "desc_ko": "길베 위 도무 증가, 길베 지속 증가",
+          "plain_ko": "흰 길이 오래 남고 그 위에서 빨라진다"
         },
         {
           "id": "pwr_yongwang_haeil",
@@ -1032,7 +1040,8 @@
           ],
           "grade_axis": "dmg_x_base_red",
           "color_rule": "red",
-          "desc_ko": "전방 해일 폭 6 길이 10, 6유닛/s, 넉백 3"
+          "desc_ko": "전방 해일 폭 6 길이 10, 6유닛/s, 넉백 3",
+          "plain_ko": "앞으로 큰 물결이 밀려간다"
         },
         {
           "id": "pwr_yongwang_neokgeonjigi",
@@ -1056,7 +1065,8 @@
           ],
           "grade_axis": "clear_water_radius_pct",
           "color_rule": "none",
-          "desc_ko": "맑은 물 장판 반경 증가, 장판 안 맺힘 복귀 타이머 감속/정지"
+          "desc_ko": "맑은 물 장판 반경 증가, 장판 안 맺힘 복귀 타이머 감속/정지",
+          "plain_ko": "맑은 물 자리가 넓고 세진다"
         }
       ],
       "gongsu": {
@@ -1341,7 +1351,8 @@
           ],
           "grade_axis": "dmg_x_face_base",
           "color_rule": "face",
-          "desc_ko": "7초마다 7방향 별 탄(관통 1, 탄속 7)"
+          "desc_ko": "7초마다 7방향 별 탄(관통 1, 탄속 7)",
+          "plain_ko": "7초마다 둘레에 별이 떨어진다"
         },
         {
           "id": "pwr_chilseong_yeonmyeong",
@@ -1365,7 +1376,8 @@
           ],
           "grade_axis": "heal_pct",
           "color_rule": "none",
-          "desc_ko": "정기 0 시 명줄보다 먼저 발동, 회복 + 무적 2.0s"
+          "desc_ko": "정기 0 시 명줄보다 먼저 발동, 회복 + 무적 2.0s",
+          "plain_ko": "체력이 바닥나면 한 번 되살아난다"
         },
         {
           "id": "pwr_chilseong_byeolgil",
@@ -1389,7 +1401,8 @@
           ],
           "grade_axis": "dmg_x_ring_effect2",
           "color_rule": "face",
-          "desc_ko": "길닦음 성립 시 고리 둘레 별 낙하(반경 1.0), 피해=효과2×0.5"
+          "desc_ko": "길닦음 성립 시 고리 둘레 별 낙하(반경 1.0), 피해=효과2×0.5",
+          "plain_ko": "흰 길로 감싸면 별이 떨어진다"
         },
         {
           "id": "pwr_chilseong_pagunseong",
@@ -1410,7 +1423,8 @@
           ],
           "grade_axis": "gyeoldan_add_pct",
           "color_rule": "red",
-          "desc_ko": "결단 증가, 결단타 시 별 낙하 1(반경 1.2, base_red_max×1.0, 내부쿨 0.5s)"
+          "desc_ko": "결단 증가, 결단타 시 별 낙하 1(반경 1.2, base_red_max×1.0, 내부쿨 0.5s)",
+          "plain_ko": "치명타가 늘고, 치명타 때 별이 떨어진다"
         },
         {
           "id": "pwr_chilseong_myeong_itgi",
@@ -1431,7 +1445,8 @@
           ],
           "grade_axis": "survive_chance_pct",
           "color_rule": "none",
-          "desc_ko": "대신 맞기 시 영가가 천도하지 않고 수명 +5초(넋 미지급)"
+          "desc_ko": "대신 맞기 시 영가가 천도하지 않고 수명 +5초(넋 미지급)",
+          "plain_ko": "맞을 때 가끔 받은 피해만큼 회복한다"
         }
       ],
       "gongsu": {
@@ -1747,7 +1762,8 @@
           ],
           "grade_axis": "dmg_pct",
           "color_rule": "buff",
-          "desc_ko": "같은 방향(±30°) 2.0s 이상 이동 시 진군: 모든 무구 피해 증가, 방향 이탈 유예 0.3s"
+          "desc_ko": "같은 방향(±30°) 2.0s 이상 이동 시 진군: 모든 무구 피해 증가, 방향 이탈 유예 0.3s",
+          "plain_ko": "한 방향으로 계속 걸으면 피해가 오른다"
         },
         {
           "id": "pwr_janggun_obang_howi",
@@ -1771,7 +1787,8 @@
           ],
           "grade_axis": "sinbok_add",
           "color_rule": "none",
-          "desc_ko": "신복 증가, 피격 후 무적 연장"
+          "desc_ko": "신복 증가, 피격 후 무적 연장",
+          "plain_ko": "방어가 오르고, 맞은 뒤 더 오래 안 다친다"
         },
         {
           "id": "pwr_janggun_gunung_haengjin",
@@ -1792,7 +1809,8 @@
           ],
           "grade_axis": "jangdan_per_stack_pct",
           "color_rule": "none",
-          "desc_ko": "영가 8명당 장단 감소, 최대 3중첩, 하한 40%"
+          "desc_ko": "영가 8명당 장단 감소, 최대 3중첩, 하한 40%",
+          "plain_ko": "넋 동무가 많을수록 더 자주 친다"
         },
         {
           "id": "pwr_janggun_geommu",
@@ -1819,7 +1837,8 @@
           ],
           "grade_axis": "dmg_x_base_red",
           "color_rule": "red",
-          "desc_ko": "적 무구 N회 발동마다 월도 회전 베기"
+          "desc_ko": "적 무구 N회 발동마다 월도 회전 베기",
+          "plain_ko": "붉은 무기를 쓸 때 가끔 칼춤으로 벤다"
         },
         {
           "id": "pwr_janggun_sinjanggi",
@@ -1840,7 +1859,8 @@
           ],
           "grade_axis": "howi_cooldown_s",
           "color_rule": "white",
-          "desc_ko": "신장 호위 대신 맞기 쿨 감소, 신장 접촉 적에게 백 피해(오라 공식×1.0)"
+          "desc_ko": "신장 호위 대신 맞기 쿨 감소, 신장 접촉 적에게 백 피해(오라 공식×1.0)",
+          "plain_ko": "호위 장수에 닿은 귀신이 풀린다"
         }
       ],
       "gongsu": {
@@ -2120,7 +2140,8 @@
           ],
           "grade_axis": "heal_per_haewon",
           "color_rule": "none",
-          "desc_ko": "해원 1당 정기 회복(초당 상한)"
+          "desc_ko": "해원 1당 정기 회복(초당 상한)",
+          "plain_ko": "풀어 줄 때마다 체력이 조금 찬다"
         },
         {
           "id": "pwr_barigongju_samsaekkot",
@@ -2141,7 +2162,8 @@
           ],
           "grade_axis": "mark_chance_pct",
           "color_rule": "white",
-          "desc_ko": "풀릴 기색 진입 시 꽃 표식: 다음 백 피해 1회 ×2.0"
+          "desc_ko": "풀릴 기색 진입 시 꽃 표식: 다음 백 피해 1회 ×2.0",
+          "plain_ko": "흰 테두리 귀신에 꽃 — 그 자리에서 크게 풀린다"
         },
         {
           "id": "pwr_barigongju_jeoseunggil",
@@ -2165,7 +2187,8 @@
           ],
           "grade_axis": "dmg_x_aura_per_s",
           "color_rule": "face",
-          "desc_ko": "영가 천도 시 반경 내 피해=오라 초당 피해×3"
+          "desc_ko": "영가 천도 시 반경 내 피해=오라 초당 피해×3",
+          "plain_ko": "넋 동무가 떠날 때 둘레를 풀어 준다"
         },
         {
           "id": "pwr_barigongju_mujangseung",
@@ -2186,7 +2209,8 @@
           ],
           "grade_axis": "neok_convert_add_pct",
           "color_rule": "none",
-          "desc_ko": "바리 위엄 넋 전환 확률 증가(총 상한 50%)"
+          "desc_ko": "바리 위엄 넋 전환 확률 증가(총 상한 50%)",
+          "plain_ko": "벤 귀신이 구슬을 더 남긴다"
         },
         {
           "id": "pwr_barigongju_ogu",
@@ -2210,7 +2234,8 @@
           ],
           "grade_axis": "neok_sumyeong_add_s",
           "color_rule": "none",
-          "desc_ko": "넋 수명·행렬 상한 증가"
+          "desc_ko": "넋 수명·행렬 상한 증가",
+          "plain_ko": "넋 동무가 더 많이, 더 오래 따른다"
         }
       ],
       "gongsu": {
@@ -2518,7 +2543,8 @@
           ],
           "grade_axis": "offering_heal_pct",
           "color_rule": "none",
-          "desc_ko": "공물 회복량·드롭 증가"
+          "desc_ko": "공물 회복량·드롭 증가",
+          "plain_ko": "강한 귀신을 잡으면 떡이 나와 체력이 찬다"
         },
         {
           "id": "pwr_jeseok_daegam_jaesu",
@@ -2539,7 +2565,8 @@
           ],
           "grade_axis": "siju_add_pct",
           "color_rule": "none",
-          "desc_ko": "시주 증가"
+          "desc_ko": "시주 증가",
+          "plain_ko": "엽전을 더 받는다"
         },
         {
           "id": "pwr_jeseok_daegam_yeomju",
@@ -2563,7 +2590,8 @@
           ],
           "grade_axis": "ring_dmg_pct",
           "color_rule": "white",
-          "desc_ko": "길닦음 효과2 피해 증가, 재사용 대기 감소"
+          "desc_ko": "길닦음 효과2 피해 증가, 재사용 대기 감소",
+          "plain_ko": "흰 길로 감싸면 안쪽에 큰 피해"
         },
         {
           "id": "pwr_jeseok_daegam_donbaram",
@@ -2584,7 +2612,8 @@
           ],
           "grade_axis": "red_dmg_pct_per_coin",
           "color_rule": "red",
-          "desc_ko": "엽전 자동 흡인(1.0s 지연), 런 획득 엽전당 적 무구 피해 증가(상한 30%)"
+          "desc_ko": "엽전 자동 흡인(1.0s 지연), 런 획득 엽전당 적 무구 피해 증가(상한 30%)",
+          "plain_ko": "많이 벨수록 붉은 무기가 세진다"
         },
         {
           "id": "pwr_jeseok_daegam_geumjul",
@@ -2611,7 +2640,8 @@
           ],
           "grade_axis": "interval_s",
           "color_rule": "none",
-          "desc_ko": "금줄 결계 주기·반경·둔화 강화"
+          "desc_ko": "금줄 결계 주기·반경·둔화 강화",
+          "plain_ko": "둘레 울타리가 귀신을 밀쳐 낸다"
         }
       ],
       "gongsu": {

@@ -23,12 +23,14 @@ const C_HWANG: Color = Color(0.91, 0.725, 0.192, 1.0)
 const PANEL_Y: float = 82.0
 const PANEL_W: float = 400.0
 const LINE_H: float = 12.0
-const LBL_W: float = 244.0
+const LBL_W: float = 280.0
 const TRIAL_FULL_S: float = 7.0         # 첫 시련: 두 길을 두 줄로 풀어 보이는 시간(그 뒤 한 줄로 접힘)
 const TRIAL_FULL_S_LATER: float = 3.0
 
 var _c: Control
 var _font: Font
+var _bold: Font
+var _small: Font
 var _brush: Font
 var _sig: int = -1
 var _s_title: String = ""
@@ -39,9 +41,11 @@ var _l1_mark: int = 0        # 0 없음 1 마름모(위엄) 2 원(가호)
 var _l2_mark: int = 0
 var _s_c1: String = ""       # 접힌 한 줄(시련 중반부터): ◆ _s_c1 · ○ _s_c2
 var _s_c2: String = ""
-var _s_vuln_short: String = "지금이다 — 화신이 숨을 고른다! 붙어서 쳐라 ×1.5"
-var _s_vuln: String = "지금이다 — 화신이 숨을 고른다. 붙어서 쳐라! (×1.5)"
-var _s_leave: String = "마당을 벗어났다 — 두 게이지가 절반만 찬다. 금줄 안으로!"
+var _s_vuln_short: String = "지금! 큰 신령이 숨을 고른다 — 붙어서 치기"
+var _s_vuln: String = "지금! 큰 신령이 숨을 고른다 — 붙어서 치면 1.5배"
+var _s_leave: String = "흰 줄 밖이면 절반만 찬다"
+var _s_lowhp: String = "체력이 낮다 — 물러나도 실패 없음"
+var _s_big3: String = ""
 var _s_big: String = ""
 var _s_big2: String = ""
 var _big_t: float = -10.0
@@ -60,10 +64,11 @@ func _ready() -> void:
 	_c.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_c.draw.connect(_on_draw)
 	add_child(_c)
-	_font = ThemeDB.fallback_font
-	var th: Theme = ThemeDB.get_project_theme()
-	if th != null and th.default_font != null:
-		_font = th.default_font
+	# 글꼴: 테마 기본값에 기대지 않고 UiKit 단계(T3 본문 12 / T4 보조 10)를 직접 쓴다(design/19 §4.1)
+	UiKit.setup_fonts()
+	_font = UiKit.body()
+	_bold = UiKit.bold()
+	_small = UiKit.small()
 	var bf: FontFile = load("res://assets/fonts/nanum_brush/NanumBrushScript-Regular.ttf") as FontFile
 	if bf != null:
 		bf = bf.duplicate() as FontFile
@@ -100,37 +105,43 @@ func _refresh_strings(td: TrialDirector) -> void:
 	lsig = lsig ^ (td.reroll_left << 20) ^ ((1 << 24) if td.santong_on else 0)
 	if lsig != _lbl_sig:
 		_lbl_sig = lsig
-		_s_santong = "다시 묻기 · 남은 %d" % td.reroll_left
+		_s_santong = "다시 고르기 · %d번" % td.reroll_left
 		for i in 2:
 			_lbl[i] = _circle_label(td, td.cand[i])
 	# 해결·빙의·합일 큰 글자
 	var rsig: int = td.ph * 7 + td.slot * 131 + td.hapil_idx * 3
 	if rsig != _last_res_sig:
 		_last_res_sig = rsig
+		if td.ph == TrialDirector.Ph.RESOLVE or td.ph >= TrialDirector.Ph.HAPIL_OMEN:
+			_s_big3 = ""
 		if td.ph == TrialDirector.Ph.RESOLVE:
-			_s_big = Defs.face_title(td.active_deity, td.res_face)
-			_s_big2 = "%s — 완성 빙의" % Defs.name_ko(td.active_deity) if td.res_complete else "%s — 미완 빙의 · 효과 70%%" % Defs.name_ko(td.active_deity)
+			# 결과(design/19 §4.6): 붓 '바리공주' + '힘을 받았다 — 칼 피해 +30% (절반 성공)' + '신령 4분 중 1분 · 18:00에…'
+			_s_big = Defs.short_name(td.active_deity)
+			var fx: String = Defs.face_plain(td.active_deity, td.res_face)
+			_s_big2 = "힘을 받았다 — %s" % fx if td.res_complete else "힘을 받았다 — %s (절반 성공)" % fx
+			var got: int = td.possessed.size() + (0 if td.possessed.has(td.active_deity) else 1)
+			_s_big3 = "신령 4분 중 %d분 · 18:00에 모두 모이면 큰 힘" % mini(4, got)
 			_big_t = now
-			_big_dur = 1.6
+			_big_dur = 2.2
 			_claim_big()
 			_big_col = C_JEOK_HI if td.res_face == &"wieom" else C_HANJI
 		elif td.ph == TrialDirector.Ph.HAPIL_CALL and td.hapil_idx >= 0 and td.hapil_idx < td.hapil_ids.size():
 			_s_big = td.hapil_word
-			_s_big2 = Defs.name_ko(td.hapil_ids[td.hapil_idx])
+			_s_big2 = Defs.short_name(td.hapil_ids[td.hapil_idx])
 			_big_t = now
 			_big_dur = 1.2
 			_claim_big()
 			_big_col = Defs.color(td.hapil_ids[td.hapil_idx]).lightened(0.25)
 		elif td.ph == TrialDirector.Ph.HAPIL_ACTIVE and td.hapil_word != "":
 			_s_big = td.hapil_word
-			_s_big2 = {&"hapil_wise": "위세(威勢) 합일 · 결단 +10%p", &"hapil_jabi": "자비(慈悲) 합일 · 풀릴 기색 +10%p · 행렬 +12", &"hapil_yangmyeon": "양면(兩面) 합일 · 신빨 +8%"}.get(td.hapil_form, "신령 합일")
+			_s_big2 = {&"hapil_wise": "신령 모두 내림 · 치명타 +10%", &"hapil_jabi": "신령 모두 내림 · 흰 테두리 쉽게 · 넋 동무 +12", &"hapil_yangmyeon": "신령 모두 내림 · 공격력 +8%"}.get(td.hapil_form, "신령 모두 내림")
 			_big_t = now
 			_big_dur = 3.2
 			_claim_big()
 			_big_col = C_HWANG
 		elif td.ph == TrialDirector.Ph.HAPIL_OMEN:
-			_s_big = "신령 합일"
-			_s_big2 = "모신 신령이 모두 내린다"
+			_s_big = "신령 모두 내림"
+			_s_big2 = "모신 신령이 모두 내려온다 — 마지막 공세"
 			_big_t = now
 			_big_dur = 2.0
 			_claim_big()
@@ -148,10 +159,10 @@ func _claim_big() -> void:
 
 
 ## 안내판 = '지금 할 일' 한 줄(왼쪽 작은 말머리 + 가운데 할 일 + 오른쪽 남은 초).
-## 시련(TRIAL) 첫 몇 초만 두 길(◆ 위엄 / ○ 가호)을 두 줄로 풀어 쓰고, 그 뒤엔 한 줄로 접는다.
-## 제목(어느 신령의 시련인지)은 HUD 의례 슬롯(y37 '시련 n · 신령')과 화신 이름표가 이미 말한다 — 여기서 되풀이하지 않는다.
+## 시련(TRIAL) 첫 몇 초만 두 길(◆ 싸움 / ○ 모심)을 두 줄로 풀어 쓰고, 그 뒤엔 한 줄로 접는다.
+## 쉬운 첫 시험(td.easy_trial): 강림 수치를 숨기고 안내판은 한 줄(design/19 §4.6).
 func _build_panel(td: TrialDirector, sec: int) -> void:
-	var ord: String = Defs.ordinal(td.slot + 1)
+	var easy: bool = td.easy_trial and td.slot == 0
 	_s_l1 = ""
 	_s_l2 = ""
 	_s_c1 = ""
@@ -161,64 +172,66 @@ func _build_panel(td: TrialDirector, sec: int) -> void:
 	_l2_mark = 0
 	match td.ph:
 		TrialDirector.Ph.OMEN:
-			# 예고 10초: 한 줄. '다시 묻기'는 산통 위 월드 이름표로, 두 신령의 면은 좌우 카드로.
-			_s_title = "%s 시련" % ord
-			_s_time = "강림 %d" % maxi(0, sec)
-			_s_l1 = "신령이 내린다 — 좌우 원 중 하나를 고르게 된다"
+			# 예고 10초: 한 줄. 두 신령의 힘은 좌우 카드가 말한다.
+			_s_title = "신령의 시험"
+			_s_time = "" if easy else "%d" % maxi(0, sec)
+			_s_l1 = "신령이 온다 — 왼쪽·오른쪽 원 중 하나로"
 		TrialDirector.Ph.DESCEND, TrialDirector.Ph.CONFIRM:
-			_s_title = "%s 시련" % ord
-			_s_time = "%d" % maxi(0, sec)
-			_s_l1 = "모실 신령의 원으로 걸어가 1초 서라"
+			_s_title = "신령의 시험"
+			_s_time = "" if easy else "%d" % maxi(0, sec)
+			_s_l1 = "모실 신령의 원 안으로 걸어가 잠깐 서기"
 		TrialDirector.Ph.CLEAR:
-			_s_title = _name_hj(td.active_deity)
-			_s_l1 = "금줄 안이 시련 마당 — 먼저 찬 면이 실린다"
+			_s_title = Defs.short_name(td.active_deity)
+			_s_l1 = "흰 줄 안이 시험 자리 — 먼저 찬 쪽 힘을 받는다"
 		TrialDirector.Ph.TRIAL:
-			_s_title = "-"      # 패널은 켜되 말머리는 없음(HUD y37 이 신령 이름을 말한다)
+			_s_title = "-"      # 패널은 켜되 말머리는 없음(HUD 가 신령 이름을 말한다)
 			_s_time = "%d" % maxi(0, sec)
-			_s_l1 = "위엄 — " + Defs.wieom_hint()
-			_s_l2 = "가호 — " + Defs.task_hint(td.active_deity)
-			_s_c1 = "화신을 쳐라"
+			_s_l1 = "싸움 — 큰 신령 곁에서 무기로 치기"
+			_s_l2 = "모심 — " + _task_short(td.active_deity)
+			_s_c1 = "큰 신령 곁에서 싸우기"
 			_s_c2 = _task_short(td.active_deity)
 			_l1_mark = 1
 			_l2_mark = 2
 		TrialDirector.Ph.AFTERGLOW:
 			_s_title = Defs.short_name(td.active_deity)
-			_s_l1 = "모신 신령 %d / 4 · 18:00에 모두 함께 실린다" % td.possessed.size()
+			_s_l1 = "신령 4분 중 %d분 · 18:00에 모두 모이면 큰 힘" % mini(4, td.possessed.size())
 		_:
 			_s_title = ""
 
 
-## 가호 과제 한 줄 요약(접힌 안내판용, 12자 안팎) — UI 표시 전용 문구
+## 모심(가호) 과제 한 줄(쉬운 말, 14자 안팎) — UI 표시 전용 문구
 func _task_short(d: StringName) -> String:
 	match String(d):
 		"deity_sansin":
-			return "쉼터 원 안에서 영가를 지켜라"
+			return "쉼터 원 안에서 넋 지키기"
 		"deity_yongwang":
-			return "넋을 건져 용왕상으로"
+			return "물속 넋을 건져 용왕상으로"
 		"deity_chilseong":
-			return "별을 번호 순서대로 밟아라"
+			return "별을 번호 순서로 밟기"
 		"deity_janggun":
-			return "오방기 다섯 곳에 서라"
+			return "깃발 자리 다섯 곳에 서기"
 		"deity_barigongju":
-			return "원혼 떼를 저승 문으로 몰아라"
+			return "작은 넋들을 문으로 몰기"
 		"deity_jeseok_daegam":
-			return "굿상을 지키고 고리를 닫아라"
-	return Defs.task_object_name(d) + " 의례를 해라"
+			return "굿상 곁에서 흰 길로 감싸기"
+	return Defs.task_object_name(d) + " 과제 하기"
 
 
-## "산신(山神)" — 한자가 없는 신령은 이름만(빈 괄호 금지).
+## 원 카드 머리: 신령 이름(한자 없음) + 내 신령 표시
 func _name_hj(d: StringName) -> String:
-	var hj: String = Defs.short_hanja(d)
-	return Defs.short_name(d) if hj == "" else "%s(%s)" % [Defs.short_name(d), hj]
+	return Defs.short_name(d)
 
 
 func _circle_label(td: TrialDirector, d: StringName) -> PackedStringArray:
 	if d == &"":
 		return PackedStringArray()
-	var head: String = "%s %s" % [Defs.short_name(d), Defs.short_hanja(d)]
+	var head: String = Defs.short_name(d)
 	if d == td.momju:
-		head += " · 몸주신"
-	return PackedStringArray([head, Defs.face_summary(d, &"wieom"), Defs.face_summary(d, &"gaho")])
+		head += " · 내 신령"
+	# 처음 두 판은 신령마다 다른 힘 대신 공통 한 줄(design/19 §4.6) — 처음 보는 낱말을 줄인다. 셋째 판부터 FACE_SHORT.
+	if td.easy_trial or td._easy_runs():
+		return PackedStringArray([head, "싸우는 힘이 세져요", "나를 돕는 힘이 생겨요"])
+	return PackedStringArray([head, Defs.face_short(d, &"wieom"), Defs.face_short(d, &"gaho")])
 
 
 # ─── 그리기 ────────────────────────────────────────────────────────────
@@ -297,8 +310,8 @@ func _on_draw() -> void:
 		var rx: float = pr.end.x - 6.0
 		# 왼쪽 말머리(작은 황 글자 + 구분 1px)
 		if _s_title != "" and _s_title != "-":
-			var tgw: float = _font.get_string_size(_s_title, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-			_text(Vector2(lx, ty), _s_title, 11, Color(C_HWANG, a), HORIZONTAL_ALIGNMENT_LEFT, tgw + 4.0)
+			var tgw: float = _bold.get_string_size(_s_title, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+			_text(Vector2(lx, ty), _s_title, 12, Color(C_HWANG, a), HORIZONTAL_ALIGNMENT_LEFT, tgw + 4.0, _bold)
 			lx += roundf(tgw) + 6.0
 			_c.draw_rect(Rect2(lx, PANEL_Y + 4.0, 1, 10), Color(C_HANJI_DK, 0.5 * a))
 			lx += 6.0
@@ -312,39 +325,42 @@ func _on_draw() -> void:
 			rx -= roundf(tmw) + 8.0
 		var tw: float = maxf(40.0, rx - lx)
 		var mid: float = roundf((lx + rx) * 0.5)
+		var low_hp: bool = is_trial and Game.hp_max > 0.0 and Game.hp < Game.hp_max * 0.3
 		if not is_trial:
-			_text(Vector2(mid, ty), _s_l1, 11, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
+			_text(Vector2(mid, ty), _s_l1, 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
+		elif low_hp:
+			_text(Vector2(mid, ty), _s_lowhp, 12, Color(C_JEOK_HI if int(now * 3.0) % 2 == 0 else C_HANJI, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
 		elif vul:
 			# 숨 고르기: 다른 글을 밀어내고 한 줄만(가장 급한 할 일)
 			_mark(Vector2(lx + 3.0, ty - 4.0), 1, a)
-			_text(Vector2(lx + 12.0, ty), _s_vuln_short if compact else _s_vuln, 11, Color(C_HANJI if int(now * 6.0) % 2 == 0 else C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
+			_text(Vector2(lx + 12.0, ty), _s_vuln_short if compact else _s_vuln, 12, Color(C_HANJI if int(now * 6.0) % 2 == 0 else C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
 			if two:
 				_mark(Vector2(lx + 3.0, ty + LINE_H - 4.0), 2, a)
-				_text(Vector2(lx + 12.0, ty + LINE_H), _s_l2, 11, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
+				_text(Vector2(lx + 12.0, ty + LINE_H), _s_l2, 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
 		elif compact:
 			# ◆ 화신을 쳐라 · ○ 과제 — 가운데 정렬로 한 줄
-			var w1: float = _font.get_string_size(_s_c1, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-			var w2: float = _font.get_string_size(_s_c2, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+			var w1: float = _font.get_string_size(_s_c1, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+			var w2: float = _font.get_string_size(_s_c2, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 			var sep: float = 18.0
 			var total: float = 12.0 + w1 + sep + 12.0 + w2
 			var x0: float = roundf(mid - total * 0.5)
 			_mark(Vector2(x0 + 3.0, ty - 4.0), 1, a)
-			_text(Vector2(x0 + 12.0, ty), _s_c1, 11, Color(C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, w1 + 4.0)
+			_text(Vector2(x0 + 12.0, ty), _s_c1, 12, Color(C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, w1 + 4.0)
 			var x1: float = x0 + 12.0 + w1 + sep
 			_c.draw_rect(Rect2(roundf(x1 - sep * 0.5), PANEL_Y + 5.0, 1, 8), Color(C_HANJI_DK, 0.6 * a))
 			_mark(Vector2(x1 + 3.0, ty - 4.0), 2, a)
-			_text(Vector2(x1 + 12.0, ty), _s_c2, 11, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, w2 + 4.0)
+			_text(Vector2(x1 + 12.0, ty), _s_c2, 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, w2 + 4.0)
 		else:
 			_mark(Vector2(lx + 3.0, ty - 4.0), _l1_mark, a)
-			_text(Vector2(lx + 12.0, ty), _s_l1, 11, Color(C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
+			_text(Vector2(lx + 12.0, ty), _s_l1, 12, Color(C_JEOK_HI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
 			if two:
 				_mark(Vector2(lx + 3.0, ty + LINE_H - 4.0), _l2_mark, a)
-				_text(Vector2(lx + 12.0, ty + LINE_H), _s_l2, 11, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
+				_text(Vector2(lx + 12.0, ty + LINE_H), _s_l2, 12, Color(C_HANJI, a), HORIZONTAL_ALIGNMENT_LEFT, tw - 12.0)
 		if is_trial and td.leaving:
-			var lw: float = roundf(_font.get_string_size(_s_leave, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x) + 16.0
+			var lw: float = roundf(_font.get_string_size(_s_leave, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x) + 16.0
 			var lr: Rect2 = Rect2(cx - roundf(lw * 0.5), pr.end.y + 2.0, lw, 15.0)
 			_c.draw_rect(lr, Color(C_MEOK, 0.72))
-			_text(Vector2(cx, lr.position.y + 11.0), _s_leave, 11, C_JEOK_HI if int(now * 4.0) % 2 == 0 else C_HANJI, HORIZONTAL_ALIGNMENT_CENTER, lw)
+			_text(Vector2(cx, lr.position.y + 11.0), _s_leave, 12, C_JEOK_HI if int(now * 4.0) % 2 == 0 else C_HANJI, HORIZONTAL_ALIGNMENT_CENTER, lw)
 	# 화신 원 이름표(OMEN~CONFIRM) — 원 가운데 위, 화면 안으로 고정
 	if ph >= TrialDirector.Ph.OMEN and ph <= TrialDirector.Ph.CONFIRM:
 		var ct: Transform2D = _c.get_viewport().get_canvas_transform()
@@ -372,7 +388,7 @@ func _on_draw() -> void:
 			var dcol: Color = Defs.color(td.cand[i])
 			# 연습 굿판: 효과 수치 두 줄을 빼고 이름 + '◆ 꺾기 · ○ 모시기' 한 줄만(글 줄이기, design/17 리뷰)
 			var tut: bool = Game.tutorial_mode
-			var r2: Rect2 = Rect2(roundf(sp.x - LBL_W * 0.5), roundf(sp.y), LBL_W, 29.0 if tut else 41.0)
+			var r2: Rect2 = Rect2(roundf(sp.x - LBL_W * 0.5), roundf(sp.y), LBL_W, 30.0 if tut else 45.0)
 			# 무당이 카드 가까이(+8px) 들어오면 카드를 옅게 — 무당 몸을 가리지 않게(design/18 §2.3)
 			var bga: float = 0.92
 			if Game.player != null and is_instance_valid(Game.player):
@@ -390,46 +406,54 @@ func _on_draw() -> void:
 			_text(Vector2(sp.x, r2.position.y + 12.0), lb[0], 12, Color(dcol.lightened(0.4), la), HORIZONTAL_ALIGNMENT_CENTER, LBL_W - 8.0)
 			if tut:
 				_mark(Vector2(sp.x - 46.0, r2.position.y + 21.0), 1, la)
-				_text(Vector2(sp.x - 38.0, r2.position.y + 25.0), "꺾기", 11, Color(C_JEOK_HI, la), HORIZONTAL_ALIGNMENT_LEFT, 40.0)
-				_mark(Vector2(sp.x + 6.0, r2.position.y + 21.0), 2, la)
-				_text(Vector2(sp.x + 14.0, r2.position.y + 25.0), "모시기", 11, Color(C_HANJI, la), HORIZONTAL_ALIGNMENT_LEFT, 44.0)
+				_text(Vector2(sp.x - 38.0, r2.position.y + 25.0), "싸우기", 12, Color(C_JEOK_HI, la), HORIZONTAL_ALIGNMENT_LEFT, 44.0)
+				_mark(Vector2(sp.x + 10.0, r2.position.y + 21.0), 2, la)
+				_text(Vector2(sp.x + 18.0, r2.position.y + 25.0), "모시기", 12, Color(C_HANJI, la), HORIZONTAL_ALIGNMENT_LEFT, 44.0)
 				if sc.x < 8.0 or sc.x > vs.x - 8.0 or sc.y < 8.0 or sc.y > vs.y - 8.0:
 					_edge_arrow(sc, vs, dcol.lightened(0.3))
 				continue
-			# 두 면 = '꺾으면(위엄)' / '모시면(가호)' 말머리를 표식 옆에 붙인다(기호만으로 두지 않음)
-			_mark(Vector2(r2.position.x + 11.0, r2.position.y + 21.0), 1, la)
-			_text(Vector2(r2.position.x + 19.0, r2.position.y + 25.0), "꺾으면", 11, Color(C_JEOK_HI.darkened(0.15), la), HORIZONTAL_ALIGNMENT_LEFT, 40.0)
-			_text(Vector2(r2.position.x + 57.0, r2.position.y + 25.0), lb[1], 11, Color(C_JEOK_HI, la), HORIZONTAL_ALIGNMENT_LEFT, LBL_W - 62.0)
-			_mark(Vector2(r2.position.x + 11.0, r2.position.y + 33.0), 2, la)
-			_text(Vector2(r2.position.x + 19.0, r2.position.y + 37.0), "모시면", 11, Color(C_HANJI_DK.lightened(0.2), la), HORIZONTAL_ALIGNMENT_LEFT, 40.0)
-			_text(Vector2(r2.position.x + 57.0, r2.position.y + 37.0), lb[2], 11, Color(C_HANJI, la), HORIZONTAL_ALIGNMENT_LEFT, LBL_W - 62.0)
+			# 두 길 = '◆ 싸워 이기면: …' / '○ 모셔 드리면: …' (design/19 §4.6 — 기호만으로 두지 않음)
+			var kx: float = r2.position.x + 19.0
+			var kw: float = roundf(_font.get_string_size("모셔 드리면:", HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x) + 5.0
+			_mark(Vector2(r2.position.x + 11.0, r2.position.y + 22.0), 1, la)
+			_text(Vector2(kx, r2.position.y + 26.0), "싸워 이기면:", 12, Color(C_JEOK_HI.darkened(0.15), la), HORIZONTAL_ALIGNMENT_LEFT, kw)
+			_text(Vector2(kx + kw, r2.position.y + 26.0), lb[1], 12, Color(C_JEOK_HI, la), HORIZONTAL_ALIGNMENT_LEFT, LBL_W - 24.0 - kw)
+			_mark(Vector2(r2.position.x + 11.0, r2.position.y + 36.0), 2, la)
+			_text(Vector2(kx, r2.position.y + 40.0), "모셔 드리면:", 12, Color(C_HANJI_DK.lightened(0.2), la), HORIZONTAL_ALIGNMENT_LEFT, kw)
+			_text(Vector2(kx + kw, r2.position.y + 40.0), lb[2], 12, Color(C_HANJI, la), HORIZONTAL_ALIGNMENT_LEFT, LBL_W - 24.0 - kw)
 			# 원이 화면 밖이면 가장자리 화살표
 			if sc.x < 8.0 or sc.x > vs.x - 8.0 or sc.y < 8.0 or sc.y > vs.y - 8.0:
 				_edge_arrow(sc, vs, dcol.lightened(0.3))
 		# 산통 이름표(월드 위치): '다시 묻기 · 남은 n'
 		if td.santong_on and _s_santong != "" and not Game.tutorial_mode:
 			var ss: Vector2 = _c.get_viewport().get_canvas_transform() * td.santong_pos
-			var sw: float = roundf(_font.get_string_size(_s_santong, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x) + 10.0
+			var sw: float = roundf(_font.get_string_size(_s_santong, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x) + 10.0
 			_c.draw_rect(Rect2(roundf(ss.x - sw * 0.5), roundf(ss.y - 33.0), sw, 15.0), Color(C_MEOK, 0.62))
-			_text(Vector2(ss.x, ss.y - 22.0), _s_santong, 11, Color(C_HWANG, 0.75 + 0.25 * td.santong_k), HORIZONTAL_ALIGNMENT_CENTER, 140.0)
+			_text(Vector2(ss.x, ss.y - 22.0), _s_santong, 12, Color(C_HWANG, 0.75 + 0.25 * td.santong_k), HORIZONTAL_ALIGNMENT_CENTER, 140.0)
 	# 마당 앵커가 화면 밖(이탈)일 때 방향 화살표
 	if ph == TrialDirector.Ph.TRIAL and td.leaving:
 		var ct2: Transform2D = _c.get_viewport().get_canvas_transform()
 		_edge_arrow(ct2 * td.anchor, vs, C_JEOK_HI)
-	# 큰 글자(해결·합일): 0.12s 동안 위에서 6px 내려앉으며 찍힌다
+	# 큰 글자(해결·합일): 0.12s 동안 위에서 6px 내려앉으며 찍힌다. 받침 α0.8(짧게 뜨므로 층 규칙 유지, design/19 §4.6)
 	var ba: float = now - _big_t
 	if ba >= 0.0 and ba < _big_dur and _s_big != "" and ph != TrialDirector.Ph.JEOMJI:
 		var al2: float = clampf((_big_dur - ba) / 0.4, 0.0, 1.0)
-		var by2: float = roundf(vs.y * 0.27)   # 띠 아래 끝(by2+24) ≤ y122 — 무당 머리 위를 덮지 않는다(design/18 §2.3)
-		var big_size: int = 48 if ph >= TrialDirector.Ph.HAPIL_OMEN else 36
+		var three: bool = _s_big3 != ""
+		# 띠 아래 끝 ≤ y122 — 무당 머리 위를 덮지 않는다(design/18 §2.3). 셋째 줄(결과)이 있으면 붓 32로 줄여 같은 띠 안에.
+		var by2: float = roundf(vs.y * 0.27) - (4.0 if three else 0.0)
+		var big_size: int = 48 if ph >= TrialDirector.Ph.HAPIL_OMEN else (32 if three else 36)
 		var drop: float = roundf(-6.0 * (1.0 - clampf(ba / 0.12, 0.0, 1.0)))
-		var bw: float = 260.0 if ph < TrialDirector.Ph.HAPIL_OMEN else 340.0
-		_c.draw_rect(Rect2(cx - bw * 0.5, by2 - 34.0, bw, 58.0), Color(C_MEOK, 0.5 * al2))
-		vis_rects["center:trial_big"] = [Rect2(cx - bw * 0.5, by2 - 34.0, bw, 58.0), Engine.get_process_frames()]
-		_c.draw_rect(Rect2(cx - bw * 0.5, by2 - 34.0, bw, 1), Color(_big_col, 0.8 * al2))
-		_c.draw_rect(Rect2(cx - bw * 0.5, by2 + 23.0, bw, 1), Color(_big_col, 0.8 * al2))
+		var bw: float = 300.0 if ph < TrialDirector.Ph.HAPIL_OMEN else 340.0
+		var top: float = by2 - (28.0 if three else 34.0)
+		var br2: Rect2 = Rect2(cx - bw * 0.5, top, bw, 122.0 - top if three else 58.0)
+		_c.draw_rect(br2, Color(C_MEOK, 0.8 * al2))
+		vis_rects["center:trial_big"] = [br2, Engine.get_process_frames()]
+		_c.draw_rect(Rect2(br2.position.x, br2.position.y, bw, 1), Color(_big_col, 0.8 * al2))
+		_c.draw_rect(Rect2(br2.position.x, br2.end.y - 1.0, bw, 1), Color(_big_col, 0.8 * al2))
 		_text(Vector2(cx, by2 + drop), _s_big, big_size, Color(_big_col, al2), HORIZONTAL_ALIGNMENT_CENTER, 600.0, _brush)
-		_text(Vector2(cx, by2 + 17.0), _s_big2, 12, Color(C_HANJI, al2), HORIZONTAL_ALIGNMENT_CENTER, 500.0)
+		_text(Vector2(cx, by2 + (14.0 if three else 17.0)), _s_big2, 12, Color(C_HANJI, al2), HORIZONTAL_ALIGNMENT_CENTER, 500.0)
+		if three:
+			_text(Vector2(cx, by2 + 26.0), _s_big3, 10, Color(C_HANJI_DK.lightened(0.25), al2), HORIZONTAL_ALIGNMENT_CENTER, 500.0, _small)
 
 
 func _edge_arrow(sc: Vector2, vs: Vector2, col: Color) -> void:

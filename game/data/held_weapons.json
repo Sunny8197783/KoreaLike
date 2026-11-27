@@ -1,22 +1,40 @@
 {
-  "_doc": "손에 든 무기(design/19 §6). 렌더 전용 — 판정·시뮬과 무관. 무구 id → 손 그림·쥐는 점·휘두르기 방식. 없는 무구는 손 무기 없이 지금처럼 동작한다.",
+  "_doc": "손에 든 무기(design/19 §6). 렌더 전용 — 판정·시뮬과 무관. 무구 id → 손 그림·쥐는 점·휘두르기 방식. 진화·결합은 원본 무구 줄을 쓰고 황 외곽선 그림(<sprite>_evo)으로 바뀐다. 없는 무구는 손 무기 없이 지금처럼 동작한다.",
   "_fields": {
-    "hand": "main(주손: 붉은 근접·투척) | off(보조손: 흰 악기·활) | both(두 손: 작두)",
-    "sprite": "game/assets/sprites/held/held_atlas.json sprites 키",
-    "grip": "그림 안 쥐는 점(px, 18×18 칸 기준)",
+    "hand": "main(주손: 붉은 근접·투척·흰 손짓) | off(보조손: 흰 악기·활·거울) | both(두 손: 작두) | back(등 족자: 호작도) | none(공전체: 그리지 않음)",
+    "sprite": "game/assets/sprites/held/held_atlas.json sprites 키(빈 값 = 코드 그림만)",
+    "grip": "그림 안 쥐는 점(px, 그림 왼쪽 위 기준)",
     "axis_deg": "그림에서 칼끝(활은 쏘는 쪽)이 향한 화면 각도(도, y 아래). 0 = 동쪽",
-    "anim": "swing | spin | thrust | slam | throw_return | bow | scatter | shake | strike | plant | scroll_back | none",
-    "weight": "heavy | mid | light (design/19 §5.0 J 단계)",
+    "anim": "swing | spin | thrust | slam | throw_return | bow | scatter | shake | strike | plant | scroll_back | fan | throw | cloth | salt | mirror | none",
+    "weight": "heavy | mid | light (design/19 §5.0 J 단계: heavy J2 · mid J1 · light J0, 한 번에 3마리 이상일 때)",
     "rest_deg": "쉴 때 각도(조준 방향 기준, 위쪽 = 음수). 서쪽을 보면 좌우 반전",
     "reach": "손에서 쥐는 점까지 앞으로 내미는 거리(px)",
-    "back": "등에 멜 수 있는 긴 무기"
+    "back": "등에 멜 수 있는 긴 무기(주손이 아닐 때 등에 비스듬히, z1, 명도 ×0.85, −35°·−50°, 최대 2. 작두도 주손이 아닐 때는 등에 걸친다)",
+    "upright": "조준과 무관하게 세워 든다(북·거울·종이돈·마름쇠·족자)",
+    "code": "코드로 덧그리는 것: flail(편곤 사슬·머리) | stick(장구채) | cloth(길베 천) | salt(소금 알갱이)"
   },
   "atlas": "res://assets/sprites/held/held_atlas.png",
   "atlas_meta": "res://assets/sprites/held/held_atlas.json",
   "weapons": {
-    "wpn_sinkal": {"hand": "main", "sprite": "sinkal", "grip": [3, 13], "axis_deg": -45, "anim": "throw_return", "weight": "light", "rest_deg": 35, "reach": 1, "back": false},
-    "wpn_jakdu": {"hand": "both", "sprite": "jakdu", "grip": [2, 14], "axis_deg": -45, "anim": "slam", "weight": "heavy", "rest_deg": 40, "reach": 2, "back": false},
+    "wpn_sinkal": {"hand": "main", "sprite": "sinkal", "grip": [3, 12], "axis_deg": -45, "anim": "throw_return", "weight": "light", "rest_deg": 35, "reach": 1, "back": false},
+    "wpn_woldo": {"hand": "main", "sprite": "woldo", "grip": [8, 24], "axis_deg": -46, "anim": "spin", "weight": "heavy", "rest_deg": -72, "reach": 0, "back": true},
+    "wpn_samjichang": {"hand": "main", "sprite": "samjichang", "grip": [8, 23], "axis_deg": -45, "anim": "thrust", "weight": "mid", "rest_deg": -72, "reach": 0, "back": true},
+    "wpn_jakdu": {"hand": "both", "sprite": "jakdu", "grip": [4, 23], "axis_deg": -45, "anim": "slam", "weight": "heavy", "rest_deg": 40, "reach": 2, "back": true},
+    "wpn_sainsageom": {"hand": "main", "sprite": "sainsageom", "grip": [3, 14], "axis_deg": -45, "anim": "swing", "weight": "mid", "rest_deg": 35, "reach": 1, "back": false},
+    "wpn_gakgung": {"hand": "off", "sprite": "gakgung", "grip": [8, 9], "axis_deg": -135, "anim": "bow", "weight": "light", "rest_deg": 0, "reach": 9, "back": false},
+    "wpn_jangchang": {"hand": "main", "sprite": "jangchang", "grip": [8, 22], "axis_deg": -48, "anim": "thrust", "weight": "mid", "rest_deg": -72, "reach": 0, "back": true},
+    "wpn_pyeongon": {"hand": "main", "sprite": "pyeongon", "grip": [3, 2], "axis_deg": 0, "anim": "swing", "weight": "heavy", "rest_deg": -40, "reach": 0, "back": false, "code": "flail"},
+    "wpn_cheoljillyeo": {"hand": "main", "sprite": "maleumsoe", "grip": [6, 7], "axis_deg": 0, "anim": "scatter", "weight": "light", "rest_deg": 0, "reach": 2, "back": false, "upright": true},
+    "wpn_hojakdo": {"hand": "back", "sprite": "hojakdo", "grip": [7, 9], "axis_deg": -90, "anim": "scroll_back", "weight": "mid", "rest_deg": 0, "reach": 0, "back": true, "upright": true},
     "wpn_bangul": {"hand": "off", "sprite": "bangul", "grip": [3, 13], "axis_deg": -50, "anim": "shake", "weight": "light", "rest_deg": -60, "reach": 0, "back": false},
-    "wpn_gakgung": {"hand": "off", "sprite": "gakgung", "grip": [9, 9], "axis_deg": -135, "anim": "bow", "weight": "light", "rest_deg": 0, "reach": 11, "back": false}
+    "wpn_buchae": {"hand": "off", "sprite": "buchae", "grip": [4, 13], "axis_deg": -45, "anim": "fan", "weight": "light", "rest_deg": -55, "reach": 0, "back": false},
+    "wpn_neokjeon": {"hand": "none", "sprite": "neokjeon", "grip": [6, 8], "axis_deg": -90, "anim": "none", "weight": "light", "rest_deg": 0, "reach": 0, "back": false, "upright": true},
+    "wpn_jijeon": {"hand": "main", "sprite": "jijeon", "grip": [5, 6], "axis_deg": -90, "anim": "scatter", "weight": "light", "rest_deg": 0, "reach": 2, "back": false, "upright": true},
+    "wpn_gilbe": {"hand": "main", "sprite": "", "grip": [0, 0], "axis_deg": 0, "anim": "cloth", "weight": "light", "rest_deg": 0, "reach": 0, "back": false, "code": "cloth"},
+    "wpn_ssukmul": {"hand": "main", "sprite": "bagaji", "grip": [2, 2], "axis_deg": 0, "anim": "throw", "weight": "light", "rest_deg": 25, "reach": 1, "back": false},
+    "wpn_sogeum": {"hand": "main", "sprite": "", "grip": [0, 0], "axis_deg": 0, "anim": "salt", "weight": "light", "rest_deg": 0, "reach": 0, "back": false, "code": "salt"},
+    "wpn_myeongdu": {"hand": "off", "sprite": "myeongdu", "grip": [7, 11], "axis_deg": -90, "anim": "mirror", "weight": "light", "rest_deg": 0, "reach": 0, "back": false, "upright": true},
+    "wpn_janggu": {"hand": "off", "sprite": "janggu", "grip": [6, 10], "axis_deg": -90, "anim": "strike", "weight": "light", "rest_deg": 0, "reach": 0, "back": false, "upright": true, "code": "stick"},
+    "wpn_obanggi": {"hand": "main", "sprite": "obanggi", "grip": [3, 13], "axis_deg": -60, "anim": "plant", "weight": "light", "rest_deg": 0, "reach": 0, "back": false}
   }
 }

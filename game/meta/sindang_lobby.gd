@@ -1,7 +1,9 @@
 extends Control
 ## 신당 로비(한 화면 신당 + 시설 메뉴, meta_economy.sindang_v1). 소유: meta.
-## 왼쪽 한지 표찰 메뉴 → 오른쪽 패널(굿판 문·무당·신당 단장·재가집 의뢰·넋기록 서고).
-## 봉헌/내림굿은 0.6초 길게 눌러 확정(09 §5.3 CONFIRM). 결과는 Save 트랜잭션(원자 저장, 실패 시 롤백).
+## 왼쪽 한지 표찰 메뉴 → 오른쪽 패널(출발·무당·신당 강화·무기 상점·특별 의뢰·도감·목표). 쉬운 말: design/19 §2.5.
+## 메타 루프(design/19 §7): 들어오면 이야기 비트(B01·B02, 화자 서리·명부 서기) → 살 수 있는 칸에 포커스·주색 점 배지 →
+## '출발' 패널 맨 위 '다음 목표'. 한글 글자는 10px 이상(대사 12px, 화자 Bold 10).
+## 강화·무기·새 무당은 0.6초 길게 눌러 확정(09 §5.3 CONFIRM). 결과는 Save 트랜잭션(원자 저장, 실패 시 롤백).
 ## 입력: 방향키/WASD/스틱·D패드, Enter/Space/A(길게 = 봉헌), Esc/Backspace/B(닫기), 마우스(호버·클릭·휠).
 ## UI 는 _draw 일괄(열 때·변경 때만 문자열을 만든다). 배경은 meta/sindang_backdrop.gd.
 
@@ -19,6 +21,9 @@ const MENU_X: float = 12.0
 const MENU_Y: float = 62.0
 const MENU_W: float = 122.0
 const MENU_H: float = 26.0
+const BARK_RECT: Rect2 = Rect2(140, 320, 360, 36)        # 패널 닫힘
+const BARK_RECT_OPEN: Rect2 = Rect2(12, 320, 344, 36)    # 패널 열림(왼쪽)
+const BARK_TEXT_W: float = 270.0
 
 const C_MEOK: Color = Color("0e0b16")
 const C_MEOK1: Color = Color("17131f")
@@ -78,7 +83,15 @@ var _toast_t: float = 0.0
 var _bark_full: String = ""
 var _bark_shown: String = ""
 var _bark_n: float = 0.0
-var _bark_speaker: String = "신어머니"
+var _bark_speaker: String = "명부 서기"
+var _bark_queue: Array[Array] = []     # [[speaker, text], …] 이야기 비트·긴 대사 쪽(2줄씩)
+var _bark_hold: float = 0.0            # 다 찍힌 뒤 다음 쪽까지 남은 시간
+var _beat_id: String = ""              # 재생 중인 비트(끝나면 Save.mark_beat_done)
+var _flash_item: String = ""           # 금 모서리 깜박일 항목 id(신당 강화 칸 안내)
+var _flash_t: float = 0.0
+var _aff_dj: int = 0                   # 살 수 있는 신당 강화 칸 수(배지)
+var _aff_wp: int = 0                   # 살 수 있는 무기 수
+var _aff_ch: int = 0                   # 열 수 있는 무당 수
 var _slam_text: String = ""            # 화면 가운데 붓 글씨(내림굿 등)
 var _slam_t: float = 0.0
 var _screen_flash: float = 0.0
@@ -142,7 +155,7 @@ func _ready() -> void:
 			_disp_b = maxf(0.0, _disp_b - float(gb))
 			_count_delay = 0.7
 			_count_rate = 2.2
-			_toasts.append("이번 굿 — 공덕 +%s · 복전 +%s" % [_fmt(gg), _fmt(gb)])
+			_toasts.append("이번 굿 — 공덕 +%s · 엽전 +%s" % [_fmt(gg), _fmt(gb)])
 	_txt_g = _fmt(int(_disp_g))
 	_txt_b = _fmt(int(_disp_b))
 	_refresh_backdrop()
@@ -151,16 +164,39 @@ func _ready() -> void:
 	# 정산 화면이 한지 카드로 이미 보여 준 기록성 알림(사연 조각·벽사록)은 다시 띄우지 않는다. 해금·시설 안내는 남긴다.
 	var shown: bool = bool(Save.last_settlement.get("result_cards_shown", false))
 	for n: String in Save.pending_notices:
-		if shown and (n.begins_with("사연 조각") or n.begins_with("벽사록")):
+		if shown and (n.begins_with("사연") or n.begins_with("처치 기록")):
 			continue
 		_toasts.append(n)
 	Save.pending_notices.clear()
 	if not Save.last_error.is_empty():
 		_toasts.append(Save.last_error)
 	_greet()
+	_focus_affordable()
 	Audio.play_music(&"jd_gutgeori_mix")
 	if not Save.flag("lobby_seen"):
 		Save.set_flag("lobby_seen", true)
+	print("[meta] lobby enter beat=%s upgrades=%d weapons=%d chars=%d menu=%s panel=%s goal=%s" % [
+		_beat_id, _aff_dj, _aff_wp, _aff_ch, String(_menu[_menu_i]["id"]), _panel, Save.next_goal_line()])
+
+
+## 살 수 있는 칸이 있으면 그 메뉴에 포커스. 첫 굿 뒤 첫 방문이면 '신당 강화'를 열고 그 칸을 1초 금 모서리로 깜박인다.
+func _focus_affordable() -> void:
+	var first: Dictionary = {}
+	for a: Dictionary in Save.affordable():
+		first = a
+		break
+	if first.is_empty():
+		return
+	var mid: String = {"danjang": "danjang", "weapon": "weapons", "char": "char"}.get(String(first["kind"]), "")
+	for i in _menu.size():
+		if String(_menu[i]["id"]) == mid:
+			_menu_i = i
+	var s: Dictionary = Save.last_settlement
+	if not Save.flag("lobby_upgrade_hint") and not s.is_empty() and mid != "":
+		Save.set_flag("lobby_upgrade_hint", true)
+		open_panel(mid)
+		_flash_item = String(first["id"])
+		_flash_t = 1.2
 
 
 # ═══ 메뉴 ═════════════════════════════════════════════════════════════
@@ -168,17 +204,26 @@ func _ready() -> void:
 func _build_menu() -> void:
 	var runs: int = Save.runs_done()
 	var u_need: int = int(MetaRules.num("sindang_v1.uiroe_open_after_runs", 3.0))
+	_aff_dj = 0
+	_aff_wp = 0
+	_aff_ch = 0
+	for a: Dictionary in Save.affordable():
+		match String(a["kind"]):
+			"danjang": _aff_dj += 1
+			"weapon": _aff_wp += 1
+			"char": _aff_ch += 1
 	_menu = [
-		{"id": "depart", "label": "굿판 문", "sub": "굿을 열러 나간다", "on": true},
-		{"id": "char", "label": "무당", "sub": _char_menu_sub(), "on": true},
-		{"id": "danjang", "label": "신당 단장", "sub": "신단을 꾸며 영구 강화" if Save.facility_open("danjang_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("danjang_open_after_runs")},
-		{"id": "weapons", "label": "무구 진열장", "sub": "백 무구 봉헌 · 적 무구 제작" if Save.facility_open("weapon_offering_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("weapon_offering_open_after_runs")},
-		{"id": "uiroe", "label": "재가집 의뢰", "sub": _uiroe_menu_sub(runs, u_need), "on": Save.uiroe_open()},
-		{"id": "singirok", "label": "넋기록 서고", "sub": "풀어 준 넋·물리친 귀신" if Save.facility_open("singirok_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("singirok_open_after_runs")},
-		{"id": "title", "label": "물러나기", "sub": "타이틀로", "on": true},
+		{"id": "depart", "label": "출발", "sub": "다음: " + Save.next_goal_tiny(), "on": true, "badge": ""},   # 강화를 사고 나오는 길에 다음 목표가 보이게
+		{"id": "danjang", "label": "신당 강화", "sub": "다음 판을 더 강하게" if Save.facility_open("danjang_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("danjang_open_after_runs"), "badge": ("강화 %d" % _aff_dj) if _aff_dj > 0 else ""},
+		{"id": "weapons", "label": "무기 상점", "sub": "새 무기 사기" if Save.facility_open("weapon_offering_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("weapon_offering_open_after_runs"), "badge": ("%d" % _aff_wp) if _aff_wp > 0 else ""},
+		{"id": "char", "label": "무당", "sub": _char_menu_sub(), "on": true, "badge": "새" if _aff_ch > 0 else ""},
+		{"id": "uiroe", "label": "특별 의뢰", "sub": _uiroe_menu_sub(runs, u_need), "on": true, "badge": ""},
+		{"id": "singirok", "label": "도감", "sub": "만난 귀신·사연" if Save.facility_open("singirok_open_after_runs") else "첫 굿 뒤 열림", "on": Save.facility_open("singirok_open_after_runs"), "badge": ""},
+		{"id": "goals", "label": "목표", "sub": Save.next_goal_tiny(), "on": true, "badge": ""},
+		{"id": "title", "label": "타이틀로", "sub": "처음 화면", "on": true, "badge": ""},
 	]
 	for m: Dictionary in _menu:
-		m["fit"] = _fit(String(m["sub"]), _f_tiny, 8, MENU_W - 14.0)
+		m["fit"] = _fit(String(m["sub"]), _f_small, 10, MENU_W - 14.0)
 	_menu_i = clampi(_menu_i, 0, _menu.size() - 1)
 	_ui.queue_redraw()
 
@@ -194,61 +239,101 @@ func _fit(s: String, f: Font, size: int, w: float) -> String:
 
 
 func _char_menu_sub() -> String:
-	var ready: Array = Save.get_value("unlocks.char_ready", [])
+	var ready: Variant = Save.get_value("unlocks.char_ready", [])
 	if ready is Array and not (ready as Array).is_empty():
-		return "내림굿을 올릴 수 있다!"
-	return "모신 무당: " + UiKit.char_name(String(Save.selected_char()))
+		return "새 무당을 열 수 있다!"
+	return "지금: " + UiKit.char_name(String(Save.selected_char()))
 
 
 func _uiroe_menu_sub(runs: int, need: int) -> String:
-	if not Save.uiroe_open():
-		return "굿 %d번 뒤 열림 (%d/%d)" % [need, mini(runs, need), need]
 	var a: String = Save.uiroe_accepted()
 	if a != "":
 		return "받음: " + String(MetaRules.uiroe_def(a).get("sayeon_ko", a))
+	if not Save.flag(Save.JINOGI_FLAG):
+		return "어머니를 보내는 굿"
+	if not Save.uiroe_open():
+		return "굿 %d번 뒤 (%d/%d)" % [need, mini(runs, need), need]
 	return "사연 %d장이 와 있다" % Save.uiroe_offers().size()
 
 
+const SPEAKER_KO: Dictionary = {"npc_myeongbu_seogi": "명부 서기", "char_mansin": "서리", "npc_eunsil": "은실"}
+
+
+## 들어올 때: 이야기 비트(B01·B02, 한 번씩) → 이어서 신당 안내 한 줄(살 수 있는 것·다음 목표).
 func _greet() -> void:
+	var beat: Dictionary = Save.next_lobby_beat({"first_hub_visit": true})
+	if not beat.is_empty():
+		_beat_id = String(beat.get("id", ""))
+		for ln: Variant in beat.get("lines", []):
+			if ln is Dictionary:
+				var sp: String = String((ln as Dictionary).get("speaker", ""))
+				_queue_bark(String((ln as Dictionary).get("ko", "")), String(SPEAKER_KO.get(sp, UiKit.char_name(sp))))
+		Save.mark_beat_done(_beat_id)   # 한 번만(틀기 시작하면 끝난 것으로 적는다)
+	_queue_bark(_guide_line(), "명부 서기")
+	_next_bark()
+
+
+## 신당 안내 한 줄(명부 서기): 살 수 있는 것 > 의뢰 마침 > 다음까지 남은 것 > 다음 목표.
+func _guide_line() -> String:
 	var s: Dictionary = Save.last_settlement
-	if not s.is_empty() and bool(s.get("first_run", false)):
-		_set_bark("첫 굿을 잘 치렀구나. 네가 올린 넋이 공덕이 되었다. 촛불부터 하나 더 밝혀 보렴.")
-	elif not s.is_empty() and bool(s.get("uiroe_done", false)):
-		_set_bark("재가집에서 고맙다는 기별이 왔다. \"%s\"" % String(s.get("uiroe_thanks", "")))
-	elif not s.is_empty():
-		_set_bark(_bark_after_run(s))
-	else:
-		var lines: PackedStringArray = PackedStringArray([
-			"굿은 혼자 여는 게 아니다. 신령과 넋, 재가집이 함께 연다.",
-			"한이 풀릴 기색을 보이면 길베로 둘레를 감아라. 고리가 닫히면 넋이 풀려난다.",
-			"퇴치도 해원도 다 굿의 길이다. 어느 쪽도 그르지 않다.",
-			"신단이 채워질수록 신령이 오래 머문다.",
-		])
-		_set_bark(lines[int(Time.get_ticks_msec() / 1000) % lines.size()])
+	var aff: Array[Dictionary] = Save.affordable()
+	if not aff.is_empty():
+		var a: Dictionary = aff[0]
+		var nm: String = String(a["name"])
+		match String(a["kind"]):
+			"danjang": return "공덕이 모였소. '신당 강화'에서 %s%s 올리면 다음 판에 %s." % [nm, MetaRules.josa(nm, "을", "를"), String(a["effect"])]
+			"weapon": return "'무기 상점'에서 %s%s 살 수 있소. 사 두면 굿판에서 고를 수 있소." % [nm, MetaRules.josa(nm, "을", "를")]
+			"char": return "새 무당 %s%s 인연이 닿았소. '무당'에서 열어 보시오." % [nm, MetaRules.josa(nm, "과", "와")]
+	if not s.is_empty() and bool(s.get("uiroe_done", false)):
+		return "재가집에서 고맙다는 기별이 왔소. \"%s\"" % String(s.get("uiroe_thanks", ""))
+	var np: Dictionary = Save.nearest_purchase()
+	if not np.is_empty() and not s.is_empty():
+		return "%s까지 %s %s 남았소. 한 판 더 다녀오시오." % [String(np["name"]), String(np["cur_ko"]), _fmt(int(np["need"]))]
+	return "다음 목표: %s. '출발'에서 굿판으로 가시오." % Save.next_goal_line()
 
 
-func _bark_after_run(s: Dictionary) -> String:
-	var n: float = float(s.get("N", 0.0))
-	if String(s.get("result", "")).begins_with("CLEAR"):
-		return "굿판을 끝까지 지켜 냈구나. 저승 문이 오늘은 조용하다."
-	if n >= 0.6:
-		return "넋을 많이 풀어 주었구나. 공덕이 두텁게 쌓였다."
-	if n <= 0.3:
-		return "귀신을 많이 물리쳤구나. 엽전 꾸러미가 무겁다. 다음엔 고리도 닫아 보렴."
-	return "넋도 풀고 귀신도 물리쳤구나. 어울린 굿이다."
+## 긴 대사는 2줄씩 쪽으로 나눠 줄에 넣는다(대사 12px, 상자 2줄).
+func _queue_bark(s: String, speaker: String) -> void:
+	if s.strip_edges() == "":
+		return
+	var lines: PackedStringArray = UiKit.wrap(_f_body, 12, s, BARK_TEXT_W, 12)
+	var i: int = 0
+	while i < lines.size():
+		var page: String = lines[i]
+		if i + 1 < lines.size():
+			page += "
+" + lines[i + 1]
+		_bark_queue.append([speaker, page])
+		i += 2
 
 
-func _set_bark(s: String, speaker: String = "신어머니") -> void:
+func _next_bark() -> void:
+	if _bark_queue.is_empty():
+		return
+	var e: Array = _bark_queue.pop_front()
+	_set_bark(String(e[1]), String(e[0]))
+
+
+## 행동 반응 대사: 줄을 끊고 바로(길면 쪽으로 나뉜다).
+func _say(s: String, speaker: String = "명부 서기") -> void:
+	_bark_queue.clear()
+	_queue_bark(s, speaker)
+	_next_bark()
+
+
+func _set_bark(s: String, speaker: String = "명부 서기") -> void:
 	_bark_full = s
 	_bark_speaker = speaker
 	_bark_n = 0.0
 	_bark_shown = ""
+	_bark_hold = 1.8 + 0.05 * float(s.length())
 
 
 # ═══ 패널 ═════════════════════════════════════════════════════════════
 
 func open_panel(id: String) -> void:
-	if _panel != id:
+	var fresh: bool = _panel != id
+	if fresh:
 		_scroll = 0.0
 		_scroll_target = 0.0
 		_item_i = 0
@@ -259,6 +344,12 @@ func open_panel(id: String) -> void:
 		for i in _items.size():
 			if String(_items[i].get("id", "")) == String(Save.selected_char()):
 				_item_i = i
+	elif fresh:
+		# 살 수 있는 칸에 먼저 포커스(신당 강화·무기 상점·무당)
+		for i in _items.size():
+			if bool(_items[i].get("afford_now", false)):
+				_item_i = i
+				break
 	Audio.play_sfx(&"sfx_ui_card_select", &"UI")
 	_ensure_visible()
 
@@ -283,17 +374,20 @@ func _build_panel() -> void:
 		"uiroe": _build_uiroe()
 		"singirok": _build_singirok()
 		"weapons": _build_weapons()
+		"goals": _build_goals()
 	_content_h = 0.0
 	for it: Dictionary in _items:
 		var r: Rect2 = it["rect"]
 		_content_h = maxf(_content_h, r.end.y + 6.0)
+	if _panel == "singirok":
+		_content_h += 70.0      # 바닥 사연 카드에 가리지 않게
 	_item_i = clampi(_item_i, 0, maxi(0, _items.size() - 1))
 	_pc.queue_redraw()
 
 
-## 머리 설명 아래 첫 항목 y
+## 머리 설명 아래 첫 항목 y(설명 10px 한 줄 = 12px)
 func _y0() -> float:
-	return 48.0 + 9.0 * float(_header_sub.size())
+	return 44.0 + 12.0 * float(_header_sub.size())
 
 
 func _wrap(s: String, w: float, f: Font = null, size: int = 10, lines: int = 4) -> PackedStringArray:
@@ -301,25 +395,31 @@ func _wrap(s: String, w: float, f: Font = null, size: int = 10, lines: int = 4) 
 
 
 func _build_depart() -> void:
-	_header = "굿판 문"
-	_header_sub = _wrap("선바위 굿당 · 표준 굿 · 20분", PANEL_W - 24.0, _f_tiny, 8, 1)
+	_header = "출발"
+	_header_sub = _wrap("선바위 굿당 · 20분 버티면 끝 · 마지막에 역려", PANEL_W - 24.0, _f_small, 10, 1)
 	var y: float = _y0()
-	var guide: Dictionary = {"kind": "guide", "rect": Rect2(8, y, PANEL_W - 16, 146), "sel": false,
-		"l1": _wrap("붉은 무구로 치면 귀신을 물리친다(퇴치). 엽전이 모여 복전이 된다.", PANEL_W - 52.0),
-		"l2": _wrap("귀신이 흰 테두리로 떨면 한이 풀릴 기색. 내 뒤에 남는 흰 길베로 그 둘레를 한 바퀴 감아 고리를 닫으면 해원 — 넋이 되어 따라온다.", PANEL_W - 52.0, null, 10, 5),
-		"l3": _wrap("넋은 굿이 끝나면 공덕이 된다. 퇴치도 해원도 다 굿의 길이다.", PANEL_W - 52.0)}
+	# 다음 목표(최고 기록 사다리) — 맨 위
+	var ng: Dictionary = Save.next_goal()
+	_items.append({"kind": "goal_box", "rect": Rect2(8, y, PANEL_W - 16, 44), "sel": false,
+		"lines": _wrap(String(ng.get("long", "")), PANEL_W - 40.0, _f_body, 12, 2)})
+	y += 50.0
+	var req: String = Save.current_request_line()
+	var bonus: String = Save.run_start_bonus_text(2)
+	var guide: Dictionary = {"kind": "guide", "rect": Rect2(8, y, PANEL_W - 16, 104), "sel": false,
+		"l1": _wrap("◆ 붉은 무기는 저절로 휘두른다 — 걸어 다니며 버티기", PANEL_W - 52.0),
+		"l2": _wrap("○ 흰 테두리 귀신은 흰 무기로 풀어 준다 — 넋 동무가 된다", PANEL_W - 52.0),
+		"l3": _wrap(bonus if bonus != "" else "판이 끝나면 공덕·엽전으로 신당을 강화한다", PANEL_W - 52.0)}
 	_items.append(guide)
-	y += 152.0
+	y += 110.0
 	var cid: String = String(Save.selected_char())
 	_items.append({"kind": "button", "id": "start", "rect": Rect2(8, y, PANEL_W - 16, 38), "sel": true,
-		"title": "굿판 열기", "sub": "%s · %s" % [UiKit.char_name(cid), _start_weapons_text(cid)], "hold": false, "on": true})
-	y += 40.0
+		"title": "굿판 열기", "sub": _fit("%s · %s" % [UiKit.char_name(cid), _start_weapons_text(cid)], _f_small, 10, PANEL_W - 30.0), "hold": false, "on": true})
+	y += 42.0
 	_items.append({"kind": "button", "id": "goto_char", "rect": Rect2(8, y, (PANEL_W - 22) * 0.5, 24), "sel": true,
 		"title": "무당 바꾸기", "sub": "", "hold": false, "on": true})
-	var ua: String = Save.uiroe_accepted()
-	var ut: String = "의뢰: " + String(MetaRules.uiroe_def(ua).get("sayeon_ko", "")) if ua != "" else ("의뢰 고르기" if Save.uiroe_open() else "의뢰 (잠김)")
+	var ut: String = req if req != "" else "특별 의뢰 고르기"
 	_items.append({"kind": "button", "id": "goto_uiroe", "rect": Rect2(14 + (PANEL_W - 22) * 0.5, y, (PANEL_W - 22) * 0.5, 24), "sel": true,
-		"title": _fit(ut, _f_small, 10, (PANEL_W - 22) * 0.5 - 8.0), "sub": "", "hold": false, "on": Save.uiroe_open()})
+		"title": _fit(ut, _f_small, 10, (PANEL_W - 22) * 0.5 - 8.0), "sub": "", "hold": false, "on": true})
 
 
 func _start_weapons_text(cid: String) -> String:
@@ -335,7 +435,7 @@ func _start_weapons_text(cid: String) -> String:
 
 func _build_char() -> void:
 	_header = "무당"
-	_header_sub = _wrap("굿을 맡을 무당을 고른다. 인연이 닿으면 공덕을 올려 내림굿을 한다.", PANEL_W - 24.0, _f_tiny, 8, 2)
+	_header_sub = _wrap("데려갈 무당을 고른다. 인연이 닿으면 공덕으로 새 무당을 연다.", PANEL_W - 24.0, _f_small, 10, 2)
 	var y: float = _y0()
 	for c: Variant in MetaRules.char_defs():
 		var cid: String = String((c as Dictionary).get("id", ""))
@@ -343,11 +443,12 @@ func _build_char() -> void:
 		var ready: bool = not unlocked and MetaRules.char_ready(Save.profile, cid)
 		var pr: Vector2i = MetaRules.char_progress(Save.profile, cid)
 		var cond: Dictionary = MetaRules.char_condition(cid)
+		var cost: int = MetaRules.char_cost(cid)
 		var status: String
 		if unlocked:
-			status = "모심" if StringName(cid) == Save.selected_char() else "고르기"
+			status = "데려감" if StringName(cid) == Save.selected_char() else "고르기"
 		elif ready:
-			status = "내림굿 · 공덕 %s (길게 눌러)" % _fmt(MetaRules.char_cost(cid))
+			status = "새 무당 열기 · 공덕 %s (길게 눌러)" % _fmt(cost)
 		else:
 			var ctext: String = String(cond.get("text", ""))
 			var paren: int = ctext.find(" (v1")
@@ -358,18 +459,19 @@ func _build_char() -> void:
 		var tb: Variant = def.get("tendency_bar", {})
 		var frames: Array[Texture2D] = SpriteLib.anim_frames_any(cid, "idle", "south")
 		var tex: Texture2D = frames[0] if not frames.is_empty() else SpriteLib.dir_tex(cid, "south", 64)
-		_items.append({"kind": "char", "id": cid, "rect": Rect2(6, y, PANEL_W - 12, 56), "sel": true,
-			"title": UiKit.char_name(cid), "hanja": UiKit.char_hanja(cid), "tex": tex,
-			"unlocked": unlocked, "ready": ready, "status": _wrap(status, PANEL_W - 90.0, _f_tiny, 8, 2),
-			"weapons": _start_weapons_text(cid), "toechi": int((tb as Dictionary).get("toechi", 0)) if tb is Dictionary else 0,
+		_items.append({"kind": "char", "id": cid, "rect": Rect2(6, y, PANEL_W - 12, 60), "sel": true,
+			"title": UiKit.char_name(cid), "tex": tex,
+			"unlocked": unlocked, "ready": ready, "status": _wrap(status, PANEL_W - 84.0, _f_small, 10, 2),
+			"weapons": _fit(_start_weapons_text(cid), _f_small, 10, PANEL_W - 84.0), "toechi": int((tb as Dictionary).get("toechi", 0)) if tb is Dictionary else 0,
 			"haewon": int((tb as Dictionary).get("haewon", 0)) if tb is Dictionary else 0,
+			"afford_now": ready and Save.wallet(MetaRules.CUR_G) >= cost,
 			"hold": ready, "on": unlocked or ready, "chosen": unlocked and StringName(cid) == Save.selected_char()})
-		y += 60.0
+		y += 64.0
 
 
 func _build_danjang() -> void:
-	_header = "신당 단장"
-	_header_sub = _wrap("신단을 꾸미면 그 정성이 굿판에서 힘이 된다. 길게 눌러 봉헌.", PANEL_W - 24.0, _f_tiny, 8, 2)
+	_header = "신당 강화"
+	_header_sub = _wrap("모은 공덕·엽전으로 다음 판을 더 강하게. 길게 눌러 올린다.", PANEL_W - 24.0, _f_small, 10, 2)
 	var y: float = _y0()
 	for it: Variant in MetaRules.danjang_items():
 		var d: Dictionary = it
@@ -379,42 +481,50 @@ func _build_danjang() -> void:
 		var cost: int = MetaRules.danjang_next_cost(Save.profile, id)
 		var cur: StringName = MetaRules.danjang_currency(id)
 		var afford: bool = cost >= 0 and Save.wallet(cur) >= cost
-		_items.append({"kind": "danjang", "id": id, "rect": Rect2(6, y, PANEL_W - 12, 38), "sel": true,
-			"title": String(d.get("name_ko", id)), "hanja": String(d.get("hanja", "")).left(1),
-			"effect": String(d.get("effect_ko", "")), "flavor": String(d.get("flavor_ko", "")), "rank": r, "max": mx,
-			"cost": cost, "cost_txt": ("다 갖춤" if cost < 0 else _fmt(cost)), "cur": cur, "afford": afford,
-			"hold": cost >= 0, "on": cost >= 0})
-		y += 41.0
+		var nm: String = String(d.get("name_ko", id))
+		_items.append({"kind": "danjang", "id": id, "rect": Rect2(6, y, PANEL_W - 12, 40), "sel": true,
+			"title": nm, "seal": nm.left(1),
+			"effect": _fit(MetaRules.danjang_effect_easy(id) + (" (지금 %d/%d)" % [r, mx] if r > 0 else ""), _f_small, 10, PANEL_W - 120.0),
+			"rank": r, "max": mx, "cost": cost, "cost_txt": ("다 갖춤" if cost < 0 else _fmt(cost)), "cur": cur, "afford": afford,
+			"afford_now": afford, "hold": cost >= 0, "on": cost >= 0})
+		y += 43.0
 	_foot = PackedStringArray()
 
 
 func _build_uiroe() -> void:
-	_header = "재가집 의뢰"
-	_header_sub = _wrap("굿을 청한 집의 사연. 한 장을 받으면 이번 굿판이 그 사연대로 바뀐다. 굿을 끝까지 마치면 보답이 있다.", PANEL_W - 24.0, _f_tiny, 8, 3)
+	_header = "특별 의뢰"
+	_header_sub = _wrap("굿을 청한 집의 사연. 받으면 이번 굿판이 그 사연대로 바뀌고, 끝까지 마치면 보답이 있다.", PANEL_W - 24.0, _f_small, 10, 2)
 	var y: float = _y0()
+	var acc: String = Save.uiroe_accepted()
+	# 고정 의뢰(첫 판부터, 수정자 없음): 어머니(은실)를 보내는 진오기굿 — 첫 클리어 전까지 늘 받은 상태
+	var jin_done: bool = Save.flag(Save.JINOGI_FLAG)
+	_items.append({"kind": "uiroe", "id": "_jinogi", "rect": Rect2(6, y, PANEL_W - 12, 52), "sel": true,
+		"title": Save.JINOGI_TITLE, "mods": PackedStringArray(["· 바뀌는 것 없음 — 20:00 역려까지 보내면 마친다"]),
+		"reward": "보답: 어머니의 사연" if not jin_done else "마침 — 어머니의 목소리를 들었다",
+		"accepted": acc == "" and not jin_done, "done": jin_done, "hold": false, "on": true})
+	y += 56.0
 	if not Save.uiroe_open():
 		var need: int = int(MetaRules.num("sindang_v1.uiroe_open_after_runs", 3.0))
 		_items.append({"kind": "note", "rect": Rect2(8, y, PANEL_W - 16, 40), "sel": false,
-			"lines": _wrap("굿을 %d번 치르면 재가집에서 의뢰가 들어온다. (%d/%d)" % [need, mini(Save.runs_done(), need), need], PANEL_W - 32.0)})
+			"lines": _wrap("굿을 %d번 치르면 다른 집에서도 의뢰가 들어온다. (%d/%d)" % [need, mini(Save.runs_done(), need), need], PANEL_W - 32.0)})
 		return
-	var acc: String = Save.uiroe_accepted()
 	for id: Variant in Save.uiroe_offers():
 		var sid: String = String(id)
 		var tx: Dictionary = MetaRules.uiroe_text(sid)
 		var mods: PackedStringArray = PackedStringArray()
 		for m: String in (tx["mods"] as Array):
-			mods.append("· " + m)
-		_items.append({"kind": "uiroe", "id": sid, "rect": Rect2(6, y, PANEL_W - 12, 70), "sel": true,
-			"title": String(tx["sayeon"]), "mods": mods, "reward": "보답: " + String(tx["reward"]),
-			"accepted": sid == acc, "hold": false, "on": true})
-		y += 74.0
+			mods.append(_fit("· " + m, _f_small, 10, PANEL_W - 60.0))
+		_items.append({"kind": "uiroe", "id": sid, "rect": Rect2(6, y, PANEL_W - 12, 74), "sel": true,
+			"title": String(tx["sayeon"]), "mods": mods, "reward": _fit("보답: " + String(tx["reward"]), _f_small, 10, PANEL_W - 40.0),
+			"accepted": sid == acc, "done": false, "hold": false, "on": true})
+		y += 78.0
 	_items.append({"kind": "button", "id": "uiroe_none", "rect": Rect2(6, y, PANEL_W - 12, 22), "sel": true,
-		"title": "받지 않기" + (" (지금)" if acc == "" else ""), "sub": "", "hold": false, "on": true})
+		"title": "특별 의뢰 받지 않기" + (" (지금)" if acc == "" else ""), "sub": "", "hold": false, "on": true})
 
 
 func _build_weapons() -> void:
-	_header = "무구 진열장"
-	_header_sub = _wrap("갖춘 무구만 굿판의 점지에 나온다. 흰 무구는 공덕을 봉헌하고, 붉은 무구는 복전으로 제작한다. 길게 눌러 확정.", PANEL_W - 24.0, _f_tiny, 8, 3)
+	_header = "무기 상점"
+	_header_sub = _wrap("산 무기만 굿판의 새 힘 고르기에 나온다. 흰 무기는 공덕, 붉은 무기는 엽전. 길게 눌러 산다.", PANEL_W - 24.0, _f_small, 10, 2)
 	var y: float = _y0()
 	for w: Variant in MetaRules.weapon_defs():
 		var d: Dictionary = w
@@ -424,23 +534,24 @@ func _build_weapons() -> void:
 		var st: String = MetaRules.weapon_state(Save.profile, id)
 		var cost: int = MetaRules.weapon_cost(id)
 		var cur: StringName = MetaRules.weapon_currency(id)
+		var white: bool = String(d.get("color", "red")) == "white"
 		var note: String = ""
 		match st:
-			"owned": note = "갖춤 · " + String(Data.weapon(id).get("archetype", ""))
-			"undiscovered": note = "발견: " + String(d.get("discover_condition", ""))
-			"gate": note = "같은 색 무구 %d개를 먼저 갖추면 열린다" % int(d.get("gate_same_color_purchased", 0))
-			_: note = String(Data.weapon(id).get("archetype", ""))
-		var white: bool = String(d.get("color", "red")) == "white"
-		_items.append({"kind": "weapon", "id": id, "rect": Rect2(6, y, PANEL_W - 12, 32), "sel": true,
+			"owned": note = "가짐"
+			"undiscovered": note = "찾는 법: " + String(d.get("discover_condition", ""))
+			"gate": note = "같은 색 무기 %d개를 먼저 사면 열린다" % int(d.get("gate_same_color_purchased", 0))
+			_: note = "흰 무기 · 풀어 준다" if white else "붉은 무기 · 벤다"
+		var afford: bool = Save.wallet(cur) >= cost
+		_items.append({"kind": "weapon", "id": id, "rect": Rect2(6, y, PANEL_W - 12, 34), "sel": true,
 			"title": String(d.get("name_ko", id)) if st != "undiscovered" else "???", "white": white, "tier": int(d.get("tier", 0)),
-			"state": st, "note": _fit(note, _f_tiny, 8, PANEL_W - 110.0), "cost": cost, "cost_txt": _fmt(cost), "cur": cur,
-			"afford": Save.wallet(cur) >= cost, "icon": UiKit.weapon_icon(id, true), "hold": st == "buyable", "on": st == "buyable"})
-		y += 35.0
+			"state": st, "note": _fit(note, _f_small, 10, PANEL_W - 110.0), "cost": cost, "cost_txt": _fmt(cost), "cur": cur,
+			"afford": afford, "afford_now": st == "buyable" and afford, "icon": UiKit.weapon_icon(id, true), "hold": st == "buyable", "on": st == "buyable"})
+		y += 37.0
 
 
 func _build_singirok() -> void:
-	_header = "넋기록 서고"
-	_header_sub = _wrap("해원록(풀어 준 넋)과 벽사록(물리친 귀신). 첫 해원마다 사연 조각을 얻는다.", PANEL_W - 24.0, _f_tiny, 8, 2)
+	_header = "도감"
+	_header_sub = _wrap("만난 귀신. 처음 풀어 주면 사연 한 조각을 듣는다.", PANEL_W - 24.0, _f_small, 10, 1)
 	var species: Array = Data.get_value("enemies", "enemies", [])
 	var x0: float = 6.0
 	var y0: float = _y0()
@@ -456,16 +567,47 @@ func _build_singirok() -> void:
 		var pieces: Variant = Save.get_value("singirok.haewonrok.%s.pieces" % sid, [])
 		var tier: int = int(Save.get_value("singirok.byeoksarok.%s.tier" % sid, 0))
 		var seen: bool = h > 0 or t > 0
-		var cond: Variant = MetaRules.econ("singirok.haewonrok.sayeon_conditions." + sid, {})
-		var cond_txt: String = String((cond as Dictionary).get("ko", "")) if cond is Dictionary else ""
+		var card: Dictionary = Save.sayeon_card(sid) if seen else {}
+		var body: String = "아직 만나지 못한 귀신이다."
+		if seen:
+			var ps: Array = card.get("pieces", [])
+			if not ps.is_empty():
+				body = "「%s」" % String(ps[ps.size() - 1])
+			elif String(card.get("neokduri", "")) != "":
+				body = "\"%s\" — 풀어 주면 사연을 들을 수 있다" % String(card["neokduri"])
+			else:
+				body = "풀어 주면 사연을 들을 수 있다."
 		var col: int = i % 4
 		var row: int = i / 4
 		_items.append({"kind": "species", "id": sid, "rect": Rect2(x0 + float(col) * cw, y0 + float(row) * ch, cw - 2.0, ch - 2.0),
 			"sel": true, "title": MetaRules.enemy_ko(sid) if seen else "???", "tex": SpriteLib.dir_tex(sid, "south", 32),
+			"title_fit": _fit(MetaRules.enemy_ko(sid) if seen else "???", _f_small, 10, cw - 6.0),
 			"seen": seen, "haewon": h, "toechi": t, "pieces": (pieces as Array).size() if pieces is Array else 0, "tier": tier,
-			"detail": _wrap(("사연: " + cond_txt) if seen and cond_txt != "" else "아직 만나지 못한 귀신이다.", PANEL_W - 20.0, _f_tiny, 8, 2),
+			"who": String(card.get("who", MetaRules.enemy_ko(sid))) if seen else "???",
+			"detail": _wrap(body, PANEL_W - 22.0, _f_small, 10, 3),
 			"hold": false, "on": true})
 		i += 1
+
+
+## 목표: 다음 목표 사다리 한 칸 + 업적 목표 목록(achievements.json goal_v1, counters 로 판정).
+func _build_goals() -> void:
+	_header = "목표"
+	_header_sub = _wrap("굿판을 하다 보면 저절로 채워진다.", PANEL_W - 24.0, _f_small, 10, 1)
+	var y: float = _y0()
+	var ng: Dictionary = Save.next_goal()
+	_items.append({"kind": "goal_box", "rect": Rect2(8, y, PANEL_W - 16, 44), "sel": false,
+		"lines": _wrap(String(ng.get("long", "")), PANEL_W - 40.0, _f_body, 12, 2)})
+	y += 50.0
+	var gl: Array[Dictionary] = Save.goal_list()
+	gl.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if bool(a["done"]) != bool(b["done"]):
+			return not bool(a["done"])
+		return float(a["cur"]) / float(a["need"]) > float(b["cur"]) / float(b["need"]))
+	for g: Dictionary in gl:
+		_items.append({"kind": "goal", "id": String(g["id"]), "rect": Rect2(6, y, PANEL_W - 12, 28), "sel": true,
+			"title": String(g["name"]), "goal": _fit(String(g["goal"]), _f_small, 10, PANEL_W - 100.0),
+			"cur": int(g["cur"]), "need": int(g["need"]), "done": bool(g["done"]), "hold": false, "on": true})
+		y += 31.0
 
 
 # ═══ 행동 ═════════════════════════════════════════════════════════════
@@ -491,15 +633,11 @@ func _activate_item(i: int) -> void:
 			match String(it["id"]):
 				"start": _start_run()
 				"goto_char": open_panel("char")
-				"goto_uiroe":
-					if Save.uiroe_open():
-						open_panel("uiroe")
-					else:
-						_reject(i, "굿을 세 번 치르면 열린다")
+				"goto_uiroe": open_panel("uiroe")
 				"uiroe_none":
 					Save.accept_uiroe("")
 					Audio.play_sfx(&"sfx_ui_confirm", &"UI")
-					_set_bark("이번엔 사연 없이 굿판을 연다. 그것도 괜찮다.")
+					_say("이번엔 특별 의뢰 없이 가오. 그것도 괜찮소.")
 		"char":
 			var cid: StringName = StringName(String(it["id"]))
 			if bool(it["unlocked"]):
@@ -508,18 +646,18 @@ func _activate_item(i: int) -> void:
 					backdrop.call("set_character", cid, true)
 					Audio.play_sfx(&"sfx_ui_confirm", &"UI")
 					_pulse_item(i)
-					_set_bark(_char_bark(String(cid)), UiKit.char_name(String(cid)))
+					_say(_char_bark(String(cid)), UiKit.char_name(String(cid)))
 			elif bool(it["ready"]):
 				var r: Dictionary = Save.unlock_char(cid)
 				if bool(r["ok"]):
 					backdrop.call("set_character", cid, true)
 					backdrop.call("burst", Vector2(320, 250), 40)
 					backdrop.set("shake", 1.0)
-					_slam("내림굿")
+					_slam("새 무당")
 					_screen_flash = 0.7
 					Audio.play_sfx(&"sfx_ui_unlock", &"UI")
 					Audio.play_sfx(&"sfx_trl_bingui", &"SFX", -6.0)
-					_set_bark("방울을 받아라. 이제 너도 신의 제자다.")
+					_say("새 무당이 신당에 들었소. '무당'에서 골라 데려가시오.")
 				else:
 					_reject(i, String(r["reason"]))
 			else:
@@ -531,7 +669,7 @@ func _activate_item(i: int) -> void:
 				Audio.play_sfx(&"sfx_ui_unlock", &"UI")
 				_pulse_item(i)
 				_wallet_bump = 1.0
-				_set_bark(String(MetaRules.danjang_item(String(it["id"])).get("flavor_ko", "")) + " — " + String(it["effect"]))
+				_say(String(MetaRules.danjang_item(String(it["id"])).get("flavor_ko", "")) + " 다음 판부터 " + MetaRules.danjang_effect_easy(String(it["id"])) + ".")
 			else:
 				_reject(i, String(res["reason"]))
 		"weapon":
@@ -545,27 +683,38 @@ func _activate_item(i: int) -> void:
 				Audio.play_sfx(&"sfx_ui_unlock", &"UI")
 				_pulse_item(i)
 				_wallet_bump = 1.0
-				_set_bark("%s%s 진열장에 걸렸다. 이제 굿판에서 점지될 수 있다." % [String(it["title"]), MetaRules.josa(String(it["title"]), "이", "가")])
+				_say("%s%s 생겼소. 이제 굿판의 새 힘 고르기에 나오오." % [String(it["title"]), MetaRules.josa(String(it["title"]), "이", "가")])
 			else:
 				_reject(i, String(wr["reason"]))
 		"uiroe":
 			var uid: String = String(it["id"])
+			if uid == "_jinogi":
+				# 고정 의뢰: 다른 의뢰를 내려놓으면 이 굿으로 돌아온다(끌 수 없다)
+				if bool(it.get("done", false)):
+					_say("어머니를 보내는 굿은 마쳤소. 그래도 넋들은 계속 오오.")
+				elif not bool(it["accepted"]):
+					Save.accept_uiroe("")
+					_pulse_item(i)
+					_say("어머니를 보내는 굿으로 가오. 20:00까지 버티고 역려를 보내시오.")
+				else:
+					_say("첫 판부터 받은 의뢰요. 역려까지 보내면 마치오.")
+				return
 			Save.accept_uiroe("" if bool(it["accepted"]) else uid)
 			Audio.play_sfx(&"sfx_ui_card_select", &"UI")
 			_pulse_item(i)
 			if not bool(it["accepted"]):
-				_set_bark("\"%s\" — 그 집의 사연을 품고 굿판에 나서자." % String(it["title"]))
+				_say("\"%s\" — 그 집의 사연을 품고 가시오." % String(it["title"]))
 		_:
 			pass
 
 
 func _char_bark(cid: String) -> String:
 	match cid:
-		"char_mansin": return "만신 몸주를 모시고 나선다. 붉은 신칼과 방울로 고르게."
-		"char_baksu": return "월도를 쥐었다. 물리치는 굿에 능하다."
-		"char_dangol": return "장구 장단으로 넋을 달랜다. 풀어 주는 굿에 능하다."
-		"char_myeongdu": return "동자령이 곁에 붙는다. 각궁으로 멀리서 친다."
-		"char_simbang": return "제주 굿의 멩두를 든다. 점괘를 다시 묻는 데 능하다."
+		"char_mansin": return "신칼로 베고 방울로 풀어 준다. 고르게 잘한다."
+		"char_baksu": return "큰 칼을 쥐었다. 베어 처치하는 데 강하다."
+		"char_dangol": return "장구 소리로 넋을 달랜다. 풀어 주는 데 강하다."
+		"char_myeongdu": return "아이 넋이 곁에 붙는다. 활로 멀리서 쏜다."
+		"char_simbang": return "제주 무당이다. 새 힘을 다시 고르는 데 강하다."
 	return "이 무당으로 굿을 연다."
 
 
@@ -682,7 +831,9 @@ func _gui_input(e: InputEvent) -> void:
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN and mb.pressed:
 			_scroll_target = clampf(_scroll_target + 24.0, 0.0, maxf(0.0, _content_h - PANEL_H))
 		elif mb.button_index == MOUSE_BUTTON_LEFT:
-			if mb.pressed:
+			if mb.pressed and _bark_rect().has_point(mb.position):
+				_advance_bark()
+			elif mb.pressed:
 				if _hover(mb.position):
 					_accept_down()
 				elif _zone == 1 and not Rect2(_pc.position, _pc.size).has_point(mb.position):
@@ -826,12 +977,17 @@ func _process(delta: float) -> void:
 		var sb: String = _fmt(int(roundf(_disp_b)))
 		if sb != _txt_b:
 			_txt_b = sb
-	# 신어머니 말(타자)
+	# 대사(타자)
 	if _bark_n < float(_bark_full.length()):
 		_bark_n += delta * 28.0
 		var n: int = mini(_bark_full.length(), int(_bark_n))
 		if n != _bark_shown.length():
 			_bark_shown = _bark_full.left(n)
+	elif not _bark_queue.is_empty():
+		_bark_hold -= delta
+		if _bark_hold <= 0.0:
+			_next_bark()
+	_flash_t = maxf(0.0, _flash_t - delta)
 	# 알림
 	if _toast_t > 0.0:
 		_toast_t -= delta
@@ -851,6 +1007,19 @@ func _process(delta: float) -> void:
 
 # ═══ 그리기 ═══════════════════════════════════════════════════════════
 
+func _bark_rect() -> Rect2:
+	return BARK_RECT_OPEN if _panel != "" else BARK_RECT
+
+
+## 대사 상자 누름: 찍히는 중이면 끝까지, 다 찍혔으면 다음 쪽.
+func _advance_bark() -> void:
+	if _bark_n < float(_bark_full.length()):
+		_bark_n = float(_bark_full.length())
+		_bark_shown = _bark_full
+	else:
+		_next_bark()
+
+
 func _menu_rect(i: int) -> Rect2:
 	return Rect2(MENU_X, MENU_Y + float(i) * (MENU_H + 6.0), MENU_W, MENU_H)
 
@@ -859,26 +1028,26 @@ func _draw_ui() -> void:
 	var c: CanvasItem = _ui
 	# 제목
 	UiKit.text_outline(c, _f_brush, 32, Vector2(16, 44), "신당", C_HANJI, 0, 2)
-	UiKit.text(c, _f_tiny, 8, Vector2(74, 30), "神堂", C_HANJI3, 0)
-	UiKit.text(c, _f_tiny, 8, Vector2(74, 41), "선바위 굿당", C_HANJI3, 0)
+	UiKit.text(c, _f_small, 10, Vector2(76, 40), "선바위 굿당", C_HANJI3, 0)
 	# 지갑
 	var bump: float = roundf(_wallet_bump * -2.0)
 	_draw_chip(c, Rect2(432, 18 + bump, 98, 18), "공덕", _txt_g, C_HANJI, true)
-	_draw_chip(c, Rect2(536, 18 + bump, 92, 18), "복전", _txt_b, C_HWANG, false)
+	_draw_chip(c, Rect2(536, 18 + bump, 92, 18), "엽전", _txt_b, C_HWANG, false)
 	# 메뉴
 	for i in _menu.size():
 		_draw_menu_item(c, i)
-	# 신어머니 말
+	# 대사(명부 서기·서리): 화자 Bold 10, 본문 12px 두 줄. 줄이 남았으면 오른쪽 아래 ▼
 	if _bark_full != "":
-		var br: Rect2 = Rect2(140, 334, 360, 22)
-		if _panel != "":
-			br = Rect2(12, 334, 344, 22)
-		UiKit.draw_meok_panel(c, br, 0.9)
-		UiKit.draw_seal(c, br.position + Vector2(3, 3), 16.0, _bark_speaker.left(1), _f_tiny, 8)
-		UiKit.text(c, _f_tiny, 8, br.position + Vector2(24, 9), _bark_speaker, C_JEOK_HI, 0)
+		var br: Rect2 = _bark_rect()
+		UiKit.draw_meok_panel(c, br, 0.92)
+		UiKit.draw_seal(c, br.position + Vector2(5, 5), 14.0, _bark_speaker.left(1), _f_small, 10)
+		UiKit.text(c, _f_bold, 10, br.position + Vector2(5, 31), _bark_speaker, C_JEOK_HI, 0)
 		var lines: PackedStringArray = _bark_lines()
 		for li in lines.size():
-			UiKit.text(c, _f_tiny, 8, br.position + Vector2(24 + 40, 9 + li * 9), lines[li], C_HANJI, 0)
+			UiKit.text(c, _f_body, 12, br.position + Vector2(66, 15 + li * 14), lines[li], C_HANJI_UI, 0)
+		if not _bark_queue.is_empty() and _bark_n >= float(_bark_full.length()):
+			var bx: Vector2 = br.end - Vector2(9, 6 - roundf(sin(_t * 6.0)))
+			c.draw_colored_polygon(PackedVector2Array([bx + Vector2(-3, -3), bx + Vector2(3, -3), bx + Vector2(0, 1)]), C_HWANG)
 	# 알림(한지 두루마리)
 	if _toast_t > 0.0 and _toast.size() > 0:
 		var k: float = clampf((3.4 - _toast_t) / 0.18, 0.0, 1.0) * clampf(_toast_t / 0.3, 0.0, 1.0)
@@ -908,8 +1077,9 @@ var _bark_cache: PackedStringArray = PackedStringArray()
 func _bark_lines() -> PackedStringArray:
 	if _bark_shown != _bark_cache_src:
 		_bark_cache_src = _bark_shown
-		var w: float = (344.0 if _panel != "" else 360.0) - 70.0
-		_bark_cache = UiKit.wrap(_f_tiny, 8, _bark_shown, w, 2)
+		var parts: PackedStringArray = _bark_shown.split("
+")
+		_bark_cache = parts.slice(0, 2)
 	return _bark_cache
 
 
@@ -926,7 +1096,7 @@ func _draw_chip(c: CanvasItem, r: Rect2, label: String, val: String, col: Color,
 		c.draw_circle(ic, 4.5, C_HWANG_DK)
 		c.draw_circle(ic, 3.5, C_HWANG)
 		c.draw_rect(Rect2(ic - Vector2(1, 1), Vector2(2, 2)), C_MEOK)
-	UiKit.text(c, _f_tiny, 8, r.position + Vector2(17, 12), label, C_HANJI3, 0)
+	UiKit.text(c, _f_small, 10, r.position + Vector2(17, 13), label, C_HANJI3, 0)
 	UiKit.text(c, _f_body, 12, Vector2(r.end.x - 5, r.position.y + 13), val, col, 2)
 
 
@@ -951,10 +1121,17 @@ func _draw_menu_item(c: CanvasItem, i: int) -> void:
 		UiKit.draw_corners(c, r.grow(2.0), C_JEOK)
 	var tc: Color = C_MEOK if on else C_MEOK3
 	UiKit.text(c, _f_bold, 12, r.position + Vector2(8, 12), String(m["label"]), tc, 0, false)
-	UiKit.text(c, _f_tiny, 8, r.position + Vector2(8, 22), String(m["fit"]), C_HANJI5 if on else C_MEOK4, 0, false)
-	if String(m["id"]) == "char" and String(m["sub"]).begins_with("내림굿"):
-		var a: float = 0.5 + 0.5 * sin(_t * 6.0)
-		c.draw_circle(r.position + Vector2(r.size.x - 8, 7), 3.0, Color(C_JEOK, a))
+	UiKit.text(c, _f_small, 10, r.position + Vector2(8, 23), String(m["fit"]), C_HANJI5 if on else C_MEOK4, 0, false)
+	# 주색 점 배지('강화 2'): 살 수 있는 칸이 있다
+	var badge: String = String(m.get("badge", ""))
+	if badge != "":
+		var bw: float = _f_small.get_string_size(badge, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x + 12.0
+		var brc: Rect2 = Rect2(r.end.x - bw - 2.0, r.position.y + 2.0, bw, 12.0)
+		var pa: float = 0.8 + 0.2 * sin(_t * 6.0)
+		c.draw_rect(brc.grow(1.0), C_MEOK)
+		c.draw_rect(brc, Color(C_JEOK, pa))
+		c.draw_circle(brc.position + Vector2(5, 6), 2.0, C_HWANG_HI)
+		UiKit.text(c, _f_small, 10, brc.position + Vector2(9, 10), badge, C_HANJI_UI, 0, false)
 
 
 func _draw_panel() -> void:
@@ -966,10 +1143,10 @@ func _draw_panel() -> void:
 	c.draw_rect(Rect2(1, 1, full.size.x - 2, 3), C_JEOK_DK)
 	var oy: float = -_scroll
 	# 머리
-	UiKit.text_outline(c, _f_brush, 22, Vector2(10, 24 + oy), _header, C_HANJI, 0, 2)
-	c.draw_rect(Rect2(10, 31 + oy, PANEL_W - 20, 1), Color(C_HANJI5, 0.8))
+	UiKit.text_outline(c, _f_big, 15, Vector2(10, 24 + oy), _header, C_HANJI_UI, 0, 1)
+	c.draw_rect(Rect2(10, 30 + oy, PANEL_W - 20, 1), Color(C_HANJI5, 0.8))
 	for li in _header_sub.size():
-		UiKit.text(c, _f_tiny, 8, Vector2(12, 42 + li * 9 + oy), _header_sub[li], C_HANJI3, 0)
+		UiKit.text(c, _f_small, 10, Vector2(12, 42 + li * 12 + oy), _header_sub[li], C_HANJI2, 0)
 	for i in _items.size():
 		var it: Dictionary = _items[i]
 		var r: Rect2 = (it["rect"] as Rect2)
@@ -987,6 +1164,8 @@ func _draw_panel() -> void:
 			"uiroe": _draw_uiroe_card(c, r, it, focus)
 			"species": _draw_species(c, r, it, focus)
 			"weapon": _draw_weapon_row(c, r, it, focus)
+			"goal_box": _draw_goal_box(c, r, it)
+			"goal": _draw_goal_row(c, r, it, focus)
 			"note":
 				UiKit.draw_hanji_panel(c, r)
 				var ls: PackedStringArray = it["lines"]
@@ -998,17 +1177,26 @@ func _draw_panel() -> void:
 			c.draw_rect(Rect2(r.position, Vector2(roundf(r.size.x * k), r.size.y)), Color(C_JEOK, 0.18))
 		if i == _pulse_i and _pulse > 0.0:
 			c.draw_rect(r.grow(2.0 * (1.0 - _pulse)), Color(C_HWANG_HI, _pulse), false, 1.0)
+		if bool(it.get("afford_now", false)):
+			c.draw_circle(r.position + Vector2(3, 3), 3.5, C_MEOK)
+			c.draw_circle(r.position + Vector2(3, 3), 2.5, Color(C_JEOK_HI, 0.75 + 0.25 * sin(_t * 6.0)))
+		if _flash_t > 0.0 and String(it.get("id", "")) == _flash_item and _flash_item != "":
+			if int(_flash_t * 8.0) % 2 == 0:
+				UiKit.draw_corners(c, r.grow(4.0), C_HWANG_HI)
 	# 넋기록: 초점 종 설명(바닥 고정)
 	if _panel == "singirok" and _item_i >= 0 and _item_i < _items.size():
 		var it2: Dictionary = _items[_item_i]
-		var dr: Rect2 = Rect2(4, PANEL_H - 52, PANEL_W - 8, 48)
+		# 사연 카드(한지): 이름 · 풀어 줌/처치 · 받은 사연 조각 문장(마지막 것)
+		var dr: Rect2 = Rect2(4, PANEL_H - 70, PANEL_W - 8, 66)
 		UiKit.draw_hanji_panel(c, dr)
-		UiKit.text(c, _f_bold, 12, dr.position + Vector2(8, 13), String(it2["title"]), C_MEOK, 0, false)
-		var stat: String = "해원 %d · 퇴치 %d · 사연 조각 %d · 벽사 %d단" % [int(it2["haewon"]), int(it2["toechi"]), int(it2["pieces"]), int(it2["tier"])]
-		UiKit.text(c, _f_tiny, 8, dr.position + Vector2(8, 25), stat, C_JEOK_DK, 0, false)
+		c.draw_rect(Rect2(dr.position.x + 2, dr.position.y + 2, 2, dr.size.y - 4), C_HANJI_UI)
+		UiKit.text(c, _f_bold, 12, dr.position + Vector2(8, 14), String(it2.get("who", it2["title"])), C_MEOK, 0, false)
+		var stat: String = "○ 풀어 줌 %d · ◆ 처치 %d · 사연 %d/3" % [int(it2["haewon"]), int(it2["toechi"]), int(it2["pieces"])]
+		var sw: float = _f_small.get_string_size(stat, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x
+		UiKit.text(c, _f_small, 10, Vector2(dr.end.x - 8 - sw, dr.position.y + 14), stat, C_JEOK_DK, 0, false)
 		var dl: PackedStringArray = it2["detail"]
 		for li in dl.size():
-			UiKit.text(c, _f_tiny, 8, dr.position + Vector2(8, 35 + li * 9), dl[li], C_HANJI5, 0, false)
+			UiKit.text(c, _f_small, 10, dr.position + Vector2(8, 28 + li * 12), dl[li], C_MEOK, 0, false)
 	# 스크롤 표시
 	if _content_h > PANEL_H + 1.0:
 		var k2: float = _scroll / maxf(1.0, _content_h - PANEL_H)
@@ -1069,10 +1257,35 @@ func _draw_button(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
 	var tc: Color = C_HANJI_UI if on else C_HANJI5
 	if big:
 		var pulse: float = 0.5 + 0.5 * sin(_t * 4.0)
-		UiKit.text_outline(c, _f_brush, 22, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 19), String(it["title"]), tc, 1, 2)
-		UiKit.text(c, _f_tiny, 8, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 33), String(it["sub"]), Color(C_HANJI2, 0.7 + 0.3 * pulse), 1)
+		UiKit.text_outline(c, _f_big, 15, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 17), String(it["title"]), tc, 1, 1)
+		UiKit.text(c, _f_small, 10, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 32), String(it["sub"]), Color(C_HANJI2, 0.75 + 0.25 * pulse), 1)
 	else:
-		UiKit.text(c, _f_small, 10, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 15), String(it["title"]), tc, 1)
+		UiKit.text(c, _f_small, 10, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 16), String(it["title"]), tc, 1)
+
+
+## '다음 목표' 칸(출발·목표 패널 맨 위): 주 마름모 + 본문 12px 두 줄.
+func _draw_goal_box(c: CanvasItem, r: Rect2, it: Dictionary) -> void:
+	c.draw_rect(r.grow(1.0), C_MEOK)
+	c.draw_rect(r, C_MEOK1)
+	c.draw_rect(r, C_HWANG_DK, false, 1.0)
+	UiKit.text(c, _f_bold, 10, r.position + Vector2(8, 12), "다음 목표", C_HWANG_HI, 0)
+	UiKit.draw_diamond(c, r.position + Vector2(r.size.x - 10, 8), 3.5, C_JEOK)
+	var ls: PackedStringArray = it["lines"]
+	for li in ls.size():
+		UiKit.text(c, _f_body, 12, r.position + Vector2(8, 26 + li * 14), ls[li], C_HANJI_UI, 0)
+
+
+func _draw_goal_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
+	var done: bool = bool(it["done"])
+	c.draw_rect(r.grow(1.0), C_MEOK)
+	c.draw_rect(r, C_MEOK2 if not focus else C_MEOK3)
+	_draw_focus(c, r, focus)
+	UiKit.text(c, _f_bold, 12, r.position + Vector2(8, 13), String(it["title"]), C_HWANG_HI if done else C_HANJI_UI, 0)
+	UiKit.text(c, _f_small, 10, r.position + Vector2(8, 25), String(it["goal"]), C_HANJI3, 0)
+	var bar: Rect2 = Rect2(r.end.x - 74, r.position.y + 8, 66, 5)
+	UiKit.draw_bar(c, bar, float(it["cur"]) / float(maxi(1, int(it["need"]))), C_HWANG if done else C_HANJI2)
+	var t: String = "다 됨" if done else "%s/%s" % [_fmt(int(it["cur"])), _fmt(int(it["need"]))]
+	UiKit.text(c, _f_small, 10, Vector2(r.end.x - 8, r.position.y + 25), t, C_HWANG if done else C_HANJI3, 2)
 
 
 func _draw_char_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
@@ -1087,27 +1300,26 @@ func _draw_char_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> voi
 	if tex != null:
 		var mod: Color = Color.WHITE if unlocked else (Color(0.55, 0.45, 0.4) if ready else Color(0.1, 0.08, 0.14))
 		var src: Rect2 = Rect2(0, 4, mini(64, tex.get_width()), mini(56, tex.get_height() - 4))
-		c.draw_texture_rect_region(tex, Rect2(r.position + Vector2(2, 0), src.size), src, mod)
+		c.draw_texture_rect_region(tex, Rect2(r.position + Vector2(2, 2), src.size), src, mod)
 	var x: float = r.position.x + 66.0
 	var name_c: Color = C_HANJI_UI if unlocked else (C_HWANG_HI if ready else C_HANJI4)
-	var w: float = UiKit.text(c, _f_bold, 12, Vector2(x, r.position.y + 13), String(it["title"]), name_c, 0)
-	UiKit.text(c, _f_tiny, 8, Vector2(x + w + 4, r.position.y + 12), String(it["hanja"]), C_HANJI4, 0)
-	# 성향 막대(퇴치 적 / 해원 한지)
+	UiKit.text(c, _f_bold, 12, Vector2(x, r.position.y + 13), String(it["title"]), name_c, 0)
+	# 성향 막대(◆ 처치 적 / ○ 풀기 한지)
 	var bx: float = x
-	var by: float = r.position.y + 18.0
-	UiKit.text(c, _f_tiny, 8, Vector2(bx, by + 7), "퇴치", C_HANJI4, 0)
+	var by: float = r.position.y + 17.0
+	UiKit.draw_diamond(c, Vector2(bx + 3, by + 5), 3.0, C_JEOK)
 	for k in 5:
-		c.draw_rect(Rect2(bx + 20 + k * 6, by + 1, 4, 5), C_JEOK if k < int(it["toechi"]) else C_MEOK4)
-	UiKit.text(c, _f_tiny, 8, Vector2(bx + 56, by + 7), "해원", C_HANJI4, 0)
+		c.draw_rect(Rect2(bx + 9 + k * 6, by + 2, 4, 6), C_JEOK if k < int(it["toechi"]) else C_MEOK4)
+	UiKit.draw_kind_mark(c, Vector2(bx + 47, by + 5), 3.0, true)
 	for k in 5:
-		c.draw_rect(Rect2(bx + 76 + k * 6, by + 1, 4, 5), C_HANJI2 if k < int(it["haewon"]) else C_MEOK4)
-	UiKit.text(c, _f_tiny, 8, Vector2(bx + 112, by + 7), String(it["weapons"]), C_HANJI3, 0)
+		c.draw_rect(Rect2(bx + 53 + k * 6, by + 2, 4, 6), C_HANJI2 if k < int(it["haewon"]) else C_MEOK4)
+	UiKit.text(c, _f_small, 10, Vector2(x, r.position.y + 36), String(it["weapons"]), C_HANJI3, 0)
 	var st: PackedStringArray = it["status"]
-	var sc: Color = C_JEOK_HI if bool(it["chosen"]) else (C_HWANG if ready else (C_NOK if unlocked else C_HANJI4))
-	for li in st.size():
-		UiKit.text(c, _f_tiny, 8, Vector2(x, r.position.y + 37 + li * 9), st[li], sc, 0)
+	var sc: Color = C_JEOK_HI if bool(it["chosen"]) else (C_HWANG if ready else (C_NOK if unlocked else C_HANJI3))
+	for li in mini(2, st.size()):
+		UiKit.text(c, _f_small, 10, Vector2(x, r.position.y + 48 + li * 11), st[li], sc, 0)
 	if bool(it["chosen"]):
-		UiKit.draw_seal(c, Vector2(r.end.x - 20, r.position.y + 4), 16.0, "모", _f_tiny, 8)
+		UiKit.draw_seal(c, Vector2(r.end.x - 20, r.position.y + 4), 16.0, "함", _f_small, 10)
 
 
 func _draw_danjang_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
@@ -1115,30 +1327,30 @@ func _draw_danjang_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> 
 	c.draw_rect(r.grow(1.0), C_MEOK)
 	c.draw_rect(r, C_MEOK2 if not focus else C_MEOK3)
 	_draw_focus(c, r, focus)
-	# 한자 낙관(랭크가 있으면 붉게)
-	var seal_r: Rect2 = Rect2(r.position + Vector2(4, 5), Vector2(26, 26))
+	# 낙관(이름 첫 글자, 단계가 있으면 붉게)
+	var seal_r: Rect2 = Rect2(r.position + Vector2(5, 7), Vector2(26, 26))
 	c.draw_rect(seal_r, C_JEOK if int(it["rank"]) > 0 else C_MEOK4)
 	c.draw_rect(seal_r.grow(-2.0), C_HANJI_UI if int(it["rank"]) > 0 else C_HANJI5, false, 1.0)
-	UiKit.text(c, _f_big, 15, seal_r.get_center() + Vector2(0, 6), String(it["hanja"]), C_HANJI_UI if int(it["rank"]) > 0 else C_HANJI3, 1, false)
-	var x: float = r.position.x + 36.0
+	UiKit.text(c, _f_big, 15, seal_r.get_center() + Vector2(0, 6), String(it["seal"]), C_HANJI_UI if int(it["rank"]) > 0 else C_HANJI3, 1, false)
+	var x: float = r.position.x + 37.0
 	UiKit.text(c, _f_bold, 12, Vector2(x, r.position.y + 13), String(it["title"]), C_HANJI_UI, 0)
-	UiKit.text(c, _f_tiny, 8, Vector2(x, r.position.y + 24), String(it["effect"]), C_HANJI3, 0)
-	# 랭크 구슬
+	# 단계 구슬(이름 옆)
+	var tw: float = _f_bold.get_string_size(String(it["title"]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 	for k in int(it["max"]):
-		var pc: Vector2 = Vector2(x + 4 + k * 9, r.position.y + 32)
+		var pc: Vector2 = Vector2(x + tw + 8 + k * 8, r.position.y + 9)
 		c.draw_circle(pc, 3.0, C_MEOK)
 		c.draw_circle(pc, 2.0, C_HWANG if k < int(it["rank"]) else C_MEOK4)
+	UiKit.text(c, _f_small, 10, Vector2(x, r.position.y + 27), String(it["effect"]), C_HWANG_HI if bool(it["afford"]) else C_HANJI2, 0)
 	# 값
 	var cur: StringName = it["cur"]
 	var cc: Color = C_HANJI if cur == MetaRules.CUR_G else C_HWANG
 	if maxed:
-		UiKit.text(c, _f_small, 10, Vector2(r.end.x - 6, r.position.y + 14), "다 갖춤", C_NOK, 2)
+		UiKit.text(c, _f_small, 10, Vector2(r.end.x - 6, r.position.y + 15), "다 갖춤", C_NOK, 2)
 	else:
 		var afford: bool = bool(it["afford"])
-		UiKit.text(c, _f_body, 12, Vector2(r.end.x - 6, r.position.y + 14), String(it["cost_txt"]), cc if afford else C_HANJI5, 2)
-		UiKit.text(c, _f_tiny, 8, Vector2(r.end.x - 6, r.position.y + 25), MetaRules.currency_name(cur) + (" 봉헌" if cur == MetaRules.CUR_G else " 마련"), C_HANJI4 if afford else C_JEOK_DK, 2)
-	if focus and not maxed:
-		UiKit.text(c, _f_tiny, 8, Vector2(r.end.x - 6, r.position.y + 34), "길게 눌러", Color(C_HANJI3, 0.6 + 0.4 * sin(_t * 5.0)), 2)
+		UiKit.text(c, _f_body, 12, Vector2(r.end.x - 6, r.position.y + 14), String(it["cost_txt"]), cc if afford else C_HANJI3, 2)
+		var lab: String = MetaRules.currency_name(cur) + (" · 길게 눌러" if focus else "")
+		UiKit.text(c, _f_small, 10, Vector2(r.end.x - 6, r.position.y + 27), lab, C_HANJI2 if afford else C_JEOK_HI, 2)
 
 
 func _draw_weapon_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
@@ -1149,19 +1361,17 @@ func _draw_weapon_row(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> v
 	var ic: Texture2D = it["icon"]
 	var mod: Color = Color.WHITE if st == "owned" or st == "buyable" else Color(0.18, 0.15, 0.25)
 	if ic != null:
-		c.draw_texture(ic, r.position + Vector2(6, 8), mod)
+		c.draw_texture(ic, r.position + Vector2(6, 9), mod)
 	UiKit.draw_kind_mark(c, r.position + Vector2(28, 10), 2.5, bool(it["white"]))
 	UiKit.text(c, _f_bold, 12, r.position + Vector2(34, 14), String(it["title"]), C_HANJI_UI if st != "undiscovered" else C_HANJI4, 0)
-	for k in int(it["tier"]):
-		c.draw_rect(Rect2(r.position.x + 34 + k * 5, r.position.y + 18, 3, 3), C_HWANG_DK)
-	UiKit.text(c, _f_tiny, 8, r.position + Vector2(34, 29), String(it["note"]), C_NOK if st == "owned" else C_HANJI3, 0)
+	UiKit.text(c, _f_small, 10, r.position + Vector2(34, 28), String(it["note"]), C_NOK if st == "owned" else C_HANJI3, 0)
 	if st == "buyable":
 		var cur: StringName = it["cur"]
 		var afford: bool = bool(it["afford"])
-		UiKit.text(c, _f_body, 12, Vector2(r.end.x - 6, r.position.y + 14), String(it["cost_txt"]), (C_HANJI if cur == MetaRules.CUR_G else C_HWANG) if afford else C_HANJI5, 2)
-		UiKit.text(c, _f_tiny, 8, Vector2(r.end.x - 6, r.position.y + 25), MetaRules.currency_name(cur) + (" 봉헌" if cur == MetaRules.CUR_G else " 제작"), C_HANJI4 if afford else C_JEOK_DK, 2)
+		UiKit.text(c, _f_body, 12, Vector2(r.end.x - 6, r.position.y + 14), String(it["cost_txt"]), (C_HANJI if cur == MetaRules.CUR_G else C_HWANG) if afford else C_HANJI3, 2)
+		UiKit.text(c, _f_small, 10, Vector2(r.end.x - 6, r.position.y + 28), MetaRules.currency_name(cur) + (" · 길게 눌러" if focus else ""), C_HANJI2 if afford else C_JEOK_HI, 2)
 	elif st == "owned":
-		UiKit.draw_seal(c, Vector2(r.end.x - 20, r.position.y + 8), 14.0, "갖", _f_tiny, 8)
+		UiKit.draw_seal(c, Vector2(r.end.x - 20, r.position.y + 9), 14.0, "가", _f_small, 10)
 
 
 func _draw_uiroe_card(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
@@ -1170,16 +1380,17 @@ func _draw_uiroe_card(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> v
 	if acc:
 		c.draw_rect(r.grow(-2.0), Color(C_JEOK, 0.12))
 	_draw_focus(c, r, focus)
-	UiKit.text(c, _f_bold, 12, r.position + Vector2(8, 14), String(it["title"]), C_MEOK, 0, false)
+	UiKit.text(c, _f_bold, 12, r.position + Vector2(8, 15), String(it["title"]), C_MEOK, 0, false)
 	var mods: PackedStringArray = it["mods"]
 	for li in mini(3, mods.size()):
-		UiKit.text(c, _f_tiny, 8, r.position + Vector2(10, 26 + li * 10), mods[li], C_HANJI5, 0, false)
-	UiKit.text(c, _f_tiny, 8, r.position + Vector2(10, r.size.y - 7), String(it["reward"]), C_JEOK_DK, 0, false)
+		UiKit.text(c, _f_small, 10, r.position + Vector2(10, 28 + li * 11), mods[li], C_HANJI5, 0, false)
+	UiKit.text(c, _f_small, 10, r.position + Vector2(10, r.size.y - 5), String(it["reward"]), C_JEOK_DK, 0, false)
 	if acc:
-		UiKit.draw_seal(c, Vector2(r.end.x - 26, r.position.y + 6), 20.0, "받", _f_small, 10)
-		UiKit.text(c, _f_tiny, 8, Vector2(r.end.x - 30, r.position.y + 30), "받은 사연", C_JEOK, 2, false)
+		UiKit.draw_seal(c, Vector2(r.end.x - 24, r.position.y + 5), 18.0, "받", _f_small, 10)
+	elif bool(it.get("done", false)):
+		UiKit.draw_seal(c, Vector2(r.end.x - 24, r.position.y + 5), 18.0, "끝", _f_small, 10)
 	elif focus:
-		UiKit.text(c, _f_tiny, 8, Vector2(r.end.x - 8, r.position.y + 14), "받기", C_JEOK, 2, false)
+		UiKit.text(c, _f_bold, 10, Vector2(r.end.x - 8, r.position.y + 15), "받기", C_JEOK, 2, false)
 
 
 func _draw_species(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void:
@@ -1190,11 +1401,11 @@ func _draw_species(c: CanvasItem, r: Rect2, it: Dictionary, focus: bool) -> void
 	var tex: Texture2D = it["tex"]
 	if tex != null:
 		var tw: float = float(mini(tex.get_width(), int(r.size.x) - 4))
-		var th: float = float(mini(tex.get_height(), 44))
+		var th: float = float(mini(tex.get_height(), 40))
 		var src: Rect2 = Rect2((float(tex.get_width()) - tw) * 0.5, float(tex.get_height()) - th, tw, th)
-		var dst: Rect2 = Rect2(Vector2(roundf(r.position.x + (r.size.x - tw) * 0.5), r.position.y + 46.0 - th), Vector2(tw, th))
+		var dst: Rect2 = Rect2(Vector2(roundf(r.position.x + (r.size.x - tw) * 0.5), r.position.y + 42.0 - th), Vector2(tw, th))
 		c.draw_texture_rect_region(tex, dst, src, Color.WHITE if seen else Color(0.16, 0.13, 0.22))
-	UiKit.text(c, _f_tiny, 8, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 54), String(it["title"]).left(6), C_HANJI if seen else C_HANJI5, 1)
+	UiKit.text(c, _f_small, 10, Vector2(r.position.x + r.size.x * 0.5, r.position.y + 53), String(it.get("title_fit", it["title"])), C_HANJI if seen else C_HANJI4, 1)
 	# 사연 조각 점
 	for k in 3:
 		c.draw_rect(Rect2(r.position.x + r.size.x * 0.5 - 8 + k * 6, r.position.y + 57, 4, 3), C_HANJI2 if k < int(it["pieces"]) else C_MEOK4)

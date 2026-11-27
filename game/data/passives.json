@@ -28,6 +28,8 @@
     {
       "id": "psv_jusa",
       "name_ko": "경면주사",
+      "plain_ko": "붉은 무기가 더 세게 벤다",
+      "lv5_plain_ko": "처치한 자리가 작게 터진다",
       "name_hanja": "鏡面朱砂",
       "name_en": "Mirror Cinnabar",
       "scope": "v1",
@@ -55,6 +57,8 @@
     {
       "id": "psv_sinjangdae",
       "name_ko": "신장대",
+      "plain_ko": "칼·화살 같은 날리는 수가 는다",
+      "lv5_plain_ko": "신령의 시험 게이지가 더 빨리 찬다",
       "name_hanja": "神將-",
       "name_en": "Descent Pole",
       "scope": "v1",
@@ -88,6 +92,8 @@
     {
       "id": "psv_mubok",
       "name_ko": "무복",
+      "plain_ko": "받는 피해가 준다",
+      "lv5_plain_ko": "버티는 힘이 더 오래 간다",
       "name_hanja": "巫服",
       "name_en": "Shaman Robe",
       "scope": "v1",
@@ -118,6 +124,8 @@
     {
       "id": "psv_jeonghwasu",
       "name_ko": "정화수",
+      "plain_ko": "체력이 저절로 찬다",
+      "lv5_plain_ko": "회복이 끊기지 않는다",
       "name_hanja": "井華水",
       "name_en": "Dawn Well Water",
       "scope": "v1",
@@ -145,6 +153,8 @@
     {
       "id": "psv_myeongjusil",
       "name_ko": "명주실",
+      "plain_ko": "최대 체력이 는다",
+      "lv5_plain_ko": "쓰러졌다 일어날 때 둘레를 밀친다",
       "name_hanja": "命紬絲",
       "name_en": "Lifespan Silk Thread",
       "scope": "v1",
@@ -172,6 +182,8 @@
     {
       "id": "psv_mituri",
       "name_ko": "미투리",
+      "plain_ko": "더 빨리 걷는다",
+      "lv5_plain_ko": "더 빨리 걷는다",
       "name_hanja": null,
       "name_en": "Hemp Sandals",
       "scope": "v1",
@@ -202,6 +214,8 @@
     {
       "id": "psv_obangkkeun",
       "name_ko": "오방끈",
+      "plain_ko": "공격 범위가 넓어진다",
+      "lv5_plain_ko": "흰 길 감싸기가 더 쉬워진다",
       "name_hanja": "五方-",
       "name_en": "Five-Direction Cords",
       "scope": "v1",
@@ -232,6 +246,8 @@
     {
       "id": "psv_baekjisul",
       "name_ko": "백지술",
+      "plain_ko": "날리는 무기가 더 빨리 난다",
+      "lv5_plain_ko": "날리는 무기가 흰 테두리 귀신을 조금 푼다",
       "name_hanja": "白紙-",
       "name_en": "White Paper Tassel",
       "scope": "v1",
@@ -259,6 +275,8 @@
     {
       "id": "psv_chotdae",
       "name_ko": "촛대",
+      "plain_ko": "효과가 더 오래 남는다",
+      "lv5_plain_ko": "무당 둘레가 밝아진다",
       "name_hanja": null,
       "name_en": "Candle Stand",
       "scope": "v1",
@@ -286,6 +304,8 @@
     {
       "id": "psv_gungchae",
       "name_ko": "궁채",
+      "plain_ko": "무기가 더 자주 친다",
+      "lv5_plain_ko": "신명이 더 쉽게 오른다",
       "name_hanja": null,
       "name_en": "Janggu Stick",
       "scope": "v1",
@@ -313,6 +333,8 @@
     {
       "id": "psv_chohon_jeoksam",
       "name_ko": "초혼 적삼",
+      "plain_ko": "구슬을 더 멀리서 끌어온다",
+      "lv5_plain_ko": "흰 테두리가 더 오래 간다",
       "name_hanja": "招魂-",
       "name_en": "Soul-Calling Jacket",
       "scope": "v1",
@@ -340,6 +362,8 @@
     {
       "id": "psv_baritdae",
       "name_ko": "바릿대",
+      "plain_ko": "풀어 주면 구슬을 더 받는다",
+      "lv5_plain_ko": "풀어 줄 때 구슬이 더 나온다",
       "name_hanja": null,
       "name_en": "Divination Bowl",
       "scope": "v1",
@@ -367,6 +391,8 @@
     {
       "id": "psv_yeopjeon",
       "name_ko": "엽전 꾸러미",
+      "plain_ko": "엽전을 더 받는다",
+      "lv5_plain_ko": "상자에서 더 좋은 것이 나온다",
       "name_hanja": "葉錢-",
       "name_en": "String of Coins",
       "scope": "v1",
@@ -394,6 +420,8 @@
     {
       "id": "psv_santong",
       "name_ko": "산통",
+      "plain_ko": "운과 치명타가 오른다",
+      "lv5_plain_ko": "새 힘 고르기에 카드가 한 장 더 나올 수 있다",
       "name_hanja": "算筒",
       "name_en": "Divination Tube",
       "scope": "v1",
@@ -422,6 +450,8 @@
     {
       "id": "psv_jeung",
       "name_ko": "제웅",
+      "plain_ko": "귀신이 늘고 보상도 는다",
+      "lv5_plain_ko": "성난 귀신을 잡으면 상자가 좋아진다",
       "name_hanja": null,
       "name_alias": "추령(芻靈)",
       "name_en": "Straw Effigy",
@@ -451,6 +481,8 @@
     {
       "id": "psv_wipae",
       "name_ko": "위패",
+      "plain_ko": "넋 동무가 더 많이, 더 오래 따른다",
+      "lv5_plain_ko": "넋 동무가 떠날 때 둘레를 풀어 준다",
       "name_hanja": "位牌",
       "name_en": "Spirit Tablet",
       "scope": "v1",

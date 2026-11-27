@@ -364,3 +364,24 @@ func clear() -> void:
 	index_of.clear()
 	names.clear()
 	count = 0
+	_gate.clear()
+
+
+# ─── 덧소리 문턱(design/19 §5.0 소리 문법): 같은 sfx 0.1초에 3개까지, 넘치면 −6dB 하나만 ───────────
+## 무구 연출 덧소리(진화 −3반음 레이어 · 결합 짝 겹침 · 무거운 무기 저음)가 부른다. 반환: 볼륨 보정(dB).
+## 0 = 그대로, −6 = 창의 넷째(−6dB 하나), −100 = 버림. 상태는 정의 슬롯별 [창 시작, 개수].
+var _gate: Dictionary = {}
+
+
+func gate(d: int, t: float) -> float:
+	if d < 0:
+		return -100.0
+	var g: Variant = _gate.get(d, null)
+	if g == null or t - float(g[0]) >= 0.1 or t < float(g[0]):
+		_gate[d] = [t, 1]
+		return 0.0
+	var n: int = int(g[1]) + 1
+	g[1] = n
+	if n <= 3:
+		return 0.0
+	return -6.0 if n == 4 else -100.0

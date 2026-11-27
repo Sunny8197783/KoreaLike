@@ -86,6 +86,25 @@ var _mk_n: int = 0
 var _mk_last: int = -100000
 var stat_multi_j2: int = 0
 var _burst_delay: int = 6
+# 첫 1f 가산 겹침(정예·다중 처치·치명 — design/19 §5.2 I): vfx_toechi_burst 0프레임을 가산 α0.55 로 한 번 더. 0.25초 창 4장.
+const BURST_OVL_CAP: int = 4
+const BURST_OVL_LIFE: float = 1.5 / 60.0
+var _ovl_t0: int = -1000
+var _ovl_n: int = 0
+var stat_burst_ovl: int = 0
+# 치명 베기 1f(vfx_gyeoldanta_cut scale 2): 전역 0.15초 간격
+const CRIT_CUT_IV: int = 9
+var _crit_cut_last: int = -100000
+var stat_crit_cut: int = 0
+# 천도 알림(design/19 §5.2 G 고침): 처음 3번만 가장자리 레인 한 줄, 2.5초 간격, 그 사이 천도는 모아 다음 알림에
+const CHEONDO_LABEL_IV: float = 2.5
+const CHEONDO_LABEL_N: int = 3
+var _cd_label_t: float = -10.0
+var _cd_shown: int = 0
+var _cd_pending: int = 0
+# 이펙트 군중 이력(Juice.fx_crowd, 켜기 40 0.5초 / 끄기 30 1초)
+var _fxc_hold: float = 0.0
+var procs: Node = null                    # vfx/passive_procs.gd(패시브 완성 발동 연출, design/19 §5.2 E)
 # 가이드(처음 하는 사람이 두 결말을 읽게): 런 처음 LABEL_FIRST 번의 퇴치·해원에는 글자 표식을 띄운다. 이후는 정예 이상·고리만.
 const LABEL_FIRST: int = 6
 var _label_toechi: int = 0
@@ -161,6 +180,16 @@ func _process(delta: float) -> void:
 		kfx = KillFx.new()
 		kfx.name = "KillFx"
 		vfx.add_child(kfx)
+	if procs == null:
+		var ps: Script = load("res://vfx/passive_procs.gd") as Script
+		if ps != null:
+			procs = ps.new() as Node
+			procs.name = "PassiveProcs"
+			procs.set("vfx", vfx)
+			vfx.add_child(procs)
+	Juice.streak_tick()
+	if _cd_pending > 0 and Game.time_sec() - _cd_label_t >= CHEONDO_LABEL_IV:
+		_cheondo_label(0)
 	var now: int = Game.anim_tick_cur
 	var crowd: bool = Juice.number_crowd or (vfx.atmosphere != null and vfx.atmosphere.crowd_n >= HW_CROWD_N)
 	for k in PEND_CAP:
@@ -172,6 +201,16 @@ func _process(delta: float) -> void:
 					vfx.play(&"vfx_toechi_burst", bp, 0.0, 2.0, {"flip": pf & 3})   # 정예·치명: scale 2
 				else:
 					vfx.play_flip(&"vfx_toechi_burst", bp, pf & 3)
+			# 정예·치명(bit2)·다중 처치(bit4): 첫 1f 가산 겹침 — '터졌다'를 한 장 더 세게(창 4장)
+			if (pf & 20) != 0:
+				if now - _ovl_t0 >= SHEET_WIN:
+					_ovl_t0 = now
+					_ovl_n = 0
+				if _ovl_n < BURST_OVL_CAP:
+					_ovl_n += 1
+					stat_burst_ovl += 1
+					vfx.play(&"vfx_toechi_burst", bp, 0.0, 2.0 if (pf & 4) != 0 else 1.0,
+						{"flip": pf & 3, "additive": true, "life": BURST_OVL_LIFE, "modulate": Color(1, 1, 1, 0.55), "snap": false})
 			kfx.burst(bp, (pf & 4) != 0, _pend_h[k], crowd)
 			_pend_t[k] = -1
 	_flush_light_agg()
@@ -233,6 +272,14 @@ func _on_run_started(_c: StringName) -> void:
 	_nc_on = false
 	_nc_hold = 0.0
 	stat_nc_on_s = 0.0
+	_fxc_hold = 0.0
+	_cd_label_t = -10.0
+	_cd_pending = 0
+	_cd_shown = 0
+	_ovl_n = 0
+	_crit_cut_last = -100000
+	stat_burst_ovl = 0
+	stat_crit_cut = 0
 
 
 ## 넘친 해원 광원을 무게중심 하나로(틱이 바뀐 뒤 한 번).
@@ -253,6 +300,8 @@ func _update_crowd_mode(dt: float) -> void:
 	var dn: DamageNumbers = Juice.damage_numbers as DamageNumbers
 	if not Game.run_active:
 		Juice.number_crowd = false
+		Juice.fx_crowd = false
+		_fxc_hold = 0.0
 		_nc_on = false
 		_nc_hold = 0.0
 		if dn != null:
@@ -262,6 +311,15 @@ func _update_crowd_mode(dt: float) -> void:
 	if vfx != null and vfx.atmosphere != null:
 		cn = vfx.atmosphere.crowd_n
 	var nn: int = dn.alive_count() if dn != null else 0
+	# 이펙트 군중(Juice.fx_crowd): 화면 일반 잡귀만 본다 — 켜기 ≥40 이 0.5초, 끄기 <30 이 1초
+	var fflip: bool = (cn >= Juice.FX_CROWD_ON) if not Juice.fx_crowd else (cn < Juice.FX_CROWD_OFF)
+	if fflip:
+		_fxc_hold += dt
+		if _fxc_hold >= (NC_OFF_S if Juice.fx_crowd else NC_ON_S):
+			Juice.fx_crowd = not Juice.fx_crowd
+			_fxc_hold = 0.0
+	else:
+		_fxc_hold = 0.0
 	var flip: bool = (cn >= NC_ON_CROWD or nn >= NC_ON_NUMS) if not _nc_on else (cn < NC_OFF_CROWD and nn < NC_OFF_NUMS)
 	if _ab_off:
 		flip = _nc_on                                   # A/B: 이력 군중 모드 끔(예전 규칙만)
@@ -350,10 +408,17 @@ func _on_hit(h: int, _sp: StringName, pos: Vector2, dmg: float, color: int, crit
 				vfx.play_ex(_spark_white_fx, spos, Rng.int_s(&"fx", 0, 3), -1, SPARK_WHITE_MOD)
 			else:
 				vfx.play_flip(_spark_fx, spos, Rng.int_s(&"fx", 0, 3))
+			# 치명: 타격 지점에 결단 베기 1f scale 2(design/19 §5.2 I) — 전역 0.15초 간격(군중 상시 번쩍임 방지)
+			if crit and now - _crit_cut_last >= CRIT_CUT_IV:
+				_crit_cut_last = now
+				stat_crit_cut += 1
+				vfx.play(&"vfx_gyeoldanta_cut", spos, 0.0, 2.0, {"flip": (slot & 3), "life": 2.0 / 60.0, "snap": false})
 
 
 func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause: StringName, tier: StringName) -> void:
 	var elite: bool = tier != K.TIER_COMMON and tier != K.TIER_MINION
+	if cause != &"debug":
+		Juice.note_kill(kind == K.KIND_HAEWON)
 	var away: Vector2 = Vector2.ZERO
 	if Game.player != null:
 		away = pos - Game.player.global_position
@@ -382,15 +447,19 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 		var ash: int = 6 if elite else (3 if sheet_ok else 1)   # 창 예산을 넘긴 무리 해원은 재 1점만(백 뭉침 방지)
 		var near_pl: bool = false
 		var pl: Player = Game.player as Player
-		if not elite and pl != null:
-			near_pl = pos.distance_squared_to(pl.render_pos) < HW_NEAR_PX * HW_NEAR_PX
+		if pl != null:
+			# 빛기둥(16×48, 위로 선다)이 무당 몸 상자(±16, −40~+4)에 걸리면 정예라도 시트 없이 — 몸 상자 안 순백 0(design/19 §5.1)
+			var fp0: Vector2 = pl.render_pos
+			var col_r: Rect2 = Rect2(pos.x - 8.0, pos.y - 48.0, 16.0, 56.0)
+			near_pl = col_r.intersects(Rect2(fp0.x - 16.0, fp0.y - 40.0, 32.0, 44.0)) or (not elite and pos.distance_squared_to(fp0) < HW_NEAR_PX * HW_NEAR_PX)
 		if vfx != null and sheet_ok:
 			var crowd40: bool = atmo != null and atmo.crowd_n >= HW_CROWD_N and not _ab_off
 			if near_pl:
 				light = 0.6                               # 무당 곁: 시트 없이 재·광원만(무당 몸을 흰 기둥이 덮지 않게)
 				ash = 3
 				stat_hw_near += 1
-			elif elite or _hw_total <= HW_FULL_FIRST:
+			elif (elite and not (cause == &"ring" and crowd40)) or _hw_total <= HW_FULL_FIRST:
+				# (군중 속 고리 해원은 정예도 순백 기둥 예외 없이 창 예산을 따른다 — 고리 하나에 흰 기둥이 무더기로 서지 않게, design/19 §5.2 G)
 				_hw_win_n += 1
 				stat_hw_full += 1
 				vfx.play_flip(&"vfx_haewon_rise", pos, 0, 1)                     # 순백 — 해원 순간
@@ -425,13 +494,13 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 		# 퇴치 파열은 적 스프라이트의 번쩍(hj 2 → jk 4틱) 뒤 틱 6에(GAME_FEEL 4.4). 4변형 반전, 회전 없음
 		# 시트 예산을 넘긴 처치도 십자·넋 빠짐은 KillFx 자기 예산(군중 4/3)으로 낸다(bit3 = 시트 없음)
 		var big: bool = elite or cause == &"gyeoldan"
+		var multi: bool = _multi_kill(away, pos)
 		_pend_t[_pend_head] = Game.game_tick + _burst_delay
 		_pend_x[_pend_head] = pos.x
 		_pend_y[_pend_head] = pos.y
-		_pend_f[_pend_head] = (Rng.int_s(&"fx", 0, 3) if sheet_ok else 0) | (4 if big else 0) | (0 if sheet_ok else 8)
+		_pend_f[_pend_head] = (Rng.int_s(&"fx", 0, 3) if sheet_ok else 0) | (4 if big else 0) | (0 if sheet_ok else 8) | (16 if multi else 0)
 		_pend_h[_pend_head] = _h
 		_pend_head = (_pend_head + 1) % PEND_CAP
-		_multi_kill(away)
 		if atmo != null:
 			atmo.burst(pos, false, 4 if elite else (2 if sheet_ok else 1))
 		if cause == &"gyeoldan" and vfx != null:
@@ -444,11 +513,11 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 			_label_haewon += 1
 			_label_tick = Game.game_tick
 			if _label_haewon > 1 or elite:          # 첫 해원은 ui/guide 가 '解冤 해원' 이름표를 단다(겹침 방지)
-				Juice.label(lp, "해원", &"haewon")
+				Juice.label(lp, UiKit.word("haewon"), &"haewon")
 		elif kind != K.KIND_HAEWON and (_label_toechi < LABEL_FIRST or elite):
 			_label_toechi += 1
 			_label_tick = Game.game_tick
-			Juice.label(lp, "퇴치", &"toechi")
+			Juice.label(lp, UiKit.word("toechi"), &"toechi")
 	# 같은 틱 퇴치·해원 8 이상 → 킥 1px + 트라우마 0.2 (1회) — 시트 대신 '한 방'으로 판다(묶음 라벨은 haewon 배너)
 	if _kill_n == 8:
 		Juice.feedback_event("kill_burst", away)
@@ -461,12 +530,15 @@ func _on_killed(_h: int, _sp: StringName, pos: Vector2, kind: StringName, cause:
 
 
 ## 다중 처치(design/19 §5.0 J2): 0.25초 창에 처치 5 이상 → 16ms + 킥 1px(전역 0.6초 쿨다운) + '모음' 소리 1번.
-func _multi_kill(away: Vector2) -> void:
+## 반환: 이 처치가 다중 처치 창(5번째 이상)에 들었는가(파열 첫 1f 가산 겹침). 5번째에 Events.kill_burst(5, pos).
+func _multi_kill(away: Vector2, pos: Vector2) -> bool:
 	var t: int = Game.game_tick
 	if t - _mk_t0 >= 15:
 		_mk_t0 = t
 		_mk_n = 0
 	_mk_n += 1
+	if _mk_n == 5:
+		Events.kill_burst.emit(_mk_n, pos)
 	if _mk_n == 5 and t - _mk_last >= 36 and WeaponBase.new_hitstop_on():
 		_mk_last = t
 		stat_multi_j2 += 1
@@ -475,6 +547,7 @@ func _multi_kill(away: Vector2) -> void:
 		var d: int = Audio.def_of(&"sfx_sys_hanpa")
 		if d >= 0:
 			Audio.play_def(d, 2.0, 1.1225)          # +2반음 +2dB
+	return _mk_n >= 5
 
 
 func _on_pullil(h: int, _sp: StringName, pos: Vector2) -> void:
@@ -487,7 +560,8 @@ func _on_ring(area: int, haewon_count: int, c: Vector2) -> void:
 	var per: float = Data.num("combat_core", "ring.trauma_per_area", 0.0025)
 	var tr: float = minf(base + per * area, Data.num("combat_core", "ring.trauma_cap", 0.5))
 	# 길닦음: 히트스톱·트라우마·백 플래시(해원이 있었을 때만 — 백은 해원 전용)
-	var key: String = "gildakkeum_large" if area >= 40 else "gildakkeum"
+	# J3(design/19 §5.0): 큰 고리(넓이 ≥40) 또는 한꺼번에 15 이상 풀림
+	var key: String = "gildakkeum_large" if (area >= 40 or haewon_count >= 15) else "gildakkeum"
 	if haewon_count > 0:
 		Juice.feedback_event(key, Vector2.ZERO, tr)
 		# 고리 빛(light_pulse)은 haewon/ring_closure 가 낸다(중복 금지)
@@ -506,7 +580,7 @@ func _on_ring(area: int, haewon_count: int, c: Vector2) -> void:
 				free = bool(Juice.call(&"claim_center", &"hf_ring_label", 0, 1.0))
 			if free:
 				# 한 명은 '×1' 없이 — '해원 ×1' 은 셈이 아니라 군더더기
-				Juice.label(c + Vector2(0, -28), "해원" if haewon_count == 1 else "해원 ×%d" % haewon_count, &"ring")
+				Juice.label(c + Vector2(0, -28), UiKit.word("haewon") if haewon_count == 1 else "한꺼번에 풀림 ×%d" % haewon_count, &"ring")
 	else:
 		# 빈 고리(해원 0): 히트스톱·트라우마 없이 킥 1px 만 — 성공 고리의 정지가 '해원 성공' 신호로 남고 T2 예산도 아낀다.
 		# 실패감은 audio(빈 고리 음)·ui 가 전한다.
@@ -514,6 +588,7 @@ func _on_ring(area: int, haewon_count: int, c: Vector2) -> void:
 
 
 func _on_player_damaged(amount: float, _src: StringName, _hp: float, hp_max: float) -> void:
+	Juice.reset_streak()                        # 연속 처치는 피격에 끊긴다(칩이 수천으로 쌓여 뜻을 잃지 않게)
 	var p: Player = Game.player as Player
 	if p != null:
 		Juice.damage_number(p.global_position + Vector2(0, -p.cam_lift * 2 - 4), amount, &"player", -1, true)
@@ -553,6 +628,25 @@ func _on_cheondo(count: int, _reason: StringName) -> void:
 	Juice.light_pulse(p.global_position + Vector2(0, -20), 3.0 * K.UNIT_PX, 0.8, 1, 0.8)
 	if vfx != null and vfx.atmosphere != null:
 		vfx.atmosphere.burst(p.global_position, true, mini(12, 3 + count))
+	_cheondo_label(count)
+
+
+## 천도 알림: 처음 CHEONDO_LABEL_N 번만 가장자리 레인(화면 좌표, 왼쪽 위)에 주어를 붙여 한 줄 — 그 뒤로는 글 없이 빛·재만.
+## (예전 '+N 떠남' 월드 글은 주어가 없고 '+' 가 이득처럼 읽혔으며, 월드 자리에 남아 무당 갓을 덮었다 — 검토 11-26)
+func _cheondo_label(count: int) -> void:
+	_cd_pending += count
+	if _cd_shown >= CHEONDO_LABEL_N:
+		_cd_pending = 0
+		return
+	var t: float = Game.time_sec()
+	if _cd_pending <= 0 or t - _cd_label_t < CHEONDO_LABEL_IV:
+		return
+	var hud: Object = Game.run_root.get("hud") if Game.run_root != null else null
+	if hud != null and hud.has_method(&"push_edge"):
+		hud.call(&"push_edge", "넋 동무 %d명이 저승길로 떠났어요" % _cd_pending, false)
+	_cd_shown += 1
+	_cd_label_t = t
+	_cd_pending = 0
 
 
 func _stats() -> String:
@@ -560,6 +654,11 @@ func _stats() -> String:
 	s += " | crowd_hit dense_max=%.1f flash_keep_min=%.2f sheet_skipped=%d" % [stat_dense_max, stat_keep_min, stat_sheet_skipped]
 	s += " | haewon n=%d full=%d soft=%d norm=%d near=%d cut=%d num_crowd_s=%.1f" % [
 		_hw_total, stat_hw_full, stat_hw_soft, stat_hw_norm, stat_hw_near, stat_hw_cut, stat_nc_on_s]
+	s += " | kill multi_j2=%d ovl=%d crit_cut=%d" % [stat_multi_j2, stat_burst_ovl, stat_crit_cut]
+	if kfx != null:
+		s += " bursts=%d souls=%d cut=%d absorbed=%d" % [kfx.stat_bursts, kfx.stat_souls, kfx.stat_cut, kfx.stat_soul_absorbed]
+	if procs != null and procs.has_method("stats_line"):
+		s += " | " + String(procs.call("stats_line"))
 	var dn: Node = Juice.damage_numbers
 	if dn != null and dn.has_method("stats_line"):
 		s += " | " + String(dn.call("stats_line"))

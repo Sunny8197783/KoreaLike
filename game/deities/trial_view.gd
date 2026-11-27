@@ -59,6 +59,39 @@ var _av_name_w: float = 0.0
 var _ov_face: StringName = &""
 var _ov_head: Array[Texture2D] = [null, null, null, null]
 var _ov_jimul: Array[Texture2D] = [null, null, null, null]
+# 권능 연출(design/19 §5.2 F): 1px 선 → 기존 시트(VfxPlayer). 첫 1f 신령 오방색 2px, 발밑 신령 표지 1f, 동시 8(군중 6).
+const PW_CAP: int = 8
+const PW_CAP_CROWD: int = 6
+const PW_FIRST: float = 2.0 / 60.0                         # '첫 1f' — 60fps 캡처에서도 잡히게 2틱
+const C_CHEONGNOK: Color = Color(0.247, 0.561, 0.525, 1.0) # #3f8f86 용왕 오방 청록(적 탄 청과 다른 값)
+const C_HWANGTO: Color = Color(0.663, 0.486, 0.106, 1.0)   # #a97c1b 대감 황토
+const WAVE_MOD: Color = Color(0.6, 1.0, 0.85, 1.0)         # 쑥물 장판 → 청록 물결
+var _pw_seen: PackedFloat32Array = PackedFloat32Array()    # 권능 연출 슬롯별로 본 fx_t0(새 항목 감지)
+var _pw_sheet_t: PackedFloat32Array = PackedFloat32Array([-10.0, -10.0, -10.0, -10.0, -10.0, -10.0, -10.0, -10.0])
+var _pw_sheet_head: int = 0
+var stat_pw_sheets: int = 0
+var stat_pw_cut: int = 0
+# 화신 타격 빛 점(design/19 §5.2 F): 맞을 때마다 화신 몸 → 위엄 막대로 0.3초(상한 4)
+const HD_CAP: int = 4
+const HD_LIFE: float = 0.3
+var _hd_t: PackedFloat32Array = PackedFloat32Array([-10.0, -10.0, -10.0, -10.0])
+var _hd_from: PackedVector2Array = PackedVector2Array([Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO])
+var _hd_head: int = 0
+var _hd_seen: float = -10.0
+
+
+## 신령 오방색(design/19 §5.2 F): 장군 적, 산신 황, 용왕 청록, 칠성·바리 한지, 대감 황토. 모르면 한지.
+func _obang_of(d: StringName) -> Color:
+	match String(d):
+		"deity_janggun":
+			return C_JEOK
+		"deity_sansin":
+			return C_HWANG
+		"deity_yongwang":
+			return C_CHEONGNOK
+		"deity_jeseok_daegam":
+			return C_HWANGTO
+	return C_HANJI
 
 
 ## "vfx_<prefix>_<key>" StringName 캐시(매 프레임 문자열 결합 방지).
@@ -198,7 +231,80 @@ func _process(_delta: float) -> void:
 		return
 	if layer_kind == 1:
 		_update_avatar_sprite()
+		_spawn_power_sheets()
+		_track_avatar_hits()
 	queue_redraw()
+
+
+## 새 권능 연출 항목을 찾아 기존 시트를 VfxPlayer 로 낸다(동시 8, 군중 6 — 넘치면 선 연출만).
+func _spawn_power_sheets() -> void:
+	var td: TrialDirector = dir as TrialDirector
+	var pw: Powers = td.powers as Powers if td != null else null
+	var vfx: VfxPlayer = Game.vfx as VfxPlayer
+	if pw == null or vfx == null:
+		return
+	if _pw_seen.size() != Powers.FX_CAP:
+		_pw_seen.resize(Powers.FX_CAP)
+		for i0 in Powers.FX_CAP:
+			_pw_seen[i0] = pw.fx_t0[i0]          # 붙기 전 항목은 낡은 것
+		return
+	var now: float = _now()
+	var cap: int = PW_CAP_CROWD if bool(Juice.get(&"fx_crowd")) else PW_CAP
+	for i in Powers.FX_CAP:
+		var t0: float = pw.fx_t0[i]
+		if t0 == _pw_seen[i]:
+			continue
+		_pw_seen[i] = t0
+		if now - t0 > 0.1 or now < t0:
+			continue
+		var live: int = 0
+		for k in _pw_sheet_t.size():
+			if now - _pw_sheet_t[k] < 0.6:
+				live += 1
+		if live >= cap:
+			stat_pw_cut += 1
+			continue
+		_pw_sheet_t[_pw_sheet_head] = now
+		_pw_sheet_head = (_pw_sheet_head + 1) % _pw_sheet_t.size()
+		stat_pw_sheets += 1
+		var p: Vector2 = Vector2(pw.fx_x[i], pw.fx_y[i])
+		var r: float = pw.fx_r[i]
+		var dc: Color = _obang_of(pw.fx_deity[i] if i < pw.fx_deity.size() else &"")
+		var white: bool = pw.fx_col[i] == K.DmgColor.WHITE
+		match pw.fx_kind[i]:
+			Powers.Fx.STAR_FALL:
+				vfx.play(&"vfx_isippalsu_bolt", p, 0.0, 1.0, {"additive": true, "snap": false, "modulate": Color(1, 1, 1, 0.9)})
+				vfx.play(&"vfx_hit_spark_white" if white else &"vfx_hit_spark_red", p + Vector2(0, -4), 0.0, 2.0,
+					{"delay": 0.1, "snap": false, "modulate": Color(0.82, 0.80, 0.76, 1.0) if white else Color.WHITE})
+			Powers.Fx.PULSE:
+				vfx.play(&"vfx_janggu_deong", p + Vector2(0, -6), 0.0, 1.0, {"snap": false, "modulate": Color(dc.lightened(0.25), 0.85)})
+			Powers.Fx.CLAW:
+				vfx.play(&"vfx_gyeoldanta_cut", p + Vector2(0, -12), 0.0, 1.0, {"snap": false, "modulate": C_HWANG.lightened(0.3)})
+			Powers.Fx.WAVE:
+				var dw: Vector2 = Vector2(pw.fx_dx[i], pw.fx_dy[i])
+				for m in 3:
+					var f: float = 0.25 + 0.25 * float(m)
+					vfx.play(&"vfx_ssukmul_pool", p + dw * r * f, 0.0, 1.0, {"snap": false, "modulate": WAVE_MOD, "life": 0.45, "delay": f * 0.45})
+			Powers.Fx.SPLASH:
+				vfx.play(&"vfx_mul_puddle_clear", p, 0.0, 1.0, {"snap": false, "life": 0.5})
+			Powers.Fx.ORB_GIFT:
+				vfx.play(&"vfx_box_neokham_open", p, 0.0, 1.0, {"snap": false, "life": 4.0 * 0.083})
+
+
+## 시련 중 화신 타격을 감지해 빛 점을 띄운다(TrialDirector.last_hit_t 가 바뀌면 1개, 상한 4 — 넘치면 가장 오래된 것을 덮음).
+func _track_avatar_hits() -> void:
+	var td: TrialDirector = dir as TrialDirector
+	if td == null or td.ph != TrialDirector.Ph.TRIAL:
+		return
+	if td.last_hit_t == _hd_seen:
+		return
+	_hd_seen = td.last_hit_t
+	var av: Avatar = td.avatar as Avatar
+	if av == null or _now() - td.last_hit_t > 0.1:
+		return
+	_hd_t[_hd_head] = _now()
+	_hd_from[_hd_head] = av.pos + Vector2(0, -roundf(float(av.size_px) * 0.36))
+	_hd_head = (_hd_head + 1) % HD_CAP
 
 
 func _now() -> float:
@@ -211,6 +317,7 @@ func _draw() -> void:
 	match layer_kind:
 		0:
 			_draw_ground()
+			_draw_power_foot()
 		1:
 			_draw_top()
 		2:
@@ -665,8 +772,8 @@ func _draw_top() -> void:
 				var py: float = roundf(-float(av.size_px) * 0.45 - minf(pa / 0.3, 1.0) * 8.0)
 				var pc: Color = Color(C_HWANG, 1.0 if pa < 0.45 else (0.6 - pa) / 0.15)
 				var pp2: Vector2 = K.rndv(av.pos + Vector2(roundf(float(av.size_px) * 0.22) - 6.0, py))
-				draw_string_outline(_font, pp2, "위엄", HORIZONTAL_ALIGNMENT_CENTER, 60.0, 11, 3, Color(C_MEOK, pc.a * 0.9))
-				draw_string(_font, pp2, "위엄", HORIZONTAL_ALIGNMENT_CENTER, 60.0, 11, pc)
+				draw_string_outline(_font, pp2, "싸움", HORIZONTAL_ALIGNMENT_CENTER, 60.0, 12, 3, Color(C_MEOK, pc.a * 0.9))
+				draw_string(_font, pp2, "싸움", HORIZONTAL_ALIGNMENT_CENTER, 60.0, 12, pc)
 		# 빛의 실(POSSESSION 0.15~0.5)
 		if ph == TrialDirector.Ph.POSSESSION and av != null:
 			var t: float = now - td.ph_t0
@@ -776,7 +883,7 @@ func _draw_avatar_gauge(td: TrialDirector, av: Avatar, now: float) -> void:
 	# 화신 이름(처음 보는 사람용: 이 존재가 '신령의 화신'이지 잡귀가 아님을 알린다)
 	if _av_name_deity != td.active_deity:
 		_av_name_deity = td.active_deity
-		_av_name = "%s의 화신 · %s" % [Defs.short_name(td.active_deity), Defs.avatar_name(td.active_deity)]
+		_av_name = "큰 신령 · %s" % Defs.short_name(td.active_deity)
 		_av_name_w = 0.0
 	# 화면 위 HUD 띠(시계·의례 슬롯·공수 레인)와 시련 안내판(trial_hud, y82~113) 안으로 올라가면 이름표는 생략
 	# — HUD '시련 n · 신령' 이 같은 말을 한다. 막대 위 이름표 윗변 = top−17 이 안내판 아래(≈115)보다 아래일 때만.
@@ -784,21 +891,36 @@ func _draw_avatar_gauge(td: TrialDirector, av: Avatar, now: float) -> void:
 	if _font != null and name_on_screen_y >= 132.0:
 		# 이름표는 위엄 막대 위에 띄운다(글자 아래 끝 ≤ 막대 위 −3px): 먹 받침 + 글자, 막대와 겹치지 않게
 		if _av_name_w <= 0.0:
-			_av_name_w = roundf(_font.get_string_size(_av_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x)
+			_av_name_w = roundf(_font.get_string_size(_av_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x)
 		var nw: float = _av_name_w + 10.0
 		var nr: Rect2 = Rect2(top.x + 20.0 - roundf(nw * 0.5), top.y - 17.0, nw, 13.0)
 		draw_rect(nr, Color(C_HEUK, 0.62))
 		draw_rect(Rect2(nr.position.x, nr.end.y - 1.0, nr.size.x, 1), Color(_deity_col(td.active_deity, 1.0), 0.7))
-		draw_string_outline(_font, Vector2(nr.position.x, top.y - 7.0), _av_name, HORIZONTAL_ALIGNMENT_CENTER, nw, 11, 2, Color(C_MEOK, 0.85))
-		draw_string(_font, Vector2(nr.position.x, top.y - 7.0), _av_name, HORIZONTAL_ALIGNMENT_CENTER, nw, 11, _deity_col(td.active_deity, 1.0).lightened(0.35))
+		draw_string_outline(_font, Vector2(nr.position.x, top.y - 7.0), _av_name, HORIZONTAL_ALIGNMENT_CENTER, nw, 12, 2, Color(C_MEOK, 0.85))
+		draw_string(_font, Vector2(nr.position.x, top.y - 7.0), _av_name, HORIZONTAL_ALIGNMENT_CENTER, nw, 12, _deity_col(td.active_deity, 1.0).lightened(0.35))
 	draw_rect(Rect2(top + Vector2(-1, -1), Vector2(42, 5)), C_HEUK)
 	draw_rect(Rect2(top, Vector2(40, 3)), Color(C_HANJI_DK, 0.7))
 	draw_rect(Rect2(top, Vector2(roundf(40.0 * td.wieom), 3)), C_JEOK)
+	# 화신 타격 빛 점: 몸 → 막대 채움 끝으로 0.3초(ease-in). 닿는 순간 막대 끝 1f 한지 — '내가 친 만큼 찬다'
+	var tip: Vector2 = top + Vector2(roundf(40.0 * td.wieom), 1)
+	var hc: Color = _obang_of(td.active_deity)
+	for k in HD_CAP:
+		var ha2: float = now - _hd_t[k]
+		if ha2 < 0.0 or ha2 >= HD_LIFE + 0.05:
+			continue
+		if ha2 >= HD_LIFE:
+			draw_rect(Rect2(tip + Vector2(-2, -2), Vector2(4, 5)), C_HANJI)
+			continue
+		var u: float = ha2 / HD_LIFE
+		var q: Vector2 = K.rndv(_hd_from[k].lerp(tip, u * u) + Vector2(0, -sin(u * PI) * 10.0))
+		draw_rect(Rect2(q - Vector2(2, 2), Vector2(5, 5)), Color(C_MEOK, 0.8))
+		draw_rect(Rect2(q - Vector2(1, 1), Vector2(3, 3)), hc)
+		draw_rect(Rect2(q, Vector2.ONE), C_HANJI)
 	if av.is_vulnerable():
 		var bp: float = 0.5 + 0.5 * sin(now * 14.0)
 		draw_rect(Rect2(top + Vector2(-1, -1), Vector2(42, 5)), Color(C_HANJI, 0.6 * bp), false, 1.0)
 		if _font != null:
-			draw_string(_font, top + Vector2(44, 5), "숨", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(C_HANJI, 0.7 + 0.3 * bp))
+			draw_string(_font, top + Vector2(44, 5), "숨", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(C_HANJI, 0.7 + 0.3 * bp))
 
 
 func _draw_task_top(td: TrialDirector, now: float, fade: float) -> void:
@@ -847,7 +969,7 @@ func _draw_task_top(td: TrialDirector, now: float, fade: float) -> void:
 				if lit and now - tk.ofx[i] < 0.4:
 					_ring(sp, 4.0 + (now - tk.ofx[i]) * 40.0, Color(C_HANJI, 1.0 - (now - tk.ofx[i]) / 0.4), 1.0)
 				if nxt and _font != null:
-					draw_string(_font, sp + Vector2(6, -4), str(i + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(C_HANJI, 0.9 * fade))
+					draw_string(_font, sp + Vector2(6, -4), str(i + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(C_HANJI, 0.9 * fade))
 		Task.Kind.INSTALL:
 			for i in 5:
 				var fp: Vector2 = Vector2(tk.ox[i], tk.oy[i])
@@ -867,6 +989,12 @@ func _draw_task_top(td: TrialDirector, now: float, fade: float) -> void:
 			draw_rect(Rect2(g + Vector2(-32, -50), Vector2(64, 5)), Color(0.2, 0.12, 0.12, fade))
 			draw_rect(Rect2(g + Vector2(-28, -45), Vector2(56, 2)), Color(C_JEOK, 0.8 * fade))
 			draw_rect(Rect2(g + Vector2(-22, -40), Vector2(44, 40)), Color(C_MEOK, 0.55 * fade))
+			# 넋이 문에 들어간 순간 문이 1f 한지로 번쩍(design/19 §5.2 F, 모심 쪽)
+			if tk.last_event == &"gate" and now - tk.last_event_t < PW_FIRST:
+				draw_rect(Rect2(g + Vector2(-26, -44), Vector2(4, 44)), C_HANJI)
+				draw_rect(Rect2(g + Vector2(22, -44), Vector2(4, 44)), C_HANJI)
+				draw_rect(Rect2(g + Vector2(-32, -50), Vector2(64, 5)), C_HANJI)
+				draw_rect(Rect2(g + Vector2(-22, -40), Vector2(44, 40)), Color(C_HANJI, 0.35))
 			for i in tk.o_count:
 				var p3: Vector2 = Vector2(tk.ox[i], tk.oy[i])
 				var t4: Texture2D = _south(YG_BODIES[1] if i % 2 == 0 else YG_BODIES[0], 32)
@@ -925,17 +1053,50 @@ func _draw_guide(td: TrialDirector, pp: Vector2, now: float) -> void:
 			draw_line(tip2, K.rndv(tip2 - dn2 * 5.0 - pr2 * 3.0), C_JEOK, 1.0)
 
 
+## 무당 발밑 신령 표지 1f(design/19 §5.2 F): 방금(첫 1f) 나간 권능 중 가장 새 것의 신령 confirm_ring 한 프레임(다 찬 고리).
+func _draw_power_foot() -> void:
+	var td: TrialDirector = dir as TrialDirector
+	var pw: Powers = td.powers as Powers
+	var pl: Player = Game.player as Player
+	if pw == null or pl == null or pw.fx_deity.size() != Powers.FX_CAP:
+		return
+	var now: float = _now()
+	for j in Powers.FX_CAP:
+		var i: int = (pw._fx_head - 1 - j + Powers.FX_CAP * 2) % Powers.FX_CAP
+		var age: float = now - pw.fx_t0[i]
+		if age < 0.0 or age >= PW_FIRST:
+			return                                  # 새 것부터 보므로 첫 1f 밖이면 끝
+		var d: StringName = pw.fx_deity[i]
+		if d == &"":
+			continue
+		_fx_frame(_fx_of("vfx_confirm_ring_", d), pl.render_pos, 99.0, Color.WHITE, false)   # 마지막 프레임 = 다 찬 고리(첫 프레임은 빈 진행 고리)
+		_ring(pl.render_pos + Vector2(0, -1), 13.0, _obang_of(d), 2.0)
+		return
+
+
 func _draw_power_fx(td: TrialDirector, now: float) -> void:
 	var pw: Powers = td.powers as Powers
 	if pw == null:
 		return
-	for i in Powers.FX_CAP:
+	var cap: int = PW_CAP_CROWD if bool(Juice.get(&"fx_crowd")) else PW_CAP
+	var drawn: int = 0
+	var has_d: bool = pw.fx_deity.size() == Powers.FX_CAP
+	for j in Powers.FX_CAP:
+		var i: int = (pw._fx_head - 1 - j + Powers.FX_CAP * 2) % Powers.FX_CAP   # 새 것부터(동시 상한에서 새 것을 남긴다)
 		var age: float = now - pw.fx_t0[i]
 		if age < 0.0 or age > 0.6:
 			continue
+		if drawn >= cap:
+			break
+		drawn += 1
 		var p: Vector2 = Vector2(pw.fx_x[i], pw.fx_y[i])
 		var col: Color = C_JEOK if pw.fx_col[i] == K.DmgColor.RED else (C_HANJI if pw.fx_col[i] == K.DmgColor.WHITE else C_HANJI_DK)
 		var r: float = pw.fx_r[i]
+		# 첫 1f: 신령 오방색 2px 고리(권능의 주인을 색으로)
+		if age < PW_FIRST and has_d and pw.fx_deity[i] != &"":
+			var fr: float = maxf(10.0, r) if pw.fx_kind[i] != Powers.Fx.LINE else 6.0
+			var fc: Vector2 = p + Vector2(pw.fx_dx[i], pw.fx_dy[i]) if pw.fx_kind[i] == Powers.Fx.LINE else p
+			_ring(fc, fr, _obang_of(pw.fx_deity[i]), 2.0)
 		match pw.fx_kind[i]:
 			Powers.Fx.STAR_FALL:
 				if age < 0.12:
@@ -955,7 +1116,13 @@ func _draw_power_fx(td: TrialDirector, now: float) -> void:
 				var frames: Array = _anim(&"avatar_sansin", "run", "east" if dv.x >= 0.0 else "west")
 				if frames.size() > 0 and k3 < 1.0:
 					var tx: Texture2D = frames[int(age * 20.0) % frames.size()]
-					_tex_flip(tx, hp, Vector2(float(tx.get_width()) * 0.5, float(_feet_y(tx))), Color(1, 1, 1, 0.9), false)
+					var tpiv: Vector2 = Vector2(float(tx.get_width()) * 0.5, float(_feet_y(tx)))
+					# 범이 무당 몸 상자(x±20, y−44~+20)와 겹치는 동안은 α0.15 — 범 그림이 무당을 통째로 덮던 것(19:30 캡처, design/18 ①)
+					var ta: float = 0.9
+					var tpl: Player = Game.player as Player
+					if tpl != null and Rect2(hp - tpiv, tx.get_size()).intersects(Rect2(tpl.render_pos + Vector2(-20, -44), Vector2(40, 64))):
+						ta = 0.15
+					_tex_flip(tx, hp, tpiv, Color(1, 1, 1, ta), false)
 			Powers.Fx.WAVE:
 				var dw: Vector2 = Vector2(pw.fx_dx[i], pw.fx_dy[i])
 				var k4: float = clampf(age / 0.5, 0.0, 1.0)
@@ -978,15 +1145,20 @@ func _draw_power_fx(td: TrialDirector, now: float) -> void:
 						draw_line(o, o + Vector2(4, 10) * k7, Color(col, 1.0 - k7), 1.0)
 			Powers.Fx.SPLASH:
 				var k8: float = clampf(age / 0.3, 0.0, 1.0)
-				_ring(p, r * (0.4 + 0.6 * k8), Color(0.55, 0.75, 0.85, 1.0 - k8), 1.0)
+				_ring(p, r * (0.4 + 0.6 * k8), Color(C_CHEONGNOK.lightened(0.3), 1.0 - k8), 2.0 if k8 < 0.3 else 1.0)
 			Powers.Fx.LINE:
 				# 영가 사격: 한지빛 화살 줄기(0.12s) — 끝에서 짧게 번진다
 				var k9: float = clampf(age / 0.12, 0.0, 1.0)
 				var tgt: Vector2 = p + Vector2(pw.fx_dx[i], pw.fx_dy[i])
 				if k9 < 1.0:
-					draw_line(K.rndv(p.lerp(tgt, maxf(0.0, k9 - 0.4))), K.rndv(p.lerp(tgt, k9)), Color(C_HANJI, 0.95), 1.0)
+					draw_line(K.rndv(p.lerp(tgt, maxf(0.0, k9 - 0.4))), K.rndv(p.lerp(tgt, k9)), Color(C_HANJI, 0.95), 2.0)
 				elif age < 0.3:
-					_ring(tgt, 3.0 + (age - 0.12) * 30.0, Color(C_HANJI, 1.0 - (age - 0.12) / 0.18), 1.0)
+					var lk: float = (age - 0.12) / 0.18
+					_ring(tgt, 3.0 + (age - 0.12) * 30.0, Color(C_HANJI, 1.0 - lk), 1.0)
+					# 꽂힘 꽃: 오방 3색 꽃잎 3장
+					for m2 in 3:
+						var fq: Vector2 = K.rndv(tgt + Vector2(0, -10) + Vector2.from_angle(-PI * 0.5 + TAU * float(m2) / 3.0) * (3.0 + 4.0 * lk))
+						draw_rect(Rect2(fq - Vector2(1, 1), Vector2(3, 3)), Color(OBANG[m2], 1.0 - lk))
 			Powers.Fx.FLOWER:
 				# 삼색꽃 표식: 적·황·청 꽃잎 세 장이 피었다 진다
 				var k10: float = clampf(age / 0.45, 0.0, 1.0)

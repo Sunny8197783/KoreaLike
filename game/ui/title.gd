@@ -12,7 +12,7 @@ signal lobby_requested
 signal tutorial_requested
 
 const KEY_ART: String = "res://ui/art/key_art_gutpan.png"
-const MENU: Array[String] = ["굿판 열기", "길잡이", "신당", "넋기록", "설정", "나가기"]
+const MENU: Array[String] = ["굿판 열기", "길잡이", "신당", "도감", "설정", "나가기"]
 const GUIDE_MENU: Array[String] = ["인트로 다시 보기", "연습 굿판", "굿 안내서", "뒤로"]
 const MODE_MENU: int = 0
 const MODE_CHARS: int = 1
@@ -30,7 +30,6 @@ var _vignette: Texture2D
 var _f_body: Font
 var _f_bold: Font
 var _f_small: Font
-var _f_tiny: Font
 var _f_big: Font
 var _f_brush: Font
 var _settings: SettingsPanel
@@ -54,7 +53,6 @@ func _ready() -> void:
 	_f_body = UiKit.body()
 	_f_bold = UiKit.bold()
 	_f_small = UiKit.small()
-	_f_tiny = UiKit.tiny()
 	_f_big = UiKit.big()
 	_f_brush = UiKit.brush()
 	_art = SpriteLib.tex(KEY_ART) if ResourceLoader.exists(KEY_ART) else null
@@ -434,7 +432,7 @@ func _draw_menu(cx: float, h: float) -> void:
 			var bob: float = roundf(sin(_t * 6.0))
 			UiKit.draw_diamond(self, Vector2(r.get_center().x - tw * 0.5 - 9.0 + bob, r.position.y + 8), 3.0, Color(UiKit.JEOK, a))
 			draw_rect(Rect2(r.get_center().x - tw * 0.5, r.position.y + 14, tw, 1), Color(UiKit.HWANG, a))
-	UiKit.text(self, _f_tiny, UiKit.SZ_TINY, Vector2(size.x - 6, h - 5), "v0.9 거의-완성 빌드", Color(UiKit.HANJI_4, a), 2)
+	UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(size.x - 6, h - 5), "v0.9", Color(UiKit.TXT_DIM_DARK, a), 2)
 	if not _overlay_open():
 		var foot: String = "↑↓ 고르기   Enter 확인   Esc 뒤로" if _mode == MODE_GUIDE else "↑↓ 고르기   Enter 확인"
 		UiKit.text(self, _f_small, UiKit.SZ_SMALL, Vector2(cx, h - 8), foot, Color(UiKit.HANJI_3, a), 1)
@@ -476,9 +474,7 @@ func _draw_chars(cx: float, w: float, h: float) -> void:
 	var ink: Color = UiKit.INK
 	draw_string(_f_bold, Vector2(x0, y), String(c["name"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
 	var nw: float = _f_bold.get_string_size(String(c["name"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY).x
-	var sub: String = String(c["lineage"])
-	if String(c["hanja"]) != "":
-		sub = "%s · %s" % [String(c["hanja"]), sub]
+	var sub: String = String(c["lineage"])   # 한자 이름은 도감·안내서에만(design/19 §4.7-3)
 	draw_string(_f_small, Vector2(x0 + nw + 8, y), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.HANJI_5)
 	y += 6
 	draw_rect(Rect2(x0, y, ip.size.x - 24, 1), UiKit.HANJI_4)
@@ -487,7 +483,7 @@ func _draw_chars(cx: float, w: float, h: float) -> void:
 		draw_string(_f_body, Vector2(x0, y), ln, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
 		y += 14
 	y += 6
-	draw_string(_f_small, Vector2(x0, y), "시작 무구", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.HANJI_5)
+	draw_string(_f_small, Vector2(x0, y), "시작 무기", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.HANJI_5)
 	var wx: float = x0 + 52
 	for wd: Dictionary in (c["weapons"] as Array):
 		UiKit.draw_kind_mark(self, Vector2(wx + 3, y - 4), 2.0, bool(wd["white"]))
@@ -497,11 +493,11 @@ func _draw_chars(cx: float, w: float, h: float) -> void:
 		draw_string(_f_small, Vector2(wx + 9, y), label, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK if not bool(wd["white"]) else ink)
 		wx += _f_small.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL).x + 18.0
 	y += 18
-	# 성향(퇴치 · 해원 5칸) — 도덕 표현 없이 경향만
-	draw_string(_f_small, Vector2(x0, y), "퇴치", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
+	# 성향(처치 · 풀기 5칸) — 도덕 표현 없이 경향만
+	draw_string(_f_small, Vector2(x0, y), "처치", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
 	for k in 5:
 		draw_rect(Rect2(x0 + 26 + k * 9, y - 7, 7, 6), UiKit.JEOK if k < int(c["toechi"]) else UiKit.HANJI_3)
-	draw_string(_f_small, Vector2(x0 + 84, y), "해원", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
+	draw_string(_f_small, Vector2(x0 + 84, y), "풀기", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
 	for k in 5:
 		draw_rect(Rect2(x0 + 110 + k * 9, y - 7, 7, 6), UiKit.MEOK_3 if k < int(c["haewon"]) else UiKit.HANJI_3)
 	y += 16
@@ -512,10 +508,10 @@ func _draw_chars(cx: float, w: float, h: float) -> void:
 	y = ip.end.y - 19.0
 	draw_rect(Rect2(x0, y - 11.0, ip.size.x - 24, 1), UiKit.HANJI_3)
 	UiKit.draw_kind_mark(self, Vector2(x0 + 3, y - 4), 2.0, false)
-	draw_string(_f_small, Vector2(x0 + 9, y), "붉은 무구 = 깨서 퇴치", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
+	draw_string(_f_small, Vector2(x0 + 9, y), "붉은 무기 = 베어 처치", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
 	UiKit.draw_kind_mark(self, Vector2(x0 + 124, y - 4), 2.0, true)
-	draw_string(_f_small, Vector2(x0 + 130, y), "흰 무구 = 풀어서 해원", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
-	draw_string(_f_small, Vector2(x0, y + 11.0), "흰 길로 고리를 닫으면 안이 한꺼번에 풀린다", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.HANJI_5)
+	draw_string(_f_small, Vector2(x0 + 130, y), "흰 무기 = 풀어 줌", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
+	draw_string(_f_small, Vector2(x0, y + 11.0), "흰 길로 한 바퀴 감싸면 안쪽이 한꺼번에 풀린다", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.HANJI_5)
 	# 출정 버튼
 	var sr: Rect2 = _start_rect()
 	var pulse: bool = fposmod(_t, 1.0) < 0.5

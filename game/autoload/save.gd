@@ -927,7 +927,12 @@ func settle_run(kind: String, result: Dictionary) -> Dictionary:
 	var acc: Dictionary = {"pg": 0, "tb": 0}       # 람다는 값 캡처 — 결과는 사전으로 받는다
 	var uiroe_id: String = String(run.get("uiroe", ""))
 	var x2: Dictionary = MetaRules.uiroe_record_x2(uiroe_id) if clear and uiroe_id != "" else {}
-	var cacc: Dictionary = {"sayeon": [], "byeoksa": [], "inyeon": [], "uiroe": false}   # 정산 화면 한지 카드 재료
+	var cacc: Dictionary = {"sayeon": [], "sayeon_ids": [], "byeoksa": [], "inyeon": [], "uiroe": false, "jinogi": false}   # 정산 화면 한지 카드 재료
+	# 결과 화면 진행 막대(design/19 §7): 넘긴 시험 수·큰 귀신·이전 최고 기록(이번 판 넣기 전)
+	var n_trials: int = int(run.get("trial_gaho", 0)) + int(run.get("trial_wieom", 0)) + int(run.get("trial_gaho_half", 0)) + int(run.get("trial_wieom_half", 0))
+	var n_mboss: int = int(run.get("mboss_haewon", 0)) + int(run.get("mboss_toechi", 0))
+	var best_before: int = best_time_s()
+	var sy_pick: Dictionary = _pick_sayeon_line(uid)
 	var ok: bool = _transact(func() -> void:
 		var cn: Dictionary = profile["counters"]
 		cn["cnt_runs"] = int(cn.get("cnt_runs", 0)) + 1
@@ -954,10 +959,14 @@ func settle_run(kind: String, result: Dictionary) -> Dictionary:
 				(profile["unlocks"]["char_ready"] as Array).append(cid)
 				var cnm: String = String(MetaRules.char_def(cid).get("name_ko", cid))
 				(cacc["inyeon"] as Array).append(cnm)
-				notices.append("%s%s 인연이 닿았습니다 — 신당에서 내림굿을 올릴 수 있습니다" % [cnm, MetaRules.josa(cnm, "과", "와")])
+				notices.append("새 무당 %s%s 인연이 닿았습니다 — '무당'에서 열 수 있습니다" % [cnm, MetaRules.josa(cnm, "과", "와")])
 		# 의뢰
 		_settle_uiroe(uiroe_id, bool(calc["uiroe_done"]), rng, notices)
 		cacc["uiroe"] = bool(calc["uiroe_done"]) and uiroe_id != ""
+		# 고정 의뢰 '어머니(은실)를 보내는 진오기굿'(design/19 §7): 첫 클리어에 마침 — 보상은 사연 카드
+		if clear and not bool((profile["flags"] as Dictionary).get(JINOGI_FLAG, false)):
+			(profile["flags"] as Dictionary)[JINOGI_FLAG] = true
+			cacc["jinogi"] = true
 		# 기록
 		(profile["flags"] as Dictionary)["tutorial_done"] = true
 		profile["active_run_uid"] = null
@@ -970,7 +979,8 @@ func settle_run(kind: String, result: Dictionary) -> Dictionary:
 		hist.append({"run_uid": uid, "char": String(run.get("char", "")), "result": kind,
 			"time_s": int(float(result.get("time_sec", 0.0))), "haewon": int(run["haewon"]), "toechi": int(run["toechi"]),
 			"neok": int(calc["neok_w"]), "yeopjeon": int(calc["yeop_w"]), "gongdeok_gain": g + res.x, "bokjeon_gain": b + res.y,
-			"uiroe": uiroe_id, "boss_knots": int(run.get("boss_knots", 0)), "stage": "stage_guksadang", "mode": "mode_pyojun", "dan": 0})
+			"uiroe": uiroe_id, "boss_knots": int(run.get("boss_knots", 0)), "stage": "stage_guksadang", "mode": "mode_pyojun", "dan": 0,
+			"trials": n_trials, "mboss": n_mboss})
 		while hist.size() > HISTORY_MAX:
 			hist.pop_front())
 	var piece_g: int = int(acc["pg"]) if ok else 0
@@ -980,15 +990,17 @@ func settle_run(kind: String, result: Dictionary) -> Dictionary:
 		if not bool(was_open[key]) and facility_open(key):
 			opened.append(key)
 			match key:
-				"danjang_open_after_runs": notices.append("신당 단장이 열렸습니다 — 공덕과 복전으로 신단을 꾸미면 다음 굿이 든든해집니다")
-				"singirok_open_after_runs": notices.append("넋기록 서고가 열렸습니다 — 풀어 준 넋과 물리친 귀신이 여기 적힙니다")
-				"uiroe_open_after_runs": notices.append("재가집 의뢰가 들어왔습니다 — 굿판 문에서 사연을 골라 받을 수 있습니다")
+				"danjang_open_after_runs": notices.append("신당 강화가 열렸습니다 — 공덕과 엽전으로 다음 판을 더 강하게")
+				"singirok_open_after_runs": notices.append("도감이 열렸습니다 — 풀어 준 넋과 처치한 귀신이 여기 적힙니다")
+				"uiroe_open_after_runs": notices.append("특별 의뢰가 들어왔습니다 — '특별 의뢰'에서 하나 골라 받을 수 있습니다")
 	last_settlement = {"run_uid": uid, "result": kind, "saved": ok, "error": "" if ok else last_error,
 		"G": g, "B": b, "piece_G": piece_g, "tier_B": tier_b, "neok_w": int(calc["neok_w"]), "yeop_w": int(calc["yeop_w"]),
 		"N": float(calc["N"]), "lines": calc["lines"], "notices": notices, "uiroe": uiroe_id,
 		"uiroe_done": bool(calc["uiroe_done"]), "uiroe_thanks": String(MetaRules.econ("sindang_v1.uiroe_thanks_ko", "")) if bool(calc["uiroe_done"]) else "",
 		"first_run": before_runs == 0, "wallet_G": wallet(MetaRules.CUR_G), "wallet_B": wallet(MetaRules.CUR_B),
-		"cards": _build_cards(cacc if ok else {}, opened, piece_g, tier_b)}
+		"cards": _build_cards(cacc if ok else {}, opened, piece_g, tier_b),
+		"time_s": int(float(result.get("time_sec", 0.0))), "trials": n_trials, "mboss": n_mboss, "best_before": best_before,
+		"sayeon_line": _sayeon_for_result(cacc if ok else {}, sy_pick), "jinogi_done": bool(cacc.get("jinogi", false))}
 	if ok:
 		_rotate_auto_backup()
 		_emit_wallet()
@@ -1003,27 +1015,39 @@ func settle_run(kind: String, result: Dictionary) -> Dictionary:
 	return last_settlement
 
 
-## 정산 화면 3막 한지 카드: 같은 종류는 한 장으로 묶는다(첫 판엔 사연 조각이 종마다 나와 화면을 덮지 않게).
+## 정산 화면 3막 한지 카드: 같은 종류는 한 장으로 묶는다(첫 판엔 사연이 종마다 나와 화면을 덮지 않게).
 ## [{kind, seal, title, body, reward}] — kind: sayeon | byeoksa | inyeon | open | uiroe. 최대 4장(중요한 순).
+## 낙관(seal)은 한글 한 글자(design/19 §4.7: 화면 한자 삭제). 사연 카드는 받은 조각 첫 문장을 인용한다.
 func _build_cards(cacc: Dictionary, opened: Array[String], piece_g: int, tier_b: int) -> Array:
 	var cards: Array = []
+	if bool(cacc.get("jinogi", false)):
+		cards.append({"kind": "uiroe", "seal": "넋", "title": "진오기굿을 마쳤다",
+			"body": "\"서리야, 풀어라. 다 풀고 나면… 나도.\" — 어머니의 목소리가 한 번 더 들렸다", "reward": ""})
 	for nm: Variant in cacc.get("inyeon", []):
-		cards.append({"kind": "inyeon", "seal": "巫", "title": "무당 인연", "body": "%s%s 인연이 닿았다 — 신당에서 내림굿" % [String(nm), MetaRules.josa(String(nm), "과", "와")], "reward": ""})
+		cards.append({"kind": "inyeon", "seal": "무", "title": "새 무당 인연", "body": "%s%s 인연이 닿았다 — 신당 '무당'에서 연다" % [String(nm), MetaRules.josa(String(nm), "과", "와")], "reward": ""})
 	for key: String in opened:
 		match key:
-			"danjang_open_after_runs": cards.append({"kind": "open", "seal": "壇", "title": "신당 단장", "body": "열렸다 — 공덕·복전으로 신단을 꾸며 다음 굿을 든든히", "reward": ""})
-			"singirok_open_after_runs": cards.append({"kind": "open", "seal": "錄", "title": "넋기록 서고", "body": "열렸다 — 풀어 준 넋과 물리친 귀신이 여기 적힌다", "reward": ""})
-			"uiroe_open_after_runs": cards.append({"kind": "open", "seal": "願", "title": "재가집 의뢰", "body": "들어왔다 — 굿판 문에서 사연을 골라 받는다", "reward": ""})
+			"danjang_open_after_runs": cards.append({"kind": "open", "seal": "강", "title": "신당 강화", "body": "열렸다 — 공덕·엽전으로 다음 판을 더 강하게", "reward": ""})
+			"singirok_open_after_runs": cards.append({"kind": "open", "seal": "도", "title": "도감", "body": "열렸다 — 풀어 준 넋의 사연이 여기 적힌다", "reward": ""})
+			"uiroe_open_after_runs": cards.append({"kind": "open", "seal": "의", "title": "특별 의뢰", "body": "들어왔다 — 신당에서 사연을 골라 받는다", "reward": ""})
 	if bool(cacc.get("uiroe", false)):
-		cards.append({"kind": "uiroe", "seal": "願", "title": "의뢰를 마쳤다", "body": String(MetaRules.econ("sindang_v1.uiroe_thanks_ko", "재가집이 고개를 숙였다")), "reward": ""})
+		cards.append({"kind": "uiroe", "seal": "의", "title": "의뢰를 마쳤다", "body": String(MetaRules.econ("sindang_v1.uiroe_thanks_ko", "재가집이 고개를 숙였다")), "reward": ""})
 	var sy: Array = cacc.get("sayeon", [])
 	if not sy.is_empty():
-		cards.append({"kind": "sayeon", "seal": "緣", "title": "사연 조각" + (" ×%d" % sy.size() if sy.size() > 1 else ""),
-			"body": _name_list(sy) + ("의 사연을 들었다" if sy.size() == 1 else " — 사연을 들었다"), "reward": "공덕 +" + _comma(piece_g) if piece_g > 0 else ""})
+		var body: String = _name_list(sy) + ("의 사연을 들었다" if sy.size() == 1 else " — 사연을 들었다")
+		for e: Variant in cacc.get("sayeon_ids", []):
+			if not (e is Array):
+				continue
+			var q: String = sayeon_piece_quote(String((e as Array)[0]), int((e as Array)[1]))
+			if q != "":
+				body = "「%s」 — %s" % [q, sayeon_who(String((e as Array)[0]))]
+				break
+		cards.append({"kind": "sayeon", "seal": "넋", "title": "사연" + (" ×%d" % sy.size() if sy.size() > 1 else ""),
+			"body": body, "reward": "공덕 +" + _comma(piece_g) if piece_g > 0 else ""})
 	var bs: Array = cacc.get("byeoksa", [])
 	if not bs.is_empty():
-		cards.append({"kind": "byeoksa", "seal": "辟", "title": "벽사록" + (" ×%d" % bs.size() if bs.size() > 1 else ""),
-			"body": _name_list(bs) + ("에 올랐다" if bs.size() == 1 else " — 벽사 단계가 올랐다"), "reward": "복전 +" + _comma(tier_b) if tier_b > 0 else ""})
+		cards.append({"kind": "byeoksa", "seal": "처", "title": "처치 기록" + (" ×%d" % bs.size() if bs.size() > 1 else ""),
+			"body": _name_list(bs) + ("에 올랐다" if bs.size() == 1 else " — 단계가 올랐다"), "reward": "엽전 +" + _comma(tier_b) if tier_b > 0 else ""})
 	if cards.size() > 4:
 		cards.resize(4)
 	return cards
@@ -1060,15 +1084,18 @@ func _apply_singirok(x2: Dictionary, notices: Array[String], cacc: Dictionary = 
 		if not pieces.has(1):
 			pieces.append(1)
 			gsum += piece_reward
-			notices.append("사연 조각: %s의 첫 사연을 들었습니다" % MetaRules.enemy_ko(key))
+			notices.append("사연: %s의 첫 사연을 들었습니다" % MetaRules.enemy_ko(key))
 			if cacc.has("sayeon"):
 				(cacc["sayeon"] as Array).append(MetaRules.enemy_ko(key))
+				(cacc["sayeon_ids"] as Array).append([key, 0])
 		if int(e["haewon"]) >= 150 and not pieces.has(2):
 			pieces.append(2)
 			gsum += piece_reward
-			notices.append("사연 조각: %s의 두 번째 사연" % MetaRules.enemy_ko(key))
+			notices.append("사연: %s의 두 번째 사연" % MetaRules.enemy_ko(key))
 			if cacc.has("sayeon") and not (cacc["sayeon"] as Array).has(MetaRules.enemy_ko(key)):
 				(cacc["sayeon"] as Array).append(MetaRules.enemy_ko(key))
+			if cacc.has("sayeon_ids"):
+				(cacc["sayeon_ids"] as Array).append([key, 1])
 	for sp: StringName in _sp_toechi:
 		var key: String = String(sp)
 		var n: int = int(_sp_toechi[sp]) * (2 if x2.has(key) else 1)
@@ -1080,7 +1107,7 @@ func _apply_singirok(x2: Dictionary, notices: Array[String], cacc: Dictionary = 
 		var t: int = MetaRules.byeoksa_tier(grp, int(e["toechi"]))
 		if t > int(e.get("tier", 0)):
 			bsum += tier_reward * (t - int(e.get("tier", 0)))
-			notices.append("벽사록: %s %d단계" % [MetaRules.enemy_ko(key), t])
+			notices.append("처치 기록: %s %d단계" % [MetaRules.enemy_ko(key), t])
 			if cacc.has("byeoksa"):
 				(cacc["byeoksa"] as Array).append("%s %d단계" % [MetaRules.enemy_ko(key), t])
 			e["tier"] = t
@@ -1100,7 +1127,7 @@ func _settle_uiroe(accepted: String, done: bool, rng: RandomNumberGenerator, not
 			(u["completed"] as Array).append(accepted)
 			var cn: Dictionary = profile["counters"]
 			cn["cnt_uiroe_done"] = int(cn.get("cnt_uiroe_done", 0)) + 1
-			notices.append("재가집 의뢰를 마쳤습니다 — \"%s\"" % String(MetaRules.econ("sindang_v1.uiroe_thanks_ko", "")))
+			notices.append("특별 의뢰를 마쳤습니다 — \"%s\"" % String(MetaRules.econ("sindang_v1.uiroe_thanks_ko", "")))
 		u["accepted"] = null
 	# 받지 않은 의뢰는 3런 동안 유지
 	var keep: int = 3
@@ -1114,9 +1141,14 @@ func _settle_uiroe(accepted: String, done: bool, rng: RandomNumberGenerator, not
 
 ## 정산 화면(ui/result.gd)용 표시 묶음. 정산 전이면 빈 사전.
 ## {ok, first_run, gain_G, gain_B, wallet_G, wallet_B,
-##  rows: [{label, value, gold:bool}]  — "풀어 준 넋 420 → 공덕 +482" 식 환산 줄(위에서 아래로 그린다),
-##  mults: Array[String] — 배율 줄("어울림 ×1.15" 등), notices: Array[String] — 해금·사연 조각 등,
-##  cards: [{kind, seal, title, body, reward}] — 3막 한지 카드(묶음, 최대 4장)}
+##  rows: [{label, value, gold:bool, from, from_n, to, to_n}] — "풀어 준 넋 420 → 공덕 +482" 식 환산 줄(넋·엽전 두 줄은 늘 있다),
+##  mults: Array[String] — 배율 줄("어울림 ×1.15" 등), notices: Array[String] — 해금·사연 등,
+##  cards: [{kind, seal, title, body, reward}] — 3막 한지 카드(묶음, 최대 4장),
+##  progress: {time_s, trials, mboss, boss, best_s, new_best} — 진행 막대(design/19 §7),
+##  affordable: [{kind, id, name, effect, cost, cur, cur_ko}] — 지금 신당에서 살 수 있는 것(싼 순),
+##  upgrades_n: int — 살 수 있는 신당 강화 칸 수, nearest: {name, effect, need, cur_ko} — 없으면 가장 가까운 것,
+##  next_goal: {id, short, long}, sayeon: {quote, who, species} — 사연 한 줄}
+## 화면 재화 이름: 복전 → 엽전(design/19 §2.5). 세이브 키는 그대로.
 func settlement_view() -> Dictionary:
 	var s: Dictionary = last_settlement
 	if s.is_empty():
@@ -1129,26 +1161,465 @@ func settlement_view() -> Dictionary:
 	# from/to/from_n/to_n: 정산 화면 카운트업용 숫자(label/value 는 옛 표시 호환).
 	var nw: int = int(s.get("neok_w", 0))
 	var yw: int = int(s.get("yeop_w", 0))
-	rows.append({"label": "넋 %s → 공덕" % _comma(nw), "value": "+" + _comma(g), "gold": false,
-		"from": "넋", "from_n": nw, "to": "공덕", "to_n": g})
-	rows.append({"label": "엽전 %s → 복전" % _comma(yw), "value": "+" + _comma(b), "gold": true,
-		"from": "엽전", "from_n": yw, "to": "복전", "to_n": b})
+	rows.append({"label": "풀어 준 넋 %s → 공덕" % _comma(nw), "value": "+" + _comma(g), "gold": false,
+		"from": "풀어 준 넋", "from_n": nw, "to": "공덕", "to_n": g})
+	rows.append({"label": "모은 엽전 %s → 엽전" % _comma(yw), "value": "+" + _comma(b), "gold": true,
+		"from": "모은 엽전", "from_n": yw, "to": "엽전", "to_n": b})
 	if pg > 0:
-		rows.append({"label": "사연 조각", "value": "공덕 +" + _comma(pg), "gold": false,
-			"from": "사연 조각", "from_n": -1, "to": "공덕", "to_n": pg})
+		rows.append({"label": "사연", "value": "공덕 +" + _comma(pg), "gold": false,
+			"from": "사연", "from_n": -1, "to": "공덕", "to_n": pg})
 	if tb > 0:
-		rows.append({"label": "벽사록 단계", "value": "복전 +" + _comma(tb), "gold": true,
-			"from": "벽사록 단계", "from_n": -1, "to": "복전", "to_n": tb})
+		rows.append({"label": "처치 기록", "value": "엽전 +" + _comma(tb), "gold": true,
+			"from": "처치 기록", "from_n": -1, "to": "엽전", "to_n": tb})
 	var mults: Array[String] = []
 	for l: Variant in s.get("lines", []):
 		mults.append(String(l))
 	var notices: Array[String] = []
 	for n: Variant in s.get("notices", []):
 		notices.append(String(n))
+	var ts: int = int(s.get("time_s", 0))
+	var kind: String = String(s.get("result", ""))
+	var best_before: int = int(s.get("best_before", 0))
+	var aff: Array[Dictionary] = affordable()
+	var up_n: int = 0
+	for a: Dictionary in aff:
+		if String(a["kind"]) == "danjang":
+			up_n += 1
 	return {"ok": bool(s.get("saved", false)), "first_run": bool(s.get("first_run", false)),
 		"gain_G": g + pg, "gain_B": b + tb, "wallet_G": int(s.get("wallet_G", 0)), "wallet_B": int(s.get("wallet_B", 0)),
 		"rows": rows, "mults": mults, "notices": notices, "error": String(s.get("error", "")),
-		"cards": (s.get("cards", []) as Array).duplicate(true) if s.get("cards") is Array else []}
+		"cards": (s.get("cards", []) as Array).duplicate(true) if s.get("cards") is Array else [],
+		"progress": {"time_s": ts, "trials": int(s.get("trials", 0)), "mboss": int(s.get("mboss", 0)) > 0,
+			"boss": kind == MetaRules.R_CLEAR_BOW or kind == MetaRules.R_CLEAR_SAL, "result": kind,
+			"best_s": maxi(best_before, ts), "new_best": ts > best_before and best_before > 0},
+		"affordable": aff, "upgrades_n": up_n, "nearest": nearest_purchase(), "next_goal": next_goal(),
+		"sayeon": (s.get("sayeon_line", {}) as Dictionary).duplicate() if s.get("sayeon_line") is Dictionary else {}}
+
+
+# ═══ 메타 루프 표시(design/19 §7) — 결과 화면·신당·HUD(목표 줄) 공용 ═══════════════
+const JINOGI_FLAG: String = "jinogi_done"
+const JINOGI_TITLE: String = "어머니(은실)를 보내는 진오기굿"
+## 다음 목표 사다리 시각(초). 시험 3:00·6:30, 큰 귀신 10:00, 신령 모두 내림 18:00, 역려 20:00.
+const LADDER_T: Dictionary = {"trial1": 180, "trial2": 390, "mboss": 600, "hapil": 1080, "boss": 1200}
+
+
+## 지난 판 중 가장 오래 버틴 시각(초). 기록이 없으면 0.
+func best_time_s() -> int:
+	var best: int = 0
+	var hist: Variant = profile.get("run_history", [])
+	if hist is Array:
+		for e: Variant in hist:
+			if e is Dictionary:
+				best = maxi(best, int((e as Dictionary).get("time_s", 0)))
+	return best
+
+
+## 사다리 단계별 달성 여부(지난 판 기록 전부). 옛 기록(trials·mboss 키 없음)은 버틴 시각으로 판정한다.
+func _ladder_done() -> Dictionary:
+	var d: Dictionary = {"trial1": false, "trial2": false, "mboss": false, "hapil": false, "boss": false, "bow": false, "sal": false}
+	var hist: Variant = profile.get("run_history", [])
+	if not (hist is Array):
+		return d
+	for e: Variant in hist:
+		if not (e is Dictionary):
+			continue
+		var h: Dictionary = e
+		var t: int = int(h.get("time_s", 0))
+		var res: String = String(h.get("result", ""))
+		var tr: int = int(h["trials"]) if h.has("trials") else (1 if t >= 225 else 0) + (1 if t >= 435 else 0)
+		if tr >= 1:
+			d["trial1"] = true
+		if tr >= 2:
+			d["trial2"] = true
+		if int(h.get("mboss", 1 if t >= 720 else 0)) > 0:
+			d["mboss"] = true
+		if t >= int(LADDER_T["hapil"]):
+			d["hapil"] = true
+		if res == MetaRules.R_CLEAR_BOW or res == MetaRules.R_CLEAR_SAL:
+			d["boss"] = true
+			d["hapil"] = true
+		if res == MetaRules.R_CLEAR_BOW:
+			d["bow"] = true
+		if res == MetaRules.R_CLEAR_SAL:
+			d["sal"] = true
+	return d
+
+
+## 다음 목표 하나(최고 기록 사다리에서 처음 못 넘은 것). {id, short, long}
+## short 는 HUD 목표 줄용(22자 이내), long 은 결과 화면·신당 '출발' 패널용.
+func next_goal() -> Dictionary:
+	var d: Dictionary = _ladder_done()
+	if not bool(d["trial1"]):
+		return {"id": "trial1", "short": "03:00 첫 신령의 시험 넘기기", "tiny": "03:00 첫 시험", "long": "03:00 첫 신령의 시험 넘기기 — 빛나는 원으로 들어가 싸우거나 모시기"}
+	if not bool(d["trial2"]):
+		return {"id": "trial2", "short": "06:30 두 번째 시험 넘기기", "tiny": "06:30 둘째 시험", "long": "06:30 두 번째 신령의 시험을 넘기기"}
+	if not bool(d["mboss"]):
+		return {"id": "mboss", "short": "10:00 큰 귀신 이기기", "tiny": "10:00 큰 귀신", "long": "10:00 큰 귀신을 쓰러뜨리거나 풀어 주기"}
+	if not bool(d["hapil"]):
+		return {"id": "hapil", "short": "18:00 신령 모두 내림까지", "tiny": "18:00 신령 내림", "long": "18:00까지 버텨 모신 신령을 모두 내려오게 하기"}
+	if not bool(d["boss"]):
+		return {"id": "boss", "short": "20:00 역려를 보내기", "tiny": "20:00 역려 보내기", "long": "20:00 마지막에 오는 역병 귀신 역려를 보내기"}
+	if not bool(d["bow"]):
+		return {"id": "bow", "short": "역려를 풀어 보내기", "tiny": "역려 풀어 보내기", "long": "많이 풀어 주어(절반 넘게) 역려를 한의 얼굴로 불러 풀어 보내기"}
+	if not bool(d["sal"]):
+		return {"id": "sal", "short": "역려를 베어 쓰러뜨리기", "tiny": "역려 베어 보내기", "long": "많이 처치해(절반 넘게) 역려를 살의 얼굴로 불러 쓰러뜨리기"}
+	# 무당 인연(가장 가까운 것)
+	var best_cid: String = ""
+	var best_k: float = -1.0
+	for c: Variant in MetaRules.char_defs():
+		var cid: String = String((c as Dictionary).get("id", ""))
+		if MetaRules.char_unlocked(profile, cid):
+			continue
+		var pr: Vector2i = MetaRules.char_progress(profile, cid)
+		var k: float = float(pr.x) / float(maxi(1, pr.y))
+		if k > best_k:
+			best_k = k
+			best_cid = cid
+	if best_cid != "":
+		var pr2: Vector2i = MetaRules.char_progress(profile, best_cid)
+		var nm: String = String(MetaRules.char_def(best_cid).get("name_ko", best_cid))
+		return {"id": "char", "short": "새 무당: %s (%d/%d)" % [nm, pr2.x, pr2.y],
+			"long": "새 무당 %s%s 인연 맺기 — %s (%d/%d)" % [nm, MetaRules.josa(nm, "과", "와"), _cond_text(best_cid), pr2.x, pr2.y]}
+	var np: Dictionary = nearest_purchase(true)
+	if not np.is_empty():
+		return {"id": "shop", "short": "%s 갖추기" % String(np["name"]), "long": "%s 갖추기 — %s %s 남음" % [String(np["name"]), String(np["cur_ko"]), _comma(int(np["need"]))]}
+	return {"id": "more", "short": "더 많이 풀어 주기", "long": "더 많은 넋을 풀어 도감을 채우기"}
+
+
+func _cond_text(cid: String) -> String:
+	var t: String = String(MetaRules.char_condition(cid).get("text", ""))
+	var paren: int = t.find(" (v1")
+	return t.left(paren) if paren >= 0 else t
+
+
+## HUD 목표 줄·이야기 카드용 짧은 한 줄(22자 이내). 예: "다음 목표: 06:30 두 번째 시험 넘기기" 대신 짧은 형만.
+func next_goal_line() -> String:
+	return String(next_goal().get("short", ""))
+
+
+## 아주 짧은 형(신당 메뉴 부제 등 좁은 칸용 — 시각·대상만). 없으면 short.
+func next_goal_tiny() -> String:
+	var g: Dictionary = next_goal()
+	return String(g.get("tiny", g.get("short", "")))
+
+
+## 다음 판 시작 때 '신당의 힘' 항목(쉬운 말). 예: ["체력 +10", "넋 동무 머묾 +3초"]. 강화가 없으면 빈 배열.
+## HUD 는 "신당의 힘: " + " · ".join(앞 2개) 로 띄운다(run_start_bonus_text() 가 그 완성형).
+func run_start_bonus_lines() -> PackedStringArray:
+	var out: PackedStringArray = PackedStringArray()
+	var bonus: Dictionary = MetaRules.danjang_stat_bonus(profile)
+	for it: Variant in MetaRules.danjang_items():
+		var st: String = String((it as Dictionary).get("stat", ""))
+		if not bonus.has(StringName(st)):
+			continue
+		var line: String = MetaRules.stat_easy(st, float(bonus[StringName(st)]))
+		if line != "" and not out.has(line):
+			out.append(line)
+	return out
+
+
+## "신당의 힘: 체력 +10 · 넋 동무 머묾 +3초 외 2" (강화가 없으면 "").
+func run_start_bonus_text(max_items: int = 2) -> String:
+	var ls: PackedStringArray = run_start_bonus_lines()
+	if ls.is_empty():
+		return ""
+	var shown: PackedStringArray = ls.slice(0, maxi(1, max_items))
+	return "신당의 힘: " + " · ".join(shown) + (" 외 %d" % (ls.size() - shown.size()) if ls.size() > shown.size() else "")
+
+
+## 이번 판 의뢰 한 줄(이야기 카드 둘째 줄). 받은 특별 의뢰가 있으면 그 사연, 없으면 첫 클리어 전까지 고정 의뢰.
+## 예: "의뢰: 어머니(은실)를 보내는 진오기굿". 둘 다 없으면 "".
+func current_request_line() -> String:
+	var a: String = uiroe_accepted()
+	if a != "":
+		return "의뢰: " + String(MetaRules.uiroe_def(a).get("sayeon_ko", a))
+	if not flag(JINOGI_FLAG):
+		return "의뢰: " + JINOGI_TITLE
+	return ""
+
+
+## 지금 지갑으로 살 수 있는 것(신당 강화 → 무기 → 새 무당), 칸마다 싼 순. [{kind, id, name, effect, cost, cur, cur_ko}]
+func affordable() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if facility_open("danjang_open_after_runs"):
+		var dj: Array[Dictionary] = []
+		for it: Variant in MetaRules.danjang_items():
+			var id: String = String((it as Dictionary).get("id", ""))
+			var cost: int = MetaRules.danjang_next_cost(profile, id)
+			var cur: StringName = MetaRules.danjang_currency(id)
+			if cost >= 0 and wallet(cur) >= cost:
+				dj.append({"kind": "danjang", "id": id, "name": String((it as Dictionary).get("name_ko", id)),
+					"effect": MetaRules.danjang_effect_easy(id), "cost": cost, "cur": cur, "cur_ko": MetaRules.currency_name(cur)})
+		dj.sort_custom(func(x: Dictionary, y: Dictionary) -> bool: return int(x["cost"]) < int(y["cost"]))
+		out.append_array(dj)
+	if facility_open("weapon_offering_open_after_runs"):
+		var ws: Array[Dictionary] = []
+		for w: Variant in MetaRules.weapon_defs():
+			var wid: String = String((w as Dictionary).get("id", ""))
+			if not Data.weapon(wid).is_empty() and not Data.is_v1(Data.weapon(wid)):
+				continue
+			if MetaRules.weapon_state(profile, wid) != "buyable":
+				continue
+			var wc: int = MetaRules.weapon_cost(wid)
+			var wcur: StringName = MetaRules.weapon_currency(wid)
+			if wallet(wcur) >= wc:
+				ws.append({"kind": "weapon", "id": wid, "name": String((w as Dictionary).get("name_ko", wid)),
+					"effect": "새 무기", "cost": wc, "cur": wcur, "cur_ko": MetaRules.currency_name(wcur)})
+		ws.sort_custom(func(x: Dictionary, y: Dictionary) -> bool: return int(x["cost"]) < int(y["cost"]))
+		out.append_array(ws)
+	for c: Variant in MetaRules.char_defs():
+		var cid: String = String((c as Dictionary).get("id", ""))
+		if MetaRules.char_unlocked(profile, cid) or not MetaRules.char_ready(profile, cid):
+			continue
+		var cc: int = MetaRules.char_cost(cid)
+		if wallet(MetaRules.CUR_G) >= cc:
+			out.append({"kind": "char", "id": cid, "name": String((c as Dictionary).get("name_ko", cid)),
+				"effect": "새 무당", "cost": cc, "cur": MetaRules.CUR_G, "cur_ko": MetaRules.currency_name(MetaRules.CUR_G)})
+	return out
+
+
+## 아직 못 사는 것 중 가장 적게 모자란 신당 강화(any=true 면 무기도). {name, effect, need, cur_ko} 또는 빈 사전.
+func nearest_purchase(any: bool = false) -> Dictionary:
+	var best: Dictionary = {}
+	var best_need: int = 0x7fffffff
+	for it: Variant in MetaRules.danjang_items():
+		var id: String = String((it as Dictionary).get("id", ""))
+		var cost: int = MetaRules.danjang_next_cost(profile, id)
+		var cur: StringName = MetaRules.danjang_currency(id)
+		var need: int = cost - wallet(cur)
+		if cost >= 0 and need > 0 and need < best_need:
+			best_need = need
+			best = {"name": String((it as Dictionary).get("name_ko", id)), "effect": MetaRules.danjang_effect_easy(id),
+				"need": need, "cur_ko": MetaRules.currency_name(cur)}
+	if any or best.is_empty():
+		for w: Variant in MetaRules.weapon_defs():
+			var wid: String = String((w as Dictionary).get("id", ""))
+			if MetaRules.weapon_state(profile, wid) != "buyable":
+				continue
+			var wcur: StringName = MetaRules.weapon_currency(wid)
+			var need2: int = MetaRules.weapon_cost(wid) - wallet(wcur)
+			if need2 > 0 and need2 < best_need:
+				best_need = need2
+				best = {"name": String((w as Dictionary).get("name_ko", wid)), "effect": "새 무기", "need": need2, "cur_ko": MetaRules.currency_name(wcur)}
+	return best
+
+
+# ─── 사연(narrative/sayeon_examples.json) ───
+
+func _sayeon_entry(species: String) -> Dictionary:
+	var es: Variant = Data.get_value("narrative/sayeon_examples", "entries", [])
+	if es is Array:
+		for e: Variant in es:
+			if e is Dictionary and String((e as Dictionary).get("id", "")) == species:
+				return e
+	return {}
+
+
+## 사연 조각 idx(0..2)의 첫 문장(짧으면 다음 문장까지, 32자 안). 없으면 "".
+func sayeon_piece_quote(species: String, idx: int) -> String:
+	var h: Variant = _sayeon_entry(species).get("haewon", {})
+	if not (h is Dictionary):
+		return ""
+	var ps: Variant = (h as Dictionary).get("pieces", [])
+	if not (ps is Array) or idx < 0 or idx >= (ps as Array).size():
+		return ""
+	return first_sentence(String((ps as Array)[idx]))
+
+
+static func first_sentence(t: String, max_len: int = 32) -> String:
+	var out: String = ""
+	var rest: String = t.strip_edges()
+	while rest != "":
+		var cut: int = -1
+		for mark: String in [". ", "? ", "! ", "… "]:
+			var k: int = rest.find(mark)
+			if k >= 0 and (cut < 0 or k < cut):
+				cut = k
+		var sent: String = rest if cut < 0 else rest.left(cut + 1)
+		if out != "" and (out + " " + sent).length() > max_len:
+			if out.length() < 10:
+				out = (out + " " + sent).left(max_len).strip_edges() + "…"
+			break
+		out = sent if out == "" else out + " " + sent
+		rest = "" if cut < 0 else rest.substr(cut + 2).strip_edges()
+		if out.length() >= 10:
+			break
+	if out.length() > max_len + 8:
+		out = out.left(max_len) + "…"
+	return out
+
+
+## "순덕(달걀귀신)" — 대표 이름이 없으면 종 이름만.
+func sayeon_who(species: String) -> String:
+	var e: Dictionary = _sayeon_entry(species)
+	var nm: String = MetaRules.enemy_ko(species)
+	var rep_v: Variant = (e.get("haewon", {}) as Dictionary).get("representative", "") if e.get("haewon") is Dictionary else ""
+	var rep_s: String = String(rep_v)
+	if rep_s == "" or rep_s.begins_with("무명") or rep_s.length() > 6:
+		return nm
+	return "%s(%s)" % [rep_s, nm]
+
+
+## 도감 칸 사연 카드: 받은 조각 문장들(최대 3) + 넋두리 한 줄. {who, pieces: Array[String], neokduri}
+func sayeon_card(species: String) -> Dictionary:
+	var e: Dictionary = _sayeon_entry(species)
+	var got: Variant = get_value("singirok.haewonrok.%s.pieces" % species, [])
+	var out: Array[String] = []
+	var h: Variant = e.get("haewon", {})
+	if h is Dictionary and (h as Dictionary).get("pieces") is Array and got is Array:
+		var ps: Array = (h as Dictionary)["pieces"]
+		for i in ps.size():
+			if (got as Array).has(i + 1) or (got as Array).has(float(i + 1)):
+				out.append(String(ps[i]))
+	var nd: Variant = e.get("neokduri", [])
+	return {"who": sayeon_who(species), "pieces": out,
+		"neokduri": String((nd as Array)[0]) if nd is Array and not (nd as Array).is_empty() else "", "has_entry": not e.is_empty()}
+
+
+## 정산 직전(이번 판 종별 해원 집계가 살아 있을 때): 가장 많이 풀어 준 종의 넋두리 한 줄. 화면용 — 게임 난수 아님(uid 해시).
+func _pick_sayeon_line(uid: String) -> Dictionary:
+	var best_sp: String = ""
+	var best_n: int = 0
+	for sp: StringName in _sp_haewon:
+		var n: int = int(_sp_haewon[sp])
+		if n > best_n and not _sayeon_entry(String(sp)).is_empty():
+			best_n = n
+			best_sp = String(sp)
+	if best_sp == "":
+		return {}
+	var nd: Variant = _sayeon_entry(best_sp).get("neokduri", [])
+	if not (nd is Array) or (nd as Array).is_empty():
+		return {}
+	var line: String = String((nd as Array)[absi(hash(uid)) % (nd as Array).size()])
+	return {"quote": line.trim_prefix("…").strip_edges(), "who": sayeon_who(best_sp), "species": best_sp}
+
+
+## 결과 화면 사연 한 줄: 이번 판 새 사연 조각이 있으면 그 첫 문장, 없으면 넋두리.
+func _sayeon_for_result(cacc: Dictionary, fallback: Dictionary) -> Dictionary:
+	for e: Variant in cacc.get("sayeon_ids", []):
+		if not (e is Array):
+			continue
+		var sp: String = String((e as Array)[0])
+		var q: String = sayeon_piece_quote(sp, int((e as Array)[1]))
+		if q != "":
+			return {"quote": q, "who": sayeon_who(sp), "species": sp}
+	return fallback
+
+
+# ─── 이야기 비트(narrative/story_beats.json, requires 최소 해석기) ───
+## 문법: requires = AND 목록. 'flag.<id>' | 'beat_done.<id>' | 'unlocked.<id>' | '<key> <op> <number>'
+##   key: stats.deaths·stats.runs·stats.clears·record.haewon_pieces_total·counter.<id>. 모르는 키는 거짓.
+## 신당(로비 v1)에서는 lobby_v1: true 인 비트만 튼다(B01·B02). ctx 는 호출자가 참으로 주는 플래그(예: first_hub_visit).
+
+func _beat_key(key: String) -> float:
+	match key:
+		"stats.deaths":
+			var n: int = 0
+			for e: Variant in profile.get("run_history", []):
+				if e is Dictionary and String((e as Dictionary).get("result", "")) == MetaRules.R_DEATH:
+					n += 1
+			return float(n)
+		"stats.runs": return float(runs_done())
+		"stats.clears": return float(MetaRules.counter(profile, "cnt_clears"))
+		"record.haewon_pieces_total":
+			var t: int = 0
+			var hr: Variant = get_value("singirok.haewonrok", {})
+			if hr is Dictionary:
+				for k: Variant in hr:
+					var pe: Variant = (hr as Dictionary)[k]
+					if pe is Dictionary and (pe as Dictionary).get("pieces") is Array:
+						t += ((pe as Dictionary)["pieces"] as Array).size()
+			return float(t)
+	if key.begins_with("counter."):
+		return float(MetaRules.counter(profile, key.substr(8)))
+	return NAN
+
+
+func beat_requires_ok(reqs: Variant, ctx: Dictionary = {}) -> bool:
+	if not (reqs is Array):
+		return true
+	for r: Variant in reqs:
+		var s: String = String(r).strip_edges()
+		if s.begins_with("flag."):
+			var f: String = s.substr(5)
+			if not (bool(ctx.get(f, false)) or flag(f)):
+				return false
+		elif s.begins_with("beat_done."):
+			if not beat_done(s.substr(10)):
+				return false
+		elif s.begins_with("unlocked."):
+			var u: String = s.substr(9)
+			if not (MetaRules.char_unlocked(profile, u) or MetaRules.has_in(profile, "unlocks", "weapons", u)):
+				return false
+		else:
+			var parts: PackedStringArray = s.split(" ", false)
+			if parts.size() != 3 or not parts[2].is_valid_float():
+				return false
+			var a: float = _beat_key(parts[0])
+			if is_nan(a):
+				return false
+			var b: float = parts[2].to_float()
+			var ok: bool = false
+			match parts[1]:
+				">=": ok = a >= b
+				">": ok = a > b
+				"<=": ok = a <= b
+				"<": ok = a < b
+				"==": ok = is_equal_approx(a, b)
+				"!=": ok = not is_equal_approx(a, b)
+			if not ok:
+				return false
+	return true
+
+
+func beat_done(id: String) -> bool:
+	return flag("beat." + id)
+
+
+## 신당에 들어올 때 틀 비트 하나(우선순위 높은 순, 한 번만). 없으면 빈 사전. {id, lines: [{speaker, ko}]}
+func next_lobby_beat(ctx: Dictionary = {}) -> Dictionary:
+	var beats: Variant = Data.get_value("narrative/story_beats", "beats", [])
+	if not (beats is Array):
+		return {}
+	var best: Dictionary = {}
+	for b: Variant in beats:
+		if not (b is Dictionary):
+			continue
+		var bd: Dictionary = b
+		if not bool(bd.get("lobby_v1", false)) or not (bd.get("lines") is Array) or (bd["lines"] as Array).is_empty():
+			continue
+		var bid: String = String(bd.get("id", ""))
+		if bool(bd.get("once", true)) and beat_done(bid):
+			continue
+		if not beat_requires_ok(bd.get("requires", []), ctx):
+			continue
+		if best.is_empty() or int(bd.get("priority", 0)) > int(best.get("priority", 0)):
+			best = bd
+	return best
+
+
+func mark_beat_done(id: String) -> void:
+	set_flag("beat." + id, true, true)
+	print("[meta] beat_done %s" % id)
+
+
+## 목표 목록(achievements.json 의 goal_v1 이 있는 것만, 판정은 counters). [{id, name, goal, cur, need, done}]
+func goal_list() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var arr: Variant = Data.get_value("achievements", "achievements", [])
+	if not (arr is Array):
+		return out
+	for a: Variant in arr:
+		if not (a is Dictionary):
+			continue
+		var g: Variant = (a as Dictionary).get("goal_v1", null)
+		if not (g is Dictionary):
+			continue
+		var need: int = maxi(1, int((g as Dictionary).get("gte", 1)))
+		var cur: int = mini(MetaRules.counter(profile, String((g as Dictionary).get("counter", ""))), need)
+		out.append({"id": String((a as Dictionary).get("id", "")), "name": String((a as Dictionary).get("name_ko", "")),
+			"goal": String((g as Dictionary).get("ko", "")), "cur": cur, "need": need, "done": cur >= need})
+	return out
 
 
 static func _comma(n: int) -> String:

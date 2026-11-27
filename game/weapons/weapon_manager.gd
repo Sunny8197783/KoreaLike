@@ -48,6 +48,7 @@ var _verdict_ready_tick: int = 0
 ## 본 층 _draw 에서 WeaponBase.draw_sheet/add_overlay 가 명령을 쌓고, 자식 _add_ci 의 draw 가 그대로 재생한다(머티리얼 1개).
 var _add_ci: Node2D = null
 var add_cmds: Array = []                 # [texture, dst Rect2, src Rect2, Transform2D, modulate]
+var big_sheets: int = 0                  # 이번 프레임 그린 64px 넘는 원샷 시트 수(design/19 §5.1: 동시 4, 군중 3)
 
 
 func _ready() -> void:
@@ -413,10 +414,10 @@ func _recompute_stats() -> void:
 
 func _color_label(c: String) -> String:
 	if c == "white":
-		return "백(白) · 흰 테두리(풀릴 기색) 귀신을 해원"
+		return "흰 무기 · 흰 테두리 귀신을 풀어 준다"
 	if c == "dual":
-		return "양면 · 붉은 귀신은 퇴치, 흰 테두리는 해원"
-	return "적(赤) · 맺힌 귀신을 한 번에 퇴치"
+		return "양쪽 · 귀신은 베고, 흰 테두리는 풀어 준다"
+	return "붉은 무기 · 귀신을 벤다"
 
 
 func get_offer_pool() -> Array[Dictionary]:
@@ -615,7 +616,12 @@ func _passive_desc(p: Dictionary, lvl: int) -> String:
 			if not (lvls is Array) or lvls.is_empty():
 				continue
 			var v: float = float(lvls[mini(lvl, lvls.size()) - 1])
-			var nm: String = String(_STAT_KO.get(String(m.get("stat", "")), String(m.get("stat", ""))))
+			var sid: String = String(m.get("stat", ""))
+			var nm: String = UiKit.stat_name(sid)
+			if nm == "" or nm == sid:
+				nm = String(_STAT_KO.get(sid, sid))
+			if UiKit.stat_invert(sid):
+				v = -v                                   # 장단(쿨다운) −6% → 화면 '공격 속도 +6%'
 			if String(m.get("op", "flat")) == "add_pct":
 				parts.append("%s %+d%%" % [nm, int(roundf(v * 100.0))])
 			else:
@@ -1017,6 +1023,7 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	add_cmds.clear()
+	big_sheets = 0
 	for w in slots:
 		w.draw_all(self)
 

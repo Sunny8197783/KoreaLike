@@ -39,7 +39,7 @@ static func price(base: float) -> int:
 static func currency_name(cur: StringName) -> String:
 	match cur:
 		CUR_G: return "공덕"
-		CUR_B: return "복전"
+		CUR_B: return "엽전"   # 화면 표기 통합(design/19 §2.5): 복전 → 엽전. 내부 키 cur_bokjeon 은 그대로
 		&"cur_neok": return "넋"
 		&"cur_yeopjeon": return "엽전"
 	return String(cur)
@@ -175,6 +175,37 @@ static func danjang_stat_bonus(p: Dictionary) -> Dictionary:
 	return out
 
 
+## 쉬운 말 효과(design/19 §2.4): 스탯 하나·값 하나 → '체력 +10' / '공격력 +4%'. 모르는 스탯은 effect_ko 를 쓴다.
+const STAT_EASY: Dictionary = {
+	"stat_jeonggi": ["체력", "n"], "stat_sinbok": ["방어", "n"], "stat_neok_sumyeong": ["넋 동무 머묾", "s"],
+	"stat_haengnyeol": ["넋 동무 수", "n"], "stat_gilbe": ["흰 길", "s1"], "stat_puri": ["풀기 힘", "p"],
+	"stat_sinppal": ["공격력", "p"], "stat_doryang": ["범위", "p"], "stat_gyeoldan": ["치명타", "pp"],
+	"stat_chohon": ["줍기 범위", "f1"], "stat_domu": ["이동 속도", "p"], "stat_siju": ["얻는 공덕·엽전", "p"],
+}
+
+
+static func stat_easy(stat: String, v: float) -> String:
+	var e: Variant = STAT_EASY.get(stat, null)
+	if not (e is Array):
+		return ""
+	var nm: String = String((e as Array)[0])
+	match String((e as Array)[1]):
+		"n": return "%s +%d" % [nm, int(roundf(v))]
+		"s": return "%s +%d초" % [nm, int(roundf(v))]
+		"s1": return "%s +%s초" % [nm, _fmt_mult(v)]
+		"p": return "%s +%d%%" % [nm, int(roundf(v * 100.0))]
+		"pp": return "%s +%d%%p" % [nm, int(roundf(v * 100.0))]
+		"f1": return "%s +%s" % [nm, _fmt_mult(v)]
+	return ""
+
+
+## 신당 강화 한 칸의 다음 단계 효과(쉬운 말). 없으면 데이터 effect_ko.
+static func danjang_effect_easy(id: String) -> String:
+	var d: Dictionary = danjang_item(id)
+	var s: String = stat_easy(String(d.get("stat", "")), float(d.get("per_rank", 0.0)))
+	return s if s != "" else String(d.get("effect_ko", ""))
+
+
 # ─── 시설 개방 (sindang_v1) ─────────────────────────────────────────────
 
 static func facility_open(p: Dictionary, key: String) -> bool:
@@ -246,13 +277,13 @@ static func uiroe_text(id: String) -> Dictionary:
 			for sp: String in md["species_weight"]:
 				mods.append("%s 출현 ×%s" % [enemy_ko(sp), _fmt_mult(float(md["species_weight"][sp]))])
 		if md.has("deity_guarantee"):
-			mods.append("06:30 시련에 %s 강림" % deity_ko(String(md["deity_guarantee"])))
+			mods.append("06:30 신령의 시험: %s" % deity_ko(String(md["deity_guarantee"])))
 		if md.has("mboss_fixed"):
-			mods.append("중간 손님: %s" % enemy_ko(String(md["mboss_fixed"])))
+			mods.append("10:00 큰 귀신: %s" % enemy_ko(String(md["mboss_fixed"])))
 		if md.has("neok_sumyeong_add_s"):
-			mods.append("넋 수명 %+d초" % int(md["neok_sumyeong_add_s"]))
+			mods.append("넋 동무 머무는 시간 %+d초" % int(md["neok_sumyeong_add_s"]))
 		if md.has("salgi_base_add"):
-			mods.append("시작 살기 +%d" % int(md["salgi_base_add"]))
+			mods.append("시작 원한 +%d" % int(md["salgi_base_add"]))
 	var reward: String = ""
 	var cm: Dictionary = uiroe_currency_mult(id)
 	for c: String in cm:
@@ -262,7 +293,7 @@ static func uiroe_text(id: String) -> Dictionary:
 		var names: Array[String] = []
 		for sp: String in rx:
 			names.append(enemy_ko(sp))
-		reward = "%s 넋기록 ×2" % "·".join(names)
+		reward = "%s 도감 기록 ×2" % "·".join(names)
 	return {"sayeon": String(d.get("sayeon_ko", id)), "mods": mods, "reward": reward}
 
 
@@ -332,7 +363,7 @@ static func compute_settlement(run: Dictionary) -> Dictionary:
 	var g: float = neok_w * num("income.conversion.cur_neok_to_cur_gongdeok", 1.0) * s
 	var b: float = yeop_w * num("income.conversion.cur_yeopjeon_to_cur_bokjeon", 1.0) * s
 	if absf(s - 1.0) > 0.001:
-		lines.append("시주 ×%.2f" % s)
+		lines.append("얻는 양 ×%.2f" % s)
 	var band: Variant = econ("income.settlement.eoullim_band", [0.35, 0.65])
 	var lo: float = float((band as Array)[0]) if band is Array else 0.35
 	var hi: float = float((band as Array)[1]) if band is Array else 0.65
@@ -340,7 +371,7 @@ static func compute_settlement(run: Dictionary) -> Dictionary:
 		var e: float = num("income.settlement.eoullim_mult", 1.15)
 		g *= e
 		b *= e
-		lines.append("어울림 ×%.2f" % e)
+		lines.append("반반 보너스 ×%.2f" % e)
 	var result: String = String(run.get("result", R_DEATH))
 	var clear: bool = result == R_CLEAR_BOW or result == R_CLEAR_SAL
 	var uiroe_id: String = String(run.get("uiroe", ""))
@@ -354,22 +385,22 @@ static func compute_settlement(run: Dictionary) -> Dictionary:
 				g *= m
 			else:
 				b *= m
-			lines.append("재가집 의뢰 %s ×%.1f" % [currency_name(StringName(c)), m])
+			lines.append("특별 의뢰 %s ×%.1f" % [currency_name(StringName(c)), m])
 	if result == R_CLEAR_BOW:
 		var bow: float = num("income.settlement.saja_bow_gongdeok_mult", 1.5)
 		g *= bow
-		lines.append("저승사자의 읍 ×%.1f" % bow)
+		lines.append("역려를 풀어 보냄 ×%.1f" % bow)
 	elif result == R_CLEAR_SAL:
 		var p: float = clampf(float(run.get("geodum_p", 1.0)), 0.0, 1.0)
 		var m2: float = 1.0 + num("income.settlement.sal_geodum_bokjeon_mult_max", 0.5) * p
 		b *= m2
-		lines.append("살 거둠 ×%.2f" % m2)
+		lines.append("역려를 쓰러뜨림 ×%.2f" % m2)
 	elif result == R_TIMEOUT_SAJA:
 		# 사자가 판을 거두었다: 읍(×1.5)·의뢰 없음. 보스까지 버틴 몫 — 푼 매듭 하나당 공덕 +5%.
 		var kn: int = timeout_knots(run)
 		var mt: float = timeout_gongdeok_mult(kn)
 		g *= mt
-		lines.insert(0, "사자가 판을 거둠 · 매듭 %d/%d ×%.2f" % [kn, int(num("income.settlement.timeout_knots_max", 7.0)), mt])
+		lines.insert(0, "사자가 판을 거둠 · 푼 매듭 %d/%d ×%.2f" % [kn, int(num("income.settlement.timeout_knots_max", 7.0)), mt])
 	var cap_w: float = 99999999.0
 	return {"N": n_ratio, "neok_w": int(neok_w), "yeop_w": int(yeop_w),
 		"G": int(clampf(floorf(g), 0.0, cap_w)), "B": int(clampf(floorf(b), 0.0, cap_w)),

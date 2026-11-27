@@ -1,5 +1,5 @@
 extends Control
-## 넋기록(최소판): 해원록(해원)·벽사록(퇴치) 종별 누계 + 최근 판. 소유: ui. design/11 §10.1~10.2 축약.
+## 도감(최소판): 풀어 줌·처치 종별 누계 + 최근 판 + 다음 목표. 화면 말은 design/19 §2(넋기록 → 도감, 해원/퇴치 → 풀어 줌/처치). 소유: ui. design/11 §10.1~10.2 축약.
 ## 자료: Save.records_view()(singirok 해원록·벽사록), Save.recent_runs(5)(프로필 run_history). 구 ui.records 는 폴백만.
 ## (11-24) singirok 이전 완료 — ui/run_ledger.gd 의 ui.records·ui.run_history 쓰기는 이제 중복(무해, 정리는 선택).
 ## 입력: ↑↓ 넘기기, Esc/Enter 닫기.
@@ -156,12 +156,12 @@ func _draw() -> void:
 	UiKit.draw_hanji_panel(self, p, _paper)
 	UiKit.draw_dancheong(self, Rect2(p.position.x + 2, p.position.y + 2, p.size.x - 4, 4))
 	draw_rect(Rect2(p.position.x + 2, p.position.y + 6, p.size.x - 4, 34), UiKit.MEOK_1)
-	UiKit.text_outline(self, _f_brush, 38, Vector2(cx, p.position.y + 33), "넋기록", UiKit.HANJI_UI, 1, 2)
+	UiKit.text_outline(self, _f_brush, 38, Vector2(cx, p.position.y + 33), "도감", UiKit.HANJI_UI, 1, 2)
 	var ink: Color = UiKit.INK
 	var x0: float = p.position.x + 16
 	var y: float = p.position.y + 60
-	draw_string(_f_bold, Vector2(x0, y), "해원록 ○  %d" % _tot_h, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
-	draw_string(_f_bold, Vector2(x0 + 150, y), "벽사록 ◆  %d" % _tot_t, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, UiKit.JEOK_DK)
+	draw_string(_f_bold, Vector2(x0, y), "○ 풀어 줌  %d" % _tot_h, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
+	draw_string(_f_bold, Vector2(x0 + 150, y), "◆ 처치  %d" % _tot_t, HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, UiKit.JEOK_DK)
 	y += 8
 	draw_rect(Rect2(x0, y, p.size.x - 32, 1), UiKit.HANJI_4)
 	if _list.is_empty():
@@ -178,13 +178,20 @@ func _draw() -> void:
 			var reg: Rect2 = d["reg"]
 			draw_texture_rect_region(tex, Rect2(Vector2(x0 + 10.0 - roundf(reg.size.x * 0.5), ry).round(), reg.size), reg)
 		draw_string(_f_body, Vector2(x0 + 32, ry + 13), String(d["name"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
-		draw_string(_f_small, Vector2(x0 + 150, ry + 13), "○ 해원 %d" % int(d["h"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
-		draw_string(_f_small, Vector2(x0 + 230, ry + 13), "◆ 퇴치 %d" % int(d["t"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
+		draw_string(_f_small, Vector2(x0 + 150, ry + 13), "○ 풀어 줌 %d" % int(d["h"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, ink)
+		draw_string(_f_small, Vector2(x0 + 230, ry + 13), "◆ 처치 %d" % int(d["t"]), HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
 		draw_rect(Rect2(x0, ry + 18, 290, 1), Color(UiKit.HANJI_3, 0.6))
 	# 최근 판
 	var hx: float = p.position.x + 318
 	var hy: float = p.position.y + 60
 	draw_string(_f_bold, Vector2(hx, hy), "최근 굿판", HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_BODY, ink)
+	# 다음 목표(최고 기록 사다리)
+	if Save.has_method("next_goal_line"):
+		var gl: PackedStringArray = UiKit.wrap(_f_small, UiKit.SZ_SMALL, "다음 목표: " + String(Save.call("next_goal_line")), 126.0, 3)
+		var gy: float = p.end.y - 20.0 - 11.0 * float(gl.size())
+		draw_rect(Rect2(hx - 4, gy - 11, 134, 11.0 * float(gl.size()) + 6.0), Color(UiKit.HANJI_2, 0.7))
+		for li in gl.size():
+			draw_string(_f_small, Vector2(hx, gy + li * 11), gl[li], HORIZONTAL_ALIGNMENT_LEFT, -1, UiKit.SZ_SMALL, UiKit.JEOK_DK)
 	for i in _hist.size():
 		var parts: PackedStringArray = _hist[i]
 		var yy: float = hy + 16 + i * 26

@@ -132,3 +132,12 @@ signal tutorial_ack(step_id: StringName)                       # ui → 로직(�
 signal tutorial_finished(completed: bool)
 signal tutorial_exit_requested(next: StringName)               # ui → main(요청): &"real" | &"again" | &"title"
 signal tutorial_skip_step_requested()                          # ui → 로직(요청)
+
+# ─── 쉽고 화려하게(design/19 §11 계약, kill_ability_fx append) ─────────────
+## 모두 연출 신호(보냄: vfx·weapons, 받음: hud·audio 등). 구독자는 시뮬 상태를 바꾸지 않는다. 받는 쪽은 Events.has_signal 확인 뒤 연결.
+## psv_id = 패시브 id(&"psv_jusa" 등), pos = 월드 좌표(발동 자리).
+signal passive_proc(psv_id: StringName, pos: Vector2)
+## 0.25초 창 묶음 처치(창에 처치 5 이상이 된 순간 1번). count = 그 창의 처치 수, pos = 마지막 처치 자리.
+signal kill_burst(count: int, pos: Vector2)
+## 손 무기 타격 순간(held_weapon_attack_fx 가 보냄). hand_pos = 월드 좌표 손 기준점.
+signal held_strike(weapon_id: StringName, hand_pos: Vector2)

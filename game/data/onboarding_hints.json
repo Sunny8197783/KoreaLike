@@ -223,7 +223,7 @@
       "id": "hint_haewon_named",
       "trigger": "first_haewon",
       "text": {
-        "ko": "解冤 해원",
+        "ko": "풀어 줌",
         "en": "Haewon (Released)"
       },
       "display": "name_tag_on_target",
@@ -240,7 +240,7 @@
       "id": "hint_yeongga",
       "trigger": "first yeongga_join",
       "text": {
-        "ko": "해원한 넋은 영가가 되어 30초 함께 걷다 떠난다",
+        "ko": "풀어 준 넋은 넋 동무가 되어 30초 함께 걷다 떠난다",
         "en": "Released souls become Yeongga — they walk with you for 30s, then move on"
       },
       "display": "label+hint_line",
@@ -260,7 +260,7 @@
       "id": "hint_daesin",
       "trigger": "first daesin_cheondo",
       "text": {
-        "ko": "영가가 대신 맞고 먼저 떠났다 — 천도",
+        "ko": "넋 동무가 대신 맞고 먼저 떠났다",
         "en": "A spirit took the blow and moved on — Cheondo"
       },
       "display": "hint_line",
@@ -311,7 +311,7 @@
       "id": "hint_ring_named",
       "trigger": "first ring_closed",
       "text": {
-        "ko": "길닦음",
+        "ko": "한꺼번에 풀림",
         "en": "Gildakkeum"
       },
       "display": "name_tag_on_ring",
@@ -328,7 +328,7 @@
       "id": "hint_sal",
       "trigger": "toechi_count>=10",
       "text": {
-        "ko": "부순 자리에 살이 남는다. 쌓이면 돌아온다",
+        "ko": "벤 자리에 원한이 남는다. 쌓이면 성난 귀신이 온다",
         "en": "Destruction leaves Sal behind. Enough of it returns"
       },
       "display": "arrow+hint_line+maedeup_highlight",
@@ -345,7 +345,7 @@
       "id": "hint_giun",
       "trigger": "run1: t==10:52(초굿, 기운 바 개방 22초 뒤) / run2+: t>=120s",
       "text": {
-        "ko": "풀어 보낸 만큼 한지빛, 부순 만큼 먹빛 — 굿판의 기운이 마지막 손님을 정한다",
+        "ko": "풀어 준 만큼 흰 칸, 벤 만큼 검은 칸 — 20:00 보스 모습이 바뀌어요",
         "en": "Release brightens the rite, destruction darkens it — the rite's mood decides the final guest"
       },
       "display": "giun_pulse+hint_line",
@@ -379,7 +379,7 @@
       "id": "hint_trial_faces",
       "trigger": "trial_start first",
       "text": {
-        "ko": "꺾으면 위엄, 모시면 가호 — 먼저 찬 쪽으로 실린다",
+        "ko": "◆ 싸움이나 ○ 모심 — 먼저 가득 찬 쪽 힘을 받는다",
         "en": "Overpower for Majesty, honor for Grace — whichever fills first"
       },
       "display": "gauge_highlight+hint_line",
@@ -413,7 +413,7 @@
       "id": "hint_need_white",
       "trigger": "run==1 && t>=240s && haewon_count==0",
       "text": {
-        "ko": "흰 무구가 있어야 풀어 보낼 수 있다",
+        "ko": "흰 무기가 있어야 풀 수 있다",
         "en": "You need a white implement to set them free"
       },
       "display": "hint_line+guarantee_white_card",
@@ -499,7 +499,7 @@
       "id": "hint_wongwi_first",
       "trigger": "first wongwi_return",
       "text": {
-        "ko": "부순 귀신이 살을 모아 돌아왔다 — 원귀",
+        "ko": "벤 귀신이 원한을 모아 성난 귀신으로 돌아왔다",
         "en": "What you destroyed has gathered its Sal and returned — Wongwi"
       },
       "display": "hint_line+maedeup_highlight",
@@ -516,7 +516,7 @@
       "id": "hint_evo_ready_first",
       "trigger": "first evo_ready",
       "text": {
-        "ko": "정예가 남긴 상자를 열면 무구가 진화한다",
+        "ko": "강한 귀신이 남긴 상자를 열면 무기가 진화한다",
         "en": "Open a chest from an elite to evolve this implement"
       },
       "display": "slot_pulse+hint_line",
@@ -550,7 +550,7 @@
       "id": "hint_dwitjeon",
       "trigger": "first geori_dwitjeon start",
       "text": {
-        "ko": "공물상을 고리로 묶으면 남은 넋이 한꺼번에 풀린다",
+        "ko": "차린 상(공물상)을 흰 길로 감싸면 남은 넋이 한꺼번에 풀린다",
         "en": "Ring the offering tables together to release every soul at once"
       },
       "display": "arrow_to_gongmulsang+hint_line",
@@ -620,11 +620,11 @@
   "death_cards_first3": [
     {
       "cond": "haewon_ratio<0.15",
-      "ko": "흰 무구로 풀어 보내면 영가가 대신 맞아 준다"
+      "ko": "흰 무기로 풀어 주면 넋 동무가 대신 맞아 준다"
     },
     {
       "cond": "haewon_ratio>0.85 && death_level<median_level_at_time",
-      "ko": "붉은 무구로 한을 깨면 원혼 구슬이 온전히 모인다 — 빨리 강해진다"
+      "ko": "붉은 무기로 베면 원혼 구슬이 온전히 모인다 — 빨리 강해진다"
     },
     {
       "cond": "ring_count==0",
@@ -640,7 +640,7 @@
     },
     {
       "cond": "weapon_slots<=3",
-      "ko": "점지에서 새 무구를 받아 칸을 채우라"
+      "ko": "새 힘 고르기에서 새 무기를 받아 칸을 채우라"
     }
   ],
   "death_cards_rule": "한쪽으로 쏠린 플레이 조언은 양쪽 모두 둔다(1.2-7)"

@@ -2,13 +2,13 @@ class_name SettingsPanel
 extends Control
 ## 설정 패널(타이틀·일시정지 공용). 소유: ui. design/11 §12.1 · GAME_FEEL 7(접근성 연결).
 ## 항목은 UiSettings.OPTIONS(음량 3 · 흔들림 · 번쩍임 · 타격 멈춤 · 적 피격 번쩍임 · 피해 숫자 · 움직임 줄이기 ·
-## 무당 강조 · 무리 어둡게 · 적 탄 강조 · 길잡이). 13항목 + 2줄 = 15줄 × 16px → 패널 304px, 아래 안내까지 360 안.
+## 무당 강조 · 무리 어둡게 · 적 탄 강조 · 내 무기 효과 · 글자 크기 · 길잡이). 15항목 + 2줄 = 17줄 × 15px → 패널 319px, 아래 안내까지 360 안.
 ## 값이 바뀌면 즉시 적용(UiSettings.apply → Juice/Game/Audio), 닫을 때 디스크에 쓴다.
 ## 입력: ↑↓ 항목, ←→ 값, Enter(닫기 줄)/Esc/Backspace 닫기, 마우스 클릭(◀ ▶).
 
 signal closed
 
-const ROW_H: float = 16.0
+const ROW_H: float = 15.0
 const PANEL_W: float = 300.0
 
 var _focus: int = 0

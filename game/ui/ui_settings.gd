@@ -18,6 +18,8 @@ const OPTIONS: Array[Dictionary] = [
 	{"key": "a11y.player_mark", "label": "무당 강조", "values": [0, 1, 2], "names": ["끔", "켬", "강하게"], "def": 1},
 	{"key": "a11y.crowd_dim", "label": "무리 어둡게", "values": [0, 1, 2], "names": ["끔", "보통", "강하게"], "def": 1},
 	{"key": "a11y.bullet", "label": "적 탄 강조", "values": [0, 1, 2], "names": ["끔", "켬", "강하게"], "def": 1},
+	{"key": "a11y.my_fx", "label": "내 무기 효과", "values": [100, 70, 40], "suffix": "%", "def": 0},
+	{"key": "ui.text_size", "label": "글자 크기", "values": [0, 1], "names": ["기본", "크게"], "def": 0},
 	{"key": "ui.guide", "label": "길잡이 안내", "values": [1, 0], "names": ["켬", "끔"], "def": 0},
 ]
 
@@ -89,6 +91,10 @@ static func apply() -> void:
 	var cd: int = get_int("a11y.crowd_dim")
 	Juice.crowd_dim_scale = 0.0 if cd <= 0 else (1.4 if cd >= 2 else 1.0)
 	Juice.bullet_emphasis = clampi(get_int("a11y.bullet"), 0, 2)
+	# 내 무기 효과 밝기(design/19 §5.1): ③궤적·④여운·원판 채움 α 배율
+	Juice.my_fx_alpha = clampf(float(get_int("a11y.my_fx")) / 100.0, 0.0, 1.0)
+	# 글자 크기(design/19 §4.1): UiKit.sz() 가 읽는다
+	UiKit.text_large = get_int("ui.text_size") != 0
 	Audio.set_bus_volume_linear(&"Master", float(get_int("audio.master")) / 100.0)
 	Audio.set_bus_volume_linear(&"Music", float(get_int("audio.music")) / 100.0)
 	Audio.set_bus_volume_linear(&"SFX", float(get_int("audio.sfx")) / 100.0)

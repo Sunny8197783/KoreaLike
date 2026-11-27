@@ -14,8 +14,8 @@ extends Node2D
 ## 콜백(WeaponManager): on_projectile_hit(wslot, enemy_slot, dmg, dir, tag, proj_index)
 ##                     on_projectile_end(wslot, tag, pos, vel, reason)   reason: 0 사거리 끝 · 1 손에 귀환 · 2 관통 소진
 ## 그리기(GAME_FEEL 3.3, 렌더 단계 R5 = render(alpha)): 보간 좌표를 K.rndv 로 정수화하고 lift(아군 16 / 적 10px)만큼 위에 그린다
-##   (충돌은 지면 좌표끼리). 회전·비정수 배율 금지: proj_visual(tag) -> {fx, orient: none|spin|dir8|dir16, fps, scale(1|2), lift_px,
-##   trail, tint}. spin = 사전 렌더 시트 프레임(age × fps), 단일 그림은 90° 단위 스냅(픽셀 정확 회전)만, 둥근 탄은 방향 없음.
+##   (충돌은 지면 좌표끼리). 비정수 배율 금지(정수 1|2). 회전은 640×360 내부 해상도라 화면 픽셀 격자에 맞는다(design/19 §5.2 B):
+##   proj_visual(tag) -> {fx, orient: none|spin|dir4|dir8|dir16, fps, scale(1|2), lift_px, trail, tint, core_len, ghosts, ghost_col}. spin = 사전 렌더 시트 프레임(age × fps), 단일 그림은 90° 단위 스냅(픽셀 정확 회전)만, 둥근 탄은 방향 없음.
 ## 적 탄(design/18 §1.1·1.3 위험 층): 자식 EnemyShots(z8 절대, 내 VFX z5·재 z6·무당 테 z7 위)에서 그린다.
 ##   탄마다 청 링(Juice.bullet_emphasis 1 = #5f93de 1px / 2 = #a9caf5 2px, 0 = 링 없음) + 먹 1px 테(±1px 4번) + 탄 그림.
 ##   원귀 탄(kind 이름에 'wongwi')은 링이 jk_dk #8c1f22. 링·테는 렌더 전용(시뮬 무관).
@@ -373,8 +373,10 @@ func _visual(ws: int, tag: int, wm: WeaponManager) -> Dictionary:
 func _draw() -> void:
 	var wm: WeaponManager = Game.weapons as WeaponManager
 	var al: float = _alpha
-	# 잔상(design/19 §5.1): 내 탄 60개 이하·군중 아님일 때만 2장. 몸통 한지 심은 늘.
-	var ghosts_ok: bool = player_alive <= 60 and not WeaponBase.fx_crowd()
+	# 잔상(design/19 §5.1): 내 탄 60개 이하일 때 2장 — 군중이면 1장(후반 무리 속에서도 내 탄 궤적이 남게, 검토 11-26). 몸통 한지 심은 늘.
+	var ghosts_ok: bool = player_alive <= 60
+	var ghost_cap: int = 2   # 내 탄 ≤60 이면 군중이어도 2장(검토 11-26 — 신칼 잔상이 무리 속에서 사라졌다). 60 넘으면 위 ghosts_ok 가 끈다
+	var fxa: float = WeaponBase.fx_alpha()   # 설정 '내 무기 효과' — 잔상(궤적)에만 곱한다
 	for i in CAPACITY:
 		var f: int = flags[i]
 		if (f & F_ALIVE) == 0:
@@ -397,7 +399,7 @@ func _draw() -> void:
 		if trd != null:
 			_draw_sheet(trd, pp, ang, scl, age, tint, true)
 		var fxd: Variant = vis.get("fxd")
-		var gn: int = int(vis.get("ghosts", 0)) if ghosts_ok else 0
+		var gn: int = mini(int(vis.get("ghosts", 0)), ghost_cap) if ghosts_ok else 0
 		var vdir: Vector2 = Vector2(vx[i], vy[i])
 		if gn > 0 and vdir.length_squared() > 1.0:
 			# 잔상: 직전 프레임 자리(속도 1틱분, 최소 3px)에 같은 그림을 jk-hi/한지 α0.5·0.25 로
@@ -405,7 +407,7 @@ func _draw() -> void:
 			var gc: Color = vis.get("ghost_col", K.COL_JEOK_HI)
 			for g in range(gn, 0, -1):
 				var gpos: Vector2 = K.rndv(pp - stp * float(g))
-				var gcol: Color = Color(gc, 0.5 / float(g))
+				var gcol: Color = Color(gc, 0.5 / float(g) * fxa)
 				if fxd != null:
 					_draw_sheet(fxd, gpos, ang, scl, age, gcol, false, _phase_frame(i, f, vis, fxd))
 				else:
